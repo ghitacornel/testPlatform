@@ -17,9 +17,9 @@ public class TestCompany extends AbstractTestSpringBootContext {
     public void testRegisterFindAllUnregisterFindAll() throws Exception {
 
         CompanyRegisterRequest request = new CompanyRegisterRequest();
-        request.setName(faker.company().name());
-        request.setIndustry(faker.company().industry());
-        request.setUrl(faker.company().url());
+        request.setName("name");
+        request.setIndustry("industry");
+        request.setUrl("url");
 
         // expect nothing registered
         {
@@ -75,8 +75,8 @@ public class TestCompany extends AbstractTestSpringBootContext {
         {
             CompanyRegisterRequest request = new CompanyRegisterRequest();
             request.setName(null);
-            request.setIndustry(faker.company().industry());
-            request.setUrl(faker.company().url());
+            request.setIndustry("industry");
+            request.setUrl("url");
             String content = objectMapper.writeValueAsString(request);
             mvc.perform(post(ROOT + "/register")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -86,9 +86,9 @@ public class TestCompany extends AbstractTestSpringBootContext {
         }
         {
             CompanyRegisterRequest request = new CompanyRegisterRequest();
-            request.setName(faker.company().name());
+            request.setName("name");
             request.setIndustry(null);
-            request.setUrl(faker.company().url());
+            request.setUrl("url");
             String content = objectMapper.writeValueAsString(request);
             mvc.perform(post(ROOT + "/register")
                             .contentType(MediaType.APPLICATION_JSON)

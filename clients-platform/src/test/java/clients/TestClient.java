@@ -17,8 +17,8 @@ public class TestClient extends AbstractTestSpringBootContext {
     public void testRegisterFindAllUnregisterFindAll() throws Exception {
 
         ClientRegisterRequest request = new ClientRegisterRequest();
-        request.setName(faker.name().username());
-        request.setCardType(faker.business().creditCardType());
+        request.setName("name");
+        request.setCardType("cardType");
 
         // expect nothing registered
         {
@@ -74,7 +74,7 @@ public class TestClient extends AbstractTestSpringBootContext {
         {
             ClientRegisterRequest request = new ClientRegisterRequest();
             request.setName(null);
-            request.setCardType(faker.business().creditCardType());
+            request.setCardType("cardType");
             String content = objectMapper.writeValueAsString(request);
             mvc.perform(post(ROOT + "/register")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +85,7 @@ public class TestClient extends AbstractTestSpringBootContext {
         {
             ClientRegisterRequest request = new ClientRegisterRequest();
             request.setName(" ");
-            request.setCardType(faker.business().creditCardType());
+            request.setCardType("cardType");
             String content = objectMapper.writeValueAsString(request);
             mvc.perform(post(ROOT + "/register")
                             .contentType(MediaType.APPLICATION_JSON)
