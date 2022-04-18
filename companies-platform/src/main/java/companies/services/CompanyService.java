@@ -36,7 +36,7 @@ public class CompanyService {
 
     public CompanyDto register(CompanyRegisterRequest request) {
         if (repository.findByName(request.getName()).isPresent()) {
-            throw new ValidationException("username taken");
+            throw new ValidationException("company name taken");
         }
         Company company = new Company();
         company.setName(request.getName());
