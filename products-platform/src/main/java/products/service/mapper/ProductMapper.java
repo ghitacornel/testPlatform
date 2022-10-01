@@ -1,6 +1,7 @@
 package products.service.mapper;
 
 import org.mapstruct.Mapper;
+import products.controller.model.request.ProductSaleRequest;
 import products.controller.model.response.ProductDetailsResponse;
 import products.repository.entity.Product;
 
@@ -8,5 +9,6 @@ import products.repository.entity.Product;
 public interface ProductMapper {
 
     ProductDetailsResponse map(Product model);
+    Product map(ProductSaleRequest model);
 
 }

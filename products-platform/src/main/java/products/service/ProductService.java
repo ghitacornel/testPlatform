@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.clients.company.CompanyClient;
-import products.clients.company.CompanyDetailsDto;
 import products.clients.order.CreateOrderRequest;
 import products.clients.order.OrderClient;
 import products.controller.model.request.ProductBuyRequest;
@@ -42,13 +41,10 @@ public class ProductService {
     }
 
     public ProductDetailsResponse sale(ProductSaleRequest saleRequest) {
-        CompanyDetailsDto company = companyClient.findById(saleRequest.getCompanyId());
-        Product product = new Product();
-        product.setName(saleRequest.getName());
-        product.setColor(saleRequest.getColor());
-        product.setPrice(saleRequest.getPrice());
-        product.setQuantity(saleRequest.getQuantity());
-        product.setCompanyId(company.getId());
+        if (companyClient.findById(saleRequest.getCompanyId()) == null) {
+            throw new EntityNotFoundException("Company with id " + saleRequest.getCompanyId() + " not found");
+        }
+        Product product = productMapper.map(saleRequest);
         repository.save(product);
         log.info("new product to sale " + product);
         return productMapper.map(product);
