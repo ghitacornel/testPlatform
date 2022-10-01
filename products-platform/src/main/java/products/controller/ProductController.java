@@ -1,11 +1,11 @@
-package products.controllers;
+package products.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import products.controllers.models.ProductBuyRequest;
-import products.controllers.models.ProductDto;
-import products.controllers.models.ProductSaleRequest;
+import products.controller.model.ProductBuyRequest;
+import products.controller.model.ProductDto;
+import products.controller.model.ProductSaleRequest;
 import products.services.ProductService;
 
 import javax.validation.constraints.NotNull;
@@ -18,12 +18,12 @@ import java.util.List;
 public class ProductController {
     private final ProductService service;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<ProductDto> findAll() {
         return service.findAll();
     }
 
-    @GetMapping("/all/count")
+    @GetMapping("/count")
     public long countAll() {
         return service.countAll();
     }

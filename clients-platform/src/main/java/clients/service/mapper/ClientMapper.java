@@ -1,7 +1,7 @@
 package clients.service.mapper;
 
-import clients.controller.model.response.ClientDetailsResponse;
 import clients.controller.model.request.ClientRegisterRequest;
+import clients.controller.model.response.ClientDetailsResponse;
 import clients.repository.entity.Client;
 import org.mapstruct.Mapper;
 
@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 public interface ClientMapper {
 
     ClientDetailsResponse map(Client data);
-     Client map(ClientRegisterRequest data);
+
+    Client map(ClientRegisterRequest data);
 
 }

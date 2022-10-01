@@ -10,11 +10,11 @@ import products.clients.company.CompanyDto;
 import products.clients.order.CreateOrderRequest;
 import products.clients.order.OrderClient;
 import products.services.mappers.ProductMapper;
-import products.controllers.models.ProductBuyRequest;
-import products.controllers.models.ProductDto;
-import products.controllers.models.ProductSaleRequest;
-import products.repositories.ProductRepository;
-import products.repositories.entities.Product;
+import products.controller.model.ProductBuyRequest;
+import products.controller.model.ProductDto;
+import products.controller.model.ProductSaleRequest;
+import products.repository.ProductRepository;
+import products.repository.entity.Product;
 
 
 import javax.persistence.EntityNotFoundException;

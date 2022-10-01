@@ -1,8 +1,8 @@
 package products.services.mappers;
 
 import org.springframework.stereotype.Component;
-import products.controllers.models.ProductDto;
-import products.repositories.entities.Product;
+import products.controller.model.ProductDto;
+import products.repository.entity.Product;
 
 @Component
 public class ProductMapper {

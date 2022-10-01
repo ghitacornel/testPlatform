@@ -1,4 +1,4 @@
-package products.controllers.models;
+package products.controller.model;
 
 import lombok.Data;
 

@@ -1,10 +1,10 @@
-package products.repositories;
+package products.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import products.repositories.entities.Product;
+import products.repository.entity.Product;
 
 import javax.persistence.LockModeType;
 import java.util.Optional;
