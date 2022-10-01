@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.clients.company.CompanyClient;
 import products.clients.order.CreateOrderRequest;
-import products.clients.order.OrderClient;
 import products.clients.order.CreateOrderResponse;
+import products.clients.order.OrderClient;
 import products.controller.model.request.ProductBuyRequest;
 import products.controller.model.request.ProductSaleRequest;
 import products.controller.model.response.ProductDetailsResponse;
@@ -41,11 +41,11 @@ public class ProductService {
         return repository.count();
     }
 
-    public ProductDetailsResponse sale(ProductSaleRequest saleRequest) {
-        if (companyClient.findById(saleRequest.getCompanyId()) == null) {
-            throw new EntityNotFoundException("Company with id " + saleRequest.getCompanyId() + " not found");
+    public ProductDetailsResponse sale(ProductSaleRequest request) {
+        if (companyClient.findById(request.getCompanyId()) == null) {
+            throw new EntityNotFoundException("Company with id " + request.getCompanyId() + " not found");
         }
-        Product product = productMapper.map(saleRequest);
+        Product product = productMapper.map(request);
         repository.save(product);
         log.info("new product to sale " + product);
         return productMapper.map(product);
@@ -58,25 +58,21 @@ public class ProductService {
         log.info("product cancelled " + product);
     }
 
-    private Product lock(Integer id) {
-        return repository.lockForProcess(id)
-                .orElseThrow(() -> new EntityNotFoundException("product with id " + id + " not found"));
-    }
-
-    public ProductDetailsResponse buy(ProductBuyRequest buyRequest) {
-        Product product = lock(buyRequest.getProductId());
-        if (product.getQuantity() < buyRequest.getQuantity()) {
-            throw new BusinessException("Cannot buy more that it exists, want to buy " + buyRequest.getQuantity() + " from remaining " + product.getQuantity());
+    public ProductDetailsResponse buy(ProductBuyRequest request) {
+        Product product = repository.findById(request.getProductId())
+                .orElseThrow(() -> new EntityNotFoundException("Product with id " + request.getProductId() + " not found"));
+        if (product.getQuantity() < request.getQuantity()) {
+            throw new BusinessException("Cannot buy more that it exists, want to buy " + request.getQuantity() + " from remaining " + product.getQuantity());
         }
 
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
-        createOrderRequest.setProductId(buyRequest.getProductId());
-        createOrderRequest.setClientId(buyRequest.getClientId());
-        createOrderRequest.setProductQuantity(buyRequest.getQuantity());
+        createOrderRequest.setProductId(request.getProductId());
+        createOrderRequest.setClientId(request.getClientId());
+        createOrderRequest.setProductQuantity(request.getQuantity());
         CreateOrderResponse order = orderClient.createOrder(createOrderRequest);
         log.info("new order " + order);
 
-        product.setQuantity(product.getQuantity() - buyRequest.getQuantity());
+        product.setQuantity(product.getQuantity() - request.getQuantity());
 
         // no more products => delete
         if (product.getQuantity() == 0) {

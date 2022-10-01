@@ -34,13 +34,13 @@ public class ProductController {
     }
 
     @PostMapping(value = "/sale")
-    public ProductDetailsResponse sale(@Validated @RequestBody ProductSaleRequest json) {
-        return service.sale(json);
+    public ProductDetailsResponse sale(@Validated @RequestBody ProductSaleRequest request) {
+        return service.sale(request);
     }
 
     @PostMapping(value = "/buy")
-    public ProductDetailsResponse buy(@Validated @RequestBody ProductBuyRequest json) {
-        return service.buy(json);
+    public ProductDetailsResponse buy(@Validated @RequestBody ProductBuyRequest request) {
+        return service.buy(request);
     }
 
     @DeleteMapping(value = "{id}")
