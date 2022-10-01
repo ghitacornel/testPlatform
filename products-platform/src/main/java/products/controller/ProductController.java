@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import products.controller.model.ProductBuyRequest;
 import products.controller.model.ProductDto;
 import products.controller.model.ProductSaleRequest;
-import products.services.ProductService;
+import products.service.ProductService;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;

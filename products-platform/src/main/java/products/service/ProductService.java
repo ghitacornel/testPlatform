@@ -1,4 +1,4 @@
-package products.services;
+package products.service;
 
 import commons.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import products.clients.company.CompanyClient;
 import products.clients.company.CompanyDto;
 import products.clients.order.CreateOrderRequest;
 import products.clients.order.OrderClient;
-import products.services.mappers.ProductMapper;
+import products.service.mapper.ProductMapper;
 import products.controller.model.ProductBuyRequest;
 import products.controller.model.ProductDto;
 import products.controller.model.ProductSaleRequest;
@@ -50,7 +50,6 @@ public class ProductService {
         product.setPrice(saleRequest.getPrice());
         product.setQuantity(saleRequest.getQuantity());
         product.setCompanyId(company.getId());
-        product.setCompanyName(company.getName());
         repository.save(product);
         log.info("new product to sale " + product);
         return productMapper.map(product);
@@ -78,7 +77,6 @@ public class ProductService {
         request.setProductPrice(product.getPrice());
         request.setProductQuantity(buyRequest.getQuantity());
         request.setUserName(buyRequest.getUserName());
-        request.setCompanyName(product.getCompanyName());
         orderClient.createOrder(request);
 
         product.setQuantity(product.getQuantity() - buyRequest.getQuantity());
