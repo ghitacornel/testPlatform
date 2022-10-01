@@ -23,12 +23,14 @@ public class PlayClient extends AbstractActor {
     public void register() {
         Client client = randomDataCreatorService.createClient();
         clientService.register(client);
+        log.info("registered client " + client);
     }
 
     @Scheduled(fixedRate = 1000, initialDelay = 2000)
     public void unregister() {
         Client client = randomDataFetchService.findRandomClient();
         clientService.unregister(client);
+        log.info("unregistered client" + client);
     }
 
 }

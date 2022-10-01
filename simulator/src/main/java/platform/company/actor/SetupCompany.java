@@ -29,15 +29,15 @@ public class SetupCompany extends AbstractActor {
         while (items.size() < MAX_COMPANY_NUMBERS) items.add(randomDataCreatorService.createCompany());
         for (Company item : items) {
             Company registered = service.register(item);
-            log.info("registered " + registered);
+            log.info("registered company " + registered);
         }
     }
 
     @PreDestroy
     public void tearDown() {
         for (Company item : service.findAll()) {
-            log.info("unregistering " + item);
             service.unregister(item);
+            log.info("unregistered company " + item);
         }
     }
 }

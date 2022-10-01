@@ -23,12 +23,14 @@ public class PlayCompany extends AbstractActor {
     public void register() {
         Company company = randomDataCreatorService.createCompany();
         companyService.register(company);
+        log.info("registered company " + company);
     }
 
     @Scheduled(fixedRate = 1000, initialDelay = 2000)
     public void unregister() {
         Company company = randomDataFetchService.findRandomCompany();
         companyService.unregister(company);
+        log.info("unregistered company " + company);
     }
 
 }
