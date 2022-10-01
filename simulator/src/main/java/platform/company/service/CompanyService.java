@@ -11,12 +11,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompanyService {
 
+    private static final String COMPANY_URL = "/company";
     private final RESTClient restClient;
 
     public List<Company> findAll() {
         return restClient.companies()
                 .get()
-                .uri("/company")
+                .uri(COMPANY_URL)
                 .retrieve()
                 .bodyToFlux(Company.class)
                 .collectList()
@@ -26,7 +27,7 @@ public class CompanyService {
     public Company register(Company item) {
         return restClient.companies()
                 .post()
-                .uri("/company")
+                .uri(COMPANY_URL)
                 .bodyValue(item)
                 .retrieve()
                 .bodyToMono(Company.class)
@@ -36,7 +37,7 @@ public class CompanyService {
     public void unregister(Company item) {
         restClient.companies()
                 .delete()
-                .uri("/company/" + item.getName())
+                .uri(COMPANY_URL + "/" + item.getName())
                 .retrieve()
                 .toBodilessEntity()
                 .block();
