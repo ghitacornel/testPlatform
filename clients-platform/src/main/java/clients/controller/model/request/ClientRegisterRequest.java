@@ -1,4 +1,4 @@
-package clients.controller.model;
+package clients.controller.model.request;
 
 import lombok.Data;
 

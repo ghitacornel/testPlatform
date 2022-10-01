@@ -1,6 +1,6 @@
 package clients;
 
-import clients.controller.model.ClientRegisterRequest;
+import clients.controller.model.request.ClientRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 

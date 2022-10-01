@@ -1,17 +1,14 @@
 package clients.service.mapper;
 
-import clients.controller.model.ClientDto;
+import clients.controller.model.response.ClientDetailsResponse;
+import clients.controller.model.request.ClientRegisterRequest;
 import clients.repository.entity.Client;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class ClientMapper {
+@Mapper
+public interface ClientMapper {
 
-    public ClientDto map(Client data) {
-        return ClientDto.builder()
-                .id(data.getId())
-                .name(data.getName())
-                .cardType(data.getCardType())
-                .build();
-    }
+    ClientDetailsResponse map(Client data);
+     Client map(ClientRegisterRequest data);
+
 }

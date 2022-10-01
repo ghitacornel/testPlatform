@@ -1,7 +1,7 @@
 package clients.controller;
 
-import clients.controller.model.ClientDto;
-import clients.controller.model.ClientRegisterRequest;
+import clients.controller.model.response.ClientDetailsResponse;
+import clients.controller.model.request.ClientRegisterRequest;
 import clients.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -18,17 +18,17 @@ public class ClientController {
     private final ClientService service;
 
     @GetMapping
-    public List<ClientDto> findAll() {
+    public List<ClientDetailsResponse> findAll() {
         return service.findAll();
     }
 
     @GetMapping(value = "{name}")
-    public ClientDto findByName(@Validated @NotBlank @PathVariable(name = "name") String name) {
+    public ClientDetailsResponse findByName(@Validated @NotBlank @PathVariable(name = "name") String name) {
         return service.findByName(name);
     }
 
     @PostMapping
-    public ClientDto register(@Validated @RequestBody ClientRegisterRequest request) {
+    public ClientDetailsResponse register(@Validated @RequestBody ClientRegisterRequest request) {
         return service.register(request);
     }
 
