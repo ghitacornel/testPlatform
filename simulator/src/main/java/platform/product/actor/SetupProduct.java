@@ -29,7 +29,9 @@ public class SetupProduct extends AbstractActor {
     public void setUp() {
         tearDown();
         Set<ProductSale> items = new HashSet<>();
-        while (items.size() < MINIMUM_INITIAL_PRODUCTS_COUNT) items.add(randomDataCreatorService.createProductSale());
+        while (items.size() < MINIMUM_INITIAL_PRODUCTS_COUNT) {
+            items.add(randomDataCreatorService.createProductSale());
+        }
         for (ProductSale item : items) {
             Product registered = service.sale(item);
             log.info("selling " + registered);

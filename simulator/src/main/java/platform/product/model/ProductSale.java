@@ -9,6 +9,6 @@ public class ProductSale {
     private String color;
     private Double price;
     private Integer quantity;
-    private String companyName;
+    private Integer companyId;
 
 }

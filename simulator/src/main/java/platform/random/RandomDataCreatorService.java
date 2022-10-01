@@ -41,7 +41,7 @@ public class RandomDataCreatorService extends AbstractActor {
         item.setColor(faker.commerce().color());
         item.setPrice(Double.valueOf(faker.commerce().price(1, 100)));
         item.setQuantity(random.nextInt(10000) + 100);
-        item.setCompanyName(company.getName());
+        item.setCompanyId(company.getId());
         return item;
     }
 
