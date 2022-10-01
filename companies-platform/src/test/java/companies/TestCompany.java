@@ -22,8 +22,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
 
         // expect nothing registered
         {
-            mvc.perform(get(ROOT + "/all")
-                            .contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get(ROOT).contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                     .andExpect(content().json("[]"));
@@ -32,17 +31,14 @@ public class TestCompany extends AbstractTestSpringBootContext {
         // try to register
         {
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(post(ROOT).contentType(MediaType.APPLICATION_JSON).content(content))
                     .andExpect(status().isOk())
                     .andExpect(content().json(objectMapper.writeValueAsString(request)));
         }
 
         // expect 1 model registered
         {
-            mvc.perform(get(ROOT + "/all")
-                            .contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get(ROOT).contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                     .andExpect(content().json("[" + objectMapper.writeValueAsString(request) + "]"));
@@ -57,8 +53,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
 
         // expect nothing registered
         {
-            mvc.perform(get(ROOT + "/all")
-                            .contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get(ROOT).contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                     .andExpect(content().json("[]"));
@@ -75,9 +70,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
             request.setIndustry("industry");
             request.setUrl("url");
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(post(ROOT).contentType(MediaType.APPLICATION_JSON).content(content))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string("{\"name\":\"must not be blank\"}"));
         }
@@ -87,9 +80,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
             request.setIndustry(null);
             request.setUrl("url");
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(post(ROOT).contentType(MediaType.APPLICATION_JSON).content(content))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string("{\"industry\":\"must not be blank\"}"));
         }
