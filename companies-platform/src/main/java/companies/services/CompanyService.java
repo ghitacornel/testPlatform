@@ -1,10 +1,10 @@
 package companies.services;
 
-import companies.services.mappers.CompanyMapper;
 import companies.controllers.models.CompanyDto;
 import companies.controllers.models.CompanyRegisterRequest;
 import companies.repositories.CompanyRepository;
 import companies.repositories.entities.Company;
+import companies.services.mappers.CompanyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +47,8 @@ public class CompanyService {
     }
 
     public void unregister(String name) {
-        repository.findByName(name).ifPresent(repository::delete);
+        Company company = repository.findByName(name).orElseThrow(() -> new EntityNotFoundException("Company with name " + name + " not found"));
+        repository.delete(company);
     }
 
 }

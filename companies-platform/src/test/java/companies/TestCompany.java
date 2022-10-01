@@ -4,8 +4,7 @@ import companies.controllers.models.CompanyRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,9 +50,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
 
         // try to unregister
         {
-            mvc.perform(post(ROOT + "/unregister")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(request.getName()))
+            mvc.perform(delete(ROOT + "/{name}", request.getName()))
                     .andExpect(status().isOk())
                     .andExpect(content().string(""));
         }
@@ -103,18 +100,12 @@ public class TestCompany extends AbstractTestSpringBootContext {
     @Test
     public void testUnregisterBadData() throws Exception {
         {
-            String content = "xxx";
-            mvc.perform(post(ROOT + "/unregister")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(content().string("company name not found"));
+            mvc.perform(delete(ROOT + "/{name}", "not existing name"))
+                    .andExpect(status().isNotFound())
+                    .andExpect(content().string("Company with name not existing name not found"));
         }
         {
-            String content = "  ";
-            mvc.perform(post(ROOT + "/unregister")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(delete(ROOT + "/{name}", "     "))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string("{\"unregister.name\":\"must not be blank\"}"));
         }
