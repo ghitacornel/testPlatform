@@ -22,7 +22,7 @@ public class PlayClient extends AbstractActor {
     @Scheduled(fixedRate = 1000, initialDelay = 2000)
     public void register() {
         Client client = randomDataCreatorService.createClient();
-        clientService.register(client);
+        client = clientService.register(client);
         log.info("registered client " + client);
     }
 

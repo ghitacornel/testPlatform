@@ -22,7 +22,7 @@ public class PlayCompany extends AbstractActor {
     @Scheduled(fixedRate = 1000, initialDelay = 2000)
     public void register() {
         Company company = randomDataCreatorService.createCompany();
-        companyService.register(company);
+        company = companyService.register(company);
         log.info("registered company " + company);
     }
 
