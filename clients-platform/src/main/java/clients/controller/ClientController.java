@@ -1,7 +1,7 @@
 package clients.controller;
 
-import clients.controller.model.response.ClientDetailsResponse;
 import clients.controller.model.request.ClientRegisterRequest;
+import clients.controller.model.response.ClientDetailsResponse;
 import clients.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -22,9 +22,9 @@ public class ClientController {
         return service.findAll();
     }
 
-    @GetMapping(value = "{name}")
-    public ClientDetailsResponse findByName(@Validated @NotBlank @PathVariable(name = "name") String name) {
-        return service.findByName(name);
+    @GetMapping(value = "{id}")
+    public ClientDetailsResponse findById(@Validated @NotBlank @PathVariable(name = "id") Integer id) {
+        return service.findById(id);
     }
 
     @PostMapping
@@ -32,9 +32,9 @@ public class ClientController {
         return service.register(request);
     }
 
-    @DeleteMapping(value = "{name}")
-    public void unregister(@Validated @NotBlank @PathVariable(name = "name") String name) {
-        service.unregister(name);
+    @DeleteMapping(value = "{id}")
+    public void deleteById(@Validated @NotBlank @PathVariable(name = "id") Integer id) {
+        service.deleteById(id);
     }
 
 }

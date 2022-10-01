@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,24 +27,21 @@ public class CompanyService {
                 .collect(Collectors.toList());
     }
 
-    public CompanyDetailsResponse findByName(String name) {
-        return repository.findByName(name)
+    public CompanyDetailsResponse findById(Integer id) {
+        return repository.findById(id)
                 .map(mapper::map)
-                .orElseThrow(() -> new EntityNotFoundException("Company with name " + name + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Company with id " + id + " not found"));
     }
 
     public CompanyDetailsResponse register(CompanyRegisterRequest request) {
-        if (repository.findByName(request.getName()).isPresent()) {
-            throw new ValidationException("company name taken");
-        }
         Company company = mapper.map(request);
         repository.save(company);
         return mapper.map(company);
     }
 
-    public void unregister(String name) {
-        Company company = repository.findByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("Company with name " + name + " not found"));
+    public void deleteById(Integer id) {
+        Company company = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Company with id " + id + " not found"));
         repository.delete(company);
     }
 

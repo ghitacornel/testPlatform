@@ -1,7 +1,7 @@
 package companies.controller;
 
-import companies.controller.model.response.CompanyDetailsResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
+import companies.controller.model.response.CompanyDetailsResponse;
 import companies.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -22,9 +22,9 @@ public class CompanyController {
         return service.findAll();
     }
 
-    @GetMapping(value = "{name}")
-    public CompanyDetailsResponse findByName(@PathVariable(name = "name") String name) {
-        return service.findByName(name);
+    @GetMapping(value = "{id}")
+    public CompanyDetailsResponse findById(@PathVariable(name = "id") Integer id) {
+        return service.findById(id);
     }
 
     @PostMapping
@@ -32,9 +32,9 @@ public class CompanyController {
         return service.register(json);
     }
 
-    @DeleteMapping(value = "{name}")
-    public void unregister(@Validated @NotBlank @PathVariable(name = "name") String name) {
-        service.unregister(name);
+    @DeleteMapping(value = "{id}")
+    public void deleteById(@Validated @NotBlank @PathVariable(name = "id") Integer id) {
+        service.deleteById(id);
     }
 
 }
