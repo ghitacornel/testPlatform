@@ -17,13 +17,14 @@ import java.util.Set;
 @Slf4j
 public class SetupCompany extends AbstractActor {
 
+    private static final int INITIAL_COMPANY_NUMBER = 50;
     private final CompanyService service;
 
     @PostConstruct
     public void setUp() {
         tearDown();
         Set<Company> items = new HashSet<>();
-        while (items.size() < 50) items.add(createNew());
+        while (items.size() < INITIAL_COMPANY_NUMBER) items.add(createNew());
         for (Company item : items) {
             Company registered = service.register(item);
             log.info("registered " + registered);
