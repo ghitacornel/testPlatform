@@ -69,10 +69,9 @@ public class ProductService {
         }
 
         CreateOrderRequest request = new CreateOrderRequest();
-        request.setProductId(product.getId());
-        request.setProductPrice(product.getPrice());
+        request.setProductId(buyRequest.getProductId());
+        request.setClientId(buyRequest.getClientId());
         request.setProductQuantity(buyRequest.getQuantity());
-        request.setUserName(buyRequest.getClientId() + " TODO");
         orderClient.createOrder(request);
 
         product.setQuantity(product.getQuantity() - buyRequest.getQuantity());
