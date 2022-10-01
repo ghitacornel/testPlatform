@@ -1,9 +1,11 @@
 package orders.clients.products;
 
+import commons.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
 import orders.clients.RESTClient;
-import orders.clients.company.CompanyDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -16,6 +18,7 @@ public class ProductClient {
                 .get()
                 .uri("/product/" + id)
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new BusinessException("Product not found for id " + id)))
                 .bodyToMono(ProductDto.class)
                 .block();
     }
