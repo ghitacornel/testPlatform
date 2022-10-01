@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class CompanyController {
     }
 
     @GetMapping(value = "{id}")
-    public CompanyDetailsResponse findById(@PathVariable(name = "id") Integer id) {
+    public CompanyDetailsResponse findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
@@ -33,7 +34,7 @@ public class CompanyController {
     }
 
     @DeleteMapping(value = "{id}")
-    public void deleteById(@Validated @NotBlank @PathVariable(name = "id") Integer id) {
+    public void deleteById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);
     }
 

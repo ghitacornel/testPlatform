@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -23,7 +23,7 @@ public class ClientController {
     }
 
     @GetMapping(value = "{id}")
-    public ClientDetailsResponse findById(@Validated @NotBlank @PathVariable(name = "id") Integer id) {
+    public ClientDetailsResponse findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
@@ -33,7 +33,7 @@ public class ClientController {
     }
 
     @DeleteMapping(value = "{id}")
-    public void deleteById(@Validated @NotBlank @PathVariable(name = "id") Integer id) {
+    public void deleteById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);
     }
 
