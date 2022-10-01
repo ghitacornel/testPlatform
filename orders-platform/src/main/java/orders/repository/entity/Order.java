@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Positive;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@Table(name = "T_ORDER")
 public class Order extends Identifiable {
 
     @NotNull
