@@ -10,9 +10,9 @@ import products.clients.company.CompanyDto;
 import products.clients.order.CreateOrderRequest;
 import products.clients.order.OrderClient;
 import products.service.mapper.ProductMapper;
-import products.controller.model.ProductBuyRequest;
-import products.controller.model.ProductDto;
-import products.controller.model.ProductSaleRequest;
+import products.controller.model.request.ProductBuyRequest;
+import products.controller.model.response.ProductDetailsResponse;
+import products.controller.model.request.ProductSaleRequest;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
 
@@ -32,7 +32,7 @@ public class ProductService {
     private final OrderClient orderClient;
     private final ProductMapper productMapper;
 
-    public List<ProductDto> findAll() {
+    public List<ProductDetailsResponse> findAll() {
         return repository.findAll().stream()
                 .map(productMapper::map)
                 .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class ProductService {
         return repository.count();
     }
 
-    public ProductDto sale(ProductSaleRequest saleRequest) {
+    public ProductDetailsResponse sale(ProductSaleRequest saleRequest) {
         CompanyDto company = companyClient.findByName(saleRequest.getCompanyName());
         Product product = new Product();
         product.setName(saleRequest.getName());
@@ -67,7 +67,7 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("product with id " + id + " not found"));
     }
 
-    public ProductDto buy(ProductBuyRequest buyRequest) {
+    public ProductDetailsResponse buy(ProductBuyRequest buyRequest) {
         Product product = lock(buyRequest.getProductId());
         if (product.getQuantity() < buyRequest.getQuantity())
             throw new BusinessException("Cannot buy more that it exists, want to buy " + buyRequest.getQuantity() + " from remaining " + product.getQuantity());
@@ -90,7 +90,7 @@ public class ProductService {
         return productMapper.map(product);
     }
 
-    public ProductDto findById(Integer id) {
+    public ProductDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(productMapper::map)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));

@@ -3,9 +3,9 @@ package products.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import products.controller.model.ProductBuyRequest;
-import products.controller.model.ProductDto;
-import products.controller.model.ProductSaleRequest;
+import products.controller.model.request.ProductBuyRequest;
+import products.controller.model.response.ProductDetailsResponse;
+import products.controller.model.request.ProductSaleRequest;
 import products.service.ProductService;
 
 import javax.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping
-    public List<ProductDto> findAll() {
+    public List<ProductDetailsResponse> findAll() {
         return service.findAll();
     }
 
@@ -29,17 +29,17 @@ public class ProductController {
     }
 
     @GetMapping(value = "{id}")
-    public ProductDto findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public ProductDetailsResponse findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
     @PostMapping(value = "/sale")
-    public ProductDto sale(@Validated @RequestBody ProductSaleRequest json) {
+    public ProductDetailsResponse sale(@Validated @RequestBody ProductSaleRequest json) {
         return service.sale(json);
     }
 
     @PostMapping(value = "/buy")
-    public ProductDto buy(@Validated @RequestBody ProductBuyRequest json) {
+    public ProductDetailsResponse buy(@Validated @RequestBody ProductBuyRequest json) {
         return service.buy(json);
     }
 

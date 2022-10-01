@@ -1,12 +1,12 @@
 package products.service.mapper;
 
 import org.mapstruct.Mapper;
-import products.controller.model.ProductDto;
+import products.controller.model.response.ProductDetailsResponse;
 import products.repository.entity.Product;
 
 @Mapper
 public interface ProductMapper {
 
-    ProductDto map(Product model);
+    ProductDetailsResponse map(Product model);
 
 }
