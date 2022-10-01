@@ -1,8 +1,8 @@
-package clients.controllers;
+package clients.controller;
 
-import clients.controllers.models.ClientDto;
-import clients.controllers.models.ClientRegisterRequest;
-import clients.services.ClientService;
+import clients.controller.model.ClientDto;
+import clients.controller.model.ClientRegisterRequest;
+import clients.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ClientController {
     private final ClientService service;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<ClientDto> findAll() {
         return service.findAll();
     }
@@ -27,7 +27,7 @@ public class ClientController {
         return service.findByName(name);
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping
     public ClientDto register(@Validated @RequestBody ClientRegisterRequest request) {
         return service.register(request);
     }

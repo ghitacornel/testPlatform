@@ -1,14 +1,13 @@
-package clients.services;
+package clients.service;
 
-import clients.services.mappers.ClientMapper;
-import clients.controllers.models.ClientDto;
-import clients.repositories.entities.Client;
-import clients.controllers.models.ClientRegisterRequest;
-import clients.repositories.ClientRepository;
+import clients.controller.model.ClientDto;
+import clients.controller.model.ClientRegisterRequest;
+import clients.repository.ClientRepository;
+import clients.repository.entity.Client;
+import clients.service.mapper.ClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ValidationException;
@@ -47,7 +46,9 @@ public class ClientService {
     }
 
     public void unregister(String name) {
-        repository.findByName(name).ifPresent(repository::delete);
+        Client client = repository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Client with user name " + name + " not found"));
+        repository.delete(client);
     }
 
 }

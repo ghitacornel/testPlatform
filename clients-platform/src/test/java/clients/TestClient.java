@@ -1,11 +1,10 @@
 package clients;
 
-import clients.controllers.models.ClientRegisterRequest;
+import clients.controller.model.ClientRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,8 +21,7 @@ public class TestClient extends AbstractTestSpringBootContext {
 
         // expect nothing registered
         {
-            mvc.perform(get(ROOT + "/all")
-                            .contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get(ROOT).contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                     .andExpect(content().json("[]"));
@@ -32,17 +30,14 @@ public class TestClient extends AbstractTestSpringBootContext {
         // try to register
         {
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT + "/register")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(post(ROOT).contentType(MediaType.APPLICATION_JSON).content(content))
                     .andExpect(status().isOk())
                     .andExpect(content().json(objectMapper.writeValueAsString(request)));
         }
 
         // expect 1 json registered
         {
-            mvc.perform(get(ROOT + "/all")
-                            .contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get(ROOT).contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                     .andExpect(content().json("[" + objectMapper.writeValueAsString(request) + "]"));
@@ -50,17 +45,14 @@ public class TestClient extends AbstractTestSpringBootContext {
 
         // try to unregister
         {
-            mvc.perform(post(ROOT + "/unregister")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(request.getName()))
+            mvc.perform(delete(ROOT + "/{name}", request.getName()))
                     .andExpect(status().isOk())
                     .andExpect(content().string(""));
         }
 
         // expect nothing registered
         {
-            mvc.perform(get(ROOT + "/all")
-                            .contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get(ROOT).contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                     .andExpect(content().json("[]"));
@@ -76,9 +68,7 @@ public class TestClient extends AbstractTestSpringBootContext {
             request.setName(null);
             request.setCardType("cardType");
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT + "/register")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(post(ROOT).contentType(MediaType.APPLICATION_JSON).content(content))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string("{\"name\":\"must not be blank\"}"));
         }
@@ -87,9 +77,7 @@ public class TestClient extends AbstractTestSpringBootContext {
             request.setName(" ");
             request.setCardType("cardType");
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT + "/register")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(post(ROOT).contentType(MediaType.APPLICATION_JSON).content(content))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string("{\"name\":\"must not be blank\"}"));
         }
@@ -101,17 +89,13 @@ public class TestClient extends AbstractTestSpringBootContext {
     public void testUnregisterBadData() throws Exception {
         {
             String content = "xxx";
-            mvc.perform(post(ROOT + "/unregister")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(content().string("user name not found"));
+            mvc.perform(delete(ROOT + "/{name}", content))
+                    .andExpect(status().isNotFound())
+                    .andExpect(content().string("Client with user name xxx not found"));
         }
         {
             String content = "  ";
-            mvc.perform(post(ROOT + "/unregister")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(content))
+            mvc.perform(delete(ROOT + "/{name}", content))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string("{\"unregister.name\":\"must not be blank\"}"));
         }

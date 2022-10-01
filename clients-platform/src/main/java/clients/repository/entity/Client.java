@@ -1,15 +1,13 @@
-package clients.repositories.entities;
+package clients.repository.entity;
 
 import commons.model.Identifiable;
 import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "T_CLIENT")
 @ToString(callSuper = true)
 @Getter
 @Setter

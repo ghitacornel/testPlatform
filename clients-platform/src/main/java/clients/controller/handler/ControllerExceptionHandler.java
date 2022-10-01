@@ -1,4 +1,4 @@
-package clients.controllers.handlers;
+package clients.controller.handler;
 
 import commons.exceptions.CommonControllerExceptionHandler;
 import lombok.extern.slf4j.Slf4j;

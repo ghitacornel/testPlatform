@@ -44,7 +44,8 @@ public class CompanyService {
     }
 
     public void unregister(String name) {
-        Company company = repository.findByName(name).orElseThrow(() -> new EntityNotFoundException("Company with name " + name + " not found"));
+        Company company = repository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Company with name " + name + " not found"));
         repository.delete(company);
     }
 

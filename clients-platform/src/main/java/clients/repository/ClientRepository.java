@@ -1,6 +1,6 @@
-package clients.repositories;
+package clients.repository;
 
-import clients.repositories.entities.Client;
+import clients.repository.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

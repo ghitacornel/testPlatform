@@ -1,7 +1,7 @@
-package clients.services.mappers;
+package clients.service.mapper;
 
-import clients.controllers.models.ClientDto;
-import clients.repositories.entities.Client;
+import clients.controller.model.ClientDto;
+import clients.repository.entity.Client;
 import org.springframework.stereotype.Component;
 
 @Component
