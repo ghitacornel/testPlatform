@@ -6,16 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.clients.company.CompanyClient;
-import products.clients.company.CompanyDto;
+import products.clients.company.CompanyDetailsDto;
 import products.clients.order.CreateOrderRequest;
 import products.clients.order.OrderClient;
-import products.service.mapper.ProductMapper;
 import products.controller.model.request.ProductBuyRequest;
-import products.controller.model.response.ProductDetailsResponse;
 import products.controller.model.request.ProductSaleRequest;
+import products.controller.model.response.ProductDetailsResponse;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
-
+import products.service.mapper.ProductMapper;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -43,7 +42,7 @@ public class ProductService {
     }
 
     public ProductDetailsResponse sale(ProductSaleRequest saleRequest) {
-        CompanyDto company = companyClient.findByName(saleRequest.getCompanyName());
+        CompanyDetailsDto company = companyClient.findById(saleRequest.getCompanyId());
         Product product = new Product();
         product.setName(saleRequest.getName());
         product.setColor(saleRequest.getColor());
@@ -76,7 +75,7 @@ public class ProductService {
         request.setProductId(product.getId());
         request.setProductPrice(product.getPrice());
         request.setProductQuantity(buyRequest.getQuantity());
-        request.setUserName(buyRequest.getUserName());
+        request.setUserName(buyRequest.getClientId() + " TODO");
         orderClient.createOrder(request);
 
         product.setQuantity(product.getQuantity() - buyRequest.getQuantity());

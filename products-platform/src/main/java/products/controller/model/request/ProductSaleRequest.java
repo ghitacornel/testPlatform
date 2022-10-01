@@ -23,7 +23,7 @@ public class ProductSaleRequest {
     @Min(100)
     private Integer quantity;
 
-    @NotBlank
-    private String companyName;
+    @NotNull
+    private Integer companyId;
 
 }

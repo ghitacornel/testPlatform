@@ -3,7 +3,6 @@ package products.clients.order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import products.clients.RESTClient;
-import products.clients.company.CompanyDto;
 
 @Component
 @RequiredArgsConstructor
