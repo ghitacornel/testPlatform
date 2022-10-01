@@ -21,7 +21,7 @@ public class SetupClient extends AbstractActor {
 
     @PostConstruct
     public void setUp() {
-        while (clientService.findAll().size() < MAX_CLIENTS_NUMBER) {
+        while (clientService.count() < MAX_CLIENTS_NUMBER) {
             try {
                 Client client = randomDataCreatorService.createClient();
                 client = clientService.register(client);

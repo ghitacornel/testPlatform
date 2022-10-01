@@ -24,6 +24,15 @@ public class ClientService {
                 .block();
     }
 
+    public Long count() {
+        return restClient.clients()
+                .get()
+                .uri(CLIENT_URL + "/count")
+                .retrieve()
+                .bodyToMono(Long.class)
+                .block();
+    }
+
     public Client register(Client item) {
         return restClient.clients()
                 .post()

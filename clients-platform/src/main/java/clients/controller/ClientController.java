@@ -22,6 +22,11 @@ public class ClientController {
         return service.findAll();
     }
 
+    @GetMapping("count")
+    public long count() {
+        return service.count();
+    }
+
     @GetMapping(value = "{id}")
     public ClientDetailsResponse findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);

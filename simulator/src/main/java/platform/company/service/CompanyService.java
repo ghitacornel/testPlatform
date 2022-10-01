@@ -24,6 +24,15 @@ public class CompanyService {
                 .block();
     }
 
+    public Long count() {
+        return restClient.clients()
+                .get()
+                .uri(COMPANY_URL + "/count")
+                .retrieve()
+                .bodyToMono(Long.class)
+                .block();
+    }
+
     public Company register(Company item) {
         return restClient.companies()
                 .post()

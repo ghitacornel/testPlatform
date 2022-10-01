@@ -45,4 +45,7 @@ public class CompanyService {
         repository.delete(company);
     }
 
+    public long count() {
+        return repository.count();
+    }
 }

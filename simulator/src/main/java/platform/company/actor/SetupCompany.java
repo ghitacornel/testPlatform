@@ -21,7 +21,7 @@ public class SetupCompany extends AbstractActor {
 
     @PostConstruct
     public void setUp() {
-        while (companyService.findAll().size() < MAX_COMPANY_NUMBERS) {
+        while (companyService.count() < MAX_COMPANY_NUMBERS) {
             try {
                 Company company = randomDataCreatorService.createCompany();
                 company = companyService.register(company);
