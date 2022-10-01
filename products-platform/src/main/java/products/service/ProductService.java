@@ -64,8 +64,9 @@ public class ProductService {
 
     public ProductDetailsResponse buy(ProductBuyRequest buyRequest) {
         Product product = lock(buyRequest.getProductId());
-        if (product.getQuantity() < buyRequest.getQuantity())
+        if (product.getQuantity() < buyRequest.getQuantity()) {
             throw new BusinessException("Cannot buy more that it exists, want to buy " + buyRequest.getQuantity() + " from remaining " + product.getQuantity());
+        }
 
         CreateOrderRequest request = new CreateOrderRequest();
         request.setProductId(product.getId());
@@ -78,8 +79,7 @@ public class ProductService {
 
         // no more products => delete
         if (product.getQuantity() == 0) {
-            log.info("no more items for sale for " + product);
-            repository.delete(product);
+            cancelSale(product.getId());
         }
 
         return productMapper.map(product);
