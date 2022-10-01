@@ -20,7 +20,7 @@ public class ProductService {
     public List<Product> findAll() {
         return restClient.products()
                 .get()
-                .uri("/product/all")
+                .uri("/product")
                 .retrieve()
                 .bodyToFlux(Product.class)
                 .collectList()
@@ -30,7 +30,7 @@ public class ProductService {
     public Long countAll() {
         return restClient.products()
                 .get()
-                .uri("product/all/count")
+                .uri("product/count")
                 .retrieve()
                 .bodyToMono(Long.class)
                 .block();
