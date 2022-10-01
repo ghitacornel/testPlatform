@@ -11,9 +11,6 @@ import platform.product.service.ProductService;
 import platform.random.RandomDataCreatorService;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -22,27 +19,17 @@ import java.util.Set;
 public class SetupProduct extends AbstractActor {
 
     private static final int MINIMUM_INITIAL_PRODUCTS_COUNT = 50;
-    private final ProductService service;
+    private final ProductService productService;
     private final RandomDataCreatorService randomDataCreatorService;
 
     @PostConstruct
     public void setUp() {
-        tearDown();
-        Set<ProductSale> items = new HashSet<>();
-        while (items.size() < MINIMUM_INITIAL_PRODUCTS_COUNT) {
-            items.add(randomDataCreatorService.createProductSale());
-        }
-        for (ProductSale item : items) {
-            Product registered = service.sale(item);
-            log.info("selling " + registered);
+
+        while (productService.countAll() < MINIMUM_INITIAL_PRODUCTS_COUNT) {
+            ProductSale productSale = randomDataCreatorService.createProductSale();
+            Product product = productService.sale(productSale);
+            log.info("selling " + product);
         }
     }
 
-    @PreDestroy
-    public void tearDown() {
-        for (Product item : service.findAll()) {
-            log.info("cancelling " + item);
-            service.cancel(item);
-        }
-    }
 }
