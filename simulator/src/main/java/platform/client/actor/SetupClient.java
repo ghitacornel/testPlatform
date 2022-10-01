@@ -9,9 +9,6 @@ import platform.common.AbstractActor;
 import platform.random.RandomDataCreatorService;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -24,20 +21,15 @@ public class SetupClient extends AbstractActor {
 
     @PostConstruct
     public void setUp() {
-        tearDown();
-        Set<Client> items = new HashSet<>();
-        while (items.size() < MAX_CLIENTS_NUMBER) items.add(randomDataCreatorService.createClient());
-        for (Client item : items) {
-            Client registered = clientService.register(item);
-            log.info("registered client " + registered);
+        while (clientService.findAll().size() < MAX_CLIENTS_NUMBER) {
+            try {
+                Client client = randomDataCreatorService.createClient();
+                client = clientService.register(client);
+                log.info("registered client " + client);
+            } catch (Exception e) {
+                log.error("fail creating a client, trying again", e);
+            }
         }
     }
 
-    @PreDestroy
-    public void tearDown() {
-        for (Client item : clientService.findAll()) {
-            clientService.unregister(item);
-            log.info("unregistered client" + item);
-        }
-    }
 }

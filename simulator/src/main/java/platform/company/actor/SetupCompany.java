@@ -9,9 +9,6 @@ import platform.company.service.CompanyService;
 import platform.random.RandomDataCreatorService;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -19,25 +16,20 @@ import java.util.Set;
 public class SetupCompany extends AbstractActor {
 
     private static final int MAX_COMPANY_NUMBERS = 50;
-    private final CompanyService service;
+    private final CompanyService companyService;
     private final RandomDataCreatorService randomDataCreatorService;
 
     @PostConstruct
     public void setUp() {
-        tearDown();
-        Set<Company> items = new HashSet<>();
-        while (items.size() < MAX_COMPANY_NUMBERS) items.add(randomDataCreatorService.createCompany());
-        for (Company item : items) {
-            Company registered = service.register(item);
-            log.info("registered company " + registered);
+        while (companyService.findAll().size() < MAX_COMPANY_NUMBERS) {
+            try {
+                Company company = randomDataCreatorService.createCompany();
+                company = companyService.register(company);
+                log.info("registered company " + company);
+            } catch (Exception e) {
+                log.error("fail creating a company, trying again", e);
+            }
         }
     }
 
-    @PreDestroy
-    public void tearDown() {
-        for (Company item : service.findAll()) {
-            service.unregister(item);
-            log.info("unregistered company " + item);
-        }
-    }
 }
