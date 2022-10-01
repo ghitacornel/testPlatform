@@ -16,13 +16,6 @@ public class CreateOrderRequest {
 
     @NotNull
     @Positive
-    private Double productPrice;
-
-    @NotNull
-    @Positive
     private Integer productQuantity;
-
-    @NotNull
-    private Integer companyId;
 
 }

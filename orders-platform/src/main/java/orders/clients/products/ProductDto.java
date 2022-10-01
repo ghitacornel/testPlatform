@@ -10,5 +10,6 @@ public class ProductDto {
     private String color;
     private Double price;
     private Integer quantity;
+    private Integer companyId;
 
 }

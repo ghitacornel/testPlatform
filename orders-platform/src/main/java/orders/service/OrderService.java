@@ -44,8 +44,8 @@ public class OrderService {
 
     public OrderDetailsResponse create(CreateOrderRequest request) {
         ClientDto client = clientClient.findById(request.getClientId());
-        CompanyDto company = companyClient.findById(request.getCompanyId());
         ProductDto product = productClient.findById(request.getProductId());
+        CompanyDto company = companyClient.findById(product.getCompanyId());
         Order order = new Order();
         order.setUserId(client.getId());
         order.setUserName(client.getName());
