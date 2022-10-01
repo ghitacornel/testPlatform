@@ -3,7 +3,7 @@ package products.clients.order;
 import lombok.Data;
 
 @Data
-public class OrderDto {
+public class CreateOrderResponse {
 
     private Integer id;
     private Integer userId;

@@ -10,13 +10,13 @@ public class OrderClient {
 
     private final RESTClient restClient;
 
-    public OrderDto createOrder(CreateOrderRequest request) {
+    public CreateOrderResponse createOrder(CreateOrderRequest request) {
         return restClient.orders()
                 .post()
                 .uri("/order" )
                 .bodyValue(request)
                 .retrieve()
-                .bodyToMono(OrderDto.class)
+                .bodyToMono(CreateOrderResponse.class)
                 .block();
     }
 }

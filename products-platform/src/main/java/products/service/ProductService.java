@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import products.clients.company.CompanyClient;
 import products.clients.order.CreateOrderRequest;
 import products.clients.order.OrderClient;
+import products.clients.order.CreateOrderResponse;
 import products.controller.model.request.ProductBuyRequest;
 import products.controller.model.request.ProductSaleRequest;
 import products.controller.model.response.ProductDetailsResponse;
@@ -68,11 +69,12 @@ public class ProductService {
             throw new BusinessException("Cannot buy more that it exists, want to buy " + buyRequest.getQuantity() + " from remaining " + product.getQuantity());
         }
 
-        CreateOrderRequest request = new CreateOrderRequest();
-        request.setProductId(buyRequest.getProductId());
-        request.setClientId(buyRequest.getClientId());
-        request.setProductQuantity(buyRequest.getQuantity());
-        orderClient.createOrder(request);
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest();
+        createOrderRequest.setProductId(buyRequest.getProductId());
+        createOrderRequest.setClientId(buyRequest.getClientId());
+        createOrderRequest.setProductQuantity(buyRequest.getQuantity());
+        CreateOrderResponse order = orderClient.createOrder(createOrderRequest);
+        log.info("new order " + order);
 
         product.setQuantity(product.getQuantity() - buyRequest.getQuantity());
 
