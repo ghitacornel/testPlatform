@@ -1,6 +1,6 @@
 package companies;
 
-import companies.controller.model.CompanyRegisterRequest;
+import companies.controller.model.request.CompanyRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 

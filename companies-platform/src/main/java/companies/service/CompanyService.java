@@ -1,7 +1,7 @@
 package companies.service;
 
-import companies.controller.model.CompanyDto;
-import companies.controller.model.CompanyRegisterRequest;
+import companies.controller.model.response.CompanyDetailsResponse;
+import companies.controller.model.request.CompanyRegisterRequest;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
 import companies.service.mapper.CompanyMapper;
@@ -22,19 +22,19 @@ public class CompanyService {
     private final CompanyRepository repository;
     private final CompanyMapper mapper;
 
-    public List<CompanyDto> findAll() {
+    public List<CompanyDetailsResponse> findAll() {
         return repository.findAll().stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());
     }
 
-    public CompanyDto findByName(String name) {
+    public CompanyDetailsResponse findByName(String name) {
         return repository.findByName(name)
                 .map(mapper::map)
                 .orElseThrow(() -> new EntityNotFoundException("Company with name " + name + " not found"));
     }
 
-    public CompanyDto register(CompanyRegisterRequest request) {
+    public CompanyDetailsResponse register(CompanyRegisterRequest request) {
         if (repository.findByName(request.getName()).isPresent()) {
             throw new ValidationException("company name taken");
         }

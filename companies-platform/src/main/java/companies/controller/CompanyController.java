@@ -1,7 +1,7 @@
 package companies.controller;
 
-import companies.controller.model.CompanyDto;
-import companies.controller.model.CompanyRegisterRequest;
+import companies.controller.model.response.CompanyDetailsResponse;
+import companies.controller.model.request.CompanyRegisterRequest;
 import companies.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -18,17 +18,17 @@ public class CompanyController {
     private final CompanyService service;
 
     @GetMapping
-    public List<CompanyDto> findAll() {
+    public List<CompanyDetailsResponse> findAll() {
         return service.findAll();
     }
 
     @GetMapping(value = "{name}")
-    public CompanyDto findByName(@PathVariable(name = "name") String name) {
+    public CompanyDetailsResponse findByName(@PathVariable(name = "name") String name) {
         return service.findByName(name);
     }
 
     @PostMapping
-    public CompanyDto register(@Validated @RequestBody CompanyRegisterRequest json) {
+    public CompanyDetailsResponse register(@Validated @RequestBody CompanyRegisterRequest json) {
         return service.register(json);
     }
 

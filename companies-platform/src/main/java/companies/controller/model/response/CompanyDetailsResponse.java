@@ -1,4 +1,4 @@
-package companies.controller.model;
+package companies.controller.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyDto {
+public class CompanyDetailsResponse {
 
     private Integer id;
     private String name;

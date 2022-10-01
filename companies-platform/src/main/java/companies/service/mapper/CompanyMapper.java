@@ -1,11 +1,11 @@
 package companies.service.mapper;
 
-import companies.controller.model.CompanyDto;
+import companies.controller.model.response.CompanyDetailsResponse;
 import companies.repository.entity.Company;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface CompanyMapper {
-    CompanyDto map(Company model);
+    CompanyDetailsResponse map(Company model);
 
 }
