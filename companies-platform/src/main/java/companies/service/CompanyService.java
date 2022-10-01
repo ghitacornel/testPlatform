@@ -1,7 +1,7 @@
 package companies.service;
 
-import companies.controller.model.response.CompanyDetailsResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
+import companies.controller.model.response.CompanyDetailsResponse;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
 import companies.service.mapper.CompanyMapper;
@@ -38,10 +38,7 @@ public class CompanyService {
         if (repository.findByName(request.getName()).isPresent()) {
             throw new ValidationException("company name taken");
         }
-        Company company = new Company();
-        company.setName(request.getName());
-        company.setIndustry(request.getIndustry());
-        company.setUrl(request.getUrl());
+        Company company = mapper.map(request);
         repository.save(company);
         return mapper.map(company);
     }
