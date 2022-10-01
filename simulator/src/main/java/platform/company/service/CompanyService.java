@@ -37,7 +37,7 @@ public class CompanyService {
     public void unregister(Company item) {
         restClient.companies()
                 .delete()
-                .uri(COMPANY_URL + "/" + item.getName())
+                .uri(COMPANY_URL + "/" + item.getId())
                 .retrieve()
                 .toBodilessEntity()
                 .block();

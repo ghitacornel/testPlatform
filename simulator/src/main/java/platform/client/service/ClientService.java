@@ -37,7 +37,7 @@ public class ClientService {
     public void unregister(Client item) {
         restClient.clients()
                 .delete()
-                .uri(CLIENT_URL + "/" + item.getName())
+                .uri(CLIENT_URL + "/" + item.getId())
                 .retrieve()
                 .toBodilessEntity()
                 .block();
