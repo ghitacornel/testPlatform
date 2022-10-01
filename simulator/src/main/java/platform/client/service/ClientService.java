@@ -11,12 +11,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientService {
 
+    private static final String CLIENT_URL = "/client";
     private final RESTClient restClient;
 
     public List<Client> findAll() {
         return restClient.clients()
                 .get()
-                .uri("/client/all")
+                .uri(CLIENT_URL)
                 .retrieve()
                 .bodyToFlux(Client.class)
                 .collectList()
@@ -26,7 +27,7 @@ public class ClientService {
     public Client register(Client item) {
         return restClient.clients()
                 .post()
-                .uri("/client/register")
+                .uri(CLIENT_URL)
                 .bodyValue(item)
                 .retrieve()
                 .bodyToMono(Client.class)
@@ -36,7 +37,7 @@ public class ClientService {
     public void unregister(Client item) {
         restClient.clients()
                 .delete()
-                .uri("/client/" + item.getName())
+                .uri(CLIENT_URL + "/" + item.getName())
                 .retrieve()
                 .toBodilessEntity()
                 .block();
