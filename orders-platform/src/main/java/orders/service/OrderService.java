@@ -1,4 +1,4 @@
-package orders.services;
+package orders.service;
 
 import lombok.RequiredArgsConstructor;
 import orders.clients.client.ClientClient;
@@ -7,11 +7,11 @@ import orders.clients.company.CompanyClient;
 import orders.clients.company.CompanyDto;
 import orders.clients.products.ProductClient;
 import orders.clients.products.ProductDto;
-import orders.controllers.models.CreateOrderRequest;
-import orders.controllers.models.OrderDto;
-import orders.repositories.entities.Order;
-import orders.repositories.OrderRepository;
-import orders.services.mappers.OrderMapper;
+import orders.controller.model.request.CreateOrderRequest;
+import orders.controller.model.response.OrderDetailsResponse;
+import orders.repository.entity.Order;
+import orders.repository.OrderRepository;
+import orders.service.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,21 +30,21 @@ public class OrderService {
     private final OrderRepository repository;
     private final OrderMapper orderMapper;
 
-    public List<OrderDto> findAll() {
+    public List<OrderDetailsResponse> findAll() {
         return repository.findAll().stream()
                 .map(orderMapper::map)
                 .collect(Collectors.toList());
     }
 
-    public OrderDto findById(Integer id) {
+    public OrderDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(orderMapper::map)
                 .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
     }
 
-    public OrderDto create(CreateOrderRequest request) {
-        ClientDto client = clientClient.findByName(request.getUserName());
-        CompanyDto company = companyClient.findByName(request.getCompanyName());
+    public OrderDetailsResponse create(CreateOrderRequest request) {
+        ClientDto client = clientClient.findById(request.getClientId());
+        CompanyDto company = companyClient.findById(request.getCompanyId());
         ProductDto product = productClient.findById(request.getProductId());
         Order order = new Order();
         order.setUserId(client.getId());

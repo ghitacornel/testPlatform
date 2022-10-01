@@ -10,10 +10,10 @@ public class CompanyClient {
 
     private final RESTClient restClient;
 
-    public CompanyDto findByName(String name) {
+    public CompanyDto findById(Integer id) {
         return restClient.companies()
                 .get()
-                .uri("/company/" + name)
+                .uri("/company/" + id)
                 .retrieve()
                 .bodyToMono(CompanyDto.class)
                 .block();

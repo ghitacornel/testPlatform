@@ -1,15 +1,9 @@
-package orders.controllers.models;
+package orders.controller.model.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class OrderDto {
+public class OrderDetailsResponse {
 
     private Integer id;
     private Integer userId;

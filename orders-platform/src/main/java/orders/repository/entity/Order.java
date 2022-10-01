@@ -1,17 +1,17 @@
-package orders.repositories.entities;
+package orders.repository.entity;
 
 import commons.model.Identifiable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Entity
-@Table(name = "T_ORDER")
 @Getter
 @Setter
 @ToString(callSuper = true)
