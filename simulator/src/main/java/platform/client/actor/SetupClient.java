@@ -17,13 +17,14 @@ import java.util.Set;
 @Slf4j
 public class SetupClient extends AbstractActor {
 
+    private static final int MAX_CLIENTS_NUMBER = 50;
     private final ClientService service;
 
     @PostConstruct
     public void setUp() {
         tearDown();
         Set<Client> items = new HashSet<>();
-        while (items.size() < 50) items.add(createNew());
+        while (items.size() < MAX_CLIENTS_NUMBER) items.add(createNew());
         for (Client item : items) {
             Client registered = service.register(item);
             log.info("registered " + registered);

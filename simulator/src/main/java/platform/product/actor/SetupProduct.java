@@ -15,7 +15,7 @@ import javax.annotation.PreDestroy;
 import java.util.HashSet;
 import java.util.Set;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 @Slf4j
 @DependsOn({"setupCompany"})

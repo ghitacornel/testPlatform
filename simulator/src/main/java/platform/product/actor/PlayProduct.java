@@ -12,7 +12,7 @@ import platform.product.service.ProductService;
 import platform.random.RandomDataCreator;
 import platform.random.RandomDataFetch;
 
-@Service
+//@Service
 @RequiredArgsConstructor
 @Slf4j
 public class PlayProduct extends AbstractActor {
