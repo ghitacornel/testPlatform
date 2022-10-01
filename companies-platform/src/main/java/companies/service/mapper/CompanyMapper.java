@@ -1,7 +1,7 @@
-package companies.services.mappers;
+package companies.service.mapper;
 
-import companies.controllers.models.CompanyDto;
-import companies.repositories.entities.Company;
+import companies.controller.model.CompanyDto;
+import companies.repository.entity.Company;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,8 +1,8 @@
-package companies.controllers;
+package companies.controller;
 
-import companies.controllers.models.CompanyDto;
-import companies.controllers.models.CompanyRegisterRequest;
-import companies.services.CompanyService;
+import companies.controller.model.CompanyDto;
+import companies.controller.model.CompanyRegisterRequest;
+import companies.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ public class CompanyController {
         return service.findByName(name);
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping
     public CompanyDto register(@Validated @RequestBody CompanyRegisterRequest json) {
         return service.register(json);
     }

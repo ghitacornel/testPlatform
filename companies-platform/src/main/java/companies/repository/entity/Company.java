@@ -1,4 +1,4 @@
-package companies.repositories.entities;
+package companies.repository.entity;
 
 import commons.model.Identifiable;
 import lombok.Getter;
@@ -7,11 +7,9 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "T_COMPANY")
 @ToString(callSuper = true)
 @Getter
 @Setter

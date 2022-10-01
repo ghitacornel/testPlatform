@@ -1,4 +1,4 @@
-package companies.controllers.models;
+package companies.controller.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

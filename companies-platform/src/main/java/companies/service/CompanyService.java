@@ -1,10 +1,10 @@
-package companies.services;
+package companies.service;
 
-import companies.controllers.models.CompanyDto;
-import companies.controllers.models.CompanyRegisterRequest;
-import companies.repositories.CompanyRepository;
-import companies.repositories.entities.Company;
-import companies.services.mappers.CompanyMapper;
+import companies.controller.model.CompanyDto;
+import companies.controller.model.CompanyRegisterRequest;
+import companies.repository.CompanyRepository;
+import companies.repository.entity.Company;
+import companies.service.mapper.CompanyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

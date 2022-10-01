@@ -1,6 +1,6 @@
 package companies;
 
-import companies.controllers.models.CompanyRegisterRequest;
+import companies.controller.model.CompanyRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
@@ -32,7 +32,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
         // try to register
         {
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT + "/register")
+            mvc.perform(post(ROOT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(content))
                     .andExpect(status().isOk())
@@ -75,7 +75,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
             request.setIndustry("industry");
             request.setUrl("url");
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT + "/register")
+            mvc.perform(post(ROOT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(content))
                     .andExpect(status().isBadRequest())
@@ -87,7 +87,7 @@ public class TestCompany extends AbstractTestSpringBootContext {
             request.setIndustry(null);
             request.setUrl("url");
             String content = objectMapper.writeValueAsString(request);
-            mvc.perform(post(ROOT + "/register")
+            mvc.perform(post(ROOT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(content))
                     .andExpect(status().isBadRequest())
