@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RandomDataFetch extends AbstractActor {
+public class RandomDataFetchService extends AbstractActor {
 
     private final ProductService productService;
     private final CompanyService companyService;

@@ -3,14 +3,13 @@ package platform.product.actor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 import platform.common.AbstractActor;
 import platform.product.model.Product;
 import platform.product.model.ProductBuy;
 import platform.product.model.ProductSale;
 import platform.product.service.ProductService;
-import platform.random.RandomDataCreator;
-import platform.random.RandomDataFetch;
+import platform.random.RandomDataCreatorService;
+import platform.random.RandomDataFetchService;
 
 //@Service
 @RequiredArgsConstructor
@@ -18,13 +17,13 @@ import platform.random.RandomDataFetch;
 public class PlayProduct extends AbstractActor {
 
     private final ProductService productService;
-    private final RandomDataFetch randomDataFetch;
-    private final RandomDataCreator randomDataCreator;
+    private final RandomDataFetchService randomDataFetchService;
+    private final RandomDataCreatorService randomDataCreatorService;
 
     @Scheduled(fixedRate = 100, initialDelay = 2000)
     public void operateSale() {
         if (productService.countAll() > 200) return;
-        ProductSale productSale = randomDataCreator.createProductSale();
+        ProductSale productSale = randomDataCreatorService.createProductSale();
         if (productSale == null) {
             log.warn("no product to sell");
             return;
@@ -35,7 +34,7 @@ public class PlayProduct extends AbstractActor {
     @Scheduled(fixedRate = 1000, initialDelay = 2000)
     public void operateCancel() {
         if (productService.countAll() <= 50) return;
-        Product product = randomDataFetch.findRandomProduct();
+        Product product = randomDataFetchService.findRandomProduct();
         if (product == null) {
             log.warn("no product to cancel");
             return;
@@ -45,7 +44,7 @@ public class PlayProduct extends AbstractActor {
 
     @Scheduled(fixedRate = 100, initialDelay = 2000)
     public void operateBuy() {
-        ProductBuy productBuy = randomDataCreator.createProductBuy();
+        ProductBuy productBuy = randomDataCreatorService.createProductBuy();
         if (productBuy == null) {
             log.warn("no product to buy");
             return;

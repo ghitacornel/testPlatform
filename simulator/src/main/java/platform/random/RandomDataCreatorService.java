@@ -13,12 +13,27 @@ import platform.product.model.ProductSale;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RandomDataCreator extends AbstractActor {
+public class RandomDataCreatorService extends AbstractActor {
 
-    private final RandomDataFetch randomDataFetch;
+    private final RandomDataFetchService randomDataFetchService;
+
+    public Client createClient() {
+        Client item = new Client();
+        item.setName(faker.name().username());
+        item.setCardType(faker.business().creditCardType());
+        return item;
+    }
+
+    public Company createCompany() {
+        Company item = new Company();
+        item.setName(faker.company().name());
+        item.setIndustry(faker.company().industry());
+        item.setUrl(faker.company().url());
+        return item;
+    }
 
     public ProductSale createProductSale() {
-        Company company = randomDataFetch.findRandomCompany();
+        Company company = randomDataFetchService.findRandomCompany();
         if (company == null) return null;
 
         ProductSale item = new ProductSale();
@@ -31,9 +46,9 @@ public class RandomDataCreator extends AbstractActor {
     }
 
     public ProductBuy createProductBuy() {
-        Client client = randomDataFetch.findRandomClient();
+        Client client = randomDataFetchService.findRandomClient();
         if (client == null) return null;
-        Product product = randomDataFetch.findRandomProduct();
+        Product product = randomDataFetchService.findRandomProduct();
         if (product == null) return null;
 
         ProductBuy item = new ProductBuy();

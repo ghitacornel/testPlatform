@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import platform.common.AbstractActor;
 import platform.company.model.Company;
 import platform.company.service.CompanyService;
+import platform.random.RandomDataCreatorService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -19,24 +20,17 @@ public class SetupCompany extends AbstractActor {
 
     private static final int MAX_COMPANY_NUMBERS = 50;
     private final CompanyService service;
+    private final RandomDataCreatorService randomDataCreatorService;
 
     @PostConstruct
     public void setUp() {
         tearDown();
         Set<Company> items = new HashSet<>();
-        while (items.size() < MAX_COMPANY_NUMBERS) items.add(createNew());
+        while (items.size() < MAX_COMPANY_NUMBERS) items.add(randomDataCreatorService.createCompany());
         for (Company item : items) {
             Company registered = service.register(item);
             log.info("registered " + registered);
         }
-    }
-
-    private Company createNew() {
-        Company item = new Company();
-        item.setName(faker.company().name());
-        item.setIndustry(faker.company().industry());
-        item.setUrl(faker.company().url());
-        return item;
     }
 
     @PreDestroy
