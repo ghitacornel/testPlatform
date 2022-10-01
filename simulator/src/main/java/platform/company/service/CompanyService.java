@@ -25,7 +25,7 @@ public class CompanyService {
     }
 
     public Long count() {
-        return restClient.clients()
+        return restClient.companies()
                 .get()
                 .uri(COMPANY_URL + "/count")
                 .retrieve()
