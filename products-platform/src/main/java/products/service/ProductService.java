@@ -51,7 +51,7 @@ public class ProductService {
         return productMapper.map(product);
     }
 
-    public void cancelSale(Integer id) {
+    public void cancel(Integer id) {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         repository.delete(product);
@@ -76,7 +76,7 @@ public class ProductService {
 
         // no more products => delete
         if (product.getQuantity() == 0) {
-            cancelSale(product.getId());
+            cancel(product.getId());
         }
 
         return productMapper.map(product);

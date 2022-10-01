@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "{id}")
-    public void cancelSale(@Validated @NotNull @PathVariable(name = "id") Integer id) {
-        service.cancelSale(id);
+    public void cancel(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+        service.cancel(id);
     }
 }
