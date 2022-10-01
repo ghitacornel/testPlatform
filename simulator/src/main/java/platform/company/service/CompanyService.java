@@ -16,7 +16,7 @@ public class CompanyService {
     public List<Company> findAll() {
         return restClient.companies()
                 .get()
-                .uri("/company/all")
+                .uri("/company")
                 .retrieve()
                 .bodyToFlux(Company.class)
                 .collectList()
@@ -26,7 +26,7 @@ public class CompanyService {
     public Company register(Company item) {
         return restClient.companies()
                 .post()
-                .uri("/company/register")
+                .uri("/company")
                 .bodyValue(item)
                 .retrieve()
                 .bodyToMono(Company.class)
