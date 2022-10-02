@@ -1,11 +1,21 @@
 services:
 
-  postgres:
+  postgres_clients:
     image: postgres:latest
-    container_name: postgresql
+    container_name: clients
     ports:
-      - "5432:5432"
+      - "1111:5432"
     environment:
-      - POSTGRES_USER=cornel
-      - POSTGRES_PASSWORD=sefusefu
-      - POSTGRES_DB=postgresql_database
+      - POSTGRES_USER=clients
+      - POSTGRES_PASSWORD=clients
+      - POSTGRES_DB=clients
+
+  postgres_companies:
+    image: postgres:latest
+    container_name: companies
+    ports:
+      - "2222:5432"
+    environment:
+      - POSTGRES_USER=companies
+      - POSTGRES_PASSWORD=companies
+      - POSTGRES_DB=companies
