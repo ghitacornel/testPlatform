@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -56,5 +57,9 @@ public class Order extends Identifiable {
     @NotBlank
     @Column(nullable = false)
     private String companyName;
+
+    @NotNull
+    @Enumerated
+    private OrderStatus status = OrderStatus.NEW;
 
 }

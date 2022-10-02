@@ -31,4 +31,14 @@ public class OrderController {
     public OrderDetailsResponse create(@Validated @RequestBody CreateOrderRequest request) {
         return service.create(request);
     }
+
+    @PatchMapping(value = "/complete/{id}")
+    public void complete(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+        service.complete(id);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public void deleteById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+        service.deleteById(id);
+    }
 }

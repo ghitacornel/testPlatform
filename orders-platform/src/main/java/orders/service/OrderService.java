@@ -1,5 +1,6 @@
 package orders.service;
 
+import commons.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
 import orders.clients.client.ClientClient;
 import orders.clients.client.ClientDto;
@@ -9,8 +10,9 @@ import orders.clients.products.ProductClient;
 import orders.clients.products.ProductDto;
 import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;
-import orders.repository.entity.Order;
 import orders.repository.OrderRepository;
+import orders.repository.entity.Order;
+import orders.repository.entity.OrderStatus;
 import orders.service.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,5 +60,23 @@ public class OrderService {
         order.setProductQuantity(product.getQuantity());
         repository.save(order);
         return orderMapper.map(order);
+    }
+
+    public void complete(Integer id) {
+        Order order = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
+        if (!order.getStatus().equals(OrderStatus.NEW)) {
+            throw new BusinessException("cannot complete already completed order");
+        }
+        order.setStatus(OrderStatus.COMPLETED);
+    }
+
+    public void deleteById(Integer id) {
+        Order order = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
+        if (!order.getStatus().equals(OrderStatus.COMPLETED)) {
+            throw new BusinessException("cannot delete an incomplete order");
+        }
+        repository.delete(order);
     }
 }
