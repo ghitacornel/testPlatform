@@ -19,8 +19,8 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping
-    public List<ProductDetailsResponse> findAll() {
-        return service.findAll();
+    public List<ProductDetailsResponse> findAllActive() {
+        return service.findAllActive();
     }
 
     @GetMapping("/count")

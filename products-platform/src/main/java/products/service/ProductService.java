@@ -32,8 +32,8 @@ public class ProductService {
     private final OrderClient orderClient;
     private final ProductMapper productMapper;
 
-    public List<ProductDetailsResponse> findAll() {
-        return repository.findAll().stream()
+    public List<ProductDetailsResponse> findAllActive() {
+        return repository.findAllActive().stream()
                 .map(productMapper::map)
                 .collect(Collectors.toList());
     }
