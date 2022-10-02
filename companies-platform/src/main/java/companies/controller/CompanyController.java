@@ -19,7 +19,7 @@ public class CompanyController {
 
     @GetMapping
     public List<CompanyDetailsResponse> findAll() {
-        return service.findAll();
+        return service.findAllActive();
     }
 
     @GetMapping("count")

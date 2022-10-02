@@ -21,8 +21,8 @@ public class CompanyService {
     private final CompanyRepository repository;
     private final CompanyMapper mapper;
 
-    public List<CompanyDetailsResponse> findAll() {
-        return repository.findAll().stream()
+    public List<CompanyDetailsResponse> findAllActive() {
+        return repository.findAllActive().stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());
     }
