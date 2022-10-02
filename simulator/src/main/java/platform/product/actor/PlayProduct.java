@@ -46,6 +46,7 @@ public class PlayProduct extends AbstractActor {
             log.warn("no product to cancel");
             return;
         }
+        log.info("trying to cancel product " + product);
         productService.cancel(product);
     }
 
@@ -56,7 +57,7 @@ public class PlayProduct extends AbstractActor {
             log.warn("no product to buy");
             return;
         }
-        log.info("trying to buy " + productBuy);
+        log.info("trying to buy product " + productBuy);
         productService.buy(productBuy);
     }
 
