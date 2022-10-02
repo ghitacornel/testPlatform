@@ -4,6 +4,7 @@ import clients.controller.model.request.ClientRegisterRequest;
 import clients.controller.model.response.ClientDetailsResponse;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
+import clients.repository.entity.ClientStatus;
 import clients.service.mapper.ClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,13 +40,13 @@ public class ClientService {
         return clientMapper.map(client);
     }
 
-    public void deleteById(Integer id) {
-        Client client = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Client with id " + id + " not found"));
-        repository.delete(client);
-    }
-
     public long count() {
         return repository.count();
+    }
+
+    public void markAsDeleted(Integer id) {
+        Client client = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Client with id " + id + " not found"));
+        client.setStatus(ClientStatus.DELETED);
     }
 }

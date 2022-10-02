@@ -38,8 +38,8 @@ public class ClientController {
     }
 
     @DeleteMapping(value = "{id}")
-    public void deleteById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
-        service.deleteById(id);
+    public void markAsDeleted(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+        service.markAsDeleted(id);
     }
 
 }

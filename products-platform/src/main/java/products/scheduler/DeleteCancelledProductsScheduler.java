@@ -1,4 +1,4 @@
-package products.schedulers;
+package products.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
