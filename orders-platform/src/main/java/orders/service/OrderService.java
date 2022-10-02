@@ -56,8 +56,8 @@ public class OrderService {
         order.setCompanyName(company.getName());
         order.setProductName(product.getName());
         order.setProductColor(product.getColor());
-        order.setProductPrice(product.getPrice());
-        order.setProductQuantity(product.getQuantity());
+        order.setPrice(product.getPrice());
+        order.setQuantity(product.getQuantity());
         repository.save(order);
         return orderMapper.map(order);
     }

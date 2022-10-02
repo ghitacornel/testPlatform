@@ -43,12 +43,12 @@ public class Order extends Identifiable {
     @NotNull
     @Positive
     @Column(nullable = false)
-    private Double productPrice;
+    private Double price;
 
     @NotNull
     @Positive
     @Column(nullable = false)
-    private Integer productQuantity;
+    private Integer quantity;
 
     @NotNull
     @Column(nullable = false)

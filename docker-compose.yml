@@ -19,3 +19,24 @@ services:
       - POSTGRES_USER=companies
       - POSTGRES_PASSWORD=companies
       - POSTGRES_DB=companies
+
+  postgres_products:
+    image: postgres:latest
+    container_name: products
+    ports:
+      - "3333:5432"
+    environment:
+      - POSTGRES_USER=products
+      - POSTGRES_PASSWORD=products
+      - POSTGRES_DB=products
+
+
+  postgres_orders:
+    image: postgres:latest
+    container_name: orders
+    ports:
+      - "4444:5432"
+    environment:
+      - POSTGRES_USER=orders
+      - POSTGRES_PASSWORD=orders
+      - POSTGRES_DB=orders
