@@ -1,4 +1,4 @@
-create table T_ORDER
+create table product
 (
     id         int primary key GENERATED ALWAYS AS IDENTITY,
     name       varchar(50)      not null,
