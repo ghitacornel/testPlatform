@@ -56,6 +56,7 @@ public class PlayProduct extends AbstractActor {
             log.warn("no product to buy");
             return;
         }
+        log.info("trying to buy " + productBuy);
         productService.buy(productBuy);
     }
 
