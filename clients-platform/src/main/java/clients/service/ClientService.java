@@ -22,8 +22,8 @@ public class ClientService {
     private final ClientRepository repository;
     private final ClientMapper clientMapper;
 
-    public List<ClientDetailsResponse> findAll() {
-        return repository.findAll().stream()
+    public List<ClientDetailsResponse> findAllActive() {
+        return repository.findAllActive().stream()
                 .map(clientMapper::map)
                 .collect(Collectors.toList());
     }

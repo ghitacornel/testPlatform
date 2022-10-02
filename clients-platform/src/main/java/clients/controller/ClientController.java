@@ -19,7 +19,7 @@ public class ClientController {
 
     @GetMapping
     public List<ClientDetailsResponse> findAll() {
-        return service.findAll();
+        return service.findAllActive();
     }
 
     @GetMapping("count")
