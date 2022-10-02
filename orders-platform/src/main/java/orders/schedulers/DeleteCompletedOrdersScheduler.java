@@ -13,7 +13,7 @@ public class DeleteCompletedOrdersScheduler {
 
     private final OrderRepository orderRepository;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void deleteCompletedOrders() {
         orderRepository.deleteCompletedOrders();

@@ -14,6 +14,7 @@ import products.controller.model.request.ProductSaleRequest;
 import products.controller.model.response.ProductDetailsResponse;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
+import products.repository.entity.ProductStatus;
 import products.service.mapper.ProductMapper;
 
 import javax.persistence.EntityNotFoundException;
@@ -54,7 +55,7 @@ public class ProductService {
     public void cancel(Integer id) {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
-        repository.delete(product);
+        product.setStatus(ProductStatus.CANCELLED);
         log.info("product cancelled " + product);
     }
 

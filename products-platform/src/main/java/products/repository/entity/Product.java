@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -36,5 +37,9 @@ public class Product extends Identifiable {
     @NotNull
     @Column(nullable = false)
     private Integer companyId;
+
+    @NotNull
+    @Enumerated
+    private ProductStatus status = ProductStatus.ACTIVE;
 
 }
