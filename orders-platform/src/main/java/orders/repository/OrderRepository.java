@@ -9,6 +9,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Modifying
     @Query("delete from Order o where o.status = orders.repository.entity.OrderStatus.COMPLETED")
-    void deleteCompletedOrders();
+    void deleteCompleted();
 
 }

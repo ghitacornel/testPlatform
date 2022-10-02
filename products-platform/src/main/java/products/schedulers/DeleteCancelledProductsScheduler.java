@@ -1,22 +1,22 @@
-package orders.schedulers;
+package products.schedulers;
 
 import lombok.RequiredArgsConstructor;
-import orders.repository.OrderRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import products.repository.ProductRepository;
 
 @Component
 @RequiredArgsConstructor
-public class DeleteCompletedOrdersScheduler {
+public class DeleteCancelledProductsScheduler {
 
-    private final OrderRepository repository;
+    private final ProductRepository repository;
 
     @Scheduled(fixedRate = 10000)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void deleteCompleted() {
-        repository.deleteCompleted();
+    public void deleteCancelled() {
+        repository.deleteCancelled();
     }
 
 }
