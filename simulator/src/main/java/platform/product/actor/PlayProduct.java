@@ -33,6 +33,7 @@ public class PlayProduct extends AbstractActor {
             log.warn("no product to sell");
             return;
         }
+        log.info("trying to sell product " + productSale);
         productService.sale(productSale);
     }
 
