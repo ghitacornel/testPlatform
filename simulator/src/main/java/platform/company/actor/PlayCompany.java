@@ -19,14 +19,14 @@ public class PlayCompany extends AbstractActor {
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;
 
-    @Scheduled(fixedRate = 1000, initialDelay = 2000)
+    @Scheduled(fixedRate = 1000, initialDelay = 10000)
     public void register() {
         Company company = randomDataCreatorService.createCompany();
         company = companyService.register(company);
         log.info("registered company " + company);
     }
 
-    @Scheduled(fixedRate = 1000, initialDelay = 2000)
+    @Scheduled(fixedRate = 1000, initialDelay = 10000)
     public void unregister() {
         Company company = randomDataFetchService.findRandomCompany();
         companyService.unregister(company);
