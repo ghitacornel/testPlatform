@@ -1,7 +1,6 @@
 package platform.order.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import platform.common.RESTClient;
 import platform.order.model.Order;
