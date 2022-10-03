@@ -26,7 +26,6 @@ public class OrderService {
     }
 
     public void complete(Order item) {
-        log.info("completing " + item);
         restClient.orders()
                 .delete()
                 .uri("/order/complete/" + item.getId())
