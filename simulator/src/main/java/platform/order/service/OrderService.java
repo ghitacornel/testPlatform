@@ -16,7 +16,7 @@ public class OrderService {
     private final RESTClient restClient;
 
     public List<Order> findAll() {
-        return restClient.products()
+        return restClient.orders()
                 .get()
                 .uri("/order")
                 .retrieve()
@@ -27,7 +27,7 @@ public class OrderService {
 
     public void complete(Order item) {
         log.info("completing " + item);
-        restClient.products()
+        restClient.orders()
                 .delete()
                 .uri("/order/complete/" + item.getId())
                 .retrieve()
