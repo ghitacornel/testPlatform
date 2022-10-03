@@ -33,7 +33,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     public List<OrderDetailsResponse> findAll() {
-        return repository.findAll().stream()
+        return repository.findAllNew().stream()
                 .map(orderMapper::map)
                 .collect(Collectors.toList());
     }
