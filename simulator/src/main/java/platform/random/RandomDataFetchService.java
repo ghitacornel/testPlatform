@@ -8,6 +8,8 @@ import platform.client.service.ClientService;
 import platform.common.AbstractActor;
 import platform.company.model.Company;
 import platform.company.service.CompanyService;
+import platform.order.model.Order;
+import platform.order.service.OrderService;
 import platform.product.model.Product;
 import platform.product.service.ProductService;
 
@@ -21,6 +23,8 @@ public class RandomDataFetchService extends AbstractActor {
     private final ProductService productService;
     private final CompanyService companyService;
     private final ClientService clientService;
+
+    private final OrderService orderService;
 
     public Company findRandomCompany() {
         List<Company> all = companyService.findAll();
@@ -38,6 +42,13 @@ public class RandomDataFetchService extends AbstractActor {
 
     public Product findRandomProduct() {
         List<Product> all = productService.findAll();
+        if (all.isEmpty()) return null;
+        int index = random.nextInt(all.size());
+        return all.get(index);
+    }
+
+    public Order findRandomOrder() {
+        List<Order> all = orderService.findAll();
         if (all.isEmpty()) return null;
         int index = random.nextInt(all.size());
         return all.get(index);
