@@ -25,7 +25,7 @@ public class OrderService {
 
     public void complete(Order item) {
         restClient.orders()
-                .delete()
+                .patch()
                 .uri("/order/complete/" + item.getId())
                 .retrieve()
                 .toBodilessEntity()
