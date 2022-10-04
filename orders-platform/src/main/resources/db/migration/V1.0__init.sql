@@ -4,6 +4,7 @@ create table T_ORDER
     user_id               int              not null,
     user_name             varchar(50)      not null,
     user_credit_card_type varchar(50)      not null,
+    product_id            int              not null,
     product_name          varchar(50)      not null,
     product_color         varchar(50)      not null,
     price                 double precision not null,
