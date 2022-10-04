@@ -2,6 +2,7 @@ create table product
 (
     id         int primary key GENERATED ALWAYS AS IDENTITY,
     name       varchar(50)      not null,
+    product_id int              not null,
     color      varchar(50)      not null,
     price      double precision not null,
     quantity   int              not null,
