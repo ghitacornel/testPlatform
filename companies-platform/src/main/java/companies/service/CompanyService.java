@@ -4,11 +4,14 @@ import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
+import companies.repository.entity.CompanyStatus;
 import companies.service.mapper.CompanyMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jms.Queue;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +23,9 @@ public class CompanyService {
 
     private final CompanyRepository repository;
     private final CompanyMapper mapper;
+
+    private final Queue queueCompanyCancellation;
+    private final JmsTemplate jmsTemplate;
 
     public List<CompanyDetailsResponse> findAllActive() {
         return repository.findAllActive().stream()
@@ -42,7 +48,8 @@ public class CompanyService {
     public void deleteById(Integer id) {
         Company company = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Company with id " + id + " not found"));
-        repository.delete(company);
+        company.setStatus(CompanyStatus.DELETED);
+        jmsTemplate.convertAndSend(queueCompanyCancellation, company.getId());
     }
 
     public long count() {
