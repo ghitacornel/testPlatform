@@ -54,6 +54,7 @@ public class OrderService {
         order.setUserCreditCardType(client.getCardType());
         order.setCompanyId(company.getId());
         order.setCompanyName(company.getName());
+        order.setProductId(product.getId());
         order.setProductName(product.getName());
         order.setProductColor(product.getColor());
         order.setPrice(product.getPrice());

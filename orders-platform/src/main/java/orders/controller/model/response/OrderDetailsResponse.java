@@ -9,6 +9,7 @@ public class OrderDetailsResponse {
     private Integer userId;
     private String userName;
     private String userCreditCardType;
+    private String productId;
     private String productName;
     private String productColor;
     private Double productPrice;

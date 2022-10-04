@@ -32,6 +32,10 @@ public class Order extends Identifiable {
     @Column(nullable = false)
     private String userCreditCardType;
 
+    @NotNull
+    @Column(nullable = false)
+    private Integer productId;
+
     @NotBlank
     @Column(nullable = false)
     private String productName;
