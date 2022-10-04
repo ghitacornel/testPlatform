@@ -14,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.CANCELLED")
     List<Product> findAllCancelled();
 
+    List<Product> findByCompanyId(Integer id);
+
 }
