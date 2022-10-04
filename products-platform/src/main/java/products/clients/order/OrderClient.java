@@ -23,4 +23,14 @@ public class OrderClient {
                 })
                 .block();
     }
+
+    public Boolean existsByProductId(Integer id) {
+        return restClient.orders()
+                .get()
+                .uri("/order/product/" + id)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+    }
+
 }
