@@ -80,4 +80,8 @@ public class OrderService {
         }
         repository.delete(order);
     }
+
+    public boolean existsByProductId(Integer id) {
+        return repository.existsByProductId(id);
+    }
 }

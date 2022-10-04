@@ -27,6 +27,11 @@ public class OrderController {
         return service.findById(id);
     }
 
+    @GetMapping(value = "/product/{id}")
+    public boolean existsByProductId(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+        return service.existsByProductId(id);
+    }
+
     @PostMapping
     public OrderDetailsResponse create(@Validated @RequestBody CreateOrderRequest request) {
         return service.create(request);

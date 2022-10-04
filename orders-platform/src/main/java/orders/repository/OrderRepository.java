@@ -16,4 +16,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("delete from Order o where o.status = orders.repository.entity.OrderStatus.COMPLETED")
     void deleteCompleted();
 
+    boolean existsByProductId(Integer id);
 }
