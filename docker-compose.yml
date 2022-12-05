@@ -39,7 +39,6 @@ services:
       - POSTGRES_PASSWORD=products
       - POSTGRES_DB=products
 
-
   postgres_orders:
     image: postgres:latest
     container_name: orders
