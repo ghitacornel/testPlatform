@@ -20,7 +20,7 @@ public class JMSConsumerQueue {
     @Transactional
     public void listenerForQueue1(Integer id) {
         repository.cancelByCompanyId(id);
-        log.info("all products cancelled fro company id " + id);
+        log.info("all products cancelled for company id " + id);
     }
 
 }
