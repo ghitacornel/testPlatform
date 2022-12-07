@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -28,18 +29,18 @@ public class ClientController {
     }
 
     @GetMapping(value = "{id}")
-    public ClientDetailsResponse findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public ClientDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
     @PostMapping
-    public ClientDetailsResponse register(@Validated @RequestBody ClientRegisterRequest request) {
+    public ClientDetailsResponse register(@Valid @RequestBody ClientRegisterRequest request) {
         return service.register(request);
     }
 
     @DeleteMapping(value = "{id}")
-    public void markAsDeleted(@Validated @NotNull @PathVariable(name = "id") Integer id) {
-        service.markAsDeleted(id);
+    public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+        service.deleteById(id);
     }
 
 }

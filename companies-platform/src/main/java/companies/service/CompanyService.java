@@ -5,7 +5,6 @@ import companies.controller.model.response.CompanyDetailsResponse;
 import companies.jms.JMSProducerQueue;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
-import companies.repository.entity.CompanyStatus;
 import companies.service.mapper.CompanyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class CompanyService {
     private final JMSProducerQueue jmsProducerQueue;
 
     public List<CompanyDetailsResponse> findAllActive() {
-        return repository.findAllActive().stream()
+        return repository.findAll().stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());
     }
@@ -43,10 +42,8 @@ public class CompanyService {
     }
 
     public void deleteById(Integer id) {
-        Company company = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Company with id " + id + " not found"));
-        company.setStatus(CompanyStatus.DELETED);
-        jmsProducerQueue.sendDeleteMessage(company.getId());
+        repository.deleteById(id);
+        jmsProducerQueue.sendDeleteMessage(id);
     }
 
     public long count() {
