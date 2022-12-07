@@ -6,11 +6,8 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 import products.config.JMSConfigurationQueue;
 import products.repository.ProductRepository;
-import products.repository.entity.Product;
-import products.repository.entity.ProductStatus;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -21,12 +18,9 @@ public class JMSConsumerQueue {
 
     @JmsListener(destination = JMSConfigurationQueue.QueueProductCancellation)
     @Transactional
-    public void listenerForQueue1(Integer message) {
-        List<Product> products = repository.findByCompanyId(message);
-        for (Product product : products) {
-            product.setStatus(ProductStatus.CANCELLED);
-            log.info("Product cancelled : " + product);
-        }
+    public void listenerForQueue1(Integer id) {
+        repository.cancelByCompanyId(id);
+        log.info("all products cancelled fro company id " + id);
     }
 
 }
