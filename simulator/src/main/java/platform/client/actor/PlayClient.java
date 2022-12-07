@@ -15,12 +15,17 @@ import platform.random.RandomDataFetchService;
 @Slf4j
 public class PlayClient extends AbstractActor {
 
+    private static final int MINIMUM_CLIENTS_COUNT = 50;
+    private static final int MAXIMUM_CLIENTS_COUNT = 200;
     private final ClientService clientService;
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;
 
     @Scheduled(fixedRate = 1000, initialDelay = 5000)
     public void register() {
+        if (clientService.count() > MAXIMUM_CLIENTS_COUNT) {
+            return;
+        }
         Client client = randomDataCreatorService.createClient();
         client = clientService.register(client);
         log.info("registered client " + client);
@@ -28,6 +33,9 @@ public class PlayClient extends AbstractActor {
 
     @Scheduled(fixedRate = 1000, initialDelay = 5000)
     public void unregister() {
+        if (clientService.count() < MINIMUM_CLIENTS_COUNT) {
+            return;
+        }
         Client client = randomDataFetchService.findRandomClient();
         clientService.unregister(client);
         log.info("unregistered client" + client);
