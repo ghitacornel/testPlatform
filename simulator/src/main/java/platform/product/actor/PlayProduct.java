@@ -17,15 +17,15 @@ import platform.random.RandomDataFetchService;
 @Slf4j
 public class PlayProduct extends AbstractActor {
 
-    private static final int MINIMUM_PRODUCTS_COUNT = 50;
-    private static final int MAXIMUM_PRODUCTS_COUNT = 200;
+    private static final int MINIMUM = 50;
+    private static final int MAXIMUM = 200;
     private final ProductService productService;
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;
 
     @Scheduled(fixedRate = 100, initialDelay = 1000)
     public void operateSale() {
-        if (productService.countAll() > MAXIMUM_PRODUCTS_COUNT) {
+        if (productService.countAll() > MAXIMUM) {
             return;
         }
         ProductSale productSale = randomDataCreatorService.createProductSale();
@@ -39,7 +39,7 @@ public class PlayProduct extends AbstractActor {
 
     @Scheduled(fixedRate = 2000, initialDelay = 1000)
     public void operateCancel() {
-        if (productService.countAll() <= MINIMUM_PRODUCTS_COUNT) {
+        if (productService.countAll() < MINIMUM) {
             return;
         }
         Product product = randomDataFetchService.findRandomProduct();

@@ -15,12 +15,17 @@ import platform.random.RandomDataFetchService;
 @Slf4j
 public class PlayCompany extends AbstractActor {
 
+    private static final int MINIMUM = 50;
+    private static final int MAXIMUM = 100;
     private final CompanyService companyService;
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;
 
     @Scheduled(fixedRate = 5000, initialDelay = 10000)
     public void register() {
+        if (companyService.count() > MAXIMUM) {
+            return;
+        }
         Company company = randomDataCreatorService.createCompany();
         company = companyService.register(company);
         log.info("registered company " + company);
@@ -28,6 +33,9 @@ public class PlayCompany extends AbstractActor {
 
     @Scheduled(fixedRate = 5000, initialDelay = 10000)
     public void unregister() {
+        if (companyService.count() < MINIMUM) {
+            return;
+        }
         Company company = randomDataFetchService.findRandomCompany();
         companyService.unregister(company);
         log.info("unregistered company " + company);
