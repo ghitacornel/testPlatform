@@ -54,7 +54,7 @@ public class ProductService {
                 .retrieve()
                 .bodyToMono(Product.class)
                 .block();
-        log.info("selling " + product);
+        log.debug("selling " + product);
         return product;
     }
 
@@ -66,7 +66,7 @@ public class ProductService {
                 .retrieve()
                 .bodyToMono(Product.class)
                 .block();
-        log.info("buying " + product);
+        log.debug("buying " + product);
         return product;
     }
 
