@@ -28,7 +28,7 @@ public class PlayClient extends AbstractActor {
         }
         Client client = randomDataCreatorService.createClient();
         client = clientService.register(client);
-        log.info("registered client " + client);
+        log.debug("registered client " + client);
     }
 
     @Scheduled(fixedRate = 1000, initialDelay = 5000)
@@ -38,7 +38,7 @@ public class PlayClient extends AbstractActor {
         }
         Client client = randomDataFetchService.findRandomClient();
         clientService.unregister(client);
-        log.info("unregistered client" + client);
+        log.debug("unregistered client" + client);
     }
 
 }

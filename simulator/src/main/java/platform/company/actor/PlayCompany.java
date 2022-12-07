@@ -28,7 +28,7 @@ public class PlayCompany extends AbstractActor {
         }
         Company company = randomDataCreatorService.createCompany();
         company = companyService.register(company);
-        log.info("registered company " + company);
+        log.debug("registered company " + company);
     }
 
     @Scheduled(fixedRate = 5000, initialDelay = 10000)
@@ -38,7 +38,7 @@ public class PlayCompany extends AbstractActor {
         }
         Company company = randomDataFetchService.findRandomCompany();
         companyService.unregister(company);
-        log.info("unregistered company " + company);
+        log.debug("unregistered company " + company);
     }
 
 }

@@ -29,7 +29,7 @@ public class PlayOrder extends AbstractActor {
             return;
         }
         orderService.complete(order);
-        log.info("order completed " + order);
+        log.debug("order completed " + order);
     }
 
 }

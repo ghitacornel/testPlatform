@@ -29,7 +29,7 @@ public class PlayProduct extends AbstractActor {
             return;
         }
         ProductSale productSale = randomDataCreatorService.createProductSale();
-        log.info("trying to sell product " + productSale);
+        log.debug("trying to sell product " + productSale);
         productService.sale(productSale);
     }
 
@@ -39,14 +39,14 @@ public class PlayProduct extends AbstractActor {
             return;
         }
         Product product = randomDataFetchService.findRandomProduct();
-        log.info("trying to cancel product " + product);
+        log.debug("trying to cancel product " + product);
         productService.cancel(product);
     }
 
     @Scheduled(fixedRate = 100, initialDelay = 2000)
     public void operateBuy() {
         ProductBuy productBuy = randomDataCreatorService.createProductBuy();
-        log.info("trying to buy product " + productBuy);
+        log.debug("trying to buy product " + productBuy);
         productService.buy(productBuy);
     }
 
