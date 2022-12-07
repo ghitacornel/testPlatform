@@ -2,6 +2,7 @@ package companies.service;
 
 import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
+import companies.exception.CompanyNotFoundException;
 import companies.jms.JMSProducerQueue;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
@@ -10,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +32,7 @@ public class CompanyService {
     public CompanyDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(mapper::map)
-                .orElseThrow(() -> new EntityNotFoundException("Company with id " + id + " not found"));
+                .orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
     public CompanyDetailsResponse register(CompanyRegisterRequest request) {
