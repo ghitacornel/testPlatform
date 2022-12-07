@@ -11,6 +11,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Getter
@@ -31,7 +32,7 @@ public class Product extends Identifiable {
     private Double price;
 
     @NotNull
-    @Min(1)
+    @PositiveOrZero
     @Column(nullable = false)
     private Integer quantity;
 
