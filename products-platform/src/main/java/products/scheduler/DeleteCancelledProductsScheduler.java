@@ -22,8 +22,8 @@ public class DeleteCancelledProductsScheduler {
 
     @Scheduled(fixedRate = 10000)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void deleteCancelled() {
-        List<Product> products = repository.findAllCancelled();
+    public void deleteNotActiveProducts() {
+        List<Product> products = repository.findAllNotActive();
         for (Product product : products) {
             if (!orderClient.existsByProductId(product.getId())) {
                 repository.delete(product);

@@ -75,9 +75,9 @@ public class ProductService {
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
 
-        // no more products => delete
+        // no more products => mark as CONSUMED
         if (product.getQuantity() == 0) {
-            cancel(product.getId());
+            product.setStatus(ProductStatus.CONSUMED);
         }
 
         return productMapper.map(product);
