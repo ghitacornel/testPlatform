@@ -5,7 +5,6 @@ import orders.clients.RESTClient;
 import orders.exception.CompanyNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
@@ -18,7 +17,9 @@ public class CompanyClient {
                 .get()
                 .uri("/company/" + id)
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new CompanyNotFoundException(id)))
+                .onStatus(httpStatus -> httpStatus == HttpStatus.NOT_FOUND, clientResponse -> {
+                    throw new CompanyNotFoundException(id);
+                })
                 .bodyToMono(CompanyDto.class)
                 .block();
     }
