@@ -16,4 +16,7 @@ public class CompanyRegisterRequest {
     @NotBlank
     private String industry;
 
+    @NotBlank
+    private String country;
+
 }

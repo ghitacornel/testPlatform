@@ -21,6 +21,7 @@ public class RandomDataCreatorService extends AbstractActor {
         Client item = new Client();
         item.setName(faker.name().username());
         item.setCardType(faker.business().creditCardType());
+        item.setCountry(faker.country().name());
         return item;
     }
 
@@ -29,6 +30,7 @@ public class RandomDataCreatorService extends AbstractActor {
         item.setName(faker.company().name());
         item.setIndustry(faker.company().industry());
         item.setUrl(faker.company().url());
+        item.setCountry(faker.country().name());
         return item;
     }
 

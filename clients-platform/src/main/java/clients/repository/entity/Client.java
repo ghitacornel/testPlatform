@@ -23,4 +23,8 @@ public class Client extends Identifiable {
     @Column(nullable = false)
     private String cardType;
 
+    @NotBlank
+    @Column(nullable = false)
+    private String country;
+
 }

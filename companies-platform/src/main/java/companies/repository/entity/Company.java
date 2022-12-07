@@ -27,4 +27,8 @@ public class Company extends Identifiable {
     @Column(nullable = false)
     private String industry;
 
+    @NotBlank
+    @Column(nullable = false)
+    private String country;
+
 }

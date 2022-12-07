@@ -13,4 +13,7 @@ public class ClientRegisterRequest {
     @NotBlank
     private String cardType;
 
+    @NotBlank
+    private String country;
+
 }
