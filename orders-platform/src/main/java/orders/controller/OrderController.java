@@ -19,13 +19,13 @@ public class OrderController {
     private final OrderService service;
 
     @GetMapping
-    public List<OrderDetailsResponse> findAll() {
-        return service.findAll();
+    public List<OrderDetailsResponse> findAllNew() {
+        return service.findAllNew();
     }
 
     @GetMapping("count")
-    public long count() {
-        return service.count();
+    public long countAllNew() {
+        return service.countAllNew();
     }
 
     @GetMapping(value = "{id}")

@@ -32,7 +32,7 @@ public class OrderService {
     private final OrderRepository repository;
     private final OrderMapper orderMapper;
 
-    public List<OrderDetailsResponse> findAll() {
+    public List<OrderDetailsResponse> findAllNew() {
         return repository.findAllNew().stream()
                 .map(orderMapper::map)
                 .collect(Collectors.toList());
@@ -85,7 +85,7 @@ public class OrderService {
         return repository.existsByProductId(id);
     }
 
-    public long count() {
-        return repository.countNewOnes();
+    public long countAllNew() {
+        return repository.countAllNew();
     }
 }
