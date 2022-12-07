@@ -18,7 +18,7 @@ public class PlayOrder extends AbstractActor {
     private final OrderService orderService;
     private final RandomDataFetchService randomDataFetchService;
 
-    @Scheduled(fixedRate = 100)
+    @Scheduled(fixedRate = 50)
     public void complete() {
         if (orderService.count() < MINIMUM) {
             return;
