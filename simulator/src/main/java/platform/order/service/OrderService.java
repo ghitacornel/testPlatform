@@ -26,7 +26,7 @@ public class OrderService {
     public Long count() {
         return restClient.orders()
                 .get()
-                .uri("/count")
+                .uri("/order/count")
                 .retrieve()
                 .bodyToMono(Long.class)
                 .block();
