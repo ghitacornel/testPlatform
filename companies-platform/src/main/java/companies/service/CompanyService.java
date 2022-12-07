@@ -23,7 +23,7 @@ public class CompanyService {
     private final CompanyMapper mapper;
     private final JMSProducerQueue jmsProducerQueue;
 
-    public List<CompanyDetailsResponse> findAllActive() {
+    public List<CompanyDetailsResponse> findAll() {
         return repository.findAll().stream()
                 .map(mapper::map)
                 .collect(Collectors.toList());
