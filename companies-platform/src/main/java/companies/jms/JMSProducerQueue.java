@@ -12,11 +12,11 @@ import javax.jms.Queue;
 @RequiredArgsConstructor
 public class JMSProducerQueue {
 
-    private final Queue queueCompanyCancellation;
+    private final Queue queueProductCancellation;
     private final JmsTemplate jmsTemplate;
 
     public void sendDeleteMessage(Integer id) {
-        jmsTemplate.convertAndSend(queueCompanyCancellation, id);
+        jmsTemplate.convertAndSend(queueProductCancellation, id);
         log.info("company delete message send " + id);
     }
 

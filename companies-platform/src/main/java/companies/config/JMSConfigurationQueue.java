@@ -16,26 +16,26 @@ import javax.jms.Queue;
 @Configuration
 public class JMSConfigurationQueue {
 
-    private static final String QueueCompanyCancellation = "QueueCompanyCancellation";
+    private static final String QueueProductCancellation = "QueueProductCancellation";
 
     @Bean
-    Queue queueCompanyCancellation() {
-        return new ActiveMQQueue(QueueCompanyCancellation);
+    Queue queueProductCancellation() {
+        return new ActiveMQQueue(QueueProductCancellation);
     }
 
     @Bean
     JmsListenerContainerFactory<?> queueConnectionFactory(ConnectionFactory connectionFactory,
                                                           DefaultJmsListenerContainerFactoryConfigurer configurer) {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        // This provides all boot's default to this factory, including the message converter
         configurer.configure(factory, connectionFactory);
-        // You could still override some of Boot's default if necessary.
         return factory;
     }
 
     @Bean
     JmsTemplate jmsTemplateQueue(ConnectionFactory queueConnectionFactory) {
-        return new JmsTemplate(queueConnectionFactory);
+        JmsTemplate jmsTemplate = new JmsTemplate(queueConnectionFactory);
+        jmsTemplate.setSessionTransacted(true);
+        return jmsTemplate;
     }
 
 }

@@ -42,8 +42,8 @@ public class CompanyService {
     }
 
     public void deleteById(Integer id) {
-        repository.deleteById(id);
         jmsProducerQueue.sendDeleteMessage(id);
+        repository.deleteById(id);
     }
 
     public long count() {

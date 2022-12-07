@@ -18,12 +18,12 @@ public class JMSConsumerQueue {
 
     private final ProductRepository repository;
 
-    @JmsListener(destination = JMSConfigurationQueue.QueueCompanyCancellation)
+    @JmsListener(destination = JMSConfigurationQueue.QueueProductCancellation)
     public void listenerForQueue1(Integer message) {
         List<Product> products = repository.findByCompanyId(message);
         for (Product product : products) {
             product.setStatus(ProductStatus.CANCELLED);
-            log.info("cancelled product " + product);
+            log.info("Product cancelled : " + product);
         }
     }
 

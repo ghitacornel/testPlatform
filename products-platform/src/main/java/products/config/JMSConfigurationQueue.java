@@ -16,11 +16,11 @@ import javax.jms.Queue;
 @Configuration
 public class JMSConfigurationQueue {
 
-    public static final String QueueCompanyCancellation = "QueueCompanyCancellation";
+    public static final String QueueProductCancellation = "QueueProductCancellation";
 
     @Bean
     Queue queueCompanyCancellation() {
-        return new ActiveMQQueue(QueueCompanyCancellation);
+        return new ActiveMQQueue(QueueProductCancellation);
     }
 
     @Bean
