@@ -56,7 +56,9 @@ public class RandomDataCreatorService extends AbstractActor {
         ProductBuy item = new ProductBuy();
         item.setClientId(client.getId());
         item.setProductId(product.getId());
-        item.setQuantity(random.nextInt(1, product.getQuantity()));
+        int quantity = random.nextInt(product.getQuantity());
+        if (quantity == 0) quantity++;
+        item.setQuantity(quantity);
         return item;
     }
 
