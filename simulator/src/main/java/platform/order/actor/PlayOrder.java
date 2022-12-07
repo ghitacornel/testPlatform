@@ -17,7 +17,7 @@ public class PlayOrder extends AbstractActor {
     private final OrderService orderService;
     private final RandomDataFetchService randomDataFetchService;
 
-    @Scheduled(fixedRate = 30)
+    @Scheduled(fixedRate = 200)
     public void complete() {
         Order order = randomDataFetchService.findRandomOrder();
         if (order == null) {
