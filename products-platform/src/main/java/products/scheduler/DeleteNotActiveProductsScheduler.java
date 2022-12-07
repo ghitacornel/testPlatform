@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DeleteCancelledProductsScheduler {
+public class DeleteNotActiveProductsScheduler {
 
     private final ProductRepository repository;
     private final OrderClient orderClient;
