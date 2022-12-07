@@ -17,4 +17,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     void deleteCompleted();
 
     boolean existsByProductId(Integer id);
+
+    @Query("select count(p.id) from Order p where p.status = orders.repository.entity.OrderStatus.NEW")
+    long countNewOnes();
+
 }

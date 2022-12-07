@@ -23,6 +23,11 @@ public class OrderController {
         return service.findAll();
     }
 
+    @GetMapping("count")
+    public long count() {
+        return service.count();
+    }
+
     @GetMapping(value = "{id}")
     public OrderDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);

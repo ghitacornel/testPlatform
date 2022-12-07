@@ -23,6 +23,15 @@ public class OrderService {
                 .block();
     }
 
+    public Long count() {
+        return restClient.orders()
+                .get()
+                .uri("/count")
+                .retrieve()
+                .bodyToMono(Long.class)
+                .block();
+    }
+
     public void complete(Order item) {
         restClient.orders()
                 .patch()

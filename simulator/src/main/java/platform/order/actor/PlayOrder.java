@@ -14,11 +14,16 @@ import platform.random.RandomDataFetchService;
 @Slf4j
 public class PlayOrder extends AbstractActor {
 
+    private static final int MINIMUM = 50;
     private final OrderService orderService;
     private final RandomDataFetchService randomDataFetchService;
 
     @Scheduled(fixedRate = 200)
     public void complete() {
+        if (orderService.count() < MINIMUM) {
+            return;
+        }
+
         Order order = randomDataFetchService.findRandomOrder();
         if (order == null) {
             return;

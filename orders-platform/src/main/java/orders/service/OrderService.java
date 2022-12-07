@@ -84,4 +84,8 @@ public class OrderService {
     public boolean existsByProductId(Integer id) {
         return repository.existsByProductId(id);
     }
+
+    public long count() {
+        return repository.countNewOnes();
+    }
 }
