@@ -9,6 +9,7 @@ import products.repository.ProductRepository;
 import products.repository.entity.Product;
 import products.repository.entity.ProductStatus;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
@@ -19,6 +20,7 @@ public class JMSConsumerQueue {
     private final ProductRepository repository;
 
     @JmsListener(destination = JMSConfigurationQueue.QueueProductCancellation)
+    @Transactional
     public void listenerForQueue1(Integer message) {
         List<Product> products = repository.findByCompanyId(message);
         for (Product product : products) {
