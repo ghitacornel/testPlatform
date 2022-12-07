@@ -60,7 +60,7 @@ public class ProductService {
     }
 
     public ProductDetailsResponse buy(ProductBuyRequest request) {
-        Product product = repository.findById(request.getProductId())
+        Product product = repository.findByIdAndLock(request.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + request.getProductId() + " not found"));
         if (product.getQuantity() < request.getQuantity()) {
             throw new BusinessException("Cannot buy more that it exists, want to buy " + request.getQuantity() + " from remaining " + product.getQuantity());
@@ -80,7 +80,10 @@ public class ProductService {
             product.setStatus(ProductStatus.CONSUMED);
         }
 
-        return productMapper.map(product);
+        ProductDetailsResponse productDetailsResponse = productMapper.map(product);
+        productDetailsResponse.setQuantity(request.getQuantity());
+        return productDetailsResponse;
+
     }
 
     public ProductDetailsResponse findById(Integer id) {

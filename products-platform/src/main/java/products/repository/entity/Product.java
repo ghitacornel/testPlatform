@@ -8,7 +8,6 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -45,8 +44,5 @@ public class Product extends Identifiable {
     @NotNull
     @Enumerated
     private ProductStatus status = ProductStatus.ACTIVE;
-
-    @Version
-    private Integer version;
 
 }

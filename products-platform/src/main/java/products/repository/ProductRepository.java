@@ -1,12 +1,13 @@
 package products.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import products.repository.entity.Product;
 
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
@@ -23,4 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("update Product p set p.status = products.repository.entity.ProductStatus.CANCELLED where p.companyId = :companyId")
     void cancelByCompanyId(@Param("companyId") Integer companyId);
 
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "100")})
+    @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE and p.id = :id")
+    Optional<Product> findByIdAndLock(@Param("id") Integer id);
 }
