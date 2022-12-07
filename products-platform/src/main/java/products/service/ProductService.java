@@ -48,7 +48,7 @@ public class ProductService {
         }
         Product product = productMapper.map(request);
         repository.save(product);
-        log.info("new product to sale " + product);
+        log.debug("new product to sale " + product);
         return productMapper.map(product);
     }
 
@@ -56,7 +56,7 @@ public class ProductService {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         product.setStatus(ProductStatus.CANCELLED);
-        log.info("product cancelled " + product);
+        log.debug("product cancelled " + product);
     }
 
     public ProductDetailsResponse buy(ProductBuyRequest request) {
@@ -71,7 +71,7 @@ public class ProductService {
         createOrderRequest.setClientId(request.getClientId());
         createOrderRequest.setProductQuantity(request.getQuantity());
         CreateOrderResponse order = orderClient.createOrder(createOrderRequest);
-        log.info("new order " + order);
+        log.debug("new order " + order);
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
 

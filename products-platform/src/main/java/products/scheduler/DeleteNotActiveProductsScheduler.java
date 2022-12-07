@@ -27,7 +27,7 @@ public class DeleteNotActiveProductsScheduler {
         for (Product product : products) {
             if (!orderClient.existsByProductId(product.getId())) {
                 repository.delete(product);
-                log.info("deleted product " + product);
+                log.debug("deleted product " + product);
             }
         }
     }
