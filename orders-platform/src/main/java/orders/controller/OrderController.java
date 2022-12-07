@@ -7,6 +7,7 @@ import orders.service.OrderService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -23,27 +24,27 @@ public class OrderController {
     }
 
     @GetMapping(value = "{id}")
-    public OrderDetailsResponse findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public OrderDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
     @GetMapping(value = "/product/{id}")
-    public boolean existsByProductId(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public boolean existsByProductId(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.existsByProductId(id);
     }
 
     @PostMapping
-    public OrderDetailsResponse create(@Validated @RequestBody CreateOrderRequest request) {
+    public OrderDetailsResponse create(@Valid @RequestBody CreateOrderRequest request) {
         return service.create(request);
     }
 
     @PatchMapping(value = "/complete/{id}")
-    public void complete(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public void complete(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.complete(id);
     }
 
     @DeleteMapping(value = "{id}")
-    public void deleteById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);
     }
 }
