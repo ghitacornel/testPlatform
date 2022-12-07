@@ -37,13 +37,13 @@ public class ProductService {
     }
 
     public void cancel(Product item) {
-        log.info("cancelling " + item);
         restClient.products()
                 .delete()
                 .uri("/product/" + item.getId())
                 .retrieve()
                 .toBodilessEntity()
                 .block();
+        log.debug("cancelling " + item);
     }
 
     public Product sale(ProductSale item) {
