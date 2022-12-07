@@ -1,1 +1,9 @@
+QUEUE ADMIN
+http://localhost:8161/admin/index.jsp
+
+http://localhost:8090/client
+http://localhost:8091/company
+http://localhost:8092/product
+http://localhost:8093/order
+
 add country to client/company
