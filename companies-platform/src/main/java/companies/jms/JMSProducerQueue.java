@@ -17,7 +17,7 @@ public class JMSProducerQueue {
 
     public void sendDeleteMessage(Integer id) {
         jmsTemplate.convertAndSend(queueProductCancellation, id);
-        log.info("company delete message send " + id);
+        log.debug("company delete message send " + id);
     }
 
 
