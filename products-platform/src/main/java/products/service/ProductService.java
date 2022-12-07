@@ -38,7 +38,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public long countAll() {
+    public long countAllActive() {
         return repository.countAllActive();
     }
 

@@ -25,8 +25,8 @@ public class ProductController {
     }
 
     @GetMapping("/count")
-    public long countAll() {
-        return service.countAll();
+    public long countAllActive() {
+        return service.countAllActive();
     }
 
     @GetMapping(value = "{id}")
