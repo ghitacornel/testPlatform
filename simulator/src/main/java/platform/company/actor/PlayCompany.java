@@ -15,7 +15,7 @@ import platform.random.RandomDataFetchService;
 @Slf4j
 public class PlayCompany extends AbstractActor {
 
-    private static final int MINIMUM = 50;
+    private static final int MINIMUM = 100;
     private static final int MAXIMUM = 100;
     private final CompanyService companyService;
     private final RandomDataFetchService randomDataFetchService;

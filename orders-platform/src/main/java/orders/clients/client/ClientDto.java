@@ -8,5 +8,6 @@ public class ClientDto {
     private Integer id;
     private String name;
     private String cardType;
+    private String country;
 
 }

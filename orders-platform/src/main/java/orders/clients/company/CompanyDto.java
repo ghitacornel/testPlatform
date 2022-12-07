@@ -9,5 +9,6 @@ public class CompanyDto {
     private String name;
     private String url;
     private String industry;
+    private String country;
 
 }

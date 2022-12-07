@@ -32,6 +32,10 @@ public class Order extends Identifiable {
     @Column(nullable = false)
     private String userCreditCardType;
 
+    @NotBlank
+    @Column(nullable = false)
+    private String userCountry;
+
     @NotNull
     @Column(nullable = false)
     private Integer productId;
@@ -61,6 +65,10 @@ public class Order extends Identifiable {
     @NotBlank
     @Column(nullable = false)
     private String companyName;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String companyCountry;
 
     @NotNull
     @Enumerated
