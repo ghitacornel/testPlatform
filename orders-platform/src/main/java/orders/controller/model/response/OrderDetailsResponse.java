@@ -12,9 +12,10 @@ public class OrderDetailsResponse {
     private String productId;
     private String productName;
     private String productColor;
-    private Double productPrice;
-    private Integer productQuantity;
+    private Double price;
+    private Integer quantity;
     private Integer companyId;
     private String companyName;
+    private String status;
 
 }
