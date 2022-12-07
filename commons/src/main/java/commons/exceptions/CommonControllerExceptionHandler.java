@@ -68,8 +68,8 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
         log.error("ConstraintViolationException", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage(), e.getConstraintViolations().stream()
                 .map(error -> {
-                    String fieldName = ((FieldError) error).getField();
-                    String fieldValue = String.valueOf(((FieldError) error).getRejectedValue());
+                    String fieldName = error.getPropertyPath().toString();
+                    String fieldValue = String.valueOf(error.getInvalidValue());
                     String errorMessage = error.getMessage();
                     return new commons.exceptions.FieldError(fieldName, fieldValue, errorMessage);
                 })
