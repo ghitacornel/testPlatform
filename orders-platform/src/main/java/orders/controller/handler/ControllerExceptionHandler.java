@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class ControllerExceptionHandler extends CommonControllerExceptionHandler {
 
     @ExceptionHandler(CompanyNotFoundException.class)
-    public ResponseEntity<Object> handle(CompanyNotFoundException e) {
+    public ResponseEntity<String> handle(CompanyNotFoundException e) {
         log.error(e.getMessage());
         return new ResponseEntity<>(e.getMessage(), NOT_FOUND);
     }
