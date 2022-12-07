@@ -29,10 +29,6 @@ public class PlayProduct extends AbstractActor {
             return;
         }
         ProductSale productSale = randomDataCreatorService.createProductSale();
-        if (productSale == null) {
-            log.warn("no product to sell");
-            return;
-        }
         log.info("trying to sell product " + productSale);
         productService.sale(productSale);
     }
@@ -43,10 +39,6 @@ public class PlayProduct extends AbstractActor {
             return;
         }
         Product product = randomDataFetchService.findRandomProduct();
-        if (product == null) {
-            log.warn("no product to cancel");
-            return;
-        }
         log.info("trying to cancel product " + product);
         productService.cancel(product);
     }
@@ -54,10 +46,6 @@ public class PlayProduct extends AbstractActor {
     @Scheduled(fixedRate = 100, initialDelay = 2000)
     public void operateBuy() {
         ProductBuy productBuy = randomDataCreatorService.createProductBuy();
-        if (productBuy == null) {
-            log.warn("no product to buy");
-            return;
-        }
         log.info("trying to buy product " + productBuy);
         productService.buy(productBuy);
     }
