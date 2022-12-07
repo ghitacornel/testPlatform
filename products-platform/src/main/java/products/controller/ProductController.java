@@ -8,6 +8,7 @@ import products.controller.model.response.ProductDetailsResponse;
 import products.controller.model.request.ProductSaleRequest;
 import products.service.ProductService;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -29,22 +30,22 @@ public class ProductController {
     }
 
     @GetMapping(value = "{id}")
-    public ProductDetailsResponse findById(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public ProductDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
     @PostMapping(value = "/sale")
-    public ProductDetailsResponse sale(@Validated @RequestBody ProductSaleRequest request) {
+    public ProductDetailsResponse sale(@Valid @RequestBody ProductSaleRequest request) {
         return service.sale(request);
     }
 
     @PostMapping(value = "/buy")
-    public ProductDetailsResponse buy(@Validated @RequestBody ProductBuyRequest request) {
+    public ProductDetailsResponse buy(@Valid @RequestBody ProductBuyRequest request) {
         return service.buy(request);
     }
 
     @DeleteMapping(value = "{id}")
-    public void cancel(@Validated @NotNull @PathVariable(name = "id") Integer id) {
+    public void cancel(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.cancel(id);
     }
 }
