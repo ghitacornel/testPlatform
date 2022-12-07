@@ -16,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByCompanyId(Integer id);
 
+    @Query("select count(p.id) from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE")
+    long countAllActive();
 }

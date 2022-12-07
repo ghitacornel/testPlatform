@@ -39,7 +39,7 @@ public class ProductService {
     }
 
     public long countAll() {
-        return repository.count();
+        return repository.countAllActive();
     }
 
     public ProductDetailsResponse sale(ProductSaleRequest request) {
