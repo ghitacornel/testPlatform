@@ -8,9 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import products.clients.order.OrderClient;
 import products.repository.ProductRepository;
-import products.repository.entity.Product;
-
-import java.util.List;
 
 @Slf4j
 @Component
@@ -23,13 +20,12 @@ public class DeleteNotActiveProductsScheduler {
     @Scheduled(fixedRate = 10000)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void deleteNotActiveProducts() {
-        List<Product> products = repository.findAllNotActive();
-        for (Product product : products) {
-            if (!orderClient.existsByProductId(product.getId())) {
-                repository.delete(product);
-                log.debug("deleted product " + product);
-            }
-        }
+        repository.findAllNotActive().stream()
+                .filter(product -> !orderClient.existsByProductId(product.getId()))
+                .forEach(product -> {
+                    repository.delete(product);
+                    log.debug("deleted product " + product);
+                });
     }
 
 }
