@@ -6,8 +6,7 @@ services:
     container_name: activeMQ
     ports:
       - 8161:8161
-      - 61616:61616
-      - 61613:61613
+      - 11111:61616
 
   postgres_clients:
     image: postgres:latest
