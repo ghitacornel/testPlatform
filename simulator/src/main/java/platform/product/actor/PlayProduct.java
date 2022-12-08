@@ -23,7 +23,7 @@ public class PlayProduct extends AbstractActor {
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;
 
-    @Scheduled(fixedRate = 100, initialDelay = 1000)
+    @Scheduled(fixedRate = 50, initialDelay = 1000)
     public void operateSale() {
         if (productService.countAll() > MAXIMUM) {
             return;
@@ -43,7 +43,7 @@ public class PlayProduct extends AbstractActor {
         productService.cancel(product);
     }
 
-    @Scheduled(fixedRate = 50, initialDelay = 2000)
+    @Scheduled(fixedRate = 25, initialDelay = 2000)
     public void operateBuy() {
         ProductBuy productBuy = randomDataCreatorService.createProductBuy();
         log.debug("trying to buy product " + productBuy);
