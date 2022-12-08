@@ -59,7 +59,7 @@ public class ProductService {
         log.debug("product cancelled " + product);
     }
 
-    public ProductDetailsResponse buy(ProductBuyRequest request) {
+    public void buy(ProductBuyRequest request) {
         Product product = repository.findByIdAndLock(request.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + request.getProductId() + " not found"));
         if (product.getQuantity() < request.getQuantity()) {
@@ -79,10 +79,6 @@ public class ProductService {
         if (product.getQuantity() == 0) {
             product.setStatus(ProductStatus.CONSUMED);
         }
-
-        ProductDetailsResponse productDetailsResponse = productMapper.map(product);
-        productDetailsResponse.setQuantity(request.getQuantity());
-        return productDetailsResponse;
 
     }
 

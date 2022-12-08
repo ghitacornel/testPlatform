@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import products.controller.model.request.ProductBuyRequest;
-import products.controller.model.response.ProductDetailsResponse;
 import products.controller.model.request.ProductSaleRequest;
+import products.controller.model.response.ProductDetailsResponse;
 import products.service.ProductService;
 
 import javax.validation.Valid;
@@ -39,9 +39,9 @@ public class ProductController {
         return service.sale(request);
     }
 
-    @PostMapping(value = "/buy")
-    public ProductDetailsResponse buy(@Valid @RequestBody ProductBuyRequest request) {
-        return service.buy(request);
+    @PutMapping(value = "/buy")
+    public void buy(@Valid @RequestBody ProductBuyRequest request) {
+        service.buy(request);
     }
 
     @DeleteMapping(value = "{id}")

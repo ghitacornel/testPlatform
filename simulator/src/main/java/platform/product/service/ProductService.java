@@ -58,16 +58,15 @@ public class ProductService {
         return product;
     }
 
-    public Product buy(ProductBuy item) {
-        Product product = restClient.products()
-                .post()
+    public void buy(ProductBuy item) {
+        restClient.products()
+                .put()
                 .uri("/product/buy")
                 .bodyValue(item)
                 .retrieve()
-                .bodyToMono(Product.class)
+                .toBodilessEntity()
                 .block();
-        log.debug("buying " + product);
-        return product;
+        log.debug("buying " + item);
     }
 
 }
