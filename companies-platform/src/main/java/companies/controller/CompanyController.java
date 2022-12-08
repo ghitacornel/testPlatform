@@ -1,5 +1,6 @@
 package companies.controller;
 
+import commons.model.IdResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
 import companies.service.CompanyService;
@@ -34,7 +35,7 @@ public class CompanyController {
     }
 
     @PostMapping
-    public CompanyDetailsResponse register(@Valid @RequestBody CompanyRegisterRequest json) {
+    public IdResponse register(@Valid @RequestBody CompanyRegisterRequest json) {
         return service.register(json);
     }
 

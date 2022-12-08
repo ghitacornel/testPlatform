@@ -1,5 +1,6 @@
 package platform.product.service;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,13 +47,13 @@ public class ProductService {
         log.debug("cancelling " + item);
     }
 
-    public Product sale(ProductSale item) {
-        Product product = restClient.products()
+    public IdResponse sale(ProductSale item) {
+        IdResponse product = restClient.products()
                 .post()
                 .uri("/product/sale")
                 .bodyValue(item)
                 .retrieve()
-                .bodyToMono(Product.class)
+                .bodyToMono(IdResponse.class)
                 .block();
         log.debug("selling " + product);
         return product;

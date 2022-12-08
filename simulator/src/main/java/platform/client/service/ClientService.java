@@ -1,5 +1,6 @@
 package platform.client.service;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import platform.client.model.Client;
@@ -33,13 +34,13 @@ public class ClientService {
                 .block();
     }
 
-    public Client register(Client item) {
+    public IdResponse register(Client item) {
         return restClient.clients()
                 .post()
                 .uri(CLIENT_URL)
                 .bodyValue(item)
                 .retrieve()
-                .bodyToMono(Client.class)
+                .bodyToMono(IdResponse.class)
                 .block();
     }
 

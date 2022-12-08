@@ -1,5 +1,6 @@
 package platform.company.actor;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,8 @@ public class SetupCompany extends AbstractActor {
         while (companyService.count() < MAX_COMPANY_NUMBERS) {
             try {
                 Company company = randomDataCreatorService.createCompany();
-                company = companyService.register(company);
-                log.info("registered company " + company);
+                IdResponse response = companyService.register(company);
+                log.info("registered company " + response);
             } catch (Exception e) {
                 log.error("fail creating a company, trying again", e);
             }

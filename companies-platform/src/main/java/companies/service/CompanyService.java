@@ -1,5 +1,6 @@
 package companies.service;
 
+import commons.model.IdResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
 import companies.exception.CompanyNotFoundException;
@@ -35,10 +36,10 @@ public class CompanyService {
                 .orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
-    public CompanyDetailsResponse register(CompanyRegisterRequest request) {
+    public IdResponse register(CompanyRegisterRequest request) {
         Company company = mapper.map(request);
         repository.save(company);
-        return mapper.map(company);
+        return new IdResponse(company.getId());
     }
 
     public void deleteById(Integer id) {

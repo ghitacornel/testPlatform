@@ -1,5 +1,6 @@
 package products.controller;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/sale")
-    public ProductDetailsResponse sale(@Valid @RequestBody ProductSaleRequest request) {
+    public IdResponse sale(@Valid @RequestBody ProductSaleRequest request) {
         return service.sale(request);
     }
 

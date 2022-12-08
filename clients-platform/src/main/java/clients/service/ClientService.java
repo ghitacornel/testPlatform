@@ -5,6 +5,7 @@ import clients.controller.model.response.ClientDetailsResponse;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
 import clients.service.mapper.ClientMapper;
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,10 +34,10 @@ public class ClientService {
                 .orElseThrow(() -> new EntityNotFoundException("Client with id " + id + " not found"));
     }
 
-    public ClientDetailsResponse register(ClientRegisterRequest request) {
+    public IdResponse register(ClientRegisterRequest request) {
         Client client = clientMapper.map(request);
         repository.save(client);
-        return clientMapper.map(client);
+        return new IdResponse(client.getId());
     }
 
     public long count() {

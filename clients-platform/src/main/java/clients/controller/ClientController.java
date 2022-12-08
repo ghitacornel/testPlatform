@@ -3,6 +3,7 @@ package clients.controller;
 import clients.controller.model.request.ClientRegisterRequest;
 import clients.controller.model.response.ClientDetailsResponse;
 import clients.service.ClientService;
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientDetailsResponse register(@Valid @RequestBody ClientRegisterRequest request) {
+    public IdResponse register(@Valid @RequestBody ClientRegisterRequest request) {
         return service.register(request);
     }
 

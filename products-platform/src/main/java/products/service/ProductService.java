@@ -1,6 +1,7 @@
 package products.service;
 
 import commons.exceptions.BusinessException;
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,14 +43,14 @@ public class ProductService {
         return repository.countAllActive();
     }
 
-    public ProductDetailsResponse sale(ProductSaleRequest request) {
+    public IdResponse sale(ProductSaleRequest request) {
         if (companyClient.findById(request.getCompanyId()) == null) {
             throw new EntityNotFoundException("Company with id " + request.getCompanyId() + " not found");
         }
         Product product = productMapper.map(request);
         repository.save(product);
         log.debug("new product to sale " + product);
-        return productMapper.map(product);
+        return new IdResponse(product.getId());
     }
 
     public void cancel(Integer id) {

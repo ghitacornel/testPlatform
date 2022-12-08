@@ -1,5 +1,6 @@
 package platform.client.actor;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,8 +28,8 @@ public class PlayClient extends AbstractActor {
             return;
         }
         Client client = randomDataCreatorService.createClient();
-        client = clientService.register(client);
-        log.debug("registered client " + client);
+        IdResponse response = clientService.register(client);
+        log.debug("registered client " + response);
     }
 
     @Scheduled(fixedRate = 1000, initialDelay = 5000)

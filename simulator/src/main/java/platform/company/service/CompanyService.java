@@ -1,5 +1,6 @@
 package platform.company.service;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import platform.common.RESTClient;
@@ -33,13 +34,13 @@ public class CompanyService {
                 .block();
     }
 
-    public Company register(Company item) {
+    public IdResponse register(Company item) {
         return restClient.companies()
                 .post()
                 .uri(COMPANY_URL)
                 .bodyValue(item)
                 .retrieve()
-                .bodyToMono(Company.class)
+                .bodyToMono(IdResponse.class)
                 .block();
     }
 

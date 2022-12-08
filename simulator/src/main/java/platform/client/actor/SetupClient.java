@@ -1,5 +1,6 @@
 package platform.client.actor;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,8 +25,8 @@ public class SetupClient extends AbstractActor {
         while (clientService.count() < MAX_CLIENTS_NUMBER) {
             try {
                 Client client = randomDataCreatorService.createClient();
-                client = clientService.register(client);
-                log.info("registered client " + client);
+                IdResponse response = clientService.register(client);
+                log.info("registered client " + response);
             } catch (Exception e) {
                 log.error("fail creating a client, trying again", e);
             }

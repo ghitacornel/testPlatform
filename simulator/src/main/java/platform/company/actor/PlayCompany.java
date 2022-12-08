@@ -1,5 +1,6 @@
 package platform.company.actor;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,8 +28,8 @@ public class PlayCompany extends AbstractActor {
             return;
         }
         Company company = randomDataCreatorService.createCompany();
-        company = companyService.register(company);
-        log.debug("registered company " + company);
+        IdResponse response = companyService.register(company);
+        log.debug("registered company " + response);
     }
 
     @Scheduled(fixedRate = 5000, initialDelay = 10000)
