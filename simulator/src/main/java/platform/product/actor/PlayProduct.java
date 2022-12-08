@@ -43,7 +43,7 @@ public class PlayProduct extends AbstractActor {
         productService.cancel(product);
     }
 
-    @Scheduled(fixedRate = 100, initialDelay = 2000)
+    @Scheduled(fixedRate = 50, initialDelay = 2000)
     public void operateBuy() {
         ProductBuy productBuy = randomDataCreatorService.createProductBuy();
         log.debug("trying to buy product " + productBuy);
