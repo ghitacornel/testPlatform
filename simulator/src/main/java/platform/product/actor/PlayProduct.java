@@ -18,7 +18,7 @@ import platform.random.RandomDataFetchService;
 public class PlayProduct extends AbstractActor {
 
     private static final int MINIMUM = 50;
-    private static final int MAXIMUM = 200;
+    private static final int MAXIMUM = 2000;
     private final ProductService productService;
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;
