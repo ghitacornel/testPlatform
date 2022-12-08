@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.clients.company.CompanyClient;
 import products.clients.order.CreateOrderRequest;
-import products.clients.order.CreateOrderResponse;
 import products.clients.order.OrderClient;
 import products.controller.model.request.ProductBuyRequest;
 import products.controller.model.request.ProductSaleRequest;
@@ -71,8 +70,8 @@ public class ProductService {
         createOrderRequest.setProductId(request.getProductId());
         createOrderRequest.setClientId(request.getClientId());
         createOrderRequest.setProductQuantity(request.getQuantity());
-        CreateOrderResponse order = orderClient.createOrder(createOrderRequest);
-        log.debug("new order " + order);
+        IdResponse response = orderClient.createOrder(createOrderRequest);
+        log.debug("new order " + response);
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
 

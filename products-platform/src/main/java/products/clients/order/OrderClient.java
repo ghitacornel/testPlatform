@@ -1,6 +1,7 @@
 package products.clients.order;
 
 import commons.exceptions.BusinessException;
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import products.clients.RESTClient;
@@ -11,13 +12,13 @@ public class OrderClient {
 
     private final RESTClient restClient;
 
-    public CreateOrderResponse createOrder(CreateOrderRequest request) {
+    public IdResponse createOrder(CreateOrderRequest request) {
         return restClient.orders()
                 .post()
                 .uri("/order")
                 .bodyValue(request)
                 .retrieve()
-                .bodyToMono(CreateOrderResponse.class)
+                .bodyToMono(IdResponse.class)
                 .doOnError(throwable -> {
                     throw new BusinessException("Exception creating order for request " + request, throwable);
                 })

@@ -1,5 +1,6 @@
 package orders.controller;
 
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;
@@ -39,7 +40,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderDetailsResponse create(@Valid @RequestBody CreateOrderRequest request) {
+    public IdResponse create(@Valid @RequestBody CreateOrderRequest request) {
         return service.create(request);
     }
 

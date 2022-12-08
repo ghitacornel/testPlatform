@@ -1,6 +1,7 @@
 package orders.service;
 
 import commons.exceptions.BusinessException;
+import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import orders.clients.client.ClientClient;
 import orders.clients.client.ClientDto;
@@ -44,7 +45,7 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
     }
 
-    public OrderDetailsResponse create(CreateOrderRequest request) {
+    public IdResponse create(CreateOrderRequest request) {
         ClientDto client = clientClient.findById(request.getClientId());
         ProductDto product = productClient.findById(request.getProductId());
         CompanyDto company = companyClient.findById(product.getCompanyId());
@@ -62,7 +63,7 @@ public class OrderService {
         order.setPrice(product.getPrice());
         order.setQuantity(product.getQuantity());
         repository.save(order);
-        return orderMapper.map(order);
+        return new IdResponse(order.getId());
     }
 
     public void complete(Integer id) {
