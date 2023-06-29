@@ -32,7 +32,7 @@ public class PlayClient extends AbstractActor {
         log.info("registered client " + response);
     }
 
-    @Scheduled(fixedRate = 1000, initialDelay = 5000)
+    @Scheduled(fixedRate = 1000, initialDelay = 5500)
     public void unregister() {
         if (clientService.count() < MINIMUM) {
             return;
