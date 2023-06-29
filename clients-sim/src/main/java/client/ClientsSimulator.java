@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ClientsSimulatorApplication {
+public class ClientsSimulator {
     public static void main(String[] args) {
-        SpringApplication.run(ClientsSimulatorApplication.class, args);
+        SpringApplication.run(ClientsSimulator.class, args);
     }
 }
