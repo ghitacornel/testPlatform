@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>companies-platform</artifactId>
+    <artifactId>companies-app</artifactId>
 
     <dependencies>
 

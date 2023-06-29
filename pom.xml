@@ -11,7 +11,7 @@
         <module>simulator</module>
         <module>commons</module>
         <module>clients-app</module>
-        <module>companies-platform</module>
+        <module>companies-app</module>
         <module>orders-platform</module>
         <module>products-platform</module>
         <module>clients-sim</module>
