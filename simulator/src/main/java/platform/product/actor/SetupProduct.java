@@ -10,7 +10,7 @@ import platform.product.model.ProductSale;
 import platform.product.service.ProductService;
 import platform.random.RandomDataCreatorService;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 @Component
 @RequiredArgsConstructor

@@ -9,7 +9,7 @@ import platform.company.model.Company;
 import platform.company.service.CompanyService;
 import platform.random.RandomDataCreatorService;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor

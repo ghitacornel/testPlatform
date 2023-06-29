@@ -9,7 +9,7 @@ import platform.client.service.ClientService;
 import platform.common.AbstractActor;
 import platform.random.RandomDataCreatorService;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 @Component
 @RequiredArgsConstructor
