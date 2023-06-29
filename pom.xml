@@ -10,7 +10,7 @@
     <modules>
         <module>simulator</module>
         <module>commons</module>
-        <module>clients-platform</module>
+        <module>clients-app</module>
         <module>companies-platform</module>
         <module>orders-platform</module>
         <module>products-platform</module>
