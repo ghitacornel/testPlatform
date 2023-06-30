@@ -63,6 +63,10 @@ public class ProductService {
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
 
+        if (product.getQuantity() == 0) {
+            log.info("Product consumed " + product);
+        }
+
     }
 
     public ProductDetailsResponse findById(Integer id) {
