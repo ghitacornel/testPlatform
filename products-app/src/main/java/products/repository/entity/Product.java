@@ -1,15 +1,11 @@
 package products.repository.entity;
 
 import commons.model.Identifiable;
-import jakarta.persistence.EnumType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 
 @Entity
 @Getter
@@ -29,7 +25,7 @@ public class Product extends Identifiable {
     @Column(nullable = false)
     private double price;
 
-    @Min(1)
+    @Min(0)
     @Column(nullable = false)
     private int quantity;
 
@@ -40,5 +36,13 @@ public class Product extends Identifiable {
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private ProductStatus status = ProductStatus.ACTIVE;
+
+    @PrePersist
+    @PreUpdate
+    private void adjustStatusBasedOnQuantity() {
+        if (quantity == 0) {
+            status = ProductStatus.CONSUMED;
+        }
+    }
 
 }

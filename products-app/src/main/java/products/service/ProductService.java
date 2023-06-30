@@ -63,11 +63,6 @@ public class ProductService {
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
 
-        // no more products => mark as CONSUMED
-        if (product.getQuantity() == 0) {
-            product.setStatus(ProductStatus.CONSUMED);
-        }
-
     }
 
     public ProductDetailsResponse findById(Integer id) {

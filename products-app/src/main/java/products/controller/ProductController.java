@@ -1,6 +1,8 @@
 package products.controller;
 
 import commons.model.IdResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +11,6 @@ import products.controller.model.request.ProductSaleRequest;
 import products.controller.model.response.ProductDetailsResponse;
 import products.service.ProductService;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 @RestController
@@ -19,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class ProductController {
-    
+
     private final ProductService service;
 
     @GetMapping
