@@ -25,7 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     void cancelByCompanyId(@Param("companyId") Integer companyId);
 
     @Lock(LockModeType.PESSIMISTIC_READ)
-    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "100")})
+    @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value = "100")})
     @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE and p.id = :id")
     Optional<Product> findByIdAndLock(@Param("id") Integer id);
 }
