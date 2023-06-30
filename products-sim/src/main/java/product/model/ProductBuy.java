@@ -7,6 +7,6 @@ public class ProductBuy {
 
     private Integer clientId;
     private Integer productId;
-    private Integer quantity;
+    private int quantity;
 
 }

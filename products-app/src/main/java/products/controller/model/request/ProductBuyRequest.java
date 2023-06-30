@@ -13,8 +13,7 @@ public class ProductBuyRequest {
     @NotNull
     private Integer productId;
 
-    @NotNull
     @Min(1)
-    private Integer quantity;
+    private int quantity;
 
 }

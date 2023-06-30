@@ -19,9 +19,8 @@ public class ProductSaleRequest {
     @Min(1)
     private Double price;
 
-    @NotNull
     @Min(100)
-    private Integer quantity;
+    private int quantity;
 
     @NotNull
     private Integer companyId;
