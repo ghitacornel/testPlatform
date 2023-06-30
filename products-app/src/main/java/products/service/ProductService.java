@@ -2,24 +2,21 @@ package products.service;
 
 import commons.exceptions.BusinessException;
 import commons.model.IdResponse;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.controller.model.request.ProductBuyRequest;
 import products.controller.model.request.ProductSaleRequest;
 import products.controller.model.response.ProductDetailsResponse;
+import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
 import products.repository.entity.ProductStatus;
-import products.mapper.ProductMapper;
-
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -41,7 +38,6 @@ public class ProductService {
     public IdResponse sale(ProductSaleRequest request) {
         Product product = productMapper.map(request);
         repository.save(product);
-        log.info("new product to sale " + product);
         return new IdResponse(product.getId());
     }
 
@@ -49,8 +45,6 @@ public class ProductService {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         product.setStatus(ProductStatus.CANCELLED);
-
-        log.info("product cancelled " + product);
     }
 
     public void buy(ProductBuyRequest request) {
@@ -63,10 +57,6 @@ public class ProductService {
         }
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
-
-        if (product.getQuantity() == 0) {
-            log.info("Product consumed " + product);
-        }
 
     }
 
