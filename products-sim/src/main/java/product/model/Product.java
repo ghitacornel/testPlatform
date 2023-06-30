@@ -8,7 +8,7 @@ public class Product  {
     private Integer id;
     private String name;
     private String color;
-    private Double price;
-    private Integer quantity;
+    private double price;
+    private int quantity;
 
 }

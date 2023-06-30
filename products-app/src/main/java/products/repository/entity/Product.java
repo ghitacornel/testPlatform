@@ -25,15 +25,13 @@ public class Product extends Identifiable {
     @Column(nullable = false)
     private String color;
 
-    @NotNull
     @Min(1)
     @Column(nullable = false)
-    private Double price;
+    private double price;
 
-    @NotNull
     @Min(1)
     @Column(nullable = false)
-    private Integer quantity;
+    private int quantity;
 
     @NotNull
     @Column(nullable = false)
