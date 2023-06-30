@@ -1,6 +1,5 @@
 package client.actor;
 
-import client.common.AbstractActor;
 import client.model.Client;
 import client.random.RandomDataCreatorService;
 import client.random.RandomDataFetchService;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class PlayClient extends AbstractActor {
+public class PlayClient {
 
     private static final int MINIMUM = 100;
     private static final int MAXIMUM = 200;

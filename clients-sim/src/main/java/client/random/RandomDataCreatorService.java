@@ -1,7 +1,7 @@
 package client.random;
 
-import client.common.AbstractActor;
 import client.model.Client;
+import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RandomDataCreatorService extends AbstractActor {
+public class RandomDataCreatorService {
 
-    private final RandomDataFetchService randomDataFetchService;
+    private final Faker faker = Faker.instance();
 
     public Client createClient() {
         Client item = new Client();

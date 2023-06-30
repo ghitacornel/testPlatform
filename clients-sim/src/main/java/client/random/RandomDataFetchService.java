@@ -1,6 +1,5 @@
 package client.random;
 
-import client.common.AbstractActor;
 import client.model.Client;
 import client.service.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RandomDataFetchService extends AbstractActor {
+public class RandomDataFetchService {
 
+    private final Random random = new Random();
     private final ClientService clientService;
 
     public Client findRandomClient() {

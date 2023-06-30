@@ -1,6 +1,5 @@
 package client.actor;
 
-import client.common.AbstractActor;
 import client.model.Client;
 import client.random.RandomDataCreatorService;
 import client.service.ClientService;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SetupClient extends AbstractActor {
+public class SetupClient {
 
     private static final int MAX_CLIENTS_NUMBER = 50;
 
