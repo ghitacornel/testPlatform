@@ -41,7 +41,7 @@ public class ProductService {
     public IdResponse sale(ProductSaleRequest request) {
         Product product = productMapper.map(request);
         repository.save(product);
-        log.debug("new product to sale " + product);
+        log.info("new product to sale " + product);
         return new IdResponse(product.getId());
     }
 
@@ -49,7 +49,8 @@ public class ProductService {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         product.setStatus(ProductStatus.CANCELLED);
-        log.debug("product cancelled " + product);
+
+        log.info("product cancelled " + product);
     }
 
     public void buy(ProductBuyRequest request) {
