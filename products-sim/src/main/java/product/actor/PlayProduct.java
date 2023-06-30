@@ -1,7 +1,6 @@
 package product.actor;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import product.common.AbstractActor;
@@ -14,7 +13,6 @@ import product.service.ProductService;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class PlayProduct extends AbstractActor {
 
     private static final int MINIMUM = 50;
@@ -30,7 +28,6 @@ public class PlayProduct extends AbstractActor {
             return;
         }
         ProductSale productSale = randomDataCreatorService.createProductSale();
-        log.debug("trying to sell product " + productSale);
         productService.sale(productSale);
     }
 
@@ -40,14 +37,12 @@ public class PlayProduct extends AbstractActor {
             return;
         }
         Product product = randomDataFetchService.findRandomProduct();
-        log.debug("trying to cancel product " + product);
         productService.cancel(product);
     }
 
     @Scheduled(fixedRate = 25, initialDelay = 2000)
     public void operateBuy() {
         ProductBuy productBuy = randomDataCreatorService.createProductBuy();
-        log.debug("trying to buy product " + productBuy);
         productService.buy(productBuy);
     }
 
