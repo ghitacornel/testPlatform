@@ -13,7 +13,7 @@
         <module>clients-app</module>
         <module>companies-app</module>
         <!--        <module>orders-platform</module>-->
-        <!--        <module>products-platform</module>-->
+        <module>products-app</module>
         <module>clients-sim</module>
         <module>companies-sim</module>
     </modules>

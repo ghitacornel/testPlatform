@@ -3,10 +3,10 @@ package companies.service;
 import commons.model.IdResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
-import companies.exception.CompanyNotFoundException;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
 import companies.mapper.CompanyMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class CompanyService {
     public CompanyDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(mapper::map)
-                .orElseThrow(() -> new CompanyNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("Company with id " + id + " not found"));
     }
 
     public IdResponse register(CompanyRegisterRequest request) {

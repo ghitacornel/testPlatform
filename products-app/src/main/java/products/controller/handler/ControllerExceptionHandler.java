@@ -1,4 +1,4 @@
-package clients.controller.handler;
+package products.controller.handler;
 
 import commons.exceptions.CommonControllerExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
