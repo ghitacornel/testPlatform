@@ -7,7 +7,7 @@ import companies.exception.CompanyNotFoundException;
 import companies.jms.JMSProducerQueue;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
-import companies.service.mapper.CompanyMapper;
+import companies.mapper.CompanyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
