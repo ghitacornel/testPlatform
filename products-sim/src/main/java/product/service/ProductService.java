@@ -1,13 +1,13 @@
-package platform.product.service;
+package product.service;
 
 import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import platform.common.RESTClient;
-import platform.product.model.Product;
-import platform.product.model.ProductBuy;
-import platform.product.model.ProductSale;
+import product.common.RESTClient;
+import product.model.Product;
+import product.model.ProductBuy;
+import product.model.ProductSale;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class ProductService {
                 .retrieve()
                 .toBodilessEntity()
                 .block();
-        log.debug("cancelling " + item);
+        log.info("cancelling " + item);
     }
 
     public IdResponse sale(ProductSale item) {
@@ -55,7 +55,7 @@ public class ProductService {
                 .retrieve()
                 .bodyToMono(IdResponse.class)
                 .block();
-        log.debug("selling " + product);
+        log.info("selling " + product);
         return product;
     }
 
@@ -67,7 +67,7 @@ public class ProductService {
                 .retrieve()
                 .toBodilessEntity()
                 .block();
-        log.debug("buying " + item);
+        log.info("buying " + item);
     }
 
 }

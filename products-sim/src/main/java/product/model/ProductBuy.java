@@ -1,4 +1,4 @@
-package platform.product.model;
+package product.model;
 
 import lombok.Data;
 

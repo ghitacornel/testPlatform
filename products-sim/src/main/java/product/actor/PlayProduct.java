@@ -1,16 +1,16 @@
-package platform.product.actor;
+package product.actor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import platform.common.AbstractActor;
-import platform.product.model.Product;
-import platform.product.model.ProductBuy;
-import platform.product.model.ProductSale;
-import platform.product.service.ProductService;
-import platform.random.RandomDataCreatorService;
-import platform.random.RandomDataFetchService;
+import product.common.AbstractActor;
+import product.model.Product;
+import product.model.ProductBuy;
+import product.model.ProductSale;
+import product.random.RandomDataCreatorService;
+import product.random.RandomDataFetchService;
+import product.service.ProductService;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +19,7 @@ public class PlayProduct extends AbstractActor {
 
     private static final int MINIMUM = 50;
     private static final int MAXIMUM = 2000;
+
     private final ProductService productService;
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;

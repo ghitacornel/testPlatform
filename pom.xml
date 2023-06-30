@@ -16,6 +16,7 @@
         <module>products-app</module>
         <module>clients-sim</module>
         <module>companies-sim</module>
+        <module>products-sim</module>
     </modules>
     <packaging>pom</packaging>
 
