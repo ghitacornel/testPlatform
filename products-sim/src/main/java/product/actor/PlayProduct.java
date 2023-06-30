@@ -3,7 +3,6 @@ package product.actor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import product.common.AbstractActor;
 import product.model.Product;
 import product.model.ProductBuy;
 import product.model.ProductSale;
@@ -13,7 +12,7 @@ import product.service.ProductService;
 
 @Service
 @RequiredArgsConstructor
-public class PlayProduct extends AbstractActor {
+public class PlayProduct {
 
     private static final int MINIMUM = 50;
     private static final int MAXIMUM = 2000;

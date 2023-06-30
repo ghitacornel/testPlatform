@@ -1,17 +1,22 @@
 package product.random;
 
+import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import product.common.AbstractActor;
 import product.model.Product;
 import product.model.ProductBuy;
 import product.model.ProductSale;
 
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RandomDataCreatorService extends AbstractActor {
+public class RandomDataCreatorService {
+
+    private final Faker faker = Faker.instance();
+    private final Random random = new Random();
 
     private final RandomDataFetchService randomDataFetchService;
 
