@@ -18,6 +18,7 @@ public class PlayClient extends AbstractActor {
 
     private static final int MINIMUM = 100;
     private static final int MAXIMUM = 200;
+
     private final ClientService clientService;
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;

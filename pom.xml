@@ -15,6 +15,7 @@
         <!--        <module>orders-platform</module>-->
         <!--        <module>products-platform</module>-->
         <module>clients-sim</module>
+        <module>companies-sim</module>
     </modules>
     <packaging>pom</packaging>
 

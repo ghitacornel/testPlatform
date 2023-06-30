@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class SetupClient extends AbstractActor {
 
     private static final int MAX_CLIENTS_NUMBER = 50;
+
     private final ClientService clientService;
     private final RandomDataCreatorService randomDataCreatorService;
 
