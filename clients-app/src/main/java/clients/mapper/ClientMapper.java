@@ -1,4 +1,4 @@
-package clients.service.mapper;
+package clients.mapper;
 
 import clients.controller.model.request.ClientRegisterRequest;
 import clients.controller.model.response.ClientDetailsResponse;

@@ -4,7 +4,7 @@ import clients.controller.model.request.ClientRegisterRequest;
 import clients.controller.model.response.ClientDetailsResponse;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
-import clients.service.mapper.ClientMapper;
+import clients.mapper.ClientMapper;
 import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
