@@ -1,20 +1,18 @@
 package company.actor;
 
 import commons.model.IdResponse;
-import company.common.AbstractActor;
 import company.model.Company;
 import company.random.RandomDataCreatorService;
 import company.service.CompanyService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SetupCompany extends AbstractActor {
+public class SetupCompany {
 
     private static final int MAX_COMPANY_NUMBERS = 50;
 

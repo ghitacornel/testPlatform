@@ -15,6 +15,7 @@ import java.util.Random;
 public class RandomDataFetchService {
 
     private final Random random = new Random();
+
     private final ClientService clientService;
 
     public Client findRandomClient() {

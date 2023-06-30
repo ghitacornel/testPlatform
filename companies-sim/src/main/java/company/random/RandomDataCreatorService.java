@@ -1,11 +1,13 @@
 package company.random;
 
-import company.common.AbstractActor;
+import com.github.javafaker.Faker;
 import company.model.Company;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RandomDataCreatorService extends AbstractActor {
+public class RandomDataCreatorService {
+
+    private final Faker faker = Faker.instance();
 
     public Company createCompany() {
         Company item = new Company();

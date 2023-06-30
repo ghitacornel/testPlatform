@@ -1,7 +1,6 @@
 package company.actor;
 
 import commons.model.IdResponse;
-import company.common.AbstractActor;
 import company.model.Company;
 import company.random.RandomDataCreatorService;
 import company.random.RandomDataFetchService;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class PlayCompany extends AbstractActor {
+public class PlayCompany {
 
     private static final int MINIMUM = 50;
     private static final int MAXIMUM = 100;
