@@ -4,7 +4,6 @@ import commons.model.IdResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
 import companies.exception.CompanyNotFoundException;
-import companies.jms.JMSProducerQueue;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
 import companies.mapper.CompanyMapper;
@@ -22,7 +21,6 @@ public class CompanyService {
 
     private final CompanyRepository repository;
     private final CompanyMapper mapper;
-    private final JMSProducerQueue jmsProducerQueue;
 
     public List<CompanyDetailsResponse> findAll() {
         return repository.findAll().stream()
@@ -43,7 +41,6 @@ public class CompanyService {
     }
 
     public void deleteById(Integer id) {
-        jmsProducerQueue.sendDeleteMessage(id);
         repository.deleteById(id);
     }
 
