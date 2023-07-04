@@ -50,7 +50,7 @@ public class ProductService {
     public IdResponse sale(ProductSell item) {
         IdResponse product = restClient.products()
                 .post()
-                .uri("/product/sale")
+                .uri("/product/sell")
                 .bodyValue(item)
                 .retrieve()
                 .bodyToMono(IdResponse.class)
