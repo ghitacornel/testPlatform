@@ -27,7 +27,7 @@ public class PlayProduct {
             return;
         }
         ProductSell productSell = randomDataCreatorService.createProductSell();
-        productService.sale(productSell);
+        productService.sell(productSell);
     }
 
     @Scheduled(fixedRate = 2000, initialDelay = 1000)

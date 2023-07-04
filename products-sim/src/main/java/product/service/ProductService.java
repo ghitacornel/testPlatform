@@ -47,7 +47,7 @@ public class ProductService {
         log.info("cancelling " + item);
     }
 
-    public IdResponse sale(ProductSell item) {
+    public IdResponse sell(ProductSell item) {
         IdResponse product = restClient.products()
                 .post()
                 .uri("/product/sell")

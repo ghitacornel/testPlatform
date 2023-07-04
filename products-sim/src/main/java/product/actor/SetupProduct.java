@@ -24,7 +24,7 @@ public class SetupProduct {
     public void setUp() {
         while (productService.countAll() < MINIMUM_INITIAL_PRODUCTS_COUNT) {
             ProductSell productSell = randomDataCreatorService.createProductSell();
-            IdResponse response = productService.sale(productSell);
+            IdResponse response = productService.sell(productSell);
             log.info("selling " + response);
         }
     }
