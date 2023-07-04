@@ -22,7 +22,7 @@ public class PlayCompany {
     private final RandomDataFetchService randomDataFetchService;
     private final RandomDataCreatorService randomDataCreatorService;
 
-    @Scheduled(fixedRate = 5000, initialDelay = 10000)
+    @Scheduled(fixedRate = 30000, initialDelay = 30000)
     public void register() {
         if (companyService.count() > MAXIMUM) {
             return;
@@ -32,7 +32,7 @@ public class PlayCompany {
         log.info("registered company " + response);
     }
 
-    @Scheduled(fixedRate = 5000, initialDelay = 12500)
+    @Scheduled(fixedRate = 30000, initialDelay = 45000)
     public void unregister() {
         if (companyService.count() < MINIMUM) {
             return;
