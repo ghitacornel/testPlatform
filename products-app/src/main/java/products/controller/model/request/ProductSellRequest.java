@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Data
-public class ProductSaleRequest {
+public class ProductSellRequest {
 
     @NotBlank
     private String name;

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.controller.model.request.ProductBuyRequest;
-import products.controller.model.request.ProductSaleRequest;
+import products.controller.model.request.ProductSellRequest;
 import products.controller.model.response.ProductDetailsResponse;
 import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
@@ -35,7 +35,7 @@ public class ProductService {
         return repository.countAllActive();
     }
 
-    public IdResponse sale(ProductSaleRequest request) {
+    public IdResponse sell(ProductSellRequest request) {
         Product product = productMapper.map(request);
         repository.save(product);
         return new IdResponse(product.getId());

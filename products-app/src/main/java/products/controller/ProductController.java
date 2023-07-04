@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import products.controller.model.request.ProductBuyRequest;
-import products.controller.model.request.ProductSaleRequest;
+import products.controller.model.request.ProductSellRequest;
 import products.controller.model.response.ProductDetailsResponse;
 import products.service.ProductService;
 
@@ -36,9 +36,9 @@ public class ProductController {
         return service.findById(id);
     }
 
-    @PostMapping(value = "sale")
-    public IdResponse sale(@Valid @RequestBody ProductSaleRequest request) {
-        return service.sale(request);
+    @PostMapping(value = "sell")
+    public IdResponse sell(@Valid @RequestBody ProductSellRequest request) {
+        return service.sell(request);
     }
 
     @PutMapping(value = "buy")
