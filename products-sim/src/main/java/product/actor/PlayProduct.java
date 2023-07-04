@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import product.model.Product;
 import product.model.ProductBuy;
-import product.model.ProductSale;
+import product.model.ProductSell;
 import product.random.RandomDataCreatorService;
 import product.random.RandomDataFetchService;
 import product.service.ProductService;
@@ -26,8 +26,8 @@ public class PlayProduct {
         if (productService.countAll() > MAXIMUM) {
             return;
         }
-        ProductSale productSale = randomDataCreatorService.createProductSale();
-        productService.sale(productSale);
+        ProductSell productSell = randomDataCreatorService.createProductSell();
+        productService.sale(productSell);
     }
 
     @Scheduled(fixedRate = 2000, initialDelay = 1000)

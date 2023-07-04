@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
-import product.model.ProductSale;
+import product.model.ProductSell;
 import product.random.RandomDataCreatorService;
 import product.service.ProductService;
 
@@ -23,8 +23,8 @@ public class SetupProduct {
     @PostConstruct
     public void setUp() {
         while (productService.countAll() < MINIMUM_INITIAL_PRODUCTS_COUNT) {
-            ProductSale productSale = randomDataCreatorService.createProductSale();
-            IdResponse response = productService.sale(productSale);
+            ProductSell productSell = randomDataCreatorService.createProductSell();
+            IdResponse response = productService.sale(productSell);
             log.info("selling " + response);
         }
     }

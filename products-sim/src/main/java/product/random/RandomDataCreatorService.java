@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import product.model.Product;
 import product.model.ProductBuy;
-import product.model.ProductSale;
+import product.model.ProductSell;
 
 import java.util.Random;
 
@@ -20,9 +20,9 @@ public class RandomDataCreatorService {
 
     private final RandomDataFetchService randomDataFetchService;
 
-    public ProductSale createProductSale() {
+    public ProductSell createProductSell() {
 
-        ProductSale item = new ProductSale();
+        ProductSell item = new ProductSell();
         item.setName(faker.commerce().productName());
         item.setColor(faker.commerce().color());
         item.setPrice(Double.valueOf(faker.commerce().price(1, 100)));

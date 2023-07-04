@@ -3,7 +3,7 @@ package product.model;
 import lombok.Data;
 
 @Data
-public class ProductSale {
+public class ProductSell {
 
     private String name;
     private String color;

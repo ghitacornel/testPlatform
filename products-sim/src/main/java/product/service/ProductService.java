@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import product.common.RESTClient;
 import product.model.Product;
 import product.model.ProductBuy;
-import product.model.ProductSale;
+import product.model.ProductSell;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class ProductService {
         log.info("cancelling " + item);
     }
 
-    public IdResponse sale(ProductSale item) {
+    public IdResponse sale(ProductSell item) {
         IdResponse product = restClient.products()
                 .post()
                 .uri("/product/sale")
