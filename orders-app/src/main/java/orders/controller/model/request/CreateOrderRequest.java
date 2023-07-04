@@ -1,9 +1,8 @@
 package orders.controller.model.request;
 
-import lombok.Data;
-
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import lombok.Data;
 
 @Data
 public class CreateOrderRequest {
@@ -15,7 +14,7 @@ public class CreateOrderRequest {
     private Integer productId;
 
     @NotNull
-    @Positive
+    @Min(1)
     private Integer quantity;
 
 }
