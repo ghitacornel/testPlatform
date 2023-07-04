@@ -8,15 +8,17 @@ import orders.service.OrderService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("order")
 @RequiredArgsConstructor
 @Validated
 public class OrderController {
+
     private final OrderService service;
 
     @GetMapping

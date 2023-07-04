@@ -2,13 +2,8 @@ package orders.service;
 
 import commons.exceptions.BusinessException;
 import commons.model.IdResponse;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import orders.clients.client.ClientClient;
-import orders.clients.client.ClientDto;
-import orders.clients.company.CompanyClient;
-import orders.clients.company.CompanyDto;
-import orders.clients.products.ProductClient;
-import orders.clients.products.ProductDto;
 import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;
 import orders.repository.OrderRepository;
@@ -18,7 +13,6 @@ import orders.service.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +21,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final ClientClient clientClient;
-    private final CompanyClient companyClient;
-    private final ProductClient productClient;
     private final OrderRepository repository;
     private final OrderMapper orderMapper;
 
@@ -46,22 +37,7 @@ public class OrderService {
     }
 
     public IdResponse create(CreateOrderRequest request) {
-        ClientDto client = clientClient.findById(request.getClientId());
-        ProductDto product = productClient.findById(request.getProductId());
-        CompanyDto company = companyClient.findById(product.getCompanyId());
-        Order order = new Order();
-        order.setUserId(client.getId());
-        order.setUserName(client.getName());
-        order.setUserCreditCardType(client.getCardType());
-        order.setUserCountry(client.getCountry());
-        order.setCompanyId(company.getId());
-        order.setCompanyName(company.getName());
-        order.setCompanyCountry(company.getCountry());
-        order.setProductId(product.getId());
-        order.setProductName(product.getName());
-        order.setProductColor(product.getColor());
-        order.setPrice(product.getPrice());
-        order.setQuantity(product.getQuantity());
+        Order order = orderMapper.map(request);
         repository.save(order);
         return new IdResponse(order.getId());
     }

@@ -1,5 +1,6 @@
 package orders.service.mapper;
 
+import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;
 import orders.repository.entity.Order;
 import org.mapstruct.Mapper;
@@ -7,6 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface OrderMapper {
 
-    OrderDetailsResponse map(Order data);
+    OrderDetailsResponse map(Order order);
+
+    Order map(CreateOrderRequest request);
 
 }

@@ -2,8 +2,8 @@ package orders.controller.model.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Data
 public class CreateOrderRequest {
@@ -16,6 +16,6 @@ public class CreateOrderRequest {
 
     @NotNull
     @Positive
-    private Integer productQuantity;
+    private Integer quantity;
 
 }

@@ -12,7 +12,7 @@
         <module>platform-commons</module>
         <module>clients-app</module>
         <module>companies-app</module>
-        <!--        <module>orders-platform</module>-->
+        <module>orders-app</module>
         <module>products-app</module>
         <module>clients-sim</module>
         <module>companies-sim</module>

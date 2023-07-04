@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories
-public class OrdersApplication {
+public class OrdersApp {
     public static void main(String[] args) {
-        SpringApplication.run(OrdersApplication.class, args);
+        SpringApplication.run(OrdersApp.class, args);
     }
 }
