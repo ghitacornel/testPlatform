@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class ClientController {
+    
     private final ClientService service;
 
     @GetMapping
