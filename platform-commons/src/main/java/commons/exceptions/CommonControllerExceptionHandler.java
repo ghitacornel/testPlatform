@@ -25,19 +25,19 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<ErrorResponse> handleEmptyResultDataAccessException(EmptyResultDataAccessException e) {
-        log.error("EmptyResultDataAccessException", e);
+        log.error("empty data", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
-        log.error("EntityNotFoundException", e);
+        log.error("no entity found found", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
     }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException e) {
-        log.error("BusinessException", e);
+        log.error("business exception", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
     }
 
@@ -46,7 +46,7 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
      */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        log.error("MethodArgumentNotValidException", e);
+        log.error("invalid argument", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage(), e.getBindingResult().getAllErrors().stream()
                 .map(error -> {
                     String fieldName = ((FieldError) error).getField();
@@ -63,7 +63,7 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException e) {
-        log.error("ConstraintViolationException", e);
+        log.error("constraint violated", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage(), e.getConstraintViolations().stream()
                 .map(error -> {
                     String fieldName = error.getPropertyPath().toString();
@@ -77,7 +77,7 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Object> handleValidationException(ValidationException e) {
-        log.error("ValidationException", e);
+        log.error("validation error", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
     }
 
