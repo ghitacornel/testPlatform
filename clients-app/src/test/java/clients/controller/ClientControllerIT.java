@@ -73,7 +73,7 @@ public class ClientControllerIT {
                 .country(clientRegisterRequest.getCountry())
                 .name(clientRegisterRequest.getName())
                 .build();
-        mockMvc.perform(get("/client/" + idResponse.getId()))
+        mockMvc.perform(get("/client/{id}", idResponse.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(clientDetailsResponse)));
@@ -97,4 +97,5 @@ public class ClientControllerIT {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("0"));
     }
+
 }
