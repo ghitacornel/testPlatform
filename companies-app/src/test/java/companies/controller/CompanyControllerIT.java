@@ -1,9 +1,9 @@
-package clients.controller;
+package companies.controller;
 
-import clients.controller.model.request.ClientRegisterRequest;
-import clients.controller.model.response.ClientDetailsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.model.IdResponse;
+import companies.controller.model.request.CompanyRegisterRequest;
+import companies.controller.model.response.CompanyDetailsResponse;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-public class ClientControllerIT {
+public class CompanyControllerIT {
 
     @Autowired
     MockMvc mockMvc;
@@ -36,22 +36,23 @@ public class ClientControllerIT {
     void testCRUD() {
 
         // GET
-        mockMvc.perform(get("/client"))
+        mockMvc.perform(get("/company"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("[]"));
-        mockMvc.perform(get("/client/count"))
+        mockMvc.perform(get("/company/count"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("0"));
 
         // POST
-        ClientRegisterRequest request = ClientRegisterRequest.builder()
+        CompanyRegisterRequest request = CompanyRegisterRequest.builder()
                 .name("name")
+                .url("url")
+                .industry("industry")
                 .country("country")
-                .cardType("cardType")
                 .build();
-        MvcResult mvcResult = mockMvc.perform(post("/client")
+        MvcResult mvcResult = mockMvc.perform(post("/company")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -62,37 +63,38 @@ public class ClientControllerIT {
         Assertions.assertNotNull(idResponse.getId());
 
         // GET
-        mockMvc.perform(get("/client/count"))
+        mockMvc.perform(get("/company/count"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("1"));
 
-        ClientDetailsResponse response = ClientDetailsResponse.builder()
+        CompanyDetailsResponse response = CompanyDetailsResponse.builder()
                 .id(idResponse.getId())
-                .cardType(request.getCardType())
-                .country(request.getCountry())
                 .name(request.getName())
+                .url(request.getUrl())
+                .industry(request.getIndustry())
+                .country(request.getCountry())
                 .build();
-        mockMvc.perform(get("/client/{id}", idResponse.getId()))
+        mockMvc.perform(get("/company/{id}", idResponse.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));
-        mockMvc.perform(get("/client"))
+        mockMvc.perform(get("/company"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(Collections.singletonList(response))));
 
         // DELETE
-        mockMvc.perform(delete("/client/" + idResponse.getId()))
+        mockMvc.perform(delete("/company/" + idResponse.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 
         // GET
-        mockMvc.perform(get("/client"))
+        mockMvc.perform(get("/company"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("[]"));
-        mockMvc.perform(get("/client/count"))
+        mockMvc.perform(get("/company/count"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("0"));
