@@ -29,20 +29,15 @@ public class ClientRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=5000&delay=5000")
                 .routeId("register-client-route")
-                .to("rest:get:client")
-                .unmarshal(new ListJacksonDataFormat(Client.class))
-                .process(exchange -> {
-                    List<?> data = exchange.getMessage().getBody(List.class);
-                    if (data.size() > MAXIMUM) {
-                        exchange.setRouteStop(true);
-                        return;
-                    }
-                    exchange.getMessage().setBody(Client.builder()
-                            .name(faker.name().username())
-                            .cardType(faker.business().creditCardType())
-                            .country(faker.country().name())
-                            .build());
-                })
+                .to("rest:get:client/count")
+                .unmarshal(new JacksonDataFormat(Long.class))
+                .choice()
+                .when(body().isLessThan(platform.routes.clients.ClientRoute.MAXIMUM))
+                .process(exchange -> exchange.getMessage().setBody(Client.builder()
+                        .name(faker.name().username())
+                        .cardType(faker.business().creditCardType())
+                        .country(faker.country().name())
+                        .build()))
                 .to("rest:post:client")
                 .unmarshal(new JacksonDataFormat(IdResponse.class))
                 .log("Registered client with id : ${body.id}")
