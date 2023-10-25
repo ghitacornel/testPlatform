@@ -8,7 +8,6 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.component.jackson.ListJacksonDataFormat;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
-import platform.routes.clients.Client;
 
 import java.util.List;
 import java.util.Random;
@@ -25,7 +24,7 @@ public class CompanyRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        restConfiguration().host("localhost").port(8091).component("servlet").bindingMode(RestBindingMode.json);
+        restConfiguration().host("localhost").port(8091).contextPath("company").component("servlet").bindingMode(RestBindingMode.json);
 
         from("timer://simpleTimer?period=500&delay=500")
                 .routeId("register-company-route")

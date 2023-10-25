@@ -24,9 +24,9 @@ public class ClientRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        restConfiguration().host("localhost").port(8090).component("servlet").bindingMode(RestBindingMode.json);
+        restConfiguration().host("localhost").port(8090).contextPath("client").component("servlet").bindingMode(RestBindingMode.json);
 
-        from("timer://simpleTimer?period=5000&delay=5000")
+        from("timer://simpleTimer?period=500&delay=500")
                 .routeId("register-client-route")
                 .to("rest:get:client/count")
                 .unmarshal(new JacksonDataFormat(Long.class))
@@ -41,7 +41,7 @@ public class ClientRoute extends RouteBuilder {
                 .log("Registered client with id : ${body.id}")
                 .end();
 
-        from("timer://simpleTimer?period=5000&delay=7500")
+        from("timer://simpleTimer?period=500&delay=750")
                 .routeId("unregister-client-route")
                 .to("rest:get:client")
                 .unmarshal(new ListJacksonDataFormat(Client.class))
