@@ -1,10 +1,12 @@
-package client.model;
+package platform.routes.clients;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @Data
 @EqualsAndHashCode(of = {"id", "name"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Client {
 
     private Integer id;
