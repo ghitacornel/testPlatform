@@ -50,8 +50,7 @@ public class ClientRoute extends RouteBuilder {
                 .setBody(exchange -> {
                     List<Client> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
-                    Client client = data.get(index);
-                    return client.getId();
+                    return data.get(index).getId();
                 })
                 .setHeader("id", body())
                 .to("rest:delete:client/{id}")
