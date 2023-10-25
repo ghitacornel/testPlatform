@@ -46,12 +46,9 @@ public class ClientRoute extends RouteBuilder {
                 .routeId("unregister-client-route")
                 .to("rest:get:client")
                 .unmarshal(new ListJacksonDataFormat(Client.class))
+                .filter(body().method("size").isGreaterThan(platform.routes.clients.ClientRoute.MINIMUM))
                 .process(exchange -> {
                     List<Client> data = exchange.getMessage().getBody(List.class);
-                    if (data.size() < MINIMUM) {
-                        exchange.setRouteStop(true);
-                        return;
-                    }
                     int index = random.nextInt(data.size());
                     Client client = data.get(index);
                     exchange.getMessage().setBody(client.getId());
