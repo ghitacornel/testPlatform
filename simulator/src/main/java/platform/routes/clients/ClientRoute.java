@@ -32,11 +32,11 @@ public class ClientRoute extends RouteBuilder {
                 .to("rest:get:client/count")
                 .unmarshal(new JacksonDataFormat(Long.class))
                 .filter(body().isLessThan(platform.routes.clients.ClientRoute.MAXIMUM))
-                .process(exchange -> exchange.getMessage().setBody(Client.builder()
+                .setBody(exchange -> Client.builder()
                         .name(faker.name().username())
                         .cardType(faker.business().creditCardType())
                         .country(faker.country().name())
-                        .build()))
+                        .build())
                 .to("rest:post:client")
                 .unmarshal(new JacksonDataFormat(IdResponse.class))
                 .log("Registered client with id : ${body.id}")
@@ -47,11 +47,11 @@ public class ClientRoute extends RouteBuilder {
                 .to("rest:get:client")
                 .unmarshal(new ListJacksonDataFormat(Client.class))
                 .filter(body().method("size").isGreaterThan(platform.routes.clients.ClientRoute.MINIMUM))
-                .process(exchange -> {
+                .setBody(exchange -> {
                     List<Client> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
                     Client client = data.get(index);
-                    exchange.getMessage().setBody(client.getId());
+                    return client.getId();
                 })
                 .setHeader("id", body())
                 .to("rest:delete:client/{id}")
