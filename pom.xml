@@ -13,7 +13,6 @@
         <module>companies-app</module>
         <module>orders-app</module>
         <module>products-app</module>
-        <module>clients-sim</module>
         <module>companies-sim</module>
         <module>products-sim</module>
         <module>simulator</module>
@@ -59,7 +58,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
 
