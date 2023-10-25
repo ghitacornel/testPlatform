@@ -25,8 +25,7 @@ public class CompanyRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        restConfiguration().host("localhost:8091");
-        restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
+        restConfiguration().host("localhost").port(8091).component("servlet").bindingMode(RestBindingMode.json);
 
         from("timer://simpleTimer?period=500&delay=500")
                 .routeId("register-company-route")
@@ -60,7 +59,6 @@ public class CompanyRoute extends RouteBuilder {
                 .end();
 
     }
-
 
 }
 

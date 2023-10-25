@@ -24,8 +24,7 @@ public class ClientRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        restConfiguration().host("localhost:8090");
-        restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
+        restConfiguration().host("localhost").port(8090).component("servlet").bindingMode(RestBindingMode.json);
 
         from("timer://simpleTimer?period=5000&delay=5000")
                 .routeId("register-client-route")
@@ -58,7 +57,6 @@ public class ClientRoute extends RouteBuilder {
                 .end();
 
     }
-
 
 }
 
