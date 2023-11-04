@@ -76,7 +76,7 @@ public class OrderRoute extends RouteBuilder {
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
-                .process(exchange -> orderContract.completeById(exchange.getMessage().getBody(Integer.class)))
+                .process(exchange -> flowsContract.completeOrder(exchange.getMessage().getBody(Integer.class)))
                 .log("Complete order ${body}")
                 .end();
 
