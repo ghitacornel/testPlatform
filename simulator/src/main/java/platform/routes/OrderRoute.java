@@ -24,7 +24,7 @@ public class OrderRoute extends RouteBuilder {
     private final OrderContract orderContract;
     private final ClientContract clientContract;
     private final ProductContract productContract;
-    private final FlowsContract flowsContract;
+//    private final FlowsContract flowsContract;
 
     @Override
     public void configure() {
@@ -50,7 +50,7 @@ public class OrderRoute extends RouteBuilder {
                     createOrderRequest.setProductId(productDetailsResponse.getId());
                     createOrderRequest.setQuantity(generateRandomQuantity(productDetailsResponse));
                 })
-                .setBody(exchange -> flowsContract.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
+                .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
                 .log("Create order ${body}")
                 .end();
 
