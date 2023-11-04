@@ -21,7 +21,6 @@ public class CreateOrderRoute extends RouteBuilder {
 
         restConfiguration()
                 .component("servlet")
-                .contextPath("/")
                 .bindingMode(RestBindingMode.auto);
 
         rest("/api")
