@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.feign.product.ProductBuyRequest;
 import platform.feign.product.ProductContract;
 import platform.feign.product.ProductDetailsResponse;
 import platform.feign.product.ProductSellRequest;
@@ -42,26 +41,6 @@ public class ProductRoute extends RouteBuilder {
                 .log("${body}")
                 .end();
 
-        from("timer://simpleTimer?period=25&delay=2000")
-                .routeId("buy-product-route")
-                .setBody(exchange -> productContract.findAllActive())
-                .setBody(exchange -> {
-                    List<ProductDetailsResponse> data = exchange.getMessage().getBody(List.class);
-                    int index = random.nextInt(data.size());
-                    return data.get(index);
-                })
-                .setBody(exchange -> {
-                    ProductDetailsResponse productDetailsResponse = exchange.getMessage().getBody(ProductDetailsResponse.class);
-                    return ProductBuyRequest.builder()
-                            .clientId(-1)// TODO
-                            .productId(productDetailsResponse.getId())
-                            .quantity(generateRandomQuantity(productDetailsResponse))
-                            .build();
-                })
-                .process(exchange -> productContract.buy(exchange.getMessage().getBody(ProductBuyRequest.class)))
-                .log("${body}")
-                .end();
-
         from("timer://simpleTimer?period=2000&delay=1000")
                 .routeId("cancel-product-route")
                 .setBody(exchange -> productContract.countAllActive())
@@ -76,12 +55,6 @@ public class ProductRoute extends RouteBuilder {
                 .log("Cancel product ${body.id}")
                 .end();
 
-    }
-
-    private int generateRandomQuantity(ProductDetailsResponse productDetailsResponse) {
-        int quantity = random.nextInt(productDetailsResponse.getQuantity());
-        if (quantity == 0) quantity++;
-        return quantity;
     }
 
 }
