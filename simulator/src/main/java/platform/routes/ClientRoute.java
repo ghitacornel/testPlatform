@@ -35,8 +35,8 @@ public class ClientRoute extends RouteBuilder {
                         .cardType(faker.business().creditCardType())
                         .country(faker.country().name())
                         .build())
-                .setBody(exchange -> clientContract.register(exchange.getMessage().getBody(ClientRegisterRequest.class)).getId())
-                .log("Registered client ${body}")
+                .process(exchange -> clientContract.register(exchange.getMessage().getBody(ClientRegisterRequest.class)))
+                .log("${body}")
                 .end();
 
         from("timer://simpleTimer?period=500&delay=750")
