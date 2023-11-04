@@ -5,6 +5,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.feign.client.ClientContract;
 import platform.feign.client.ClientDetailsResponse;
+import platform.feign.flows.FlowsContract;
 import platform.feign.order.CreateOrderRequest;
 import platform.feign.order.OrderContract;
 import platform.feign.order.OrderDetailsResponse;
@@ -23,6 +24,7 @@ public class OrderRoute extends RouteBuilder {
     private final OrderContract orderContract;
     private final ClientContract clientContract;
     private final ProductContract productContract;
+    private final FlowsContract flowsContract;
 
     @Override
     public void configure() {
@@ -48,7 +50,7 @@ public class OrderRoute extends RouteBuilder {
                     createOrderRequest.setProductId(productDetailsResponse.getId());
                     createOrderRequest.setQuantity(generateRandomQuantity(productDetailsResponse));
                 })
-                .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
+                .setBody(exchange -> flowsContract.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
                 .log("Create order ${body}")
                 .end();
 
