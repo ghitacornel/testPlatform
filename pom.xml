@@ -13,7 +13,6 @@
         <module>companies-app</module>
         <module>orders-app</module>
         <module>products-app</module>
-        <module>products-sim</module>
         <module>simulator</module>
     </modules>
     <packaging>pom</packaging>
