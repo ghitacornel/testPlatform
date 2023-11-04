@@ -48,7 +48,7 @@ public class OrderRoute extends RouteBuilder {
                     createOrderRequest.setProductId(productDetailsResponse.getId());
                     createOrderRequest.setQuantity(generateRandomQuantity(productDetailsResponse));
                 })
-                .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
+                .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
                 .log("Create order ${body}")
                 .end();
 
