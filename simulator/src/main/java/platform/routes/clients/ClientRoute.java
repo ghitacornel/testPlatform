@@ -35,7 +35,7 @@ public class ClientRoute extends RouteBuilder {
                         .cardType(faker.business().creditCardType())
                         .country(faker.country().name())
                         .build())
-                .setBody(exchange -> clientContract.create(exchange.getMessage().getBody(ClientRegisterRequest.class)))
+                .setBody(exchange -> clientContract.register(exchange.getMessage().getBody(ClientRegisterRequest.class)))
                 .log("Registered client with id : ${body.id}")
                 .end();
 
@@ -48,7 +48,7 @@ public class ClientRoute extends RouteBuilder {
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
-                .process(exchange -> clientContract.deleteById(exchange.getMessage().getBody(Integer.class)))
+                .process(exchange -> clientContract.unregister(exchange.getMessage().getBody(Integer.class)))
                 .log("Unregistered client with id : ${body}")
                 .end();
 

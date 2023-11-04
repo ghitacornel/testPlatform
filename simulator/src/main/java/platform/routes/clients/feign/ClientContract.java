@@ -17,9 +17,9 @@ public interface ClientContract {
 
     @RequestLine("POST /client")
     @Headers("Content-Type: application/json")
-    IdResponse create(ClientRegisterRequest inputModel);
+    IdResponse register(ClientRegisterRequest inputModel);
 
     @RequestLine("DELETE /client/{id}")
-    void deleteById(@Param("id") Integer id);
+    void unregister(@Param("id") Integer id);
 
 }

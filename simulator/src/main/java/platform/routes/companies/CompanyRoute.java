@@ -36,7 +36,7 @@ public class CompanyRoute extends RouteBuilder {
                         .url(faker.company().url())
                         .country(faker.country().name())
                         .build())
-                .setBody(exchange -> companyContract.create(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
+                .setBody(exchange -> companyContract.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
                 .log("Registered company with id : ${body.id}")
                 .end();
 
@@ -49,7 +49,7 @@ public class CompanyRoute extends RouteBuilder {
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
-                .process(exchange -> companyContract.deleteById(exchange.getMessage().getBody(Integer.class)))
+                .process(exchange -> companyContract.unregister(exchange.getMessage().getBody(Integer.class)))
                 .log("Unregistered company with id : ${body}")
                 .end();
 

@@ -4,8 +4,6 @@ import commons.model.IdResponse;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
-import platform.routes.clients.feign.ClientDetailsResponse;
-import platform.routes.clients.feign.ClientRegisterRequest;
 
 import java.util.List;
 
@@ -19,9 +17,9 @@ public interface CompanyContract {
 
     @RequestLine("POST /company")
     @Headers("Content-Type: application/json")
-    IdResponse create(CompanyRegisterRequest inputModel);
+    IdResponse register(CompanyRegisterRequest inputModel);
 
     @RequestLine("DELETE /company/{id}")
-    void deleteById(@Param("id") Integer id);
+    void unregister(@Param("id") Integer id);
 
 }
