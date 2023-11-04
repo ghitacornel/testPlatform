@@ -38,6 +38,12 @@ public class Product extends Identifiable {
     private ProductStatus status = ProductStatus.ACTIVE;
 
     @PrePersist
+    private void checkStrictPositiveQuantityOnCreation() {
+        if (quantity == 0) {
+            throw new IllegalStateException("Product created with initial quantity ZERO");
+        }
+    }
+
     @PreUpdate
     private void adjustStatusBasedOnQuantity() {
         if (quantity == 0) {
