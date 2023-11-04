@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -78,6 +79,12 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Object> handleValidationException(ValidationException e) {
         log.error("validation error", e);
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        log.error("data integrity error " + e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
     }
 
