@@ -22,7 +22,7 @@ public class CreateOrderRoute extends RouteBuilder {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
         rest()
-                .path("/order")
+                .path("/order/create")
                 .post()
                 .consumes(APPLICATION_JSON_VALUE)
                 .produces(APPLICATION_JSON_VALUE)
