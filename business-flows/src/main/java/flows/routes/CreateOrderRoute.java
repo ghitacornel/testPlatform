@@ -15,8 +15,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class CreateOrderRoute extends RouteBuilder {
+
+    private static final String PRODUCT_BUY_REQUEST = "productBuyRequest";
 
     private final OrderContract orderContract;
     private final ProductContract productContract;
@@ -45,10 +46,11 @@ public class CreateOrderRoute extends RouteBuilder {
                             .quantity(createOrderRequest.getQuantity())
                             .build();
                     productContract.buy(productBuyRequest);
-                    log.info(productBuyRequest.toString());
+                    exchange.getMessage().setHeader(PRODUCT_BUY_REQUEST, productBuyRequest);
                 })
                 .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
-                .log("Order ${body.id} created")
+                .log("Order ${body.id} created with ${header.productBuyRequest}")
+                .removeHeader(PRODUCT_BUY_REQUEST)
                 .end();
     }
 
