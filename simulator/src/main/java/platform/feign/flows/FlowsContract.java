@@ -15,4 +15,7 @@ public interface FlowsContract {
     @RequestLine("PATCH /camel/order/complete/{id}")
     void completeOrder(@Param("id") Integer id);
 
+    @RequestLine("PATCH /camel/order/cancel/{id}")
+    void cancelOrder(@Param("id") Integer id);
+
 }

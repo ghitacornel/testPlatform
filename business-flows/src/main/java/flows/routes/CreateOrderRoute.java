@@ -33,9 +33,9 @@ public class CreateOrderRoute extends RouteBuilder {
                 .produces(APPLICATION_JSON_VALUE)
                 .type(CreateOrderRequest.class)
                 .outType(IdResponse.class)
-                .to("direct:post-order");
+                .to("direct:create-order");
 
-        from("direct:post-order")
+        from("direct:create-order")
                 .routeId("create-order-route")
                 .process(exchange -> {
                     CreateOrderRequest createOrderRequest = exchange.getMessage().getBody(CreateOrderRequest.class);
