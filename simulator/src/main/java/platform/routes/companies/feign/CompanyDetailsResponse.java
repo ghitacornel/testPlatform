@@ -1,13 +1,15 @@
-package platform.routes.companies;
+package platform.routes.companies.feign;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(of = {"id", "name"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Company {
+public class CompanyDetailsResponse {
 
     private Integer id;
     private String name;
