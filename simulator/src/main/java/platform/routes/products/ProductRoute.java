@@ -45,7 +45,6 @@ public class ProductRoute extends RouteBuilder {
         from("timer://simpleTimer?period=25&delay=2000")
                 .routeId("buy-product-route")
                 .setBody(exchange -> productContract.findAllActive())
-                .filter(body().method("size").isGreaterThan(ProductRoute.MINIMUM))
                 .setBody(exchange -> {
                     List<ProductDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
