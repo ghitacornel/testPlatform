@@ -29,11 +29,11 @@ public class CreateOrderRoute extends RouteBuilder {
                 .produces(APPLICATION_JSON_VALUE)
                 .type(CreateOrderRequest.class)
                 .outType(IdResponse.class)
-                .to("direct:order-create");
+                .to("direct:post-order");
 
-        from("direct:order-create")
+        from("direct:post-order")
                 .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
-                .log("${body}")
+                .log("Order ${body.id} created")
                 .end();
     }
 
