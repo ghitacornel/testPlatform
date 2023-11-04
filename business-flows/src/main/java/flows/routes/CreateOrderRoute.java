@@ -19,21 +19,22 @@ public class CreateOrderRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        restConfiguration()
-                .component("servlet")
-                .bindingMode(RestBindingMode.auto);
+        restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
-        rest("/api")
-                .get("/all")
-                .produces(APPLICATION_JSON_VALUE)
-                .to("direct:all");
+        rest()
+                .path("/all")
+                .get()
+                .outType(CreateOrderRequest.class)
+                .to("direct:xxx");
 
-        from("direct:all")
-                .setBody(exchange -> CreateOrderRequest.builder()
-                        .clientId(1)
-                        .productId(2)
-                        .quantity(3)
-                        .build())
+        from("direct:xxx")
+                .setBody(exchange -> {
+                    return CreateOrderRequest.builder()
+                            .clientId(1)
+                            .productId(2)
+                            .quantity(3)
+                            .build();
+                })
                 .log("{body}")
                 .end();
 
