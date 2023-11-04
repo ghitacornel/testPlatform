@@ -29,7 +29,6 @@ public class CreateOrderRoute extends RouteBuilder {
         rest()
                 .path("/order/create")
                 .post()
-                .routeId("create-order-route-rest")
                 .consumes(APPLICATION_JSON_VALUE)
                 .produces(APPLICATION_JSON_VALUE)
                 .type(CreateOrderRequest.class)
@@ -37,7 +36,7 @@ public class CreateOrderRoute extends RouteBuilder {
                 .to("direct:post-order");
 
         from("direct:post-order")
-                .routeId("create-order-route-service")
+                .routeId("create-order-route")
                 .process(exchange -> {
                     CreateOrderRequest createOrderRequest = exchange.getMessage().getBody(CreateOrderRequest.class);
                     ProductBuyRequest productBuyRequest = ProductBuyRequest.builder()
