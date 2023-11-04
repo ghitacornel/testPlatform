@@ -49,7 +49,7 @@ public class ProductRoute extends RouteBuilder {
                     productSellRequest.setCompanyId(companyDetailsResponses.get(index).getId());
                 })
                 .process(exchange -> productContract.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
-                .log("${body}")
+                .log("Create product ${body.id}")
                 .end();
 
         from("timer://simpleTimer?period=2000&delay=1000")
