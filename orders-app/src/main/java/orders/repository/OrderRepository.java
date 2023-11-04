@@ -21,4 +21,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("select count(p.id) from Order p where p.status = orders.repository.entity.OrderStatus.NEW")
     long countAllNew();
 
+    @Query("select count(p.id) from Order p where p.status = orders.repository.entity.OrderStatus.CANCELLED")
+    long countAllCancelled();
+
+    @Query("select count(p.id) from Order p where p.status = orders.repository.entity.OrderStatus.COMPLETED")
+    long countAllCompleted();
 }

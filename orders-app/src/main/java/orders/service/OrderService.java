@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;
+import orders.controller.model.response.OrderStatistics;
 import orders.repository.OrderRepository;
 import orders.repository.entity.Order;
 import orders.repository.entity.OrderStatus;
@@ -75,5 +76,14 @@ public class OrderService {
 
     public long countAllNew() {
         return repository.countAllNew();
+    }
+
+    public OrderStatistics getStatistics() {
+        return OrderStatistics.builder()
+                .countAll(repository.count())
+                .countAllNew(repository.countAllNew())
+                .countCancelled(repository.countAllCancelled())
+                .countCompleted(repository.countAllCompleted())
+                .build();
     }
 }
