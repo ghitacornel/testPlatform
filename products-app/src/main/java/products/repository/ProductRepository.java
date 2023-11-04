@@ -14,15 +14,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE")
     List<Product> findAllActive();
 
-    @Query("select p from Product p where p.status <> products.repository.entity.ProductStatus.ACTIVE")
-    List<Product> findAllNotActive();
-
     @Query("select count(p.id) from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE")
     long countAllActive();
 
-    @Modifying(flushAutomatically = true)
-    @Query("update Product p set p.status = products.repository.entity.ProductStatus.CANCELLED where p.companyId = :companyId")
-    void cancelByCompanyId(@Param("companyId") Integer companyId);
+    @Query("select count(p.id) from Product p where p.status = products.repository.entity.ProductStatus.CANCELLED")
+    long countAllCancelled();
+
+    @Query("select count(p.id) from Product p where p.status = products.repository.entity.ProductStatus.CONSUMED")
+    long countAllConsumed();
 
     @Lock(LockModeType.PESSIMISTIC_READ)
     @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value = "100")})

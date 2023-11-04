@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import products.controller.model.request.ProductBuyRequest;
 import products.controller.model.request.ProductSellRequest;
 import products.controller.model.response.ProductDetailsResponse;
+import products.controller.model.response.ProductStatistics;
 import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
@@ -70,5 +71,14 @@ public class ProductService {
         Product product = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         product.setQuantity(product.getQuantity() + quantity);
+    }
+
+    public ProductStatistics getStatistics() {
+        return ProductStatistics.builder()
+                .countAll(repository.count())
+                .countActive(repository.countAllActive())
+                .countCancelled(repository.countAllCancelled())
+                .countConsumed(repository.countAllConsumed())
+                .build();
     }
 }

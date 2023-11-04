@@ -81,7 +81,7 @@ public class OrderService {
     public OrderStatistics getStatistics() {
         return OrderStatistics.builder()
                 .countAll(repository.count())
-                .countAllNew(repository.countAllNew())
+                .countNew(repository.countAllNew())
                 .countCancelled(repository.countAllCancelled())
                 .countCompleted(repository.countAllCompleted())
                 .build();

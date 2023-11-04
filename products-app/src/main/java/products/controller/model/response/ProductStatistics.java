@@ -1,4 +1,4 @@
-package orders.controller.model.response;
+package products.controller.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderStatistics {
+public class ProductStatistics {
 
     private long countAll;
-    private long countNew;
+    private long countActive;
     private long countCancelled;
-    private long countCompleted;
+    private long countConsumed;
 
 }
