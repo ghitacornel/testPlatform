@@ -1,13 +1,12 @@
 package platform.routes.clients;
 
 import com.github.javafaker.Faker;
-import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.jackson.JacksonDataFormat;
-import org.apache.camel.component.jackson.ListJacksonDataFormat;
-import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
+import platform.routes.clients.feign.ClientContract;
+import platform.routes.clients.feign.ClientDetailsResponse;
+import platform.routes.clients.feign.ClientRegisterRequest;
 
 import java.util.List;
 import java.util.Random;
@@ -18,42 +17,39 @@ public class ClientRoute extends RouteBuilder {
 
     private static final int MINIMUM = 100;
     private static final int MAXIMUM = 200;
+
     private final Random random = new Random();
     private final Faker faker = Faker.instance();
+
+    private final ClientContract clientContract;
 
     @Override
     public void configure() {
 
-        restConfiguration().host("localhost").port(8090).contextPath("client").component("servlet").bindingMode(RestBindingMode.json);
-
         from("timer://simpleTimer?period=500&delay=500")
                 .routeId("register-client-route")
-                .to("rest:get:client/count")
-                .unmarshal(new JacksonDataFormat(Long.class))
+                .setBody(exchange -> clientContract.count())
                 .filter(body().isLessThan(platform.routes.clients.ClientRoute.MAXIMUM))
-                .setBody(exchange -> Client.builder()
+                .setBody(exchange -> ClientRegisterRequest.builder()
                         .name(faker.name().username())
                         .cardType(faker.business().creditCardType())
                         .country(faker.country().name())
                         .build())
-                .to("rest:post:client")
-                .unmarshal(new JacksonDataFormat(IdResponse.class))
+                .setBody(exchange -> clientContract.create(exchange.getMessage().getBody(ClientRegisterRequest.class)))
                 .log("Registered client with id : ${body.id}")
                 .end();
 
         from("timer://simpleTimer?period=500&delay=750")
                 .routeId("unregister-client-route")
-                .to("rest:get:client")
-                .unmarshal(new ListJacksonDataFormat(Client.class))
+                .setBody(exchange -> clientContract.findAll())
                 .filter(body().method("size").isGreaterThan(platform.routes.clients.ClientRoute.MINIMUM))
                 .setBody(exchange -> {
-                    List<Client> data = exchange.getMessage().getBody(List.class);
+                    List<ClientDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
-                .setHeader("id", body())
-                .to("rest:delete:client/{id}")
-                .log("Unregistered client with id : ${header.id}")
+                .process(exchange -> clientContract.deleteById(exchange.getMessage().getBody(Integer.class)))
+                .log("Unregistered client with id : ${body}")
                 .end();
 
     }
