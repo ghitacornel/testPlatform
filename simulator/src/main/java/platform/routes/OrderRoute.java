@@ -49,7 +49,7 @@ public class OrderRoute extends RouteBuilder {
                     createOrderRequest.setQuantity(generateRandomQuantity(productDetailsResponse));
                 })
                 .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
-                .log("${body}")
+                .log("Create order ${body}")
                 .end();
 
         from("timer://simpleTimer?period=1000&delay=1000")
@@ -59,10 +59,10 @@ public class OrderRoute extends RouteBuilder {
                 .setBody(exchange -> {
                     List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
-                    return data.get(index);
+                    return data.get(index).getId();
                 })
-                .process(exchange -> orderContract.cancelById(exchange.getMessage().getBody(OrderDetailsResponse.class).getId()))
-                .log("Cancel order : ${body}")
+                .process(exchange -> orderContract.cancelById(exchange.getMessage().getBody(Integer.class)))
+                .log("Cancel order ${body}")
                 .end();
 
         from("timer://simpleTimer?period=50&delay=500")
@@ -72,10 +72,10 @@ public class OrderRoute extends RouteBuilder {
                 .setBody(exchange -> {
                     List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
-                    return data.get(index);
+                    return data.get(index).getId();
                 })
-                .process(exchange -> orderContract.completeById(exchange.getMessage().getBody(OrderDetailsResponse.class).getId()))
-                .log("Complete order : ${body}")
+                .process(exchange -> orderContract.completeById(exchange.getMessage().getBody(Integer.class)))
+                .log("Complete order ${body}")
                 .end();
 
     }
