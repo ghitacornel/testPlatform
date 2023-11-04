@@ -73,7 +73,7 @@ public class ProductRoute extends RouteBuilder {
                     return data.get(index);
                 })
                 .process(exchange -> productContract.cancel(exchange.getMessage().getBody(ProductDetailsResponse.class).getId()))
-                .log("Cancel product : ${body}")
+                .log("Cancel product ${body}")
                 .end();
 
     }
