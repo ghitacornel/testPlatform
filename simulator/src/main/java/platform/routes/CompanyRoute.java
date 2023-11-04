@@ -36,8 +36,8 @@ public class CompanyRoute extends RouteBuilder {
                         .url(faker.company().url())
                         .country(faker.country().name())
                         .build())
-                .setBody(exchange -> companyContract.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
-                .log("Registered company with id : ${body.id}")
+                .setBody(exchange -> companyContract.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)).getId())
+                .log("Registered company ${body}")
                 .end();
 
         from("timer://simpleTimer?period=500&delay=750")
@@ -50,7 +50,7 @@ public class CompanyRoute extends RouteBuilder {
                     return data.get(index).getId();
                 })
                 .process(exchange -> companyContract.unregister(exchange.getMessage().getBody(Integer.class)))
-                .log("Unregistered company with id : ${body}")
+                .log("Unregistered company ${body}")
                 .end();
 
     }

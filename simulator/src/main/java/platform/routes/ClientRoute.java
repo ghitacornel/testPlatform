@@ -35,8 +35,8 @@ public class ClientRoute extends RouteBuilder {
                         .cardType(faker.business().creditCardType())
                         .country(faker.country().name())
                         .build())
-                .setBody(exchange -> clientContract.register(exchange.getMessage().getBody(ClientRegisterRequest.class)))
-                .log("Registered client with id : ${body.id}")
+                .setBody(exchange -> clientContract.register(exchange.getMessage().getBody(ClientRegisterRequest.class)).getId())
+                .log("Registered client ${body}")
                 .end();
 
         from("timer://simpleTimer?period=500&delay=750")
@@ -49,7 +49,7 @@ public class ClientRoute extends RouteBuilder {
                     return data.get(index).getId();
                 })
                 .process(exchange -> clientContract.unregister(exchange.getMessage().getBody(Integer.class)))
-                .log("Unregistered client with id : ${body}")
+                .log("Unregistered client ${body}")
                 .end();
 
     }
