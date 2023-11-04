@@ -42,7 +42,7 @@ public class OrderService {
         return new IdResponse(order.getId());
     }
 
-    public void complete(Integer id) {
+    public void completeById(Integer id) {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
         if (!order.getStatus().equals(OrderStatus.NEW)) {

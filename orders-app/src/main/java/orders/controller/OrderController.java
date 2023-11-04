@@ -47,8 +47,8 @@ public class OrderController {
     }
 
     @PatchMapping(value = "/complete/{id}")
-    public void complete(@Valid @NotNull @PathVariable(name = "id") Integer id) {
-        service.complete(id);
+    public void completeById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+        service.completeById(id);
     }
 
     @DeleteMapping(value = "{id}")
