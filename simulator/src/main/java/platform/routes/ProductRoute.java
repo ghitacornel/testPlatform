@@ -29,7 +29,7 @@ public class ProductRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=50&delay=1000")
+        from("timer://simpleTimer?period=500&delay=1000")
                 .routeId("sale-product-route")
                 .setBody(exchange -> productContract.countAllActive())
                 .filter(body().isLessThan(ProductRoute.MAXIMUM))
