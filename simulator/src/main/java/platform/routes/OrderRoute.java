@@ -54,8 +54,10 @@ public class OrderRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=1000&delay=1000")
                 .routeId("cancel-order-route")
+                .setBody(exchange -> orderContract.findAllNew())
+                .filter(body().method("size").isGreaterThan(0))
                 .setBody(exchange -> {
-                    List<OrderDetailsResponse> data = orderContract.findAllNew();
+                    List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
                     return data.get(index);
                 })
@@ -65,8 +67,10 @@ public class OrderRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=50&delay=500")
                 .routeId("complete-order-route")
+                .setBody(exchange -> orderContract.findAllNew())
+                .filter(body().method("size").isGreaterThan(0))
                 .setBody(exchange -> {
-                    List<OrderDetailsResponse> data = orderContract.findAllNew();
+                    List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
                     return data.get(index);
                 })

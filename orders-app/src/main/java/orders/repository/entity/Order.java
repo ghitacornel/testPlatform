@@ -24,7 +24,7 @@ public class Order extends Identifiable {
     @Column(nullable = false)
     private Integer clientId;
 
-    @NotBlank
+    @NotNull
     @Column(nullable = false)
     private Integer productId;
 
