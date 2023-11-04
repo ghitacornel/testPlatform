@@ -24,6 +24,7 @@ public class CreateOrderRoute extends RouteBuilder {
         rest()
                 .path("/order/create")
                 .post()
+                .routeId("create-order-route")
                 .consumes(APPLICATION_JSON_VALUE)
                 .produces(APPLICATION_JSON_VALUE)
                 .type(CreateOrderRequest.class)
