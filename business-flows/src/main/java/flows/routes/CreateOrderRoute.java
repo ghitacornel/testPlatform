@@ -22,35 +22,18 @@ public class CreateOrderRoute extends RouteBuilder {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
         rest()
-                .path("/all")
-                .get()
-                .outType(CreateOrderRequest.class)
-                .to("direct:xxx");
+                .path("/order")
+                .post()
+                .consumes(APPLICATION_JSON_VALUE)
+                .produces(APPLICATION_JSON_VALUE)
+                .type(CreateOrderRequest.class)
+                .outType(IdResponse.class)
+                .to("direct:order-create");
 
-        from("direct:xxx")
-                .setBody(exchange -> {
-                    return CreateOrderRequest.builder()
-                            .clientId(1)
-                            .productId(2)
-                            .quantity(3)
-                            .build();
-                })
-                .log("{body}")
+        from("direct:order-create")
+                .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
+                .log("${body}")
                 .end();
-
-//        rest()
-//                .path("/order")
-//                .post()
-//                .consumes(APPLICATION_JSON_VALUE)
-//                .produces(APPLICATION_JSON_VALUE)
-//                .type(CreateOrderRequest.class)
-//                .outType(IdResponse.class)
-//                .to("direct:order-create");
-//
-//        from("direct:order-create")
-//                .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
-//                .log("{body}")
-//                .end();
     }
 
 }

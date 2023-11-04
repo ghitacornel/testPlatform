@@ -7,7 +7,7 @@ import platform.feign.order.CreateOrderRequest;
 
 public interface FlowsContract {
 
-    @RequestLine("POST /orchestrator/order")
+    @RequestLine("POST /camel/order")
     @Headers("Content-Type: application/json")
     IdResponse createOrder(CreateOrderRequest inputModel);
 
