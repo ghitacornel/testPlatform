@@ -4,6 +4,8 @@ import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
+import platform.feign.company.CompanyContract;
+import platform.feign.company.CompanyDetailsResponse;
 import platform.feign.product.ProductContract;
 import platform.feign.product.ProductDetailsResponse;
 import platform.feign.product.ProductSellRequest;
@@ -22,6 +24,7 @@ public class ProductRoute extends RouteBuilder {
     private final Faker faker = Faker.instance();
 
     private final ProductContract productContract;
+    private final CompanyContract companyContract;
 
     @Override
     public void configure() {
@@ -35,8 +38,16 @@ public class ProductRoute extends RouteBuilder {
                         .color(faker.commerce().color())
                         .price(Double.valueOf(faker.commerce().price(1, 100)))
                         .quantity(random.nextInt(10000) + 100)
-                        .companyId(-1)// TODO
                         .build())
+                .process(exchange -> {
+                    ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
+                    List<CompanyDetailsResponse> companyDetailsResponses = companyContract.findAll();
+                    if (companyDetailsResponses.isEmpty()) {
+                        throw new IllegalStateException("no companies available for creating products");
+                    }
+                    int index = random.nextInt(companyDetailsResponses.size());
+                    productSellRequest.setCompanyId(companyDetailsResponses.get(index).getId());
+                })
                 .process(exchange -> productContract.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
                 .log("${body}")
                 .end();
