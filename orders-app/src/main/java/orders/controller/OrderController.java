@@ -51,6 +51,11 @@ public class OrderController {
         service.completeById(id);
     }
 
+    @PatchMapping(value = "/cancel/{id}")
+    public void cancelById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+        service.cancelById(id);
+    }
+
     @DeleteMapping(value = "{id}")
     public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);

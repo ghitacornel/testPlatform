@@ -51,10 +51,19 @@ public class OrderService {
         order.setStatus(OrderStatus.COMPLETED);
     }
 
+    public void cancelById(Integer id) {
+        Order order = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
+        if (!order.getStatus().equals(OrderStatus.NEW)) {
+            throw new BusinessException("cannot complete already completed order");
+        }
+        order.setStatus(OrderStatus.CANCELLED);
+    }
+
     public void deleteById(Integer id) {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
-        if (!order.getStatus().equals(OrderStatus.COMPLETED)) {
+        if (order.getStatus().equals(OrderStatus.NEW)) {
             throw new BusinessException("cannot delete an incomplete order");
         }
         repository.delete(order);

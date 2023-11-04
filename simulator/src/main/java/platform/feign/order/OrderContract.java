@@ -25,6 +25,9 @@ public interface OrderContract {
     @RequestLine("PATCH /order/complete/{id}")
     void completeById(@Param("id") Integer id);
 
+    @RequestLine("PATCH /order/cancel/{id}")
+    void cancelById(@Param("id") Integer id);
+
     @RequestLine("DELETE /order/{id}")
     void deleteById(@Param("id") Integer id);
 

@@ -61,7 +61,7 @@ public class OrderRoute extends RouteBuilder {
                     int index = random.nextInt(data.size());
                     return data.get(index);
                 })
-                .process(exchange -> orderContract.deleteById(exchange.getMessage().getBody(OrderDetailsResponse.class).getId()))
+                .process(exchange -> orderContract.cancelById(exchange.getMessage().getBody(OrderDetailsResponse.class).getId()))
                 .log("Cancel order : ${body}")
                 .end();
 
