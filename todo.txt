@@ -5,3 +5,7 @@ http://localhost:8090/client
 http://localhost:8091/company
 http://localhost:8092/product
 http://localhost:8093/order
+
+TODO
+delete cancelled or consumed products
+add UNREGISTERED marker for client/company + delete them in the future
