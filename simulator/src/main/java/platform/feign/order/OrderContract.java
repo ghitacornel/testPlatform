@@ -22,7 +22,7 @@ public interface OrderContract {
     @Headers("Content-Type: application/json")
     IdResponse create(CreateOrderRequest inputModel);
 
-    @RequestLine("PATCH /order/{id}")
+    @RequestLine("PATCH /order/complete/{id}")
     void completeById(@Param("id") Integer id);
 
     @RequestLine("DELETE /order/{id}")
