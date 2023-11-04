@@ -1,4 +1,4 @@
-package platform.routes.companies.feign;
+package platform.feign.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyDetailsResponse {
+public class ClientDetailsResponse {
 
     private Integer id;
     private String name;
-    private String url;
-    private String industry;
+    private String cardType;
     private String country;
 
 }

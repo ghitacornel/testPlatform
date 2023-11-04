@@ -1,4 +1,4 @@
-package platform.routes.companies.feign;
+package platform.feign.company;
 
 import commons.model.IdResponse;
 import feign.Headers;

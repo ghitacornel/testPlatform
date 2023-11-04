@@ -1,4 +1,4 @@
-package platform.routes.companies.feign;
+package platform.feign.company;
 
 import feign.Feign;
 import feign.Logger;
@@ -8,7 +8,6 @@ import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import platform.routes.clients.feign.ClientContract;
 
 @Configuration
 class CompanyFeignConfiguration {

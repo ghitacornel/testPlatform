@@ -1,4 +1,4 @@
-package platform.routes.clients.feign;
+package platform.feign.order;
 
 import feign.Feign;
 import feign.Logger;
@@ -10,16 +10,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class ClientFeignConfiguration {
+class OrderFeignConfiguration {
 
     @Bean
-    ClientContract clientContract() {
+    OrderContract orderContract() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
-                .logger(new Slf4jLogger(ClientContract.class))
+                .logger(new Slf4jLogger(OrderContract.class))
                 .logLevel(Logger.Level.FULL)
-                .target(ClientContract.class, "http://localhost:8090");
+                .target(OrderContract.class, "http://localhost:8093");
     }
 }

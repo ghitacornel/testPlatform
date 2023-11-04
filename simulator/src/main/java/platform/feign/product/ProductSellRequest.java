@@ -1,4 +1,4 @@
-package platform.routes.companies.feign;
+package platform.feign.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyRegisterRequest {
+public class ProductSellRequest {
 
     private String name;
-    private String url;
-    private String industry;
-    private String country;
+    private String color;
+    private Double price;
+    private int quantity;
+    private Integer companyId;
 
 }

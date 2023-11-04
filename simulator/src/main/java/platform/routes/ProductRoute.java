@@ -1,13 +1,13 @@
-package platform.routes.products;
+package platform.routes;
 
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.routes.products.feign.ProductBuyRequest;
-import platform.routes.products.feign.ProductContract;
-import platform.routes.products.feign.ProductDetailsResponse;
-import platform.routes.products.feign.ProductSellRequest;
+import platform.feign.product.ProductBuyRequest;
+import platform.feign.product.ProductContract;
+import platform.feign.product.ProductDetailsResponse;
+import platform.feign.product.ProductSellRequest;
 
 import java.util.List;
 import java.util.Random;

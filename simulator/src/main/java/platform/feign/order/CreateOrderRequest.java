@@ -1,4 +1,4 @@
-package platform.routes.orders.feign;
+package platform.feign.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

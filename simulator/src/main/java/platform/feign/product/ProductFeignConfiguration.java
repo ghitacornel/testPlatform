@@ -1,4 +1,4 @@
-package platform.routes.products.feign;
+package platform.feign.product;
 
 import feign.Feign;
 import feign.Logger;

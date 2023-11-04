@@ -1,4 +1,4 @@
-package platform.routes.orders.feign;
+package platform.feign.order;
 
 import commons.model.IdResponse;
 import feign.Headers;

@@ -1,12 +1,12 @@
-package platform.routes.clients;
+package platform.routes;
 
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.routes.clients.feign.ClientContract;
-import platform.routes.clients.feign.ClientDetailsResponse;
-import platform.routes.clients.feign.ClientRegisterRequest;
+import platform.feign.client.ClientContract;
+import platform.feign.client.ClientDetailsResponse;
+import platform.feign.client.ClientRegisterRequest;
 
 import java.util.List;
 import java.util.Random;
@@ -29,7 +29,7 @@ public class ClientRoute extends RouteBuilder {
         from("timer://simpleTimer?period=500&delay=500")
                 .routeId("register-client-route")
                 .setBody(exchange -> clientContract.count())
-                .filter(body().isLessThan(platform.routes.clients.ClientRoute.MAXIMUM))
+                .filter(body().isLessThan(ClientRoute.MAXIMUM))
                 .setBody(exchange -> ClientRegisterRequest.builder()
                         .name(faker.name().username())
                         .cardType(faker.business().creditCardType())
@@ -42,7 +42,7 @@ public class ClientRoute extends RouteBuilder {
         from("timer://simpleTimer?period=500&delay=750")
                 .routeId("unregister-client-route")
                 .setBody(exchange -> clientContract.findAll())
-                .filter(body().method("size").isGreaterThan(platform.routes.clients.ClientRoute.MINIMUM))
+                .filter(body().method("size").isGreaterThan(ClientRoute.MINIMUM))
                 .setBody(exchange -> {
                     List<ClientDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
