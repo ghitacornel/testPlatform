@@ -3,6 +3,7 @@ package products.controller;
 import commons.model.IdResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,22 +32,27 @@ public class ProductController {
         return service.countAllActive();
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping("{id}")
     public ProductDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
-    @PostMapping(value = "sell")
+    @PostMapping("sell")
     public IdResponse sell(@Valid @RequestBody ProductSellRequest request) {
         return service.sell(request);
     }
 
-    @PutMapping(value = "buy")
+    @PutMapping("buy")
     public void buy(@Valid @RequestBody ProductBuyRequest request) {
         service.buy(request);
     }
 
-    @DeleteMapping(value = "{id}")
+    @PatchMapping("refill/{id}/{quantity}")
+    public void refill(@Valid @NotNull @PathVariable(name = "id") Integer id, @Valid @NotNull @Positive @PathVariable(name = "quantity") Integer quantity) {
+        service.refill(id, quantity);
+    }
+
+    @DeleteMapping("{id}")
     public void cancel(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.cancel(id);
     }

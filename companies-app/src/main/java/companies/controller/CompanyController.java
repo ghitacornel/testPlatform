@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class CompanyController {
         return service.count();
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping("{id}")
     public CompanyDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
@@ -40,7 +41,7 @@ public class CompanyController {
         return service.register(json);
     }
 
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping("{id}")
     public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);
     }

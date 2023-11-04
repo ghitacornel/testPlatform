@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class ClientController {
-    
+
     private final ClientService service;
 
     @GetMapping
@@ -30,7 +30,7 @@ public class ClientController {
         return service.count();
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping("{id}")
     public ClientDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
@@ -40,7 +40,7 @@ public class ClientController {
         return service.register(request);
     }
 
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping("{id}")
     public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);
     }

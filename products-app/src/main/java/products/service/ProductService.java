@@ -66,4 +66,9 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
     }
 
+    public void refill(Integer id, Integer quantity) {
+        Product product = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+        product.setQuantity(product.getQuantity() + quantity);
+    }
 }

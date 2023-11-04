@@ -31,12 +31,12 @@ public class OrderController {
         return service.countAllNew();
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping("{id}")
     public OrderDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.findById(id);
     }
 
-    @GetMapping(value = "/product/{id}")
+    @GetMapping("/product/{id}")
     public boolean existsByProductId(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.existsByProductId(id);
     }
@@ -46,17 +46,17 @@ public class OrderController {
         return service.create(request);
     }
 
-    @PatchMapping(value = "/complete/{id}")
+    @PatchMapping("/complete/{id}")
     public void completeById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.completeById(id);
     }
 
-    @PatchMapping(value = "/cancel/{id}")
+    @PatchMapping("/cancel/{id}")
     public void cancelById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.cancelById(id);
     }
 
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping("{id}")
     public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);
     }
