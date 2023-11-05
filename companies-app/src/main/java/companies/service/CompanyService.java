@@ -3,6 +3,7 @@ package companies.service;
 import commons.model.IdResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
+import companies.controller.model.response.CompanyStatistics;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
 import companies.mapper.CompanyMapper;
@@ -46,5 +47,11 @@ public class CompanyService {
 
     public long count() {
         return repository.count();
+    }
+
+    public CompanyStatistics getStatistics() {
+        return CompanyStatistics.builder()
+                .countAll(repository.count())
+                .build();
     }
 }
