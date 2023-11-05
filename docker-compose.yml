@@ -47,3 +47,13 @@ services:
       - POSTGRES_USER=orders
       - POSTGRES_PASSWORD=orders
       - POSTGRES_DB=orders
+
+  postgres_invoices:
+    image: postgres:latest
+    container_name: invoices
+    ports:
+      - "5555:5432"
+    environment:
+      - POSTGRES_USER=invoices
+      - POSTGRES_PASSWORD=invoices
+      - POSTGRES_DB=invoices
