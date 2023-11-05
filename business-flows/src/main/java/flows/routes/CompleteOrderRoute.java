@@ -29,6 +29,13 @@ public class CompleteOrderRoute extends RouteBuilder {
                     orderContract.complete(id);
                 })
                 .log("Order ${header.id} completed")
+                .wireTap("direct:complete-order-jms")
+                .end();
+
+        from("direct:complete-order-jms")
+                .setBody(exchange -> exchange.getIn().getHeader("id", Integer.class))
+                .log("send to complete order queue : ${body}")
+                .to("jms:queue:CompletedOrdersQueueName")
                 .end();
     }
 
