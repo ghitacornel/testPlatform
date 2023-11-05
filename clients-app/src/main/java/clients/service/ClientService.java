@@ -2,6 +2,7 @@ package clients.service;
 
 import clients.controller.model.request.ClientRegisterRequest;
 import clients.controller.model.response.ClientDetailsResponse;
+import clients.controller.model.response.ClientStatistics;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
 import clients.mapper.ClientMapper;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,5 +48,11 @@ public class ClientService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+    }
+
+    public ClientStatistics getStatistics() {
+        return ClientStatistics.builder()
+                .countAll(repository.count())
+                .build();
     }
 }
