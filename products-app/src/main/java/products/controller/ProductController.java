@@ -56,4 +56,9 @@ public class ProductController {
     public void cancel(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.cancel(id);
     }
+
+    @DeleteMapping("company/{id}")
+    public void cancelByCompany(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+        service.cancelByCompany(id);
+    }
 }

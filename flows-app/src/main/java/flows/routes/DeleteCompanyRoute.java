@@ -1,6 +1,7 @@
 package flows.routes;
 
 import contracts.companies.CompanyContract;
+import contracts.products.ProductContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class DeleteCompanyRoute extends RouteBuilder {
 
     private final CompanyContract companyContract;
+    private final ProductContract productContract;
 
     @Override
     public void configure() {
@@ -27,6 +29,10 @@ public class DeleteCompanyRoute extends RouteBuilder {
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
                     companyContract.retire(id);
+                })
+                .process(exchange -> {
+                    Integer id = exchange.getIn().getHeader("id", Integer.class);
+                    productContract.cancelByCompany(id);
                 })
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);

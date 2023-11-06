@@ -80,4 +80,7 @@ public class ProductService {
         log.info("refill " + entity);
     }
 
+    public void cancelByCompany(Integer id) {
+        repository.deleteProductsByCompanyId(id);
+    }
 }

@@ -29,6 +29,9 @@ public interface ProductContract {
     @RequestLine("DELETE /product/{id}")
     void cancel(@Param("id") Integer id);
 
+    @RequestLine("DELETE /product/company/{id}")
+    void cancelByCompany(@Param("id") Integer id);
+
     @RequestLine("PATCH /product/refill/{id}/{quantity}")
     void refill(@Param("id") Integer id, @Param("quantity") Integer quantity);
 
