@@ -14,7 +14,7 @@
         <module>orders-app</module>
         <module>products-app</module>
         <module>simulator</module>
-        <module>business-flows</module>
+        <module>flows-app</module>
         <module>invoices-app</module>
     </modules>
     <packaging>pom</packaging>
