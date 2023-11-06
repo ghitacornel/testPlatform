@@ -1,12 +1,13 @@
 package invoices.service;
 
 import commons.model.IdResponse;
-import invoices.controller.model.request.InvoiceCreateRequest;
+import invoices.controller.model.request.*;
 import invoices.controller.model.response.InvoiceDetails;
 import invoices.controller.model.response.InvoiceStatistics;
 import invoices.mapper.InvoiceMapper;
 import invoices.repository.InvoiceRepository;
 import invoices.repository.entity.Invoice;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class InvoiceService {
 
     public IdResponse createInvoice(InvoiceCreateRequest request) {
         Invoice invoice = new Invoice();
-        invoice.setOrderId(request.getOrderId());
+        invoice.setId(request.getOrderId());
         repository.save(invoice);
         return new IdResponse(invoice.getId());
     }
@@ -43,5 +44,39 @@ public class InvoiceService {
         return InvoiceStatistics.builder()
                 .countAll(repository.count())
                 .build();
+    }
+
+    public void updateOrder(UpdateOrderRequest request) {
+        Invoice invoice = repository.findById(request.getOrderId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
+        invoice.setOrderQuantity(request.getQuantity());
+    }
+
+    public void updateClient(UpdateClientRequest request) {
+        Invoice invoice = repository.findById(request.getOrderId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
+        invoice.setClientId(request.getClientId());
+        invoice.setClientName(request.getClientName());
+        invoice.setClientCardType(request.getClientCardType());
+        invoice.setClientCountry(request.getClientCountry());
+    }
+
+    public void updateCompany(UpdateCompanyRequest request) {
+        Invoice invoice = repository.findById(request.getOrderId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
+        invoice.setCompanyId(request.getCompanyId());
+        invoice.setCompanyName(request.getCompanyName());
+        invoice.setCompanyUrl(request.getCompanyUrl());
+        invoice.setCompanyIndustry(request.getCompanyIndustry());
+        invoice.setCompanyCountry(request.getCompanyCountry());
+    }
+
+    public void updateProduct(UpdateProductRequest request) {
+        Invoice invoice = repository.findById(request.getOrderId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
+        invoice.setProductId(request.getProductId());
+        invoice.setProductName(request.getProductName());
+        invoice.setProductColor(request.getProductColor());
+        invoice.setProductPrice(request.getProductPrice());
     }
 }

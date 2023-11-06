@@ -1,16 +1,21 @@
 package invoices.repository.entity;
 
-import commons.model.Identifiable;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@ToString(callSuper = true)
+@ToString
 @Getter
 @Setter
-public class Invoice extends Identifiable {
+public class Invoice {
+
+    @Id
+    private Integer id;// Invoice ID = Order ID
+
+    private Integer orderQuantity;
 
     private Integer clientId;
     private String clientName;
@@ -27,8 +32,5 @@ public class Invoice extends Identifiable {
     private String productName;
     private String productColor;
     private Double productPrice;
-
-    private Integer orderId;
-    private Integer orderQuantity;
 
 }
