@@ -36,6 +36,12 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
     }
 
+    @ExceptionHandler(ResourceNotFound.class)
+    public ResponseEntity<Object> handleResourceNotFound(ResourceNotFound e) {
+        // no logs for these exceptions
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
+    }
+
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException e) {
         log.error("business exception", e);
