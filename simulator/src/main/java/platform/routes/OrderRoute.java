@@ -31,24 +31,27 @@ public class OrderRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=20&delay=1000")
                 .routeId("create-order-route")
-                .setBody(exchange -> CreateOrderRequest.builder().build())
-                .process(exchange -> {
+                .setBody(exchange -> {
 
-                    List<ClientDetailsResponse> clients = clientContract.findAll();
-                    int index = random.nextInt(clients.size());
+                    Integer clientId;
+                    {
+                        List<ClientDetailsResponse> clients = clientContract.findAll();
+                        int index = random.nextInt(clients.size());
+                        clientId = clients.get(index).getId();
+                    }
 
-                    CreateOrderRequest createOrderRequest = exchange.getMessage().getBody(CreateOrderRequest.class);
-                    createOrderRequest.setClientId(clients.get(index).getId());
-                })
-                .process(exchange -> {
+                    ProductDetailsResponse productDetailsResponse;
+                    {
+                        List<ProductDetailsResponse> productDetailsResponses = productContract.findAllActive();
+                        int index = random.nextInt(productDetailsResponses.size());
+                        productDetailsResponse = productDetailsResponses.get(index);
+                    }
 
-                    List<ProductDetailsResponse> productDetailsResponses = productContract.findAllActive();
-                    int index = random.nextInt(productDetailsResponses.size());
-                    ProductDetailsResponse productDetailsResponse = productDetailsResponses.get(index);
-
-                    CreateOrderRequest createOrderRequest = exchange.getMessage().getBody(CreateOrderRequest.class);
-                    createOrderRequest.setProductId(productDetailsResponse.getId());
-                    createOrderRequest.setQuantity(generateRandomQuantity(productDetailsResponse));
+                    return CreateOrderRequest.builder()
+                            .clientId(clientId)
+                            .productId(productDetailsResponse.getId())
+                            .quantity(generateRandomQuantity(productDetailsResponse))
+                            .build();
                 })
                 .setBody(exchange -> flowsContract.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
                 .log("Create order ${body}")
