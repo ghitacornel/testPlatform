@@ -4,5 +4,6 @@ create table company
     name     varchar(255) not null unique,
     url      varchar(255) not null unique,
     industry varchar(255) not null,
-    country  varchar(255) not null
+    country  varchar(255) not null,
+    status   varchar(255) not null
 );

@@ -41,6 +41,11 @@ public class CompanyController {
         return service.register(json);
     }
 
+    @PatchMapping("/retire/{id}")
+    public void retire(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+        service.retire(id);
+    }
+
     @DeleteMapping("{id}")
     public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.deleteById(id);
