@@ -48,7 +48,7 @@ public class ProductService {
         Product entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         entity.setStatus(ProductStatus.CANCELLED);
-        log.info("cancel " + entity);
+        log.info("cancel " + id);
     }
 
     public void buy(ProductBuyRequest request) {
@@ -62,7 +62,7 @@ public class ProductService {
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
         if (product.getQuantity() == 0) {
-            log.info("consumed " + product);
+            log.info("consumed " + request.getProductId());
         }
 
     }
@@ -77,10 +77,11 @@ public class ProductService {
         Product entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         entity.setQuantity(entity.getQuantity() + quantity);
-        log.info("refill " + entity);
+        log.info("refill " + id + " with quantity " + quantity);
     }
 
     public void cancelByCompany(Integer id) {
         repository.deleteProductsByCompanyId(id);
+        log.info("cancel by company " + id);
     }
 }
