@@ -1,7 +1,7 @@
 package invoices.controller;
 
-import invoices.controller.model.response.InvoiceStatistics;
-import invoices.service.InvoiceService;
+import invoices.controller.model.response.Statistics;
+import invoices.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
-public class InvoiceStatisticsController {
+public class StatisticsController {
 
-    private final InvoiceService service;
+    private final StatisticsService service;
 
     @GetMapping
-    public InvoiceStatistics statistics() {
+    public Statistics statistics() {
         return service.getStatistics();
     }
 

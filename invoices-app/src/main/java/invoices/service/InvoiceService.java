@@ -3,7 +3,6 @@ package invoices.service;
 import commons.model.IdResponse;
 import invoices.controller.model.request.*;
 import invoices.controller.model.response.InvoiceDetails;
-import invoices.controller.model.response.InvoiceStatistics;
 import invoices.mapper.InvoiceMapper;
 import invoices.repository.InvoiceRepository;
 import invoices.repository.entity.Invoice;
@@ -38,12 +37,6 @@ public class InvoiceService {
         invoice.setId(request.getOrderId());
         repository.save(invoice);
         return new IdResponse(invoice.getId());
-    }
-
-    public InvoiceStatistics getStatistics() {
-        return InvoiceStatistics.builder()
-                .countAll(repository.count())
-                .build();
     }
 
     public void updateOrder(UpdateOrderRequest request) {
