@@ -46,7 +46,6 @@ public class CompanyService {
 
     public void delete(Integer id) {
         repository.deleteById(id);
-        log.info("removed " + id);
     }
 
     public long count() {
@@ -54,9 +53,7 @@ public class CompanyService {
     }
 
     public void retire(Integer id) {
-        Company company = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Company with id " + id + " not found"));
-        company.setStatus(Status.RETIRED);
-        log.info("retiring " + id);
+        repository.findById(id).ifPresent(company -> company.setStatus(Status.RETIRED));
     }
+
 }
