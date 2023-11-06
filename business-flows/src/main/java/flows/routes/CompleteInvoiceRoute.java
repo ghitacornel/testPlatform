@@ -1,5 +1,7 @@
 package flows.routes;
 
+import flows.feign.invoice.InvoiceContract;
+import flows.feign.invoice.UpdateOrderRequest;
 import flows.feign.order.OrderContract;
 import flows.feign.order.OrderDetailsResponse;
 import flows.feign.product.ProductContract;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CompleteInvoiceRoute extends RouteBuilder {
 
-
+    private final InvoiceContract invoiceContract;
     private final OrderContract orderContract;
     private final ProductContract productContract;
 
@@ -22,6 +24,10 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
                     OrderDetailsResponse orderDetailsResponse = orderContract.findById(orderId);
+                    invoiceContract.update(UpdateOrderRequest.builder()
+                            .id(orderId)
+                            .orderQuantity(orderDetailsResponse.getQuantity())
+                            .build());
                 })
                 .end();
     }
