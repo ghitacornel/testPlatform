@@ -15,6 +15,10 @@ public interface CompanyContract {
     @RequestLine("GET /company")
     List<CompanyDetailsResponse> findAll();
 
+    @RequestLine("GET /company/{id}")
+    @Headers("Content-Type: application/json")
+    CompanyDetailsResponse findById(@Param("id") Integer id);
+
     @RequestLine("POST /company")
     @Headers("Content-Type: application/json")
     IdResponse register(CompanyRegisterRequest inputModel);

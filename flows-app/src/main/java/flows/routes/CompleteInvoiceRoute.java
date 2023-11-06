@@ -3,6 +3,7 @@ package flows.routes;
 import contracts.clients.ClientContract;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyContract;
+import contracts.companies.CompanyDetailsResponse;
 import contracts.invoices.*;
 import contracts.orders.OrderContract;
 import contracts.orders.OrderDetailsResponse;
@@ -46,6 +47,20 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 })
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    Integer productId = exchange.getMessage().getHeader("productId", Integer.class);
+                    ProductDetailsResponse response = productContract.findById(productId);
+                    invoiceContract.update(UpdateProductRequest.builder()
+                            .id(orderId)
+                            .productId(productId)
+                            .productName(response.getName())
+                            .productColor(response.getColor())
+                            .productPrice(response.getPrice())
+                            .companyId(response.getCompanyId())
+                            .build());
+                    exchange.getMessage().setHeader("companyId", response.getCompanyId());
+                })
+                .process(exchange -> {
+                    Integer orderId = exchange.getMessage().getBody(Integer.class);
                     Integer clientId = exchange.getMessage().getHeader("clientId", Integer.class);
                     ClientDetailsResponse response = clientContract.findById(clientId);
                     invoiceContract.update(UpdateClientRequest.builder()
@@ -58,17 +73,16 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 })
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
-                    Integer productId = exchange.getMessage().getHeader("productId", Integer.class);
-                    ProductDetailsResponse response = productContract.findById(productId);
-                    invoiceContract.update(UpdateProductRequest.builder()
+                    Integer companyId = exchange.getMessage().getHeader("companyId", Integer.class);
+                    CompanyDetailsResponse response = companyContract.findById(companyId);
+                    invoiceContract.update(UpdateCompanyRequest.builder()
                             .id(orderId)
-                            .productId(productId)
-                            .productName(response.getName())
-                            .productColor(response.getColor())
-                            .productPrice(response.getPrice())
-                            .companyId(response.getCompanyId())
+                            .companyId(companyId)
+                            .companyName(response.getName())
+                            .companyUrl(response.getUrl())
+                            .companyIndustry(response.getIndustry())
+                            .companyCountry(response.getCountry())
                             .build());
-                    exchange.getMessage().setHeader("companyId", response.getCompanyId());
                 })
                 .end();
     }
