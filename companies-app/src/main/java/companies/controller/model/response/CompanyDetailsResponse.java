@@ -16,5 +16,6 @@ public class CompanyDetailsResponse {
     private String url;
     private String industry;
     private String country;
+    private String status;
 
 }

@@ -37,8 +37,8 @@ public class CompanyController {
     }
 
     @PostMapping
-    public IdResponse register(@Valid @RequestBody CompanyRegisterRequest json) {
-        return service.register(json);
+    public IdResponse create(@Valid @RequestBody CompanyRegisterRequest request) {
+        return service.create(request);
     }
 
     @PatchMapping("/retire/{id}")
@@ -47,8 +47,8 @@ public class CompanyController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
-        service.deleteById(id);
+    public void delete(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+        service.delete(id);
     }
 
 }

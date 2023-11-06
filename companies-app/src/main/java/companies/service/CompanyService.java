@@ -37,16 +37,16 @@ public class CompanyService {
                 .orElseThrow(() -> new ResourceNotFound("Company with id " + id + " not found"));
     }
 
-    public IdResponse register(CompanyRegisterRequest request) {
+    public IdResponse create(CompanyRegisterRequest request) {
         Company entity = mapper.map(request);
         repository.save(entity);
         log.info("registered " + entity);
         return new IdResponse(entity.getId());
     }
 
-    public void deleteById(Integer id) {
+    public void delete(Integer id) {
         repository.deleteById(id);
-        log.info("unregistered " + id);
+        log.info("removed " + id);
     }
 
     public long count() {

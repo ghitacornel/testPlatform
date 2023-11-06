@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import contracts.companies.CompanyContract;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
+import contracts.flows.FlowsContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class CompanyRoute extends RouteBuilder {
     private final Faker faker = Faker.instance();
 
     private final CompanyContract companyContract;
+    private final FlowsContract flowsContract;
 
     @Override
     public void configure() {
@@ -36,7 +38,7 @@ public class CompanyRoute extends RouteBuilder {
                         .url(faker.company().url())
                         .country(faker.country().name())
                         .build())
-                .process(exchange -> companyContract.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
+                .process(exchange -> companyContract.create(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
                 .end();
 
         from("timer://simpleTimer?period=10000&delay=10000")
@@ -48,7 +50,7 @@ public class CompanyRoute extends RouteBuilder {
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
-                .process(exchange -> companyContract.unregister(exchange.getMessage().getBody(Integer.class)))
+                .process(exchange -> flowsContract.deleteCompany(exchange.getMessage().getBody(Integer.class)))
                 .end();
 
     }

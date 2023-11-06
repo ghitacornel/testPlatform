@@ -21,9 +21,11 @@ public interface CompanyContract {
 
     @RequestLine("POST /company")
     @Headers("Content-Type: application/json")
-    IdResponse register(CompanyRegisterRequest inputModel);
+    IdResponse create(CompanyRegisterRequest inputModel);
 
     @RequestLine("DELETE /company/{id}")
-    void unregister(@Param("id") Integer id);
+    void delete(@Param("id") Integer id);
 
+    @RequestLine("PATCH /company/retire/{id}")
+    void retire(@Param("id") Integer id);
 }
