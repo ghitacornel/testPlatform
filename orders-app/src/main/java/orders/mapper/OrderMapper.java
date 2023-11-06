@@ -1,4 +1,4 @@
-package orders.service.mapper;
+package orders.mapper;
 
 import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;

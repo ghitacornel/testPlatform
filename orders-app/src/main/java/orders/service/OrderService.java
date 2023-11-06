@@ -9,7 +9,7 @@ import orders.controller.model.response.OrderDetailsResponse;
 import orders.repository.OrderRepository;
 import orders.repository.entity.Order;
 import orders.repository.entity.OrderStatus;
-import orders.service.mapper.OrderMapper;
+import orders.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
