@@ -29,7 +29,7 @@ public class ProductRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=500&delay=1000")
+        from("timer://simpleTimer?period=1000&delay=1000")
                 .routeId("sale-product-route")
                 .setBody(exchange -> productContract.countAllActive())
                 .filter(body().isLessThan(ProductRoute.MAXIMUM))
@@ -49,10 +49,9 @@ public class ProductRoute extends RouteBuilder {
                     productSellRequest.setCompanyId(companyDetailsResponses.get(index).getId());
                 })
                 .process(exchange -> productContract.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
-                .log("${body}")
                 .end();
 
-        from("timer://simpleTimer?period=2000&delay=1000")
+        from("timer://simpleTimer?period=5000&delay=1000")
                 .routeId("cancel-product-route")
                 .setBody(exchange -> productContract.countAllActive())
                 .filter(body().isGreaterThan(ProductRoute.MINIMUM))
@@ -63,7 +62,6 @@ public class ProductRoute extends RouteBuilder {
                     return data.get(index);
                 })
                 .process(exchange -> productContract.cancel(exchange.getMessage().getBody(ProductDetailsResponse.class).getId()))
-                .log("Cancel product ${body.id}")
                 .end();
 
     }

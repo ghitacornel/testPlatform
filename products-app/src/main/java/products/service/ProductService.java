@@ -4,6 +4,7 @@ import commons.exceptions.BusinessException;
 import commons.model.IdResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.controller.model.request.ProductBuyRequest;
@@ -18,6 +19,7 @@ import products.repository.entity.ProductStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -37,15 +39,17 @@ public class ProductService {
     }
 
     public IdResponse sell(ProductSellRequest request) {
-        Product product = productMapper.map(request);
-        repository.save(product);
-        return new IdResponse(product.getId());
+        Product entity = productMapper.map(request);
+        repository.save(entity);
+        log.info("sell " + entity);
+        return new IdResponse(entity.getId());
     }
 
     public void cancel(Integer id) {
-        Product product = repository.findById(id)
+        Product entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
-        product.setStatus(ProductStatus.CANCELLED);
+        entity.setStatus(ProductStatus.CANCELLED);
+        log.info("cancel " + entity);
     }
 
     public void buy(ProductBuyRequest request) {
@@ -68,9 +72,10 @@ public class ProductService {
     }
 
     public void refill(Integer id, Integer quantity) {
-        Product product = repository.findById(id)
+        Product entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
-        product.setQuantity(product.getQuantity() + quantity);
+        entity.setQuantity(entity.getQuantity() + quantity);
+        log.info("refill " + entity);
     }
 
     public ProductStatistics getStatistics() {
