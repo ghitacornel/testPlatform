@@ -2,7 +2,6 @@ package clients.service;
 
 import clients.controller.model.request.ClientRegisterRequest;
 import clients.controller.model.response.ClientDetailsResponse;
-import clients.controller.model.response.ClientStatistics;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
@@ -53,9 +52,4 @@ public class ClientService {
         log.info("unregistered " + id);
     }
 
-    public ClientStatistics getStatistics() {
-        return ClientStatistics.builder()
-                .countAll(repository.count())
-                .build();
-    }
 }
