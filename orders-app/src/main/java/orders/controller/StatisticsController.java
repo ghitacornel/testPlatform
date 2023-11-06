@@ -1,8 +1,8 @@
 package orders.controller;
 
 import lombok.RequiredArgsConstructor;
-import orders.controller.model.response.OrderStatistics;
-import orders.service.OrderService;
+import orders.controller.model.response.Statistics;
+import orders.service.StatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
-public class OrderStatisticsController {
+public class StatisticsController {
 
-    private final OrderService service;
+    private final StatisticsService service;
 
     @GetMapping
-    public OrderStatistics statistics() {
+    public Statistics statistics() {
         return service.getStatistics();
     }
 

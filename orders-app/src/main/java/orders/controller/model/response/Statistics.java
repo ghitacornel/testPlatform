@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderStatistics {
+public class Statistics {
 
     private long countAll;
     private long countNew;
