@@ -1,6 +1,5 @@
 package flows.routes;
 
-import contracts.orders.OrderContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -9,8 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CompleteOrderRoute extends RouteBuilder {
-
-    private final OrderContract orderContract;
 
     @Override
     public void configure() {
