@@ -8,7 +8,7 @@ public interface InvoiceContract {
 
     @RequestLine("POST /invoice")
     @Headers("Content-Type: application/json")
-    IdResponse createInvoice(InvoiceCreateRequest request);
+    IdResponse create(InvoiceCreateRequest request);
 
     @RequestLine("PATCH /invoice/update/order")
     @Headers("Content-Type: application/json")

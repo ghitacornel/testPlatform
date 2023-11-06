@@ -1,11 +1,11 @@
 package flows.routes;
 
+import contracts.invoices.InvoiceContract;
+import contracts.invoices.InvoiceCreateRequest;
+import contracts.invoices.UpdateOrderRequest;
 import contracts.orders.OrderContract;
 import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
-import flows.feign.invoice.InvoiceContract;
-import flows.feign.invoice.InvoiceCreateRequest;
-import flows.feign.invoice.UpdateOrderRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
         from("jms:queue:CompletedOrdersQueueName")
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
-                    invoiceContract.createInvoice(InvoiceCreateRequest.builder()
+                    invoiceContract.create(InvoiceCreateRequest.builder()
                             .orderId(orderId)
                             .build());
                 })

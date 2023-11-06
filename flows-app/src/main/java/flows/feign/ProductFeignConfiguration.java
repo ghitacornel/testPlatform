@@ -1,6 +1,6 @@
-package flows.feign.order;
+package flows.feign;
 
-import contracts.orders.OrderContract;
+import contracts.products.ProductContract;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;
@@ -11,16 +11,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class OrderFeignConfiguration {
+class ProductFeignConfiguration {
 
     @Bean
-    OrderContract orderContract() {
+    ProductContract productContract() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
-                .logger(new Slf4jLogger(OrderContract.class))
+                .logger(new Slf4jLogger(ProductContract.class))
                 .logLevel(Logger.Level.FULL)
-                .target(OrderContract.class, "http://localhost:8093");
+                .target(ProductContract.class, "http://localhost:8092");
     }
 }
