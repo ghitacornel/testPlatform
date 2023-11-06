@@ -30,7 +30,6 @@ public class CompleteOrderRoute extends RouteBuilder {
                 })
                 .setBody(exchange -> exchange.getIn().getHeader("id", Integer.class))
                 .to("jms:queue:CompletedOrdersQueueName")
-                .log("Order completed ${body}")
                 .end();
     }
 
