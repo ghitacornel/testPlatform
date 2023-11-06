@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class InvoiceDetails {
 
+    private Integer id;
+    private Integer orderQuantity;
+
     private Integer clientId;
     private String clientName;
     private String clientCardType;
@@ -26,8 +29,5 @@ public class InvoiceDetails {
     private String productName;
     private String productColor;
     private Double productPrice;
-
-    private Integer orderId;
-    private Integer orderQuantity;
 
 }

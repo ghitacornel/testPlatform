@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class UpdateOrderRequest {
 
     @NotNull
-    private Integer orderId;
+    private Integer id;
 
     @Positive
-    private Integer quantity;
+    private Integer orderQuantity;
 
 }

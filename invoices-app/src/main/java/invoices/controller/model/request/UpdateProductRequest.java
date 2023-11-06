@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class UpdateProductRequest {
 
     @NotNull
-    private Integer orderId;
+    private Integer id;
 
     private Integer productId;
     private String productName;

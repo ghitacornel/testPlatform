@@ -47,36 +47,26 @@ public class InvoiceService {
     }
 
     public void updateOrder(UpdateOrderRequest request) {
-        Invoice invoice = repository.findById(request.getOrderId())
-                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
-        invoice.setOrderQuantity(request.getQuantity());
+        Invoice invoice = repository.findById(request.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
+        invoiceMapper.update(invoice, request);
     }
 
     public void updateClient(UpdateClientRequest request) {
-        Invoice invoice = repository.findById(request.getOrderId())
-                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
-        invoice.setClientId(request.getClientId());
-        invoice.setClientName(request.getClientName());
-        invoice.setClientCardType(request.getClientCardType());
-        invoice.setClientCountry(request.getClientCountry());
+        Invoice invoice = repository.findById(request.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
+        invoiceMapper.update(invoice, request);
     }
 
     public void updateCompany(UpdateCompanyRequest request) {
-        Invoice invoice = repository.findById(request.getOrderId())
-                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
-        invoice.setCompanyId(request.getCompanyId());
-        invoice.setCompanyName(request.getCompanyName());
-        invoice.setCompanyUrl(request.getCompanyUrl());
-        invoice.setCompanyIndustry(request.getCompanyIndustry());
-        invoice.setCompanyCountry(request.getCompanyCountry());
+        Invoice invoice = repository.findById(request.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
+        invoiceMapper.update(invoice, request);
     }
 
     public void updateProduct(UpdateProductRequest request) {
-        Invoice invoice = repository.findById(request.getOrderId())
-                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getOrderId() + " not found"));
-        invoice.setProductId(request.getProductId());
-        invoice.setProductName(request.getProductName());
-        invoice.setProductColor(request.getProductColor());
-        invoice.setProductPrice(request.getProductPrice());
+        Invoice invoice = repository.findById(request.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
+        invoiceMapper.update(invoice, request);
     }
 }
