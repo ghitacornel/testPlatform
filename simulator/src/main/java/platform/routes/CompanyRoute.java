@@ -26,7 +26,7 @@ public class CompanyRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=500&delay=500")
+        from("timer://simpleTimer?period=2000&delay=2000")
                 .routeId("register-company-route")
                 .setBody(exchange -> companyContract.count())
                 .filter(body().isLessThan(CompanyRoute.MAXIMUM))
@@ -40,7 +40,7 @@ public class CompanyRoute extends RouteBuilder {
                 .log("${body}")
                 .end();
 
-        from("timer://simpleTimer?period=500&delay=750")
+        from("timer://simpleTimer?period=2000&delay=2000")
                 .routeId("unregister-company-route")
                 .setBody(exchange -> companyContract.findAll())
                 .filter(body().method("size").isGreaterThan(CompanyRoute.MINIMUM))
