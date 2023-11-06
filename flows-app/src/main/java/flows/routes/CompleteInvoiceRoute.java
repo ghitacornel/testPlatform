@@ -1,6 +1,5 @@
 package flows.routes;
 
-import commons.model.IdResponse;
 import contracts.clients.ClientContract;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyContract;
