@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class UpdateOrderRequest {
 
     private Integer id;
+    private Integer clientId;
+    private Integer productId;
     private Integer orderQuantity;
 
 }

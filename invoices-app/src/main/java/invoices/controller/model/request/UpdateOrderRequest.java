@@ -19,4 +19,10 @@ public class UpdateOrderRequest {
     @Positive
     private Integer orderQuantity;
 
+    @NotNull
+    private Integer clientId;
+
+    @NotNull
+    private Integer productId;
+
 }

@@ -15,6 +15,9 @@ public interface ClientContract {
     @RequestLine("GET /client")
     List<ClientDetailsResponse> findAll();
 
+    @RequestLine("GET /client/{id}")
+    ClientDetailsResponse findById(@Param("id") Integer id);
+
     @RequestLine("POST /client")
     @Headers("Content-Type: application/json")
     IdResponse register(ClientRegisterRequest inputModel);
