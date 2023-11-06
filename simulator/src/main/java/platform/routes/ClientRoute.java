@@ -26,7 +26,7 @@ public class ClientRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=1000&delay=1000")
+        from("timer://simpleTimer?period=5000&delay=5000")
                 .routeId("register-client-route")
                 .setBody(exchange -> clientContract.count())
                 .filter(body().isLessThan(ClientRoute.MAXIMUM))
@@ -36,10 +36,9 @@ public class ClientRoute extends RouteBuilder {
                         .country(faker.country().name())
                         .build())
                 .process(exchange -> clientContract.register(exchange.getMessage().getBody(ClientRegisterRequest.class)))
-                .log("${body}")
                 .end();
 
-        from("timer://simpleTimer?period=1000&delay=1000")
+        from("timer://simpleTimer?period=5000&delay=5000")
                 .routeId("unregister-client-route")
                 .setBody(exchange -> clientContract.findAll())
                 .filter(body().method("size").isGreaterThan(ClientRoute.MINIMUM))
@@ -49,7 +48,6 @@ public class ClientRoute extends RouteBuilder {
                     return data.get(index).getId();
                 })
                 .process(exchange -> clientContract.unregister(exchange.getMessage().getBody(Integer.class)))
-                .log("Unregistered client ${body}")
                 .end();
 
     }

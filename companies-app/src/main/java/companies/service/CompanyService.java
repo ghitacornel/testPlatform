@@ -9,12 +9,14 @@ import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -36,13 +38,15 @@ public class CompanyService {
     }
 
     public IdResponse register(CompanyRegisterRequest request) {
-        Company company = mapper.map(request);
-        repository.save(company);
-        return new IdResponse(company.getId());
+        Company entity = mapper.map(request);
+        repository.save(entity);
+        log.info("registered " + entity);
+        return new IdResponse(entity.getId());
     }
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+        log.info("unregistered " + id);
     }
 
     public long count() {

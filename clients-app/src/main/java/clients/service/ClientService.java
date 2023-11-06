@@ -9,12 +9,14 @@ import clients.repository.entity.Client;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -36,9 +38,10 @@ public class ClientService {
     }
 
     public IdResponse register(ClientRegisterRequest request) {
-        Client client = clientMapper.map(request);
-        repository.save(client);
-        return new IdResponse(client.getId());
+        Client entity = clientMapper.map(request);
+        repository.save(entity);
+        log.info("registered " + entity);
+        return new IdResponse(entity.getId());
     }
 
     public long count() {
@@ -47,6 +50,7 @@ public class ClientService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
+        log.info("unregistered " + id);
     }
 
     public ClientStatistics getStatistics() {

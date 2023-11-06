@@ -26,7 +26,7 @@ public class CompanyRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=2000&delay=2000")
+        from("timer://simpleTimer?period=10000&delay=10000")
                 .routeId("register-company-route")
                 .setBody(exchange -> companyContract.count())
                 .filter(body().isLessThan(CompanyRoute.MAXIMUM))
@@ -37,10 +37,9 @@ public class CompanyRoute extends RouteBuilder {
                         .country(faker.country().name())
                         .build())
                 .process(exchange -> companyContract.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
-                .log("${body}")
                 .end();
 
-        from("timer://simpleTimer?period=2000&delay=2000")
+        from("timer://simpleTimer?period=10000&delay=10000")
                 .routeId("unregister-company-route")
                 .setBody(exchange -> companyContract.findAll())
                 .filter(body().method("size").isGreaterThan(CompanyRoute.MINIMUM))
@@ -50,7 +49,6 @@ public class CompanyRoute extends RouteBuilder {
                     return data.get(index).getId();
                 })
                 .process(exchange -> companyContract.unregister(exchange.getMessage().getBody(Integer.class)))
-                .log("Unregistered company ${body}")
                 .end();
 
     }
