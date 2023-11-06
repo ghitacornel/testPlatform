@@ -22,15 +22,15 @@ public class Invoice {
     private String clientCardType;
     private String clientCountry;
 
+    private Integer productId;
+    private String productName;
+    private String productColor;
+    private Double productPrice;
+
     private Integer companyId;
     private String companyName;
     private String companyUrl;
     private String companyIndustry;
     private String companyCountry;
-
-    private Integer productId;
-    private String productName;
-    private String productColor;
-    private Double productPrice;
 
 }

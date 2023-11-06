@@ -3,13 +3,11 @@ package flows.routes;
 import contracts.clients.ClientContract;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyContract;
-import contracts.invoices.InvoiceContract;
-import contracts.invoices.InvoiceCreateRequest;
-import contracts.invoices.UpdateClientRequest;
-import contracts.invoices.UpdateOrderRequest;
+import contracts.invoices.*;
 import contracts.orders.OrderContract;
 import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
+import contracts.products.ProductDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -52,11 +50,25 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                     ClientDetailsResponse response = clientContract.findById(clientId);
                     invoiceContract.update(UpdateClientRequest.builder()
                             .id(orderId)
-                            .clientId(response.getId())
+                            .clientId(clientId)
                             .clientName(response.getName())
                             .clientCardType(response.getCardType())
                             .clientCountry(response.getCountry())
                             .build());
+                })
+                .process(exchange -> {
+                    Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    Integer productId = exchange.getMessage().getHeader("productId", Integer.class);
+                    ProductDetailsResponse response = productContract.findById(productId);
+                    invoiceContract.update(UpdateProductRequest.builder()
+                            .id(orderId)
+                            .productId(productId)
+                            .productName(response.getName())
+                            .productColor(response.getColor())
+                            .productPrice(response.getPrice())
+                            .companyId(response.getCompanyId())
+                            .build());
+                    exchange.getMessage().setHeader("companyId", response.getCompanyId());
                 })
                 .end();
     }
