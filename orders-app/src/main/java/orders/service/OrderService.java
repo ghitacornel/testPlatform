@@ -4,6 +4,7 @@ import commons.exceptions.BusinessException;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;
 import orders.mapper.OrderMapper;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -39,6 +41,7 @@ public class OrderService {
     public IdResponse create(CreateOrderRequest request) {
         Order order = orderMapper.map(request);
         repository.save(order);
+        log.info("Created " + order);
         return new IdResponse(order.getId());
     }
 
@@ -49,6 +52,7 @@ public class OrderService {
             throw new BusinessException("cannot complete already completed order");
         }
         order.setStatus(OrderStatus.COMPLETED);
+        log.info("Completed " + id);
     }
 
     public void cancelById(Integer id) {
@@ -58,6 +62,7 @@ public class OrderService {
             throw new BusinessException("cannot complete already completed order");
         }
         order.setStatus(OrderStatus.CANCELLED);
+        log.info("Cancelled " + id);
     }
 
     public void deleteById(Integer id) {
@@ -67,6 +72,7 @@ public class OrderService {
             throw new BusinessException("cannot delete an incomplete order");
         }
         repository.delete(order);
+        log.info("Deleted " + id);
     }
 
     public boolean existsByProductId(Integer id) {
