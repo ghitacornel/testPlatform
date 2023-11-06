@@ -1,9 +1,14 @@
 package flows.feign.invoice;
 
+import commons.model.IdResponse;
 import feign.Headers;
 import feign.RequestLine;
 
 public interface InvoiceContract {
+
+    @RequestLine("POST /invoice")
+    @Headers("Content-Type: application/json")
+    IdResponse createInvoice(InvoiceCreateRequest request);
 
     @RequestLine("PATCH /invoice/update/order")
     @Headers("Content-Type: application/json")

@@ -1,6 +1,7 @@
 package flows.routes;
 
 import flows.feign.invoice.InvoiceContract;
+import flows.feign.invoice.InvoiceCreateRequest;
 import flows.feign.invoice.UpdateOrderRequest;
 import flows.feign.order.OrderContract;
 import flows.feign.order.OrderDetailsResponse;
@@ -21,6 +22,12 @@ public class CompleteInvoiceRoute extends RouteBuilder {
     public void configure() {
 
         from("jms:queue:CompletedOrdersQueueName")
+                .process(exchange -> {
+                    Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    invoiceContract.createInvoice(InvoiceCreateRequest.builder()
+                            .orderId(orderId)
+                            .build());
+                })
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
                     OrderDetailsResponse orderDetailsResponse = orderContract.findById(orderId);

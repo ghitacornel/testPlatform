@@ -1,6 +1,5 @@
-package invoices.controller.model.request;
+package flows.feign.invoice;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class InvoiceCreateRequest {
 
-    @NotNull
     private Integer orderId;
 
 }
