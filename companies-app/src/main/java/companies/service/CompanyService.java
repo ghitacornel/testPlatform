@@ -46,6 +46,7 @@ public class CompanyService {
 
     public void delete(Integer id) {
         repository.deleteById(id);
+        log.info("deleted " + id);
     }
 
     public long count() {
@@ -54,6 +55,7 @@ public class CompanyService {
 
     public void retire(Integer id) {
         repository.findById(id).ifPresent(company -> company.setStatus(Status.RETIRED));
+        log.info("retired " + id);
     }
 
 }
