@@ -1,5 +1,6 @@
-package platform.feign.flows;
+package platform.feign;
 
+import contracts.flows.FlowsContract;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;

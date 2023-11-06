@@ -1,4 +1,4 @@
-package platform.feign.flows;
+package contracts.flows;
 
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
