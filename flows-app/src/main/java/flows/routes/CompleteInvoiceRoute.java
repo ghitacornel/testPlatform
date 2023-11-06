@@ -100,6 +100,10 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                             .companyCountry(response.getCountry())
                             .build());
                 })
+                .process(exchange -> {
+                    Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    orderContract.complete(orderId);
+                })
                 .end();
     }
 

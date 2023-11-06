@@ -24,10 +24,6 @@ public class CompleteOrderRoute extends RouteBuilder {
 
         from("direct:complete-order")
                 .routeId("complete-order-route")
-                .process(exchange -> {
-                    Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    orderContract.complete(id);
-                })
                 .setBody(exchange -> exchange.getIn().getHeader("id", Integer.class))
                 .to("jms:queue:CompletedOrdersQueueName")
                 .end();
