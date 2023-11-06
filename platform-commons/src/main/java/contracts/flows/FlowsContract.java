@@ -19,6 +19,6 @@ public interface FlowsContract {
     void cancelOrder(@Param("id") Integer id);
 
     @RequestLine("DELETE /camel/company/delete/{id}")
-    void deleteCompany(Integer body);
+    void deleteCompany(@Param("id") Integer id);
 
 }
