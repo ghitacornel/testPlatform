@@ -30,6 +30,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
     public void configure() {
 
         from("jms:queue:CompletedOrdersQueueName")
+                .routeId("create-invoice-route")
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
                     invoiceContract.create(InvoiceCreateRequest.builder()
