@@ -1,5 +1,6 @@
-package platform.feign.company;
+package platform.feign;
 
+import contracts.products.ProductContract;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;
@@ -10,16 +11,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class CompanyFeignConfiguration {
+class ProductFeignConfiguration {
 
     @Bean
-    CompanyContract companyContract() {
+    ProductContract productContract() {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
-                .logger(new Slf4jLogger(CompanyContract.class))
+                .logger(new Slf4jLogger(ProductContract.class))
                 .logLevel(Logger.Level.FULL)
-                .target(CompanyContract.class, "http://localhost:8091");
+                .target(ProductContract.class, "http://localhost:8092");
     }
 }

@@ -1,16 +1,16 @@
 package platform.routes;
 
+import contracts.clients.ClientContract;
+import contracts.clients.ClientDetailsResponse;
+import contracts.orders.CreateOrderRequest;
+import contracts.orders.OrderContract;
+import contracts.orders.OrderDetailsResponse;
+import contracts.products.ProductContract;
+import contracts.products.ProductDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.feign.client.ClientContract;
-import platform.feign.client.ClientDetailsResponse;
 import platform.feign.flows.FlowsContract;
-import platform.feign.order.CreateOrderRequest;
-import platform.feign.order.OrderContract;
-import platform.feign.order.OrderDetailsResponse;
-import platform.feign.product.ProductContract;
-import platform.feign.product.ProductDetailsResponse;
 
 import java.util.List;
 import java.util.Random;

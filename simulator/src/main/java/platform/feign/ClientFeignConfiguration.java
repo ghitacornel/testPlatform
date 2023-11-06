@@ -1,5 +1,6 @@
-package platform.feign.client;
+package platform.feign;
 
+import contracts.clients.ClientContract;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;

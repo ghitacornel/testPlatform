@@ -1,5 +1,6 @@
-package platform.feign.order;
+package platform.feign;
 
+import contracts.orders.OrderContract;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;

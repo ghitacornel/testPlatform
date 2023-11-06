@@ -1,12 +1,12 @@
 package platform.routes;
 
 import com.github.javafaker.Faker;
+import contracts.clients.ClientContract;
+import contracts.clients.ClientDetailsResponse;
+import contracts.clients.ClientRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.feign.client.ClientContract;
-import platform.feign.client.ClientDetailsResponse;
-import platform.feign.client.ClientRegisterRequest;
 
 import java.util.List;
 import java.util.Random;

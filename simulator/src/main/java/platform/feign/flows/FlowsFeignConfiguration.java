@@ -8,7 +8,6 @@ import feign.okhttp.OkHttpClient;
 import feign.slf4j.Slf4jLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import platform.feign.order.OrderContract;
 
 @Configuration
 class FlowsFeignConfiguration {

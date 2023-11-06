@@ -1,12 +1,12 @@
 package platform.routes;
 
 import com.github.javafaker.Faker;
+import contracts.companies.CompanyContract;
+import contracts.companies.CompanyDetailsResponse;
+import contracts.companies.CompanyRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.feign.company.CompanyContract;
-import platform.feign.company.CompanyDetailsResponse;
-import platform.feign.company.CompanyRegisterRequest;
 
 import java.util.List;
 import java.util.Random;

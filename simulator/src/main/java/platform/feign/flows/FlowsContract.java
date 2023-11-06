@@ -1,10 +1,10 @@
 package platform.feign.flows;
 
 import commons.model.IdResponse;
+import contracts.orders.CreateOrderRequest;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
-import platform.feign.order.CreateOrderRequest;
 
 public interface FlowsContract {
 
