@@ -1,15 +1,15 @@
 package orders.service;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import orders.controller.model.request.CreateOrderRequest;
 import orders.controller.model.response.OrderDetailsResponse;
+import orders.mapper.OrderMapper;
 import orders.repository.OrderRepository;
 import orders.repository.entity.Order;
 import orders.repository.entity.OrderStatus;
-import orders.mapper.OrderMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +33,7 @@ public class OrderService {
     public OrderDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(orderMapper::map)
-                .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
     }
 
     public IdResponse create(CreateOrderRequest request) {
@@ -44,7 +44,7 @@ public class OrderService {
 
     public void completeById(Integer id) {
         Order order = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
         if (!order.getStatus().equals(OrderStatus.NEW)) {
             throw new BusinessException("cannot complete already completed order");
         }
@@ -53,7 +53,7 @@ public class OrderService {
 
     public void cancelById(Integer id) {
         Order order = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
         if (!order.getStatus().equals(OrderStatus.NEW)) {
             throw new BusinessException("cannot complete already completed order");
         }
@@ -62,7 +62,7 @@ public class OrderService {
 
     public void deleteById(Integer id) {
         Order order = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
         if (order.getStatus().equals(OrderStatus.NEW)) {
             throw new BusinessException("cannot delete an incomplete order");
         }
