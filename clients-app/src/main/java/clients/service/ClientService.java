@@ -6,6 +6,7 @@ import clients.controller.model.response.ClientStatistics;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
 import clients.mapper.ClientMapper;
+import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class ClientService {
     public ClientDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(clientMapper::map)
-                .orElseThrow(() -> new EntityNotFoundException("Client with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFound("Client with id " + id + " not found"));
     }
 
     public IdResponse register(ClientRegisterRequest request) {
