@@ -9,12 +9,15 @@ import contracts.orders.OrderContract;
 import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
 import contracts.products.ProductDetailsResponse;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class CompleteInvoiceRoute extends RouteBuilder {
 
     private final InvoiceContract invoiceContract;
@@ -62,7 +65,13 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
                     Integer clientId = exchange.getMessage().getHeader("clientId", Integer.class);
-                    ClientDetailsResponse response = clientContract.findById(clientId);
+                    ClientDetailsResponse response;
+                    try {
+                        response = clientContract.findById(clientId);
+                    } catch (FeignException e) {
+                        log.error("no client found for id " + clientId);
+                        return;
+                    }
                     invoiceContract.update(UpdateClientRequest.builder()
                             .id(orderId)
                             .clientId(clientId)
@@ -74,7 +83,13 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
                     Integer companyId = exchange.getMessage().getHeader("companyId", Integer.class);
-                    CompanyDetailsResponse response = companyContract.findById(companyId);
+                    CompanyDetailsResponse response;
+                    try {
+                        response = companyContract.findById(companyId);
+                    } catch (FeignException e) {
+                        log.error("no company found for id " + companyId);
+                        return;
+                    }
                     invoiceContract.update(UpdateCompanyRequest.builder()
                             .id(orderId)
                             .companyId(companyId)
