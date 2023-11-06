@@ -3,16 +3,14 @@ package clients.service;
 import clients.controller.model.request.ClientRegisterRequest;
 import clients.controller.model.response.ClientDetailsResponse;
 import clients.controller.model.response.ClientStatistics;
+import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
-import clients.mapper.ClientMapper;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
