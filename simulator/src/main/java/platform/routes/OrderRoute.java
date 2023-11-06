@@ -29,7 +29,7 @@ public class OrderRoute extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=20&delay=1000")
+        from("timer://simpleTimer?period=10&delay=1000")
                 .routeId("create-order-route")
                 .setBody(exchange -> {
 
@@ -70,7 +70,7 @@ public class OrderRoute extends RouteBuilder {
                 .log("Cancel order ${body}")
                 .end();
 
-        from("timer://simpleTimer?period=20&delay=500")
+        from("timer://simpleTimer?period=10&delay=500")
                 .routeId("complete-order-route")
                 .setBody(exchange -> orderContract.findAllNew())
                 .filter(body().method("size").isGreaterThan(0))
