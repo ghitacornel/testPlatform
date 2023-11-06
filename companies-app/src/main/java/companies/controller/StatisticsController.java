@@ -1,6 +1,6 @@
 package companies.controller;
 
-import companies.controller.model.response.CompanyStatistics;
+import companies.controller.model.response.Statistics;
 import companies.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ public class StatisticsController {
     private final StatisticsService service;
 
     @GetMapping
-    public CompanyStatistics statistics() {
+    public Statistics statistics() {
         return service.getStatistics();
     }
 

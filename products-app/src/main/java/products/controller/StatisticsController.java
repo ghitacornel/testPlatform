@@ -4,18 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import products.controller.model.response.ProductStatistics;
-import products.service.ProductService;
+import products.controller.model.response.Statistics;
+import products.service.StatisticsService;
 
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
-public class ProductsStatisticsController {
+public class StatisticsController {
 
-    private final ProductService service;
+    private final StatisticsService service;
 
     @GetMapping
-    public ProductStatistics statistics() {
+    public Statistics statistics() {
         return service.getStatistics();
     }
 

@@ -1,4 +1,4 @@
-package clients.controller.model.response;
+package companies.controller.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ClientStatistics {
+public class Statistics {
 
     private long countAll;
 

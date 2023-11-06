@@ -1,6 +1,6 @@
 package clients.controller;
 
-import clients.controller.model.response.ClientStatistics;
+import clients.controller.model.response.Statistics;
 import clients.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,7 @@ public class StatisticsController {
     private final StatisticsService service;
 
     @GetMapping
-    public ClientStatistics statistics() {
+    public Statistics statistics() {
         return service.getStatistics();
     }
 

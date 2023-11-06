@@ -1,6 +1,6 @@
 package companies.service;
 
-import companies.controller.model.response.CompanyStatistics;
+import companies.controller.model.response.Statistics;
 import companies.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +13,8 @@ public class StatisticsService {
 
     private final CompanyRepository repository;
 
-    public CompanyStatistics getStatistics() {
-        return CompanyStatistics.builder()
+    public Statistics getStatistics() {
+        return Statistics.builder()
                 .countAll(repository.count())
                 .build();
     }
