@@ -4,7 +4,6 @@ import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import companies.controller.model.request.CompanyRegisterRequest;
 import companies.controller.model.response.CompanyDetailsResponse;
-import companies.controller.model.response.CompanyStatistics;
 import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
@@ -53,9 +52,4 @@ public class CompanyService {
         return repository.count();
     }
 
-    public CompanyStatistics getStatistics() {
-        return CompanyStatistics.builder()
-                .countAll(repository.count())
-                .build();
-    }
 }

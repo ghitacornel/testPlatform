@@ -1,7 +1,7 @@
-package companies.controller;
+package clients.controller;
 
-import companies.controller.model.response.CompanyStatistics;
-import companies.service.CompanyService;
+import clients.controller.model.response.ClientStatistics;
+import clients.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
-public class CompanyStatisticsController {
+public class StatisticsController {
 
-    private final CompanyService service;
+    private final StatisticsService service;
 
     @GetMapping
-    public CompanyStatistics statistics() {
+    public ClientStatistics statistics() {
         return service.getStatistics();
     }
 
