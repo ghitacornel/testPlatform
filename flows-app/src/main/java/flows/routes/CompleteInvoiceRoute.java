@@ -52,7 +52,13 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
                     Integer productId = exchange.getMessage().getHeader("productId", Integer.class);
-                    ProductDetailsResponse response = productContract.findById(productId);
+                    ProductDetailsResponse response;
+                    try {
+                        response = productContract.findById(productId);
+                    } catch (FeignException e) {
+                        log.error("no product found for id " + productId);
+                        return;
+                    }
                     invoiceContract.update(UpdateProductRequest.builder()
                             .id(orderId)
                             .productId(productId)
