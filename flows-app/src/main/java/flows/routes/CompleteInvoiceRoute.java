@@ -44,10 +44,13 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                             .productId(response.getProductId())
                             .orderQuantity(response.getQuantity())
                             .build());
+                    exchange.getMessage().setHeader("clientId", response.getClientId());
+                    exchange.getMessage().setHeader("productId", response.getProductId());
                 })
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
-                    ClientDetailsResponse response = clientContract.findById(orderId);
+                    Integer clientId = exchange.getMessage().getHeader("clientId", Integer.class);
+                    ClientDetailsResponse response = clientContract.findById(clientId);
                     invoiceContract.update(UpdateClientRequest.builder()
                             .id(orderId)
                             .clientId(response.getId())

@@ -32,7 +32,7 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
-        log.error("no entity found found", e);
+        log.error("Entity not found", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
     }
 
