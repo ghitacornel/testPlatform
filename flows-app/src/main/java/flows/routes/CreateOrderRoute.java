@@ -1,10 +1,10 @@
 package flows.routes;
 
 import commons.model.IdResponse;
+import contracts.products.ProductBuyRequest;
+import contracts.products.ProductContract;
 import flows.feign.order.CreateOrderRequest;
 import flows.feign.order.OrderContract;
-import flows.feign.product.ProductBuyRequest;
-import flows.feign.product.ProductContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;

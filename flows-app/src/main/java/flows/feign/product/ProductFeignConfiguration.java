@@ -1,5 +1,6 @@
 package flows.feign.product;
 
+import contracts.products.ProductContract;
 import feign.Feign;
 import feign.Logger;
 import feign.gson.GsonDecoder;
