@@ -36,7 +36,7 @@ public class CancelOrderRoute extends RouteBuilder {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
                     orderContract.cancel(id);
                 })
-                .log("Order ${header.id} cancelled")
+                .log("Order cancelled ${header.id}")
                 .end();
     }
 
