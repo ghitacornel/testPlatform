@@ -1,11 +1,11 @@
 package flows.routes;
 
+import contracts.orders.OrderContract;
+import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
 import flows.feign.invoice.InvoiceContract;
 import flows.feign.invoice.InvoiceCreateRequest;
 import flows.feign.invoice.UpdateOrderRequest;
-import flows.feign.order.OrderContract;
-import flows.feign.order.OrderDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;

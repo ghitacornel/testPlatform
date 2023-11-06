@@ -1,6 +1,6 @@
 package flows.routes;
 
-import flows.feign.order.OrderContract;
+import contracts.orders.OrderContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;

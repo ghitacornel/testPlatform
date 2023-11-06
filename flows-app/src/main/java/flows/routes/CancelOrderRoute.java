@@ -1,8 +1,8 @@
 package flows.routes;
 
+import contracts.orders.OrderContract;
+import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
-import flows.feign.order.OrderContract;
-import flows.feign.order.OrderDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
