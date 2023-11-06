@@ -6,6 +6,7 @@ import products.repository.entity.Product;
 
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.QueryHint;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findByIdAndLock(@Param("id") Integer id);
 
     @Modifying
-    void deleteProductsByCompanyId(Integer id);
+    @Query("update Product p set p.status = products.repository.entity.ProductStatus.CANCELLED where p.companyId = :id")
+    void cancelByCompany(@Param("id") Integer id);
 
 }

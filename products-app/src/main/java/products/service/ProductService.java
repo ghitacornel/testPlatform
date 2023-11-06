@@ -81,7 +81,7 @@ public class ProductService {
     }
 
     public void cancelByCompany(Integer id) {
-        repository.deleteProductsByCompanyId(id);
+        repository.cancelByCompany(id);
         log.info("cancel by company " + id);
     }
 }
