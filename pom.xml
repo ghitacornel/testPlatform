@@ -31,7 +31,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.1.5</version>
+                <version>3.2.5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -55,7 +55,7 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-okhttp</artifactId>
-                <version>12.2</version>
+                <version>13.2.1</version>
             </dependency>
             <dependency>
                 <groupId>io.github.openfeign</groupId>
@@ -65,7 +65,7 @@
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-slf4j</artifactId>
-                <version>12.2</version>
+                <version>13.2</version>
             </dependency>
 
         </dependencies>
@@ -112,7 +112,7 @@
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
-                                <version>1.18.30</version>
+                                <version>1.18.32</version>
                             </path>
                             <!-- This is needed when using Lombok 1.18.16 and above -->
                             <path>
