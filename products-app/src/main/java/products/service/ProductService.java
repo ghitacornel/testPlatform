@@ -45,8 +45,7 @@ public class ProductService {
     }
 
     public void cancel(Integer id) {
-        Product entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+        Product entity = repository.getReferenceById(id);
         entity.setStatus(ProductStatus.CANCELLED);
         log.info("cancel " + id);
     }
@@ -74,8 +73,7 @@ public class ProductService {
     }
 
     public void refill(Integer id, Integer quantity) {
-        Product entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+        Product entity = repository.getReferenceById(id);
         entity.setQuantity(entity.getQuantity() + quantity);
         log.info("refill " + id + " with quantity " + quantity);
     }
