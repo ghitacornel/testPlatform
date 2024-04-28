@@ -43,6 +43,9 @@ public class OrderRoute extends RouteBuilder {
                     ProductDetailsResponse productDetailsResponse;
                     {
                         List<ProductDetailsResponse> productDetailsResponses = productContract.findAllActive();
+                        if (productDetailsResponses.isEmpty()) {
+                            return null;
+                        }
                         int index = random.nextInt(productDetailsResponses.size());
                         productDetailsResponse = productDetailsResponses.get(index);
                     }
@@ -53,8 +56,12 @@ public class OrderRoute extends RouteBuilder {
                             .quantity(generateRandomQuantity(productDetailsResponse))
                             .build();
                 })
+                .choice().
+                when(body().isNull()).log("no active products")
+                .otherwise()
                 .setBody(exchange -> flowsContract.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
                 .log("Create order ${body}")
+                .endChoice()
                 .end();
 
         from("timer://simpleTimer?period=1000&delay=1000")
