@@ -37,7 +37,7 @@ public class ProductRoute extends RouteBuilder {
                         .name(faker.commerce().productName())
                         .color(faker.commerce().color())
                         .price(Double.valueOf(faker.commerce().price(1, 100)))
-                        .quantity(random.nextInt(10000) + 100)
+                        .quantity(random.nextInt(100000) + 100)
                         .build())
                 .process(exchange -> {
                     ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
