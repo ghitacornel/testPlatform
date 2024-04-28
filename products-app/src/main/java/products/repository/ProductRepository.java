@@ -33,4 +33,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("update Product p set p.status = products.repository.entity.ProductStatus.CANCELLED where p.companyId = :id")
     void cancelByCompany(@Param("id") Integer id);
 
+    @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.CONSUMED")
+    List<Product> findAllConsumed();
+
+    @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.CANCELLED")
+    List<Product> findAllCancelled();
+
 }
