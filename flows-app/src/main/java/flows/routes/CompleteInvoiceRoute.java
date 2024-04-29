@@ -56,7 +56,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                     try {
                         response = productContract.findById(productId);
                     } catch (FeignException e) {
-                        log.error("no product found for id " + productId);
+                        log.error("no product found for id {}", productId);
                         return;
                     }
                     invoiceContract.update(UpdateProductRequest.builder()
@@ -94,7 +94,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                     try {
                         response = companyContract.findById(companyId);
                     } catch (FeignException e) {
-                        log.error("no company found for id " + companyId);
+                        log.error("no company found for id {}", companyId);
                         return;
                     }
                     invoiceContract.update(UpdateCompanyRequest.builder()
