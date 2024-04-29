@@ -9,7 +9,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -36,5 +35,17 @@ public class Order extends Identifiable {
     @NotNull
     @Enumerated
     private OrderStatus status = OrderStatus.NEW;
+
+    public boolean isNew() {
+        return status == OrderStatus.NEW;
+    }
+
+    public void cancel() {
+        status = OrderStatus.CANCELLED;
+    }
+
+    public void complete() {
+        status = OrderStatus.COMPLETED;
+    }
 
 }
