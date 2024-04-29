@@ -7,6 +7,7 @@ import invoices.service.InvoiceService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +57,7 @@ public class InvoiceController {
     }
 
     @PatchMapping("/complete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void complete(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.complete(id);
     }
