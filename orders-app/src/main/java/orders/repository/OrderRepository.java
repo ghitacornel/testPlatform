@@ -1,25 +1,33 @@
 package orders.repository;
 
 import orders.repository.entity.Order;
+import orders.repository.entity.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query("select p from Order p where p.status = orders.repository.entity.OrderStatus.NEW")
-    List<Order> findAllNew();
+    List<Order> findByStatus(OrderStatus status);
+
+    default List<Order> findAllNew() {
+        return findByStatus(OrderStatus.NEW);
+    }
 
     boolean existsByProductId(Integer id);
 
-    @Query("select count(p.id) from Order p where p.status = orders.repository.entity.OrderStatus.NEW")
-    long countAllNew();
+    long countByStatus(OrderStatus status);
 
-    @Query("select count(p.id) from Order p where p.status = orders.repository.entity.OrderStatus.CANCELLED")
-    long countAllCancelled();
+    default long countAllNew() {
+        return countByStatus(OrderStatus.NEW);
+    }
 
-    @Query("select count(p.id) from Order p where p.status = orders.repository.entity.OrderStatus.COMPLETED")
-    long countAllCompleted();
+    default long countAllCancelled() {
+        return countByStatus(OrderStatus.CANCELLED);
+    }
+
+    default long countAllCompleted() {
+        return countByStatus(OrderStatus.COMPLETED);
+    }
 
 }
