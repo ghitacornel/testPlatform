@@ -39,7 +39,7 @@ public class ClientService {
     public IdResponse register(ClientRegisterRequest request) {
         Client entity = clientMapper.map(request);
         repository.save(entity);
-        log.info("registered " + entity);
+        log.info("registered {}", entity);
         return new IdResponse(entity.getId());
     }
 
@@ -49,7 +49,7 @@ public class ClientService {
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
-        log.info("unregistered " + id);
+        log.info("unregistered {}", id);
     }
 
 }
