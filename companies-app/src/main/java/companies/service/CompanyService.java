@@ -40,13 +40,13 @@ public class CompanyService {
     public IdResponse create(CompanyRegisterRequest request) {
         Company entity = mapper.map(request);
         repository.save(entity);
-        log.info("registered " + entity);
+        log.info("registered {}", entity);
         return new IdResponse(entity.getId());
     }
 
     public void delete(Integer id) {
         repository.deleteById(id);
-        log.info("deleted " + id);
+        log.info("deleted {}", id);
     }
 
     public long count() {
@@ -55,7 +55,7 @@ public class CompanyService {
 
     public void retire(Integer id) {
         repository.findById(id).ifPresent(company -> company.setStatus(Status.RETIRED));
-        log.info("retired " + id);
+        log.info("retired {}", id);
     }
 
 }
