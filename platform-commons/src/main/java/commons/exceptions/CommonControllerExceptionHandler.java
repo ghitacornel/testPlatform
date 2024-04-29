@@ -31,13 +31,13 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
         log.error("Entity not found", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
     }
 
     @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<Object> handleResourceNotFound(ResourceNotFound e) {
+    public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFound e) {
         // no logs for these exceptions
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
     }
@@ -69,7 +69,7 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
      * override how validation constraints in SERVICE layer are handled
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException e) {
+    public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException e) {
         log.error("constraint violated", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage(), e.getConstraintViolations().stream()
                 .map(error -> {
@@ -83,14 +83,14 @@ public class CommonControllerExceptionHandler extends ResponseEntityExceptionHan
     }
 
     @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<Object> handleValidationException(ValidationException e) {
+    public ResponseEntity<ErrorResponse> handleValidationException(ValidationException e) {
         log.error("validation error", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
-        log.error("data integrity error " + e.getMessage());
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        log.error("data integrity error", e);
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
     }
 
