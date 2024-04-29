@@ -1,5 +1,6 @@
 package flows.feign;
 
+import com.netflix.discovery.EurekaClient;
 import contracts.orders.OrderContract;
 import feign.Feign;
 import feign.Logger;
@@ -14,13 +15,13 @@ import org.springframework.context.annotation.Configuration;
 class OrderFeignConfiguration {
 
     @Bean
-    OrderContract orderContract() {
+    OrderContract orderContract(EurekaClient eurekaClient) {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
                 .logger(new Slf4jLogger(OrderContract.class))
                 .logLevel(Logger.Level.FULL)
-                .target(OrderContract.class, "http://localhost:8093");
+                .target(OrderContract.class, eurekaClient.getApplication("orders-cloud").getInstances().getFirst().getHomePageUrl());
     }
 }

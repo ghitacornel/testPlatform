@@ -1,5 +1,6 @@
 package platform.feign;
 
+import com.netflix.discovery.EurekaClient;
 import contracts.companies.CompanyContract;
 import feign.Feign;
 import feign.Logger;
@@ -14,13 +15,13 @@ import org.springframework.context.annotation.Configuration;
 class CompanyFeignConfiguration {
 
     @Bean
-    CompanyContract companyContract() {
+    CompanyContract companyContract(EurekaClient eurekaClient) {
         return Feign.builder()
                 .client(new OkHttpClient())
                 .encoder(new GsonEncoder())
                 .decoder(new GsonDecoder())
                 .logger(new Slf4jLogger(CompanyContract.class))
                 .logLevel(Logger.Level.FULL)
-                .target(CompanyContract.class, "http://localhost:8091");
+                .target(CompanyContract.class, eurekaClient.getApplication("clients-cloud").getInstances().getFirst().getHomePageUrl());
     }
 }
