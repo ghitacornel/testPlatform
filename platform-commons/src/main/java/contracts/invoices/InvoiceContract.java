@@ -27,7 +27,7 @@ public interface InvoiceContract {
     @Headers("Content-Type: application/json")
     void update(UpdateProductRequest request);
 
-    @RequestLine("PATCH /complete/{id}")
+    @RequestLine("PATCH /invoice/complete/{id}")
     void complete(@Param("id") Integer id);
 
 }
