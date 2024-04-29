@@ -41,7 +41,7 @@ public class OrderService {
     public IdResponse create(CreateOrderRequest request) {
         Order order = orderMapper.map(request);
         repository.save(order);
-        log.info("Created " + order);
+        log.info("Created {}", order);
         return new IdResponse(order.getId());
     }
 
@@ -52,7 +52,7 @@ public class OrderService {
             throw new BusinessException("cannot complete already completed order");
         }
         order.setStatus(OrderStatus.COMPLETED);
-        log.info("Completed " + id);
+        log.info("Completed {}", id);
     }
 
     public void cancelById(Integer id) {
@@ -62,7 +62,7 @@ public class OrderService {
             throw new BusinessException("cannot complete already completed order");
         }
         order.setStatus(OrderStatus.CANCELLED);
-        log.info("Cancelled " + id);
+        log.info("Cancelled {}", id);
     }
 
     public void deleteById(Integer id) {
@@ -72,7 +72,7 @@ public class OrderService {
             throw new BusinessException("cannot delete an incomplete order");
         }
         repository.delete(order);
-        log.info("Deleted " + id);
+        log.info("Deleted {}", id);
     }
 
     public boolean existsByProductId(Integer id) {
