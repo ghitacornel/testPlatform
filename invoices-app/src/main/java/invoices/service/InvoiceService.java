@@ -8,12 +8,14 @@ import invoices.repository.InvoiceRepository;
 import invoices.repository.entity.Invoice;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ public class InvoiceService {
         Invoice invoice = new Invoice();
         invoice.setId(request.getOrderId());
         repository.save(invoice);
+        log.info("Invoice created: {}", invoice);
         return new IdResponse(invoice.getId());
     }
 
@@ -43,23 +46,27 @@ public class InvoiceService {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
+        log.info("Invoice order updated: {}", invoice);
     }
 
     public void updateClient(UpdateClientRequest request) {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
+        log.info("Invoice client updated: {}", invoice);
     }
 
     public void updateCompany(UpdateCompanyRequest request) {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
+        log.info("Invoice company updated: {}", invoice);
     }
 
     public void updateProduct(UpdateProductRequest request) {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
+        log.info("Invoice product updated: {}", invoice);
     }
 }
