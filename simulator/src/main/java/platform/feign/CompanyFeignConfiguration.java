@@ -22,6 +22,6 @@ class CompanyFeignConfiguration {
                 .decoder(new GsonDecoder())
                 .logger(new Slf4jLogger(CompanyContract.class))
                 .logLevel(Logger.Level.FULL)
-                .target(CompanyContract.class, eurekaClient.getApplication("clients-cloud").getInstances().getFirst().getHomePageUrl());
+                .target(CompanyContract.class, eurekaClient.getApplication("companies-cloud").getInstances().getFirst().getHomePageUrl());
     }
 }
