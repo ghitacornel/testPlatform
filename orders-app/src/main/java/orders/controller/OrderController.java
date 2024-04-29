@@ -36,7 +36,7 @@ public class OrderController {
         return service.findById(id);
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("product/{id}")
     public boolean existsByProductId(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         return service.existsByProductId(id);
     }
@@ -46,12 +46,12 @@ public class OrderController {
         return service.create(request);
     }
 
-    @PatchMapping("/complete/{id}")
+    @PatchMapping("complete/{id}")
     public void completeById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.completeById(id);
     }
 
-    @PatchMapping("/cancel/{id}")
+    @PatchMapping("cancel/{id}")
     public void cancelById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.cancelById(id);
     }
