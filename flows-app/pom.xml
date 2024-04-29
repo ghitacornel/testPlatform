@@ -60,9 +60,10 @@
         </dependency>
 
         <!-- http://localhost:8090/swagger-ui/index.html#/ -->
+        <!-- include springodc so we can browse the api docs in a swagger web ui -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-rest-openapi-starter</artifactId>
+            <artifactId>camel-springdoc-starter</artifactId>
         </dependency>
 
         <!-- FEIGN REST client -->
