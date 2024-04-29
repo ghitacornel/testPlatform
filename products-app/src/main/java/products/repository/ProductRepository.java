@@ -6,23 +6,40 @@ import products.repository.entity.Product;
 
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.QueryHint;
+import products.repository.entity.ProductStatus;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE")
-    List<Product> findAllActive();
+    List<Product> findByStatus(ProductStatus status);
 
-    @Query("select count(p.id) from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE")
-    long countAllActive();
+    default List<Product> findAllActive() {
+        return findByStatus(ProductStatus.ACTIVE);
+    }
 
-    @Query("select count(p.id) from Product p where p.status = products.repository.entity.ProductStatus.CANCELLED")
-    long countAllCancelled();
+    default List<Product> findAllConsumed() {
+        return findByStatus(ProductStatus.CONSUMED);
+    }
 
-    @Query("select count(p.id) from Product p where p.status = products.repository.entity.ProductStatus.CONSUMED")
-    long countAllConsumed();
+    default List<Product> findAllCancelled() {
+        return findByStatus(ProductStatus.CANCELLED);
+    }
+
+    long countByStatus(ProductStatus status);
+
+    default long countAllActive() {
+        return countByStatus(ProductStatus.ACTIVE);
+    }
+
+    default long countAllCancelled() {
+        return countByStatus(ProductStatus.CANCELLED);
+    }
+
+    default long countAllConsumed() {
+        return countByStatus(ProductStatus.CONSUMED);
+    }
 
     @Lock(LockModeType.PESSIMISTIC_READ)
     @QueryHints({@QueryHint(name = "jakarta.persistence.lock.timeout", value = "100")})
@@ -32,11 +49,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Modifying
     @Query("update Product p set p.status = products.repository.entity.ProductStatus.CANCELLED where p.companyId = :id")
     void cancelByCompany(@Param("id") Integer id);
-
-    @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.CONSUMED")
-    List<Product> findAllConsumed();
-
-    @Query("select p from Product p where p.status = products.repository.entity.ProductStatus.CANCELLED")
-    List<Product> findAllCancelled();
 
 }
