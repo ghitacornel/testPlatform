@@ -11,17 +11,17 @@ import products.repository.ProductRepository;
 @RequiredArgsConstructor
 class RemoveNotActiveProductsScheduler {
 
-    private final ProductRepository productRepository;
+    private final ProductRepository repository;
 
     @Scheduled(fixedRate = 10000)
     private void removeNotActiveProducts() {
-        productRepository.findAllConsumed().forEach(product -> {
+        repository.findAllConsumed().forEach(product -> {
             log.info("Removing consumed product {}", product);
-            productRepository.delete(product);
+            repository.delete(product);
         });
-        productRepository.findAllCancelled().forEach(product -> {
+        repository.findAllCancelled().forEach(product -> {
             log.info("Removing cancelled product {}", product);
-            productRepository.delete(product);
+            repository.delete(product);
         });
     }
 
