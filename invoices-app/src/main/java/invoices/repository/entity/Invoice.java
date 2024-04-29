@@ -1,7 +1,9 @@
 package invoices.repository.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,5 +34,13 @@ public class Invoice {
     private String companyUrl;
     private String companyIndustry;
     private String companyCountry;
+
+    @NotNull
+    @Enumerated
+    private InvoiceStatus status = InvoiceStatus.NEW;
+
+    public void complete(){
+        this.status = InvoiceStatus.COMPLETED;
+    }
 
 }

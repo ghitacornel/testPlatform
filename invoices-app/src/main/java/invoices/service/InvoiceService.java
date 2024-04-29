@@ -69,4 +69,9 @@ public class InvoiceService {
         invoiceMapper.update(invoice, request);
         log.info("Invoice product updated: {}", invoice);
     }
+
+    public void complete(Integer id) {
+        repository.getReferenceById(id).complete();
+    }
+
 }
