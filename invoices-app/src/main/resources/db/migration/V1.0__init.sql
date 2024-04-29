@@ -18,6 +18,7 @@ create table invoice
     product_id       int,
     product_name     varchar(255),
     product_color    varchar(255),
-    product_price    double precision
+    product_price    double precision,
 
+    status           smallint not null
 );
