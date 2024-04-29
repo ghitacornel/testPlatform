@@ -40,14 +40,14 @@ public class ProductService {
     public IdResponse sell(ProductSellRequest request) {
         Product entity = productMapper.map(request);
         repository.save(entity);
-        log.info("sell " + entity);
+        log.info("sell {}", entity);
         return new IdResponse(entity.getId());
     }
 
     public void cancel(Integer id) {
         Product entity = repository.getReferenceById(id);
         entity.setStatus(ProductStatus.CANCELLED);
-        log.info("cancel " + id);
+        log.info("cancel {}", id);
     }
 
     public void buy(ProductBuyRequest request) {
@@ -61,7 +61,7 @@ public class ProductService {
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
         if (product.getQuantity() == 0) {
-            log.info("consumed " + request.getProductId());
+            log.info("consumed {}", request.getProductId());
         }
 
     }
@@ -75,11 +75,11 @@ public class ProductService {
     public void refill(Integer id, Integer quantity) {
         Product entity = repository.getReferenceById(id);
         entity.setQuantity(entity.getQuantity() + quantity);
-        log.info("refill " + id + " with quantity " + quantity);
+        log.info("refill {} with quantity {}", id, quantity);
     }
 
     public void cancelByCompany(Integer id) {
         repository.cancelByCompany(id);
-        log.info("cancel by company " + id);
+        log.info("cancel by company {}", id);
     }
 }
