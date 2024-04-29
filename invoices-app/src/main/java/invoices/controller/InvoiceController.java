@@ -57,7 +57,6 @@ public class InvoiceController {
     }
 
     @PatchMapping("complete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void complete(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.complete(id);
     }
