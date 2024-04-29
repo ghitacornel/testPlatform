@@ -76,7 +76,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                     try {
                         response = clientContract.findById(clientId);
                     } catch (FeignException e) {
-                        log.error("no client found for id " + clientId);
+                        log.error("no client found for id {}", clientId);
                         return;
                     }
                     invoiceContract.update(UpdateClientRequest.builder()
@@ -109,6 +109,10 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
                     orderContract.complete(orderId);
+                })
+                .process(exchange -> {
+                    Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    invoiceContract.complete(orderId);
                 })
                 .end();
     }
