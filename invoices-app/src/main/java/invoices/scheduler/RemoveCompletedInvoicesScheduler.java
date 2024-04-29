@@ -16,8 +16,8 @@ class RemoveCompletedInvoicesScheduler {
     @Scheduled(fixedRate = 10000)
     private void removeCompletedInvoices() {
         repository.findAllCompleted().forEach(invoice -> {
-            log.info("Removing completed invoice {}", invoice);
             repository.delete(invoice);
+            log.info("Removed completed invoice {}", invoice);
         });
     }
 
