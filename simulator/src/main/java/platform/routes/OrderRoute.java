@@ -9,12 +9,14 @@ import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
 import contracts.products.ProductDetailsResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Random;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OrderRoute extends RouteBuilder {
@@ -36,6 +38,10 @@ public class OrderRoute extends RouteBuilder {
                     Integer clientId;
                     {
                         List<ClientDetailsResponse> clients = clientContract.findAll();
+                        if(clients.isEmpty()){
+                            log.error("no clients available");
+                            return null;
+                        }
                         int index = random.nextInt(clients.size());
                         clientId = clients.get(index).getId();
                     }
@@ -44,6 +50,7 @@ public class OrderRoute extends RouteBuilder {
                     {
                         List<ProductDetailsResponse> productDetailsResponses = productContract.findAllActive();
                         if (productDetailsResponses.isEmpty()) {
+                            log.error("no products available");
                             return null;
                         }
                         int index = random.nextInt(productDetailsResponses.size());
@@ -56,8 +63,8 @@ public class OrderRoute extends RouteBuilder {
                             .quantity(generateRandomQuantity(productDetailsResponse))
                             .build();
                 })
-                .choice().
-                when(body().isNull()).log("no active products")
+                .choice()
+                .when(body().isNull()).log("no order created")
                 .otherwise()
                 .setBody(exchange -> flowsContract.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
                 .log("Create order ${body}")
