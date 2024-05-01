@@ -4,15 +4,15 @@ services:
     image: my-eureka-server-docker-image
     container_name: eureka-server
     ports:
-      - 8761:8761
+      - "8761:8761"
 
   #http://localhost:8161/admin/index.jsp
   jms:
     image: webcenter/activemq
     container_name: activeMQ
     ports:
-      - 8161:8161
-      - 11111:61616
+      - "8161:8161"
+      - "11111:61616"
 
   postgres_clients:
     image: postgres:latest
