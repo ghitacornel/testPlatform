@@ -1,0 +1,9 @@
+services:
+
+  eureka-server:
+    image: my-eureka-server-docker-image
+    build:
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - 8761:8761
