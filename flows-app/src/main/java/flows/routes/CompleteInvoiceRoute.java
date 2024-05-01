@@ -1,5 +1,6 @@
 package flows.routes;
 
+import contracts.clients.ClientContract;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyContract;
 import contracts.companies.CompanyDetailsResponse;
@@ -9,7 +10,6 @@ import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
 import contracts.products.ProductDetailsResponse;
 import feign.FeignException;
-import flows.feign.ClientContract;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
