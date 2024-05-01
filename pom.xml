@@ -95,6 +95,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- actuators -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- TESTS -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
