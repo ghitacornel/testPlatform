@@ -36,33 +36,34 @@ public class InvoiceController {
         return service.createInvoice(request);
     }
 
-    @PatchMapping("update/order")
+    @PostMapping("update/order")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOrder(@Valid @RequestBody UpdateOrderRequest request) {
         service.updateOrder(request);
     }
 
-    @PatchMapping("update/client")
+    @PostMapping("update/client")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateClient(@Valid @RequestBody UpdateClientRequest request) {
         service.updateClient(request);
     }
 
-    @PatchMapping("update/company")
+    @PostMapping("update/company")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCompany(@Valid @RequestBody UpdateCompanyRequest request) {
         service.updateCompany(request);
     }
 
-    @PatchMapping("update/product")
+    @PostMapping("update/product")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@Valid @RequestBody UpdateProductRequest request) {
         service.updateProduct(request);
     }
 
-    @PatchMapping("complete/{id}")
+    @PostMapping("complete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void complete(@Valid @NotNull @PathVariable(name = "id") Integer id) {
         service.complete(id);
     }
+
 }

@@ -10,6 +10,7 @@ import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductContract;
 import contracts.products.ProductDetailsResponse;
 import feign.FeignException;
+import flows.feign.InvoiceContract;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
