@@ -3,8 +3,8 @@ package flows.routes;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductBuyRequest;
-import flows.feign.OrderContract;
-import flows.feign.ProductContract;
+import flows.clients.OrderClient;
+import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -18,8 +18,8 @@ public class CreateOrderRoute extends RouteBuilder {
 
     private static final String PRODUCT_BUY_REQUEST = "productBuyRequest";
 
-    private final OrderContract orderContract;
-    private final ProductContract productContract;
+    private final OrderClient orderClient;
+    private final ProductClient productClient;
 
     @Override
     public void configure() {
@@ -44,10 +44,10 @@ public class CreateOrderRoute extends RouteBuilder {
                             .productId(createOrderRequest.getProductId())
                             .quantity(createOrderRequest.getQuantity())
                             .build();
-                    productContract.buy(productBuyRequest);
+                    productClient.buy(productBuyRequest);
                     exchange.getMessage().setHeader(PRODUCT_BUY_REQUEST, productBuyRequest);
                 })
-                .setBody(exchange -> orderContract.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
+                .setBody(exchange -> orderClient.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
                 .log("Order ${body.id} created with ${header.productBuyRequest}")
                 .removeHeader(PRODUCT_BUY_REQUEST)
                 .end();

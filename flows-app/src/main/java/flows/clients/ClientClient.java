@@ -1,7 +1,7 @@
-package flows.feign;
+package flows.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
 
 @FeignClient(name = "clients-cloud")
-public interface ClientContract extends contracts.clients.ClientContract {
+public interface ClientClient extends contracts.clients.ClientContract {
 }

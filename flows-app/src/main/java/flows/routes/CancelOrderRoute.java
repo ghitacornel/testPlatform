@@ -1,8 +1,8 @@
 package flows.routes;
 
 import contracts.orders.OrderDetailsResponse;
-import flows.feign.OrderContract;
-import flows.feign.ProductContract;
+import flows.clients.OrderClient;
+import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CancelOrderRoute extends RouteBuilder {
 
-    private final OrderContract orderContract;
-    private final ProductContract productContract;
+    private final OrderClient orderClient;
+    private final ProductClient productClient;
 
     @Override
     public void configure() {
@@ -29,12 +29,12 @@ public class CancelOrderRoute extends RouteBuilder {
                 .routeId("cancel-order-route")
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    OrderDetailsResponse orderDetailsResponse = orderContract.findById(id);
-                    productContract.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
+                    OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
+                    productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
                 })
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    orderContract.cancel(id);
+                    orderClient.cancel(id);
                 })
                 .end();
     }
