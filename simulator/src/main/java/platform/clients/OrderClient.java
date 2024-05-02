@@ -1,7 +1,7 @@
-package platform.feign;
+package platform.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
 
 @FeignClient(name = "orders-cloud")
-public interface OrderContract extends contracts.orders.OrderContract {
+public interface OrderClient extends contracts.orders.OrderContract {
 }

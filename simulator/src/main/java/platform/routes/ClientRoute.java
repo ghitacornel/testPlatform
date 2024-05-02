@@ -6,7 +6,7 @@ import contracts.clients.ClientRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.feign.ClientContract;
+import platform.clients.ClientClient;
 
 import java.util.List;
 import java.util.Random;
@@ -21,26 +21,26 @@ public class ClientRoute extends RouteBuilder {
     private final Random random = new Random();
     private final Faker faker = Faker.instance();
 
-    private final ClientContract clientContract;
+    private final ClientClient clientClient;
 
     @Override
     public void configure() {
 
         from("timer://simpleTimer?period=5000&delay=5000")
                 .routeId("register-client-route")
-                .setBody(exchange -> clientContract.count())
+                .setBody(exchange -> clientClient.count())
                 .filter(body().isLessThan(ClientRoute.MAXIMUM))
                 .setBody(exchange -> ClientRegisterRequest.builder()
                         .name(faker.name().username())
                         .cardType(faker.business().creditCardType())
                         .country(faker.country().name())
                         .build())
-                .process(exchange -> clientContract.register(exchange.getMessage().getBody(ClientRegisterRequest.class)))
+                .process(exchange -> clientClient.register(exchange.getMessage().getBody(ClientRegisterRequest.class)))
                 .end();
 
         from("timer://simpleTimer?period=5000&delay=5000")
                 .routeId("unregister-client-route")
-                .setBody(exchange -> clientContract.findAll())
+                .setBody(exchange -> clientClient.findAll())
                 .filter(body().method("size").isGreaterThan(ClientRoute.MINIMUM))
                 .setBody(exchange -> {
                     List<ClientDetailsResponse> data = exchange.getMessage().getBody(List.class);
@@ -54,7 +54,7 @@ public class ClientRoute extends RouteBuilder {
                 .choice()
                 .when(body().isNull()).log("no order created")
                 .otherwise()
-                .process(exchange -> clientContract.unregister(exchange.getMessage().getBody(Integer.class)))
+                .process(exchange -> clientClient.unregister(exchange.getMessage().getBody(Integer.class)))
                 .endChoice()
                 .end();
 

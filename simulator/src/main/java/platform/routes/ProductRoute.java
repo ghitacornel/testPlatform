@@ -8,7 +8,7 @@ import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-import platform.feign.ProductContract;
+import platform.clients.ProductClient;
 
 import java.util.List;
 import java.util.Random;
@@ -23,7 +23,7 @@ public class ProductRoute extends RouteBuilder {
     private final Random random = new Random();
     private final Faker faker = Faker.instance();
 
-    private final ProductContract productContract;
+    private final ProductClient productClient;
     private final CompanyContract companyContract;
 
     @Override
@@ -31,7 +31,7 @@ public class ProductRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=1000&delay=1000")
                 .routeId("sale-product-route")
-                .setBody(exchange -> productContract.countAllActive())
+                .setBody(exchange -> productClient.countAllActive())
                 .filter(body().isLessThan(ProductRoute.MAXIMUM))
                 .setBody(exchange -> ProductSellRequest.builder()
                         .name(faker.commerce().productName())
@@ -48,20 +48,20 @@ public class ProductRoute extends RouteBuilder {
                     int index = random.nextInt(companyDetailsResponses.size());
                     productSellRequest.setCompanyId(companyDetailsResponses.get(index).getId());
                 })
-                .process(exchange -> productContract.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
+                .process(exchange -> productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
                 .end();
 
         from("timer://simpleTimer?period=5000&delay=1000")
                 .routeId("cancel-product-route")
-                .setBody(exchange -> productContract.countAllActive())
+                .setBody(exchange -> productClient.countAllActive())
                 .filter(body().isGreaterThan(ProductRoute.MINIMUM))
-                .setBody(exchange -> productContract.findAllActive())
+                .setBody(exchange -> productClient.findAllActive())
                 .setBody(exchange -> {
                     List<ProductDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
                     return data.get(index);
                 })
-                .process(exchange -> productContract.cancel(exchange.getMessage().getBody(ProductDetailsResponse.class).getId()))
+                .process(exchange -> productClient.cancel(exchange.getMessage().getBody(ProductDetailsResponse.class).getId()))
                 .end();
 
     }
