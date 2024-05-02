@@ -2,7 +2,7 @@ package flows.routes;
 
 import contracts.orders.OrderContract;
 import contracts.orders.OrderDetailsResponse;
-import contracts.products.ProductContract;
+import flows.feign.ProductContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;

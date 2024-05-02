@@ -1,38 +1,39 @@
 package contracts.products;
 
 import commons.model.IdResponse;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public interface ProductContract {
 
-    @RequestLine("GET /product/count")
+    @GetMapping("product/count")
     long countAllActive();
 
-    @RequestLine("GET /product")
+    @GetMapping(value = "product", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ProductDetailsResponse> findAllActive();
 
-    @RequestLine("GET /product/{id}")
-    ProductDetailsResponse findById(@Param("id") Integer id);
+    @GetMapping(value = "product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ProductDetailsResponse findById(@PathVariable("id") Integer id);
 
-    @RequestLine("POST /product/sell")
-    @Headers("Content-Type: application/json")
-    IdResponse sell(ProductSellRequest inputModel);
+    @PostMapping(value = "product/sell", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    IdResponse sell(@RequestBody ProductSellRequest inputModel);
 
-    @RequestLine("PUT /product/buy")
-    @Headers("Content-Type: application/json")
-    IdResponse buy(ProductBuyRequest inputModel);
+    @PutMapping(value = "product/buy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    IdResponse buy(@RequestBody ProductBuyRequest inputModel);
 
-    @RequestLine("DELETE /product/{id}")
-    void cancel(@Param("id") Integer id);
+    @DeleteMapping("product/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void cancel(@PathVariable("id") Integer id);
 
-    @RequestLine("DELETE /product/company/{id}")
-    void cancelByCompany(@Param("id") Integer id);
+    @DeleteMapping("product/company/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void cancelByCompany(@PathVariable("id") Integer id);
 
-    @RequestLine("PATCH /product/refill/{id}/{quantity}")
-    void refill(@Param("id") Integer id, @Param("quantity") Integer quantity);
+    @PatchMapping("product/refill/{id}/{quantity}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void refill(@PathVariable("id") Integer id, @PathVariable("quantity") Integer quantity);
 
 }

@@ -3,12 +3,12 @@ package platform.routes;
 import com.github.javafaker.Faker;
 import contracts.companies.CompanyContract;
 import contracts.companies.CompanyDetailsResponse;
-import contracts.products.ProductContract;
 import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
+import platform.feign.ProductContract;
 
 import java.util.List;
 import java.util.Random;
