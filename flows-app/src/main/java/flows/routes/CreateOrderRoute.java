@@ -2,8 +2,8 @@ package flows.routes;
 
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
-import contracts.orders.OrderContract;
 import contracts.products.ProductBuyRequest;
+import flows.feign.OrderContract;
 import flows.feign.ProductContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;

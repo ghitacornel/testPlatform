@@ -1,28 +1,29 @@
 package contracts.orders;
 
 import commons.model.IdResponse;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public interface OrderContract {
 
-    @RequestLine("GET /order")
+    @GetMapping(value = "order", produces = MediaType.APPLICATION_JSON_VALUE)
     List<OrderDetailsResponse> findAllNew();
 
-    @RequestLine("GET /order/{id}")
-    OrderDetailsResponse findById(@Param("id") Integer id);
+    @GetMapping(value = "order/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    OrderDetailsResponse findById(@PathVariable("id") Integer id);
 
-    @RequestLine("POST /order")
-    @Headers("Content-Type: application/json")
-    IdResponse create(CreateOrderRequest inputModel);
+    @PostMapping(value = "order", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    IdResponse create(@RequestBody CreateOrderRequest inputModel);
 
-    @RequestLine("PATCH /order/complete/{id}")
-    void complete(@Param("id") Integer id);
+    @PatchMapping("order/complete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void complete(@PathVariable("id") Integer id);
 
-    @RequestLine("PATCH /order/cancel/{id}")
-    void cancel(@Param("id") Integer id);
+    @PatchMapping("order/cancel/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void cancel(@PathVariable("id") Integer id);
 
 }
