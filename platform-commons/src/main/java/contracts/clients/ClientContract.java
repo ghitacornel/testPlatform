@@ -1,28 +1,28 @@
 package contracts.clients;
 
 import commons.model.IdResponse;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public interface ClientContract {
 
-    @RequestLine("GET /client/count")
+    @GetMapping("client/count")
     long count();
 
-    @RequestLine("GET /client")
+    @GetMapping(value = "client", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ClientDetailsResponse> findAll();
 
-    @RequestLine("GET /client/{id}")
-    ClientDetailsResponse findById(@Param("id") Integer id);
+    @GetMapping(value = "client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ClientDetailsResponse findById(@PathVariable("id") Integer id);
 
-    @RequestLine("POST /client")
-    @Headers("Content-Type: application/json")
+    @PostMapping(value = "client", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse register(ClientRegisterRequest inputModel);
 
-    @RequestLine("DELETE /client/{id}")
-    void unregister(@Param("id") Integer id);
+    @DeleteMapping("client/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void unregister(@PathVariable("id") Integer id);
 
 }
