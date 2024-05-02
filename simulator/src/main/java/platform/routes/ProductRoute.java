@@ -1,13 +1,13 @@
 package platform.routes;
 
 import com.github.javafaker.Faker;
-import contracts.companies.CompanyContract;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
+import platform.clients.CompanyClient;
 import platform.clients.ProductClient;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ProductRoute extends RouteBuilder {
     private final Faker faker = Faker.instance();
 
     private final ProductClient productClient;
-    private final CompanyContract companyContract;
+    private final CompanyClient companyClient;
 
     @Override
     public void configure() {
@@ -41,7 +41,7 @@ public class ProductRoute extends RouteBuilder {
                         .build())
                 .process(exchange -> {
                     ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
-                    List<CompanyDetailsResponse> companyDetailsResponses = companyContract.findAll();
+                    List<CompanyDetailsResponse> companyDetailsResponses = companyClient.findAll();
                     if (companyDetailsResponses.isEmpty()) {
                         throw new IllegalStateException("no companies available for creating products");
                     }

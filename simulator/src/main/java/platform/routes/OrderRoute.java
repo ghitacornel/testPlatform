@@ -1,6 +1,5 @@
 package platform.routes;
 
-import contracts.clients.ClientContract;
 import contracts.clients.ClientDetailsResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
+import platform.clients.ClientClient;
 import platform.clients.FlowsClient;
 import platform.clients.OrderClient;
 import platform.clients.ProductClient;
@@ -24,7 +24,7 @@ public class OrderRoute extends RouteBuilder {
     private final Random random = new Random();
 
     private final OrderClient orderClient;
-    private final ClientContract clientContract;
+    private final ClientClient clientClient;
     private final ProductClient productClient;
     private final FlowsClient flowsClient;
 
@@ -37,7 +37,7 @@ public class OrderRoute extends RouteBuilder {
 
                     Integer clientId;
                     {
-                        List<ClientDetailsResponse> clients = clientContract.findAll();
+                        List<ClientDetailsResponse> clients = clientClient.findAll();
                         if (clients.isEmpty()) {
                             log.error("no clients available");
                             return null;
