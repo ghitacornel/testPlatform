@@ -44,10 +44,18 @@ public class ClientRoute extends RouteBuilder {
                 .filter(body().method("size").isGreaterThan(ClientRoute.MINIMUM))
                 .setBody(exchange -> {
                     List<ClientDetailsResponse> data = exchange.getMessage().getBody(List.class);
+                    if (data.isEmpty()) {
+                        log.error("no clients available");
+                        return null;
+                    }
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
+                .choice()
+                .when(body().isNull()).log("no order created")
+                .otherwise()
                 .process(exchange -> clientContract.unregister(exchange.getMessage().getBody(Integer.class)))
+                .endChoice()
                 .end();
 
     }
