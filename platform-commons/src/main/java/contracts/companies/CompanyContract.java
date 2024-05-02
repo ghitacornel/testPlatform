@@ -1,31 +1,32 @@
 package contracts.companies;
 
 import commons.model.IdResponse;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 public interface CompanyContract {
 
-    @RequestLine("GET /company/count")
+    @GetMapping("company/count")
     long count();
 
-    @RequestLine("GET /company")
+    @GetMapping(value = "company", produces = MediaType.APPLICATION_JSON_VALUE)
     List<CompanyDetailsResponse> findAll();
 
-    @RequestLine("GET /company/{id}")
-    @Headers("Content-Type: application/json")
-    CompanyDetailsResponse findById(@Param("id") Integer id);
+    @GetMapping(value = "company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    CompanyDetailsResponse findById(@PathVariable("id") Integer id);
 
-    @RequestLine("POST /company")
-    @Headers("Content-Type: application/json")
-    IdResponse create(CompanyRegisterRequest inputModel);
+    @PostMapping(value = "company", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    IdResponse create(@RequestBody CompanyRegisterRequest inputModel);
 
-    @RequestLine("DELETE /company/{id}")
-    void delete(@Param("id") Integer id);
+    @DeleteMapping("company/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@PathVariable("id") Integer id);
 
-    @RequestLine("PATCH /company/retire/{id}")
-    void retire(@Param("id") Integer id);
+    @PatchMapping("company/retire/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void retire(@PathVariable("id") Integer id);
+
 }

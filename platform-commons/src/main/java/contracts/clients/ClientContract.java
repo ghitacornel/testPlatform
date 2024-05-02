@@ -19,7 +19,7 @@ public interface ClientContract {
     ClientDetailsResponse findById(@PathVariable("id") Integer id);
 
     @PostMapping(value = "client", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    IdResponse register(ClientRegisterRequest inputModel);
+    IdResponse register(@RequestBody ClientRegisterRequest inputModel);
 
     @DeleteMapping("client/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

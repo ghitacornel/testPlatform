@@ -1,7 +1,7 @@
 package flows.routes;
 
-import contracts.companies.CompanyContract;
 import contracts.products.ProductContract;
+import flows.feign.CompanyContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;

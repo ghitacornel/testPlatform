@@ -1,7 +1,6 @@
 package flows.routes;
 
 import contracts.clients.ClientDetailsResponse;
-import contracts.companies.CompanyContract;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.invoices.*;
 import contracts.orders.OrderContract;
@@ -10,6 +9,7 @@ import contracts.products.ProductContract;
 import contracts.products.ProductDetailsResponse;
 import feign.FeignException;
 import flows.feign.ClientContract;
+import flows.feign.CompanyContract;
 import flows.feign.InvoiceContract;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
