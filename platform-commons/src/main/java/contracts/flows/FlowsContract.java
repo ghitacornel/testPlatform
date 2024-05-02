@@ -2,23 +2,25 @@ package contracts.flows;
 
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 public interface FlowsContract {
 
-    @RequestLine("POST /camel/order/create")
-    @Headers("Content-Type: application/json")
-    IdResponse createOrder(CreateOrderRequest inputModel);
+    @PostMapping(value = "camel/order/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    IdResponse createOrder(@RequestBody CreateOrderRequest inputModel);
 
-    @RequestLine("PATCH /camel/order/complete/{id}")
-    void completeOrder(@Param("id") Integer id);
+    @PatchMapping("camel/order/complete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void completeOrder(@PathVariable("id") Integer id);
 
-    @RequestLine("PATCH /camel/order/cancel/{id}")
-    void cancelOrder(@Param("id") Integer id);
+    @PatchMapping("camel/order/cancel/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void cancelOrder(@PathVariable("id") Integer id);
 
-    @RequestLine("DELETE /camel/company/delete/{id}")
-    void deleteCompany(@Param("id") Integer id);
+    @DeleteMapping("camel/company/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteCompany(@PathVariable("id") Integer id);
 
 }

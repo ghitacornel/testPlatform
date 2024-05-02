@@ -2,7 +2,6 @@ package platform.routes;
 
 import contracts.clients.ClientContract;
 import contracts.clients.ClientDetailsResponse;
-import contracts.flows.FlowsContract;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductDetailsResponse;
@@ -10,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
+import platform.feign.FlowsContract;
 import platform.feign.OrderContract;
 import platform.feign.ProductContract;
 

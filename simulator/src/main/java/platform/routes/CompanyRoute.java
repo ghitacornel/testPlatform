@@ -3,7 +3,7 @@ package platform.routes;
 import com.github.javafaker.Faker;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
-import contracts.flows.FlowsContract;
+import platform.feign.FlowsContract;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
