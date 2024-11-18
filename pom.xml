@@ -127,7 +127,7 @@
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
-                                <version>1.18.32</version>
+                                <version>1.18.36</version>
                             </path>
                             <!-- This is needed when using Lombok 1.18.16 and above -->
                             <path>
@@ -139,7 +139,7 @@
                             <path>
                                 <groupId>org.mapstruct</groupId>
                                 <artifactId>mapstruct-processor</artifactId>
-                                <version>1.5.5.Final</version>
+                                <version>1.6.3</version>
                             </path>
                         </annotationProcessorPaths>
                         <compilerArgs>
