@@ -145,6 +145,7 @@
                         <compilerArgs>
                             <compilerArg>
                                 -Amapstruct.defaultComponentModel=spring
+                                -Amapstruct.unmappedTargetPolicy=ERROR
                             </compilerArg>
                         </compilerArgs>
                     </configuration>
