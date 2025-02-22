@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,7 +27,7 @@ public class OrderService {
     public List<OrderDetailsResponse> findAllNew() {
         return repository.findAllNew().stream()
                 .map(orderMapper::map)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public OrderDetailsResponse findById(Integer id) {

@@ -6,7 +6,7 @@ import orders.repository.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderMapper {
 
     OrderDetailsResponse map(Order order);
