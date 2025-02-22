@@ -6,8 +6,9 @@ import companies.repository.entity.Company;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CompanyMapper {
+
     CompanyDetailsResponse map(Company model);
 
     @Mapping(target = "status", ignore = true)
