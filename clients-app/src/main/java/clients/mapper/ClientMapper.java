@@ -5,11 +5,10 @@ import clients.controller.model.response.ClientDetailsResponse;
 import clients.repository.entity.Client;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ClientMapper {
 
     ClientDetailsResponse map(Client data);
-
     Client map(ClientRegisterRequest data);
 
 }
