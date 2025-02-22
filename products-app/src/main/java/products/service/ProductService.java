@@ -16,7 +16,6 @@ import products.repository.entity.Product;
 import products.repository.entity.ProductStatus;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,7 +29,7 @@ public class ProductService {
     public List<ProductDetailsResponse> findAllActive() {
         return repository.findAllActive().stream()
                 .map(productMapper::map)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public long countAllActive() {

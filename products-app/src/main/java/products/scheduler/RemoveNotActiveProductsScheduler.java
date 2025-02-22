@@ -16,12 +16,12 @@ class RemoveNotActiveProductsScheduler {
     @Scheduled(fixedRate = 10000)
     private void removeNotActiveProducts() {
         repository.findAllConsumed().forEach(product -> {
-            log.info("Removing consumed product {}", product);
             repository.delete(product);
+            log.info("Removed consumed product {}", product);
         });
         repository.findAllCancelled().forEach(product -> {
-            log.info("Removing cancelled product {}", product);
             repository.delete(product);
+            log.info("Removed cancelled product {}", product);
         });
     }
 

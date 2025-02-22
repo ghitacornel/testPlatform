@@ -6,7 +6,7 @@ import products.controller.model.request.ProductSellRequest;
 import products.controller.model.response.ProductDetailsResponse;
 import products.repository.entity.Product;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ProductMapper {
 
     ProductDetailsResponse map(Product model);
