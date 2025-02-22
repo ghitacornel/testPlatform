@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -27,7 +26,7 @@ public class InvoiceService {
     public List<InvoiceDetails> findAll() {
         return repository.findAll().stream()
                 .map(invoiceMapper::map)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public long count() {

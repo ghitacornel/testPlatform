@@ -8,7 +8,7 @@ import invoices.controller.model.response.InvoiceDetails;
 import invoices.repository.entity.Invoice;
 import org.mapstruct.*;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface InvoiceMapper {
 
     InvoiceDetails map(Invoice data);
