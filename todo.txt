@@ -10,5 +10,4 @@ TODO
 add UNREGISTERED marker for client/company + delete them in the future
 
 TODO
-remove path variable name
 remove mapstruct maven config
