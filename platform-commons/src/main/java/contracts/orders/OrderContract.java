@@ -37,6 +37,6 @@ public interface OrderContract {
     void cancel(@Valid @NotNull @PathVariable("id") Integer id);
 
     @DeleteMapping("{id}")
-    void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id);
+    void delete(@Valid @NotNull @PathVariable(name = "id") Integer id);
 
 }
