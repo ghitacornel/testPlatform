@@ -23,7 +23,7 @@ public class Company extends Identifiable {
     private String name;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String url;
 
     @NotBlank
