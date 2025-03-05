@@ -1,6 +1,6 @@
 package invoices.service;
 
-import invoices.controller.model.response.Statistics;
+import commons.model.Statistics;
 import invoices.repository.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

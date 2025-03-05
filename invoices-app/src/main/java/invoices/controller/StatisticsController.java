@@ -1,6 +1,6 @@
 package invoices.controller;
 
-import invoices.controller.model.response.Statistics;
+import commons.model.Statistics;
 import invoices.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

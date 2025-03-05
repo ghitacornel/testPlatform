@@ -1,10 +1,6 @@
 package invoices.mapper;
 
-import invoices.controller.model.request.UpdateClientRequest;
-import invoices.controller.model.request.UpdateCompanyRequest;
-import invoices.controller.model.request.UpdateOrderRequest;
-import invoices.controller.model.request.UpdateProductRequest;
-import invoices.controller.model.response.InvoiceDetails;
+import contracts.invoices.*;
 import invoices.repository.entity.Invoice;
 import org.mapstruct.*;
 

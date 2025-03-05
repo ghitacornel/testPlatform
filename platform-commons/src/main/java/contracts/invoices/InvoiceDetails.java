@@ -1,4 +1,4 @@
-package invoices.controller.model.response;
+package contracts.invoices;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

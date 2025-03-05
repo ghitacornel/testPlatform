@@ -1,8 +1,7 @@
 package invoices.service;
 
 import commons.model.IdResponse;
-import invoices.controller.model.request.*;
-import invoices.controller.model.response.InvoiceDetails;
+import contracts.invoices.*;
 import invoices.mapper.InvoiceMapper;
 import invoices.repository.InvoiceRepository;
 import invoices.repository.entity.Invoice;
