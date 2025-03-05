@@ -1,6 +1,6 @@
 package companies.service;
 
-import companies.controller.model.response.Statistics;
+import commons.model.Statistics;
 import companies.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

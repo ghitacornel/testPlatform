@@ -1,6 +1,6 @@
 package companies.controller;
 
-import companies.controller.model.response.Statistics;
+import commons.model.Statistics;
 import companies.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

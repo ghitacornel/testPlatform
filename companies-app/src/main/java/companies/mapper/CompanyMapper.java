@@ -1,8 +1,8 @@
 package companies.mapper;
 
-import companies.controller.model.request.CompanyRegisterRequest;
-import companies.controller.model.response.CompanyDetailsResponse;
 import companies.repository.entity.Company;
+import contracts.companies.CompanyDetailsResponse;
+import contracts.companies.CompanyRegisterRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

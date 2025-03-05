@@ -2,12 +2,12 @@ package companies.service;
 
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
-import companies.controller.model.request.CompanyRegisterRequest;
-import companies.controller.model.response.CompanyDetailsResponse;
 import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
 import companies.repository.entity.Status;
+import contracts.companies.CompanyDetailsResponse;
+import contracts.companies.CompanyRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
