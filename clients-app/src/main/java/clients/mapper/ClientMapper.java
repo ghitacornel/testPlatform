@@ -1,8 +1,8 @@
 package clients.mapper;
 
-import clients.controller.model.request.ClientRegisterRequest;
-import clients.controller.model.response.ClientDetailsResponse;
 import clients.repository.entity.Client;
+import contracts.clients.ClientDetailsResponse;
+import contracts.clients.ClientRegisterRequest;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

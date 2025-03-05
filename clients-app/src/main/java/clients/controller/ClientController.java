@@ -1,47 +1,39 @@
 package clients.controller;
 
-import clients.controller.model.request.ClientRegisterRequest;
-import clients.controller.model.response.ClientDetailsResponse;
 import clients.service.ClientService;
 import commons.model.IdResponse;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import contracts.clients.ClientContract;
+import contracts.clients.ClientDetailsResponse;
+import contracts.clients.ClientRegisterRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("client")
+@RequestMapping
 @RequiredArgsConstructor
-@Validated
-public class ClientController {
+public class ClientController implements ClientContract {
 
     private final ClientService service;
 
-    @GetMapping
     public List<ClientDetailsResponse> findAll() {
         return service.findAll();
     }
 
-    @GetMapping("count")
     public long count() {
         return service.count();
     }
 
-    @GetMapping("{id}")
-    public ClientDetailsResponse findById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+    public ClientDetailsResponse findById(Integer id) {
         return service.findById(id);
     }
 
-    @PostMapping
-    public IdResponse register(@Valid @RequestBody ClientRegisterRequest request) {
+    public IdResponse register(ClientRegisterRequest request) {
         return service.register(request);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteById(@Valid @NotNull @PathVariable(name = "id") Integer id) {
+    public void unregister(Integer id) {
         service.deleteById(id);
     }
 

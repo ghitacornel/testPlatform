@@ -1,12 +1,12 @@
 package clients.service;
 
-import clients.controller.model.request.ClientRegisterRequest;
-import clients.controller.model.response.ClientDetailsResponse;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
+import contracts.clients.ClientDetailsResponse;
+import contracts.clients.ClientRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package clients.controller.model.response;
+package commons.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

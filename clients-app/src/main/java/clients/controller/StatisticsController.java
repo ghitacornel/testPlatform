@@ -1,7 +1,7 @@
 package clients.controller;
 
-import clients.controller.model.response.Statistics;
 import clients.service.StatisticsService;
+import commons.model.Statistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

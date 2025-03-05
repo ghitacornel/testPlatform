@@ -1,7 +1,7 @@
 package clients.service;
 
-import clients.controller.model.response.Statistics;
 import clients.repository.ClientRepository;
+import commons.model.Statistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
