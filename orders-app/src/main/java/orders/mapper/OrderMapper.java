@@ -1,7 +1,7 @@
 package orders.mapper;
 
-import orders.controller.model.request.CreateOrderRequest;
-import orders.controller.model.response.OrderDetailsResponse;
+import contracts.orders.CreateOrderRequest;
+import contracts.orders.OrderDetailsResponse;
 import orders.repository.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
