@@ -1,9 +1,9 @@
 package products.mapper;
 
+import contracts.products.ProductDetailsResponse;
+import contracts.products.ProductSellRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import products.controller.model.request.ProductSellRequest;
-import products.controller.model.response.ProductDetailsResponse;
 import products.repository.entity.Product;
 
 @Mapper(componentModel = "spring")

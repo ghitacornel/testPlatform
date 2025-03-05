@@ -1,12 +1,17 @@
 package contracts.products;
 
 import commons.model.IdResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 public interface ProductContract {
 
     @GetMapping("product/count")
@@ -16,24 +21,24 @@ public interface ProductContract {
     List<ProductDetailsResponse> findAllActive();
 
     @GetMapping(value = "product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ProductDetailsResponse findById(@PathVariable("id") Integer id);
+    ProductDetailsResponse findById(@Valid @NotNull @PathVariable("id") Integer id);
 
     @PostMapping(value = "product/sell", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    IdResponse sell(@RequestBody ProductSellRequest inputModel);
+    IdResponse sell(@Valid @RequestBody ProductSellRequest inputModel);
 
     @PutMapping(value = "product/buy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    IdResponse buy(@RequestBody ProductBuyRequest inputModel);
+    void buy(@Valid @RequestBody ProductBuyRequest inputModel);
 
     @DeleteMapping("product/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void cancel(@PathVariable("id") Integer id);
+    void cancel(@Valid @NotNull @PathVariable("id") Integer id);
 
     @DeleteMapping("product/company/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void cancelByCompany(@PathVariable("id") Integer id);
+    void cancelByCompany(@Valid @NotNull @PathVariable("id") Integer id);
 
     @PatchMapping("product/refill/{id}/{quantity}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void refill(@PathVariable("id") Integer id, @PathVariable("quantity") Integer quantity);
+    void refill(@Valid @NotNull @PathVariable("id") Integer id, @Valid @NotNull @Positive @PathVariable("quantity") Integer quantity);
 
 }

@@ -2,14 +2,14 @@ package products.service;
 
 import commons.exceptions.BusinessException;
 import commons.model.IdResponse;
+import contracts.products.ProductBuyRequest;
+import contracts.products.ProductDetailsResponse;
+import contracts.products.ProductSellRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import products.controller.model.request.ProductBuyRequest;
-import products.controller.model.request.ProductSellRequest;
-import products.controller.model.response.ProductDetailsResponse;
 import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
