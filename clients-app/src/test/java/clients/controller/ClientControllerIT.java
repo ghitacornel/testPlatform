@@ -1,9 +1,9 @@
 package clients.controller;
 
-import clients.controller.model.request.ClientRegisterRequest;
-import clients.controller.model.response.ClientDetailsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.model.IdResponse;
+import contracts.clients.ClientDetailsResponse;
+import contracts.clients.ClientRegisterRequest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -2,8 +2,8 @@ package companies.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commons.model.IdResponse;
-import companies.controller.model.request.CompanyRegisterRequest;
-import companies.controller.model.response.CompanyDetailsResponse;
+import contracts.companies.CompanyDetailsResponse;
+import contracts.companies.CompanyRegisterRequest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
