@@ -47,10 +47,17 @@ public class CompanyRoute extends RouteBuilder {
                 .filter(body().method("size").isGreaterThan(CompanyRoute.MINIMUM))
                 .setBody(exchange -> {
                     List<CompanyDetailsResponse> data = exchange.getMessage().getBody(List.class);
+                    if (data.isEmpty()) {
+                        return null;
+                    }
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
+                .choice()
+                .when(body().isNull()).log("No companies available for unregistering")
+                .otherwise()
                 .process(exchange -> flowsClient.deleteCompany(exchange.getMessage().getBody(Integer.class)))
+                .endChoice()
                 .end();
 
     }

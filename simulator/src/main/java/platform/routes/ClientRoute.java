@@ -45,14 +45,13 @@ public class ClientRoute extends RouteBuilder {
                 .setBody(exchange -> {
                     List<ClientDetailsResponse> data = exchange.getMessage().getBody(List.class);
                     if (data.isEmpty()) {
-                        log.error("no clients available");
                         return null;
                     }
                     int index = random.nextInt(data.size());
                     return data.get(index).getId();
                 })
                 .choice()
-                .when(body().isNull()).log("no order created")
+                .when(body().isNull()).log("No clients available for unregistering")
                 .otherwise()
                 .process(exchange -> clientClient.unregister(exchange.getMessage().getBody(Integer.class)))
                 .endChoice()
