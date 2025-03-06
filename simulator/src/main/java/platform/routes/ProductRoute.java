@@ -5,6 +5,7 @@ import contracts.companies.CompanyDetailsResponse;
 import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.CompanyClient;
@@ -58,10 +59,17 @@ public class ProductRoute extends RouteBuilder {
                 .setBody(exchange -> productClient.findAllActive())
                 .setBody(exchange -> {
                     List<ProductDetailsResponse> data = exchange.getMessage().getBody(List.class);
+                    if (data.isEmpty()) {
+                        return null;
+                    }
                     int index = random.nextInt(data.size());
                     return data.get(index);
                 })
+                .choice()
+                .when(body().isNull()).log(LoggingLevel.WARN, "No products available for cancelling")
+                .otherwise()
                 .process(exchange -> productClient.cancel(exchange.getMessage().getBody(ProductDetailsResponse.class).getId()))
+                .endChoice()
                 .end();
 
     }
