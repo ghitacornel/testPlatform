@@ -44,12 +44,16 @@ public class ProductRoute extends RouteBuilder {
                     ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
                     List<CompanyDetailsResponse> companyDetailsResponses = companyClient.findAll();
                     if (companyDetailsResponses.isEmpty()) {
-                        throw new IllegalStateException("no companies available for creating products");
+                        exchange.setMessage(null);
                     }
                     int index = random.nextInt(companyDetailsResponses.size());
                     productSellRequest.setCompanyId(companyDetailsResponses.get(index).getId());
                 })
+                .choice()
+                .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for creating products")
+                .otherwise()
                 .process(exchange -> productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
+                .endChoice()
                 .end();
 
         from("timer://simpleTimer?period=5000&delay=1000")
