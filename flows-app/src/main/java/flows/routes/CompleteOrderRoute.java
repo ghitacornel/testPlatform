@@ -23,6 +23,7 @@ public class CompleteOrderRoute extends RouteBuilder {
                 .routeId("complete-order-route")
                 .setBody(exchange -> exchange.getIn().getHeader("id", Integer.class))
                 .to("jms:queue:CompletedOrdersQueueName")
+                .setBody().simple("${null}")
                 .end();
     }
 
