@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import contracts.clients.ClientDetailsResponse;
 import contracts.clients.ClientRegisterRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.ClientClient;
@@ -53,7 +54,7 @@ public class ClientRoute extends RouteBuilder {
                     return data.get(index).getId();
                 })
                 .choice()
-                .when(body().isNull()).log("No clients available for unregistering")
+                .when(body().isNull()).log(LoggingLevel.WARN, "No clients available for unregistering")
                 .otherwise()
                 .process(exchange -> clientClient.unregister(exchange.getMessage().getBody(Integer.class)))
                 .endChoice()

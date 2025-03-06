@@ -3,6 +3,7 @@ package platform.routes;
 import com.github.javafaker.Faker;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
+import org.apache.camel.LoggingLevel;
 import platform.clients.FlowsClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -56,7 +57,7 @@ public class CompanyRoute extends RouteBuilder {
                     return data.get(index).getId();
                 })
                 .choice()
-                .when(body().isNull()).log("No companies available for unregistering")
+                .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for unregistering")
                 .otherwise()
                 .process(exchange -> flowsClient.deleteCompany(exchange.getMessage().getBody(Integer.class)))
                 .endChoice()
