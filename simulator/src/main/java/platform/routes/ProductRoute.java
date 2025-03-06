@@ -45,6 +45,7 @@ public class ProductRoute extends RouteBuilder {
                     List<CompanyDetailsResponse> companyDetailsResponses = companyClient.findAll();
                     if (companyDetailsResponses.isEmpty()) {
                         exchange.setMessage(null);
+                        return;
                     }
                     int index = random.nextInt(companyDetailsResponses.size());
                     productSellRequest.setCompanyId(companyDetailsResponses.get(index).getId());
