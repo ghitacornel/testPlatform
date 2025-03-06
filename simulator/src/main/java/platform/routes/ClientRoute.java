@@ -40,6 +40,8 @@ public class ClientRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=5000&delay=5000")
                 .routeId("unregister-client-route")
+                .setBody(exchange -> clientClient.count())
+                .filter(body().isGreaterThan(ClientRoute.MINIMUM))
                 .setBody(exchange -> clientClient.findAll())
                 .filter(body().method("size").isGreaterThan(ClientRoute.MINIMUM))
                 .setBody(exchange -> {

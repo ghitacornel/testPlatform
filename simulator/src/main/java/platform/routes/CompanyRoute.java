@@ -43,6 +43,8 @@ public class CompanyRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=10000&delay=10000")
                 .routeId("unregister-company-route")
+                .setBody(exchange -> companyClient.count())
+                .filter(body().isGreaterThan(CompanyRoute.MINIMUM))
                 .setBody(exchange -> companyClient.findAll())
                 .filter(body().method("size").isGreaterThan(CompanyRoute.MINIMUM))
                 .setBody(exchange -> {
