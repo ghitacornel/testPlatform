@@ -44,6 +44,7 @@ public class DeleteCompanyRoute extends RouteBuilder {
                     companyClient.delete(id);
                 })
                 .log("Deleted company ${header.id}")
+                .setBody().simple("${null}")
                 .end();
     }
 
