@@ -11,3 +11,4 @@ add UNREGISTERED marker for client/company + delete them in the future
 
 TODO
 add log gatherer
+delete client flow
