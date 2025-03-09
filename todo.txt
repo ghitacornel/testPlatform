@@ -10,6 +10,6 @@ TODO
 add UNREGISTERED marker for client/company + delete them in the future
 
 TODO
-add log gatherer
+add log gatherer => grafana loki for logs
 delete client flow
 statistics published to prometheus + grafana
