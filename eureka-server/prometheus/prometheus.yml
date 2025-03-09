@@ -5,4 +5,4 @@ scrape_configs:
 
     # Scrape Eureka itself to discover new services.
     eureka_sd_configs:
-      - server: http://desktop-jua7r1e:8761/eureka
+      - server: http://eureka-server:8761/eureka
