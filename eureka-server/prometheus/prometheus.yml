@@ -2,6 +2,7 @@ scrape_configs:
 
   # Discover Eureka services to scrape.
   - job_name: 'eureka'
+    metrics_path: '/actuator/prometheus'
 
     # Scrape Eureka itself to discover new services.
     eureka_sd_configs:
