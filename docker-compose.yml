@@ -1,11 +1,5 @@
 services:
 
-  eureka-server:
-    image: my-eureka-server-docker-image
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-
   #http://localhost:8161/admin/index.jsp
   jms:
     image: webcenter/activemq
