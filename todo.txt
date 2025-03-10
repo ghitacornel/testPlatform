@@ -13,3 +13,4 @@ TODO
 add log gatherer => grafana loki for logs
 delete client flow
 statistics published to prometheus + grafana
+spring cloud gateway
