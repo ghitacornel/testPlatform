@@ -13,5 +13,4 @@ add UNREGISTERED marker for client/company + delete them in the future
 
 TODO
 add log gatherer => grafana loki for logs
-statistics published to prometheus + grafana
 spring cloud gateway / spring-cloud-kubernetes
