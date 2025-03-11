@@ -3,7 +3,6 @@ package clients.service;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
-import clients.repository.entity.Status;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import contracts.clients.ClientDetailsResponse;
@@ -53,7 +52,7 @@ public class ClientService {
     }
 
     public void unregister(Integer id) {
-        repository.findById(id).ifPresent(client -> client.setStatus(Status.RETIRED));
+        repository.findById(id).ifPresent(Client::retire);
         log.info("unregister {}", id);
     }
 

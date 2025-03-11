@@ -5,7 +5,6 @@ import commons.model.IdResponse;
 import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
-import companies.repository.entity.Status;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +52,7 @@ public class CompanyService {
     }
 
     public void unregister(Integer id) {
-        repository.findById(id).ifPresent(company -> company.setStatus(Status.RETIRED));
+        repository.findById(id).ifPresent(Company::retire);
         log.info("unregister {}", id);
     }
 

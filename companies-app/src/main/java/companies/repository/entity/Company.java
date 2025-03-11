@@ -38,4 +38,8 @@ public class Company extends Identifiable {
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
+    public void retire() {
+        status = Status.RETIRED;
+    }
+
 }
