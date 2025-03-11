@@ -23,11 +23,11 @@ public interface CompanyContract {
     CompanyDetailsResponse findById(@Valid @NotNull @PathVariable("id") Integer id);
 
     @PostMapping(value = "company", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    IdResponse create(@Valid @RequestBody CompanyRegisterRequest inputModel);
+    IdResponse register(@Valid @RequestBody CompanyRegisterRequest inputModel);
 
-    @PatchMapping("company/retire/{id}")
+    @PatchMapping("company/unregister/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void retire(@Valid @NotNull @PathVariable("id") Integer id);
+    void unregister(@Valid @NotNull @PathVariable("id") Integer id);
 
     @DeleteMapping("company/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

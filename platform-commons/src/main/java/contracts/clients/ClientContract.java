@@ -1,6 +1,8 @@
 package contracts.clients;
 
 import commons.model.IdResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -23,8 +25,12 @@ public interface ClientContract {
     @PostMapping(value = "client", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse register(@RequestBody ClientRegisterRequest inputModel);
 
+    @PatchMapping("client/unregister/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void unregister(@Valid @NotNull @PathVariable("id") Integer id);
+
     @DeleteMapping("client/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void unregister(@PathVariable("id") Integer id);
+    void delete(@PathVariable("id") Integer id);
 
 }

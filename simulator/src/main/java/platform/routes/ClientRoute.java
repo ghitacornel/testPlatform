@@ -8,6 +8,7 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.ClientClient;
+import platform.clients.FlowsClient;
 
 import java.util.List;
 import java.util.Random;
@@ -23,6 +24,7 @@ public class ClientRoute extends RouteBuilder {
     private final Faker faker = Faker.instance();
 
     private final ClientClient clientClient;
+    private final FlowsClient flowsClient;
 
     @Override
     public void configure() {
@@ -56,7 +58,7 @@ public class ClientRoute extends RouteBuilder {
                 .choice()
                 .when(body().isNull()).log(LoggingLevel.WARN, "No clients available for unregistering")
                 .otherwise()
-                .process(exchange -> clientClient.unregister(exchange.getMessage().getBody(Integer.class)))
+                .process(exchange -> flowsClient.deleteClient(exchange.getMessage().getBody(Integer.class)))
                 .endChoice()
                 .end();
 

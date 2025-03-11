@@ -29,16 +29,16 @@ public class CompanyController implements CompanyContract {
         return service.findById(id);
     }
 
-    public IdResponse create(CompanyRegisterRequest request) {
-        return service.create(request);
-    }
-
-    public void retire(Integer id) {
-        service.retire(id);
+    public IdResponse register(CompanyRegisterRequest request) {
+        return service.register(request);
     }
 
     public void delete(Integer id) {
         service.delete(id);
+    }
+
+    public void unregister(Integer id) {
+        service.unregister(id);
     }
 
 }

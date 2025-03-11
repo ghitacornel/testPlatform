@@ -36,11 +36,15 @@ public class CompanyService {
                 .orElseThrow(() -> new ResourceNotFound("Company with id " + id + " not found"));
     }
 
-    public IdResponse create(CompanyRegisterRequest request) {
+    public IdResponse register(CompanyRegisterRequest request) {
         Company entity = mapper.map(request);
         repository.save(entity);
         log.info("registered {}", entity);
         return new IdResponse(entity.getId());
+    }
+
+    public long count() {
+        return repository.countAllActive();
     }
 
     public void delete(Integer id) {
@@ -48,13 +52,9 @@ public class CompanyService {
         log.info("deleted {}", id);
     }
 
-    public long count() {
-        return repository.countAllActive();
-    }
-
-    public void retire(Integer id) {
+    public void unregister(Integer id) {
         repository.findById(id).ifPresent(company -> company.setStatus(Status.RETIRED));
-        log.info("retired {}", id);
+        log.info("unregister {}", id);
     }
 
 }

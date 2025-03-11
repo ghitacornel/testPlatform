@@ -3,6 +3,7 @@ package clients.service;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
+import clients.repository.entity.Status;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import contracts.clients.ClientDetailsResponse;
@@ -24,7 +25,7 @@ public class ClientService {
     private final ClientMapper clientMapper;
 
     public List<ClientDetailsResponse> findAll() {
-        return repository.findAll().stream()
+        return repository.findAllActive().stream()
                 .map(clientMapper::map)
                 .toList();
     }
@@ -43,12 +44,17 @@ public class ClientService {
     }
 
     public long count() {
-        return repository.count();
+        return repository.countAllActive();
     }
 
     public void deleteById(Integer id) {
         repository.deleteById(id);
-        log.info("unregistered {}", id);
+        log.info("deleted {}", id);
+    }
+
+    public void unregister(Integer id) {
+        repository.findById(id).ifPresent(client -> client.setStatus(Status.RETIRED));
+        log.info("unregister {}", id);
     }
 
 }

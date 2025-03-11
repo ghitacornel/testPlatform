@@ -23,4 +23,8 @@ public interface FlowsContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteCompany(@PathVariable("id") Integer id);
 
+    @DeleteMapping("camel/client/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteClient(@PathVariable("id") Integer id);
+
 }

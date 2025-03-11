@@ -26,12 +26,12 @@ public class DeleteCompanyRoute extends RouteBuilder {
 
         from("direct:delete-company")
                 .routeId("delete-company-route")
-                .log("Retire company ${header.id}")
+                .log("Unregister company ${header.id}")
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    companyClient.retire(id);
+                    companyClient.unregister(id);
                 })
-                .log("Retired company ${header.id}")
+                .log("Unregistered company ${header.id}")
                 .log("Cancel products for company ${header.id}")
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);

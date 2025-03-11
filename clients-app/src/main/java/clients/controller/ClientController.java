@@ -33,8 +33,12 @@ public class ClientController implements ClientContract {
         return service.register(request);
     }
 
-    public void unregister(Integer id) {
+    public void delete(Integer id) {
         service.deleteById(id);
+    }
+
+    public void unregister(Integer id) {
+        service.unregister(id);
     }
 
 }

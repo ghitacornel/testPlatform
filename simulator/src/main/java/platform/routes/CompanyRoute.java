@@ -39,7 +39,7 @@ public class CompanyRoute extends RouteBuilder {
                         .url(faker.company().url())
                         .country(faker.country().name())
                         .build())
-                .process(exchange -> companyClient.create(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
+                .process(exchange -> companyClient.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
                 .end();
 
         from("timer://simpleTimer?period=10000&delay=10000")
