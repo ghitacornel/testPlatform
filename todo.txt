@@ -9,7 +9,7 @@ http://localhost:8092/product
 http://localhost:8093/order
 
 TODO
-add UNREGISTERED marker for client/company + delete them in the future
+add UNREGISTERED marker for client/company + delete them in the future => add maintenance schedulers
 
 TODO
 add log gatherer => grafana loki for logs
