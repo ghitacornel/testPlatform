@@ -30,17 +30,17 @@ public class CompanyController implements CompanyContract {
         return service.findById(id);
     }
 
-    @Counted(description = "companies registered")
+    @Counted
     public IdResponse register(CompanyRegisterRequest request) {
         return service.register(request);
     }
 
-    @Counted(description = "companies deleted")
+    @Counted
     public void delete(Integer id) {
         service.delete(id);
     }
 
-    @Counted(description = "companies unregistered")
+    @Counted
     public void unregister(Integer id) {
         service.unregister(id);
     }

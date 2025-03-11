@@ -30,17 +30,17 @@ public class ClientController implements ClientContract {
         return service.findById(id);
     }
 
-    @Counted(description = "clients registered")
+    @Counted
     public IdResponse register(ClientRegisterRequest request) {
         return service.register(request);
     }
 
-    @Counted(description = "clients deleted")
+    @Counted
     public void delete(Integer id) {
         service.deleteById(id);
     }
 
-    @Counted(description = "clients unregistered")
+    @Counted
     public void unregister(Integer id) {
         service.unregister(id);
     }
