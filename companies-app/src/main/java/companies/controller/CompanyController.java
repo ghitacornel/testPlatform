@@ -5,6 +5,7 @@ import companies.service.CompanyService;
 import contracts.companies.CompanyContract;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
+import io.micrometer.core.annotation.Counted;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,14 +30,17 @@ public class CompanyController implements CompanyContract {
         return service.findById(id);
     }
 
+    @Counted(value = "registered", description = "companies registered")
     public IdResponse register(CompanyRegisterRequest request) {
         return service.register(request);
     }
 
+    @Counted(value = "deleted", description = "companies deleted")
     public void delete(Integer id) {
         service.delete(id);
     }
 
+    @Counted(value = "unregistered", description = "companies unregistered")
     public void unregister(Integer id) {
         service.unregister(id);
     }
