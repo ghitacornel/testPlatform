@@ -3,6 +3,8 @@ package clients.service;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
+import clients.repository.entity.Status;
+import commons.exceptions.BusinessException;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import contracts.clients.ClientDetailsResponse;
@@ -47,6 +49,9 @@ public class ClientService {
     }
 
     public void deleteById(Integer id) {
+        if (!repository.findStatusById(id).equals(Status.RETIRED)) {
+            throw new BusinessException("cannot delete not RETIRED client");
+        }
         repository.deleteById(id);
         log.info("deleted {}", id);
     }

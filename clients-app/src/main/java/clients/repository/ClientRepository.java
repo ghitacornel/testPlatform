@@ -10,6 +10,8 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 
     List<Client> findByStatus(Status status);
 
+    Status findStatusById(int id);
+
     default List<Client> findAllActive() {
         return findByStatus(Status.ACTIVE);
     }

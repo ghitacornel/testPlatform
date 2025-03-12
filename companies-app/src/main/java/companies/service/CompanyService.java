@@ -1,10 +1,12 @@
 package companies.service;
 
+import commons.exceptions.BusinessException;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
+import companies.repository.entity.Status;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +49,9 @@ public class CompanyService {
     }
 
     public void delete(Integer id) {
+        if (!repository.findStatusById(id).equals(Status.RETIRED)) {
+            throw new BusinessException("cannot delete not RETIRED company");
+        }
         repository.deleteById(id);
         log.info("deleted {}", id);
     }

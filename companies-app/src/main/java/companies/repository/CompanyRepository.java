@@ -10,6 +10,8 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     List<Company> findByStatus(Status status);
 
+    Status findStatusById(int id);
+
     default List<Company> findAllActive() {
         return findByStatus(Status.ACTIVE);
     }
