@@ -41,12 +41,6 @@
             <artifactId>spring-cloud-openfeign-core</artifactId>
         </dependency>
 
-        <!-- CACHE -->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-        </dependency>
-
         <!-- FEIGN REST client -->
         <dependency>
             <groupId>io.github.openfeign</groupId>
