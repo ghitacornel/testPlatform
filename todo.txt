@@ -14,3 +14,4 @@ add UNREGISTERED marker for client/company + delete them in the future => add ma
 TODO
 add log gatherer => grafana loki for logs
 spring cloud gateway / spring-cloud-kubernetes
+parallel processing
