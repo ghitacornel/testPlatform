@@ -21,6 +21,14 @@ public class OrderController implements OrderContract {
         return service.findAllNew();
     }
 
+    public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
+        return service.findAllNewForClientId(id);
+    }
+
+    public List<OrderDetailsResponse> findAllNewForProductId(Integer id) {
+        return service.findAllNewForProductId(id);
+    }
+
     public long countAllNew() {
         return service.countAllNew();
     }

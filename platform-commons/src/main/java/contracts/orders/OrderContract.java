@@ -16,6 +16,12 @@ public interface OrderContract {
     @GetMapping(value = "order", produces = MediaType.APPLICATION_JSON_VALUE)
     List<OrderDetailsResponse> findAllNew();
 
+    @GetMapping(value = "order/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<OrderDetailsResponse> findAllNewForClientId(@Valid @NotNull @PathVariable("id") Integer id);
+
+    @GetMapping(value = "order/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<OrderDetailsResponse> findAllNewForProductId(@Valid @NotNull @PathVariable("id") Integer id);
+
     @GetMapping("count")
     long countAllNew();
 

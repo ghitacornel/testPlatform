@@ -15,6 +15,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByStatus(ProductStatus status);
 
+    @Query("select p from Product p where p.companyId = :id and p.status = products.repository.entity.ProductStatus.ACTIVE")
+    List<Product> findAllActiveForCompany(@Param("id") Integer id);
+
     default List<Product> findAllActive() {
         return findByStatus(ProductStatus.ACTIVE);
     }

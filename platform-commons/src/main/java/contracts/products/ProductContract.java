@@ -20,6 +20,9 @@ public interface ProductContract {
     @GetMapping(value = "product", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ProductDetailsResponse> findAllActive();
 
+    @GetMapping(value = "product/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<ProductDetailsResponse> findAllActiveForCompany(@Valid @NotNull @PathVariable("id") Integer id);
+
     @GetMapping(value = "product/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ProductDetailsResponse findById(@Valid @NotNull @PathVariable("id") Integer id);
 

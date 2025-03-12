@@ -22,6 +22,11 @@ public class ProductController implements ProductContract {
         return service.findAllActive();
     }
 
+    @Override
+    public List<ProductDetailsResponse> findAllActiveForCompany(Integer id) {
+        return service.findAllActiveForCompany(id);
+    }
+
     public long countAllActive() {
         return service.countAllActive();
     }

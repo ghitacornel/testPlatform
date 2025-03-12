@@ -1,6 +1,7 @@
 package flows.routes;
 
 import flows.clients.CompanyClient;
+import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -13,6 +14,7 @@ public class DeleteCompanyRoute extends RouteBuilder {
 
     private final CompanyClient companyClient;
     private final ProductClient productClient;
+    private final OrderClient orderClient;
 
     @Override
     public void configure() {
@@ -32,6 +34,14 @@ public class DeleteCompanyRoute extends RouteBuilder {
                     companyClient.unregister(id);
                 })
                 .log("Unregistered company ${header.id}")
+                .log("Start cancelling orders for company ${header.id}")
+                .process(exchange -> {
+                    Integer id = exchange.getIn().getHeader("id", Integer.class);
+                    productClient.findAllActiveForCompany(id)
+                            .forEach(product -> orderClient.findAllNewForProductId(product.getId())
+                                    .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId())));
+                })
+                .log("End cancelling orders for company ${header.id}")
                 .log("Cancel products for company ${header.id}")
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);

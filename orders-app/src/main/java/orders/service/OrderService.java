@@ -30,6 +30,18 @@ public class OrderService {
                 .toList();
     }
 
+    public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
+        return repository.findAllNewForClientId(id).stream()
+                .map(orderMapper::map)
+                .toList();
+    }
+
+    public List<OrderDetailsResponse> findAllNewForProductId(Integer id) {
+        return repository.findAllNewForProductId(id).stream()
+                .map(orderMapper::map)
+                .toList();
+    }
+
     public OrderDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(orderMapper::map)

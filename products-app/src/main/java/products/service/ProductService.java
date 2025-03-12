@@ -32,6 +32,12 @@ public class ProductService {
                 .toList();
     }
 
+    public List<ProductDetailsResponse> findAllActiveForCompany(Integer id) {
+        return repository.findAllActiveForCompany(id).stream()
+                .map(productMapper::map)
+                .toList();
+    }
+
     public long countAllActive() {
         return repository.countAllActive();
     }
