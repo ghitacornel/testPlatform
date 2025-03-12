@@ -36,11 +36,6 @@ public class ClientController implements ClientContract {
     }
 
     @Counted
-    public void delete(Integer id) {
-        service.deleteById(id);
-    }
-
-    @Counted
     public void unregister(Integer id) {
         service.unregister(id);
     }

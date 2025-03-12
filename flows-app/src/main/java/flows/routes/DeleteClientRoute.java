@@ -39,12 +39,6 @@ public class DeleteClientRoute extends RouteBuilder {
                             .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId()));
                 })
                 .log("End cancelling orders for client ${header.id}")
-                .log("Delete client ${header.id}")
-                .process(exchange -> {
-                    Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    clientClient.delete(id);
-                })
-                .log("Deleted client ${header.id}")
                 .setBody().simple("${null}")
                 .end();
     }

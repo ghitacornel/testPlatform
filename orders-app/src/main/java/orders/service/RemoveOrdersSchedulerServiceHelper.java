@@ -16,13 +16,13 @@ import org.springframework.stereotype.Component;
 class RemoveOrdersSchedulerServiceHelper {
 
     private final OrderRepository repository;
-    private final OrderMapper orderMapper;
+    private final OrderMapper mapper;
     private final OrderArchiveRepository archiveRepository;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     @Async
     public void delete(Order order) {
-        archiveRepository.save(orderMapper.mapToArchive(order));
+        archiveRepository.save(mapper.mapToArchive(order));
         repository.deleteById(order.getId());
         log.info("Deleted {}", order.getId());
     }

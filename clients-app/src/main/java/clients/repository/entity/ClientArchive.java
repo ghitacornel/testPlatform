@@ -1,23 +1,24 @@
 package clients.repository.entity;
 
-import commons.model.Identifiable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import jakarta.validation.constraints.NotBlank;
-
 @Entity
-@Table(name = "CLIENT")
+@Table(name = "CLIENT_ARCHIVE")
 @ToString(callSuper = true)
 @Getter
 @Setter
-public class Client extends Identifiable {
+public class ClientArchive {
+
+    @Id
+    private Integer id;
 
     @NotBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @NotBlank
@@ -30,10 +31,6 @@ public class Client extends Identifiable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Status status = Status.ACTIVE;
-
-    public void retire() {
-        status = Status.RETIRED;
-    }
+    private Status status;
 
 }
