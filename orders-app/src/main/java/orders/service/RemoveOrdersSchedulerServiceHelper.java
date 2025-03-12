@@ -7,9 +7,8 @@ import orders.mapper.OrderMapper;
 import orders.repository.OrderArchiveRepository;
 import orders.repository.OrderRepository;
 import orders.repository.entity.Order;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Slf4j
 @Component
@@ -21,6 +20,7 @@ class RemoveOrdersSchedulerServiceHelper {
     private final OrderArchiveRepository archiveRepository;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
+    @Async
     public void delete(Order order) {
         archiveRepository.save(orderMapper.mapToArchive(order));
         repository.deleteById(order.getId());
