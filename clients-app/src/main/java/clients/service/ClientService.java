@@ -49,7 +49,7 @@ public class ClientService {
     }
 
     public void deleteById(Integer id) {
-        if (!repository.findStatusById(id).equals(Status.RETIRED)) {
+        if (!Status.RETIRED.equals(repository.findStatusById(id))) {
             throw new BusinessException("cannot delete not RETIRED client");
         }
         repository.deleteById(id);

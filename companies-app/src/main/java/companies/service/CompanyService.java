@@ -49,7 +49,7 @@ public class CompanyService {
     }
 
     public void delete(Integer id) {
-        if (!repository.findStatusById(id).equals(Status.RETIRED)) {
+        if (!Status.RETIRED.equals(repository.findStatusById(id))) {
             throw new BusinessException("cannot delete not RETIRED company");
         }
         repository.deleteById(id);
