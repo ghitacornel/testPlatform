@@ -71,7 +71,7 @@ public class OrderRoute extends RouteBuilder {
                 .endChoice()
                 .end();
 
-        from("timer://simpleTimer?period=1000&delay=1000")
+        from("timer://simpleTimer?period=500&delay=1000")
                 .routeId("cancel-order-route")
                 .setBody(exchange -> orderClient.findAllNew())
                 .filter(body().method("size").isGreaterThan(0))
