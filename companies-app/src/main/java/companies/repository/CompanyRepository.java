@@ -19,6 +19,10 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
         return findByStatus(Status.ACTIVE);
     }
 
+    default List<Company> findAllRetired() {
+        return findByStatus(Status.RETIRED);
+    }
+
     long countByStatus(Status status);
 
     default long countAllActive() {

@@ -19,6 +19,10 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
         return findByStatus(Status.ACTIVE);
     }
 
+    default List<Client> findAllRetired() {
+        return findByStatus(Status.RETIRED);
+    }
+
     long countByStatus(Status status);
 
     default long countAllActive() {

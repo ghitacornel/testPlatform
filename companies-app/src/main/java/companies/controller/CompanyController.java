@@ -36,11 +36,6 @@ public class CompanyController implements CompanyContract {
     }
 
     @Counted
-    public void delete(Integer id) {
-        service.delete(id);
-    }
-
-    @Counted
     public void unregister(Integer id) {
         service.unregister(id);
     }

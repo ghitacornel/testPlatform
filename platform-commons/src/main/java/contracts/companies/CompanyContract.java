@@ -29,8 +29,4 @@ public interface CompanyContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void unregister(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @DeleteMapping("company/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@Valid @NotNull @PathVariable("id") Integer id);
-
 }

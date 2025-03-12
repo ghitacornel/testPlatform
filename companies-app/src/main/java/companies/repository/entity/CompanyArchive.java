@@ -1,4 +1,4 @@
-package clients.repository.entity;
+package companies.repository.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class ClientArchive {
+public class CompanyArchive {
 
     @Id
     private Integer id;
@@ -20,7 +20,11 @@ public class ClientArchive {
 
     @NotBlank
     @Column(nullable = false)
-    private String cardType;
+    private String url;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String industry;
 
     @NotBlank
     @Column(nullable = false)

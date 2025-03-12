@@ -14,7 +14,7 @@ public class RemoveClientsSchedulerService {
     private final RemoveClientsSchedulerServiceHelper helper;
 
     public void removeRetiredClients() {
-        repository.findAllActive().forEach(helper::delete);
+        repository.findAllRetired().forEach(helper::delete);
     }
 
 }

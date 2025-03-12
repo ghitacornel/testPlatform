@@ -48,12 +48,6 @@ public class DeleteCompanyRoute extends RouteBuilder {
                     productClient.cancelByCompany(id);
                 })
                 .log("Cancelled products for company ${header.id}")
-                .log("Delete company ${header.id}")
-                .process(exchange -> {
-                    Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    companyClient.delete(id);
-                })
-                .log("Deleted company ${header.id}")
                 .setBody().simple("${null}")
                 .end();
     }
