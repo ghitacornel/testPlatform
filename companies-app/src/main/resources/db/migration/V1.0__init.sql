@@ -10,8 +10,9 @@ create table company
 create table company_archive
 (
     id        int primary key,
-    name      varchar(255) not null,
-    card_type varchar(255) not null,
-    country   varchar(255) not null,
-    status    varchar(50)  not null CHECK ( status IN ('ACTIVE', 'RETIRED'))
+    name     varchar(255) not null,
+    url      varchar(255) not null,
+    industry varchar(255) not null,
+    country  varchar(255) not null,
+    status   varchar(50) not null CHECK ( status IN ('ACTIVE', 'RETIRED'))
 );
