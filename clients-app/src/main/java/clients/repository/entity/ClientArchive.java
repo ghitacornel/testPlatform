@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "CLIENT_ARCHIVE")
 @ToString(callSuper = true)
 @Getter
 @Setter

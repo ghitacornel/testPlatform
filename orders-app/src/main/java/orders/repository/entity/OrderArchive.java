@@ -9,7 +9,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "ORDER_ARCHIVE")
 public class OrderArchive {
 
     @Id

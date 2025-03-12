@@ -10,7 +10,6 @@ import lombok.ToString;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "CLIENT")
 @ToString(callSuper = true)
 @Getter
 @Setter
