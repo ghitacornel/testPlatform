@@ -36,7 +36,4 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancel(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @DeleteMapping("{id}")
-    void delete(@Valid @NotNull @PathVariable(name = "id") Integer id);
-
 }

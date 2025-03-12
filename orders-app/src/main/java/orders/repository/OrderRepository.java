@@ -14,6 +14,14 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return findByStatus(OrderStatus.NEW);
     }
 
+    default List<Order> findAllCompleted() {
+        return findByStatus(OrderStatus.COMPLETED);
+    }
+
+    default List<Order> findAllCancelled() {
+        return findByStatus(OrderStatus.CANCELLED);
+    }
+
     boolean existsByProductId(Integer id);
 
     long countByStatus(OrderStatus status);

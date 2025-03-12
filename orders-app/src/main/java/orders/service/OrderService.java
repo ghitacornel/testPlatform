@@ -8,7 +8,6 @@ import contracts.orders.OrderDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import orders.mapper.OrderMapper;
-import orders.repository.OrderArchiveRepository;
 import orders.repository.OrderRepository;
 import orders.repository.entity.Order;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository repository;
-    private final OrderArchiveRepository archiveRepository;
     private final OrderMapper orderMapper;
 
     public List<OrderDetailsResponse> findAllNew() {
@@ -63,17 +61,6 @@ public class OrderService {
         }
         order.cancel();
         log.info("Cancelled {}", id);
-    }
-
-    public void deleteById(Integer id) {
-        Order order = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
-        if (order.isNew()) {
-            throw new BusinessException("cannot delete an incomplete order");
-        }
-        archiveRepository.save(orderMapper.mapToArchive(order));
-        repository.delete(order);
-        log.info("Deleted {}", id);
     }
 
     public boolean existsByProductId(Integer id) {
