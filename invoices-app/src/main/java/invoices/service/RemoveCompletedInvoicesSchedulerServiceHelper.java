@@ -19,7 +19,7 @@ class RemoveCompletedInvoicesSchedulerServiceHelper {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void removeInvoice(Invoice invoice) {
         repository.deleteById(invoice.getId());
-        log.info("Removed  invoice {}", invoice);
+        log.info("Removed invoice {}", invoice.getId());
     }
 
 }
