@@ -17,7 +17,7 @@ class RemoveCompletedInvoicesSchedulerServiceHelper {
 
     @Async
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public void removeInvoice(Invoice invoice) {
+    public void remove(Invoice invoice) {
         repository.deleteById(invoice.getId());
         log.info("Removed invoice {}", invoice.getId());
     }

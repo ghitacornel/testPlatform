@@ -13,8 +13,8 @@ public class RemoveCompletedInvoicesSchedulerService {
     private final InvoiceRepository repository;
     private final RemoveCompletedInvoicesSchedulerServiceHelper helper;
 
-    public void removeCompletedInvoices() {
-        repository.findAllCompleted().forEach(helper::removeInvoice);
+    public void removeCompleted() {
+        repository.findAllCompleted().forEach(helper::remove);
     }
 
 }

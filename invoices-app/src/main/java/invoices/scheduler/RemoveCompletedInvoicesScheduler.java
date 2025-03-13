@@ -14,8 +14,8 @@ class RemoveCompletedInvoicesScheduler {
     private final RemoveCompletedInvoicesSchedulerService service;
 
     @Scheduled(fixedRate = 10000)
-    private void removeCompletedInvoices() {
-        service.removeCompletedInvoices();
+    private void removeCompleted() {
+        service.removeCompleted();
     }
 
 }
