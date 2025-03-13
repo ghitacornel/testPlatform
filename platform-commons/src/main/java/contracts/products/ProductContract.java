@@ -44,4 +44,13 @@ public interface ProductContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void refill(@Valid @NotNull @PathVariable("id") Integer id, @Valid @NotNull @Positive @PathVariable("quantity") Integer quantity);
 
+    @GetMapping(value = "products/ids/consumed", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findConsumedIds();
+
+    @GetMapping(value = "products/ids/cancelled", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findCancelledIds();
+
+    @DeleteMapping("products/{id}")
+    void delete(@Valid @NotNull @PathVariable("id") Integer id);
+
 }

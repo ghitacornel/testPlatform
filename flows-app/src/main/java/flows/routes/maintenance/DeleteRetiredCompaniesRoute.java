@@ -28,9 +28,7 @@ public class DeleteRetiredCompaniesRoute extends RouteBuilder {
                 .filter(body().isNotNull())
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
-                    if (id != null) {
-                        companyClient.delete(id);
-                    }
+                    companyClient.delete(id);
                 })
                 .log("Retired company deleted ${body}")
                 .end();

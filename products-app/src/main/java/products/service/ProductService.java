@@ -1,6 +1,5 @@
 package products.service;
 
-import commons.exceptions.BusinessException;
 import commons.model.IdResponse;
 import contracts.products.ProductBuyRequest;
 import contracts.products.ProductDetailsResponse;
@@ -10,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import products.exceptions.CannotBuyMoreThanAvailableException;
 import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
@@ -52,7 +52,7 @@ public class ProductService {
     public void cancel(Integer id) {
         Product entity = repository.getReferenceById(id);
         entity.setStatus(ProductStatus.CANCELLED);
-        log.info("cancel {}", id);
+        log.info("canceled {}", id);
     }
 
     public void buy(ProductBuyRequest request) {
@@ -61,7 +61,7 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + request.getProductId() + " not found"));
 
         if (product.getQuantity() < request.getQuantity()) {
-            throw new BusinessException("Cannot buy more that it exists, requested " + request.getQuantity() + " available " + product.getQuantity());
+            throw new CannotBuyMoreThanAvailableException(request.getQuantity(), product.getQuantity());
         }
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
@@ -85,6 +85,20 @@ public class ProductService {
 
     public void cancelByCompany(Integer id) {
         repository.cancelByCompany(id);
-        log.info("cancel by company {}", id);
+        log.info("cancelled by company {}", id);
     }
+
+    public List<Integer> findConsumedIds() {
+        return repository.findConsumedIds();
+    }
+
+    public List<Integer> findCancelledIds() {
+        return repository.findCancelledIds();
+    }
+
+    public void delete(Integer id) {
+        repository.deleteById(id);
+        log.info("deleted {}", id);
+    }
+
 }

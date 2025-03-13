@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class DeleteCompletedOrderRoute extends RouteBuilder {
+public class DeleteCompletedOrdersRoute extends RouteBuilder {
 
     private final OrderClient orderClient;
     private final InvoiceClient invoiceClient;
@@ -28,9 +28,7 @@ public class DeleteCompletedOrderRoute extends RouteBuilder {
                 .filter(body().isNotNull())
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
-                    if (id != null) {
-                        orderClient.delete(id);
-                    }
+                    orderClient.delete(id);
                 })
                 .log("Completed order deleted ${body}")
                 .end();

@@ -19,14 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
         return findByStatus(ProductStatus.ACTIVE);
     }
 
-    default List<Product> findAllConsumed() {
-        return findByStatus(ProductStatus.CONSUMED);
-    }
-
-    default List<Product> findAllCancelled() {
-        return findByStatus(ProductStatus.CANCELLED);
-    }
-
     long countByStatus(ProductStatus status);
 
     default long countAllActive() {
@@ -44,5 +36,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Modifying
     @Query("update Product p set p.status = products.repository.entity.ProductStatus.CANCELLED where p.companyId = :id")
     void cancelByCompany(@Param("id") Integer id);
+
+    @Query("select p.id from Product p where p.status = products.repository.entity.ProductStatus.CONSUMED")
+    List<Integer> findConsumedIds();
+
+    @Query("select p.id from Product p where p.status = products.repository.entity.ProductStatus.CANCELLED")
+    List<Integer> findCancelledIds();
 
 }

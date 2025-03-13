@@ -55,4 +55,16 @@ public class ProductController implements ProductContract {
         service.refill(id, quantity);
     }
 
+    public List<Integer> findConsumedIds() {
+        return service.findConsumedIds();
+    }
+
+    public List<Integer> findCancelledIds() {
+        return service.findCancelledIds();
+    }
+
+    public void delete(Integer id) {
+        service.delete(id);
+    }
+
 }
