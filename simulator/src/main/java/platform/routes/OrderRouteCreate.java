@@ -33,27 +33,27 @@ public class OrderRouteCreate extends RouteBuilder {
                 .multicast()
                 .parallelProcessing()
                 .to("direct:a")
-//                .to("direct:b")
-//                .to("direct:c")
-//                .to("direct:d")
-//                .to("direct:e")
+                .to("direct:b")
+                .to("direct:c")
+                .to("direct:d")
+                .to("direct:e")
         ;
 
         from("direct:a")
                 .routeId("direct-a")
                 .to("direct:create-order-route");
-//        from("direct:b")
-//                .routeId("direct-b")
-//                .to("direct:create-order-route");
-//        from("direct:c")
-//                .routeId("direct-c")
-//                .to("direct:create-order-route");
-//        from("direct:d")
-//                .routeId("direct-d")
-//                .to("direct:create-order-route");
-//        from("direct:e")
-//                .routeId("direct-e")
-//                .to("direct:create-order-route");
+        from("direct:b")
+                .routeId("direct-b")
+                .to("direct:create-order-route");
+        from("direct:c")
+                .routeId("direct-c")
+                .to("direct:create-order-route");
+        from("direct:d")
+                .routeId("direct-d")
+                .to("direct:create-order-route");
+        from("direct:e")
+                .routeId("direct-e")
+                .to("direct:create-order-route");
 
         from("direct:create-order-route")
                 .routeId("create-order-route")

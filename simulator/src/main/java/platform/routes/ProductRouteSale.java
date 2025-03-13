@@ -1,7 +1,6 @@
 package platform.routes;
 
 import contracts.companies.CompanyDetailsResponse;
-import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
@@ -16,7 +15,7 @@ import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
-public class ProductRoute extends RouteBuilder {
+public class ProductRouteSale extends RouteBuilder {
 
     public static final int MINIMUM = 50;
     private static final int MAXIMUM = 2000;
@@ -30,9 +29,36 @@ public class ProductRoute extends RouteBuilder {
     public void configure() {
 
         from("timer://simpleTimer?period=1000&delay=1000")
+                .routeId("sale-product-route-timer")
+                .multicast()
+                .parallelProcessing()
+                .to("direct:a")
+                .to("direct:b")
+                .to("direct:c")
+                .to("direct:d")
+                .to("direct:e")
+        ;
+
+        from("direct:a")
+                .routeId("direct-a")
+                .to("direct:sale-product-route");
+        from("direct:b")
+                .routeId("direct-b")
+                .to("direct:sale-product-route");
+        from("direct:c")
+                .routeId("direct-c")
+                .to("direct:sale-product-route");
+        from("direct:d")
+                .routeId("direct-d")
+                .to("direct:sale-product-route");
+        from("direct:e")
+                .routeId("direct-e")
+                .to("direct:sale-product-route");
+
+        from("direct:sale-product-route")
                 .routeId("sale-product-route")
                 .setBody(exchange -> productClient.countAllActive())
-                .filter(body().isLessThan(ProductRoute.MAXIMUM))
+                .filter(body().isLessThan(ProductRouteSale.MAXIMUM))
                 .setBody(exchange -> ProductSellRequestFaker.fake())
                 .process(exchange -> {
                     ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
@@ -48,26 +74,6 @@ public class ProductRoute extends RouteBuilder {
                 .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for creating products")
                 .otherwise()
                 .process(exchange -> productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
-                .endChoice()
-                .end();
-
-        from("timer://simpleTimer?period=5000&delay=1000")
-                .routeId("cancel-product-route")
-                .setBody(exchange -> productClient.countAllActive())
-                .filter(body().isGreaterThan(ProductRoute.MINIMUM))
-                .setBody(exchange -> productClient.findAllActive())
-                .setBody(exchange -> {
-                    List<ProductDetailsResponse> data = exchange.getMessage().getBody(List.class);
-                    if (data.isEmpty()) {
-                        return null;
-                    }
-                    int index = random.nextInt(data.size());
-                    return data.get(index);
-                })
-                .choice()
-                .when(body().isNull()).log(LoggingLevel.WARN, "No products available for cancelling")
-                .otherwise()
-                .process(exchange -> productClient.cancel(exchange.getMessage().getBody(ProductDetailsResponse.class).getId()))
                 .endChoice()
                 .end();
 

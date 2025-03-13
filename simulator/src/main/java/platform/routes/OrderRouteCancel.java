@@ -29,27 +29,27 @@ public class OrderRouteCancel extends RouteBuilder {
                 .multicast()
                 .parallelProcessing()
                 .to("direct:a")
-//                .to("direct:b")
-//                .to("direct:c")
-//                .to("direct:d")
-//                .to("direct:e")
+                .to("direct:b")
+                .to("direct:c")
+                .to("direct:d")
+                .to("direct:e")
         ;
 
         from("direct:a")
                 .routeId("direct-a")
                 .to("direct:cancel-order-route");
-//        from("direct:b")
-//                .routeId("direct-b")
-//                .to("direct:cancel-order-route");
-//        from("direct:c")
-//                .routeId("direct-c")
-//                .to("direct:cancel-order-route");
-//        from("direct:d")
-//                .routeId("direct-d")
-//                .to("direct:cancel-order-route");
-//        from("direct:e")
-//                .routeId("direct-e")
-//                .to("direct:cancel-order-route");
+        from("direct:b")
+                .routeId("direct-b")
+                .to("direct:cancel-order-route");
+        from("direct:c")
+                .routeId("direct-c")
+                .to("direct:cancel-order-route");
+        from("direct:d")
+                .routeId("direct-d")
+                .to("direct:cancel-order-route");
+        from("direct:e")
+                .routeId("direct-e")
+                .to("direct:cancel-order-route");
 
 
         from("direct:cancel-order-route")
