@@ -28,7 +28,7 @@ public class ProductRouteSale extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=1000&delay=1000")
+        from("timer://simpleTimer?period=500&delay=1000")
                 .routeId("sale-product-route-timer")
                 .multicast()
                 .parallelProcessing()
