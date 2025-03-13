@@ -63,6 +63,10 @@ public class ProductController implements ProductContract {
         return service.findCancelledIds();
     }
 
+    public List<Integer> findActiveIds() {
+        return service.findActiveIds();
+    }
+
     public void delete(Integer id) {
         service.delete(id);
     }

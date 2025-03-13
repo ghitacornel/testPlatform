@@ -95,6 +95,10 @@ public class ProductService {
         return repository.findCancelledIds();
     }
 
+    public List<Integer> findActiveIds() {
+        return repository.findActiveIds();
+    }
+
     public void delete(Integer id) {
         repository.deleteById(id);
         log.info("deleted {}", id);

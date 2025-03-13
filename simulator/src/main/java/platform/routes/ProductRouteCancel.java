@@ -1,6 +1,5 @@
 package platform.routes;
 
-import contracts.products.ProductDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -38,9 +37,9 @@ public class ProductRouteCancel extends RouteBuilder {
                 .routeId("cancel-product-route")
                 .setBody(exchange -> productClient.countAllActive())
                 .filter(body().isGreaterThan(ProductRouteCancel.MINIMUM))
-                .setBody(exchange -> productClient.findAllActive())
+                .setBody(exchange -> productClient.findActiveIds())
                 .setBody(exchange -> {
-                    List<ProductDetailsResponse> data = exchange.getMessage().getBody(List.class);
+                    List<?> data = exchange.getMessage().getBody(List.class);
                     if (data.isEmpty()) {
                         return null;
                     }
@@ -50,7 +49,8 @@ public class ProductRouteCancel extends RouteBuilder {
                 .choice()
                 .when(body().isNull()).log(LoggingLevel.WARN, "No products available for cancelling")
                 .otherwise()
-                .process(exchange -> productClient.cancel(exchange.getMessage().getBody(ProductDetailsResponse.class).getId()))
+                .process(exchange -> productClient.cancel(exchange.getMessage().getBody(Integer.class)))
+                .log("Cancel product " + body())
                 .endChoice()
                 .end();
 
