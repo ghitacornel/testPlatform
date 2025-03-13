@@ -69,7 +69,8 @@ public class InvoiceService {
     }
 
     public void complete(Integer id) {
-        repository.getReferenceById(id).complete();
+        repository.complete(id);
+        log.info("Invoice completed: {}", id);
     }
 
 }

@@ -39,8 +39,4 @@ public class Invoice {
     @Enumerated
     private InvoiceStatus status = InvoiceStatus.NEW;
 
-    public void complete(){
-        this.status = InvoiceStatus.COMPLETED;
-    }
-
 }
