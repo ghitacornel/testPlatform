@@ -1,6 +1,5 @@
 package orders.service;
 
-import commons.exceptions.BusinessException;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
@@ -61,8 +60,8 @@ public class OrderService {
         if (order.isCompleted()) {
             return;
         }
-        if (!order.isNew()) {
-            throw new BusinessException("cannot complete already completed order");
+        if (order.isCancelled()) {
+            return;
         }
         order.complete();
         log.info("Completed {}", id);
@@ -71,11 +70,11 @@ public class OrderService {
     public void cancelById(Integer id) {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
-        if (order.isCancelled()) {
+        if (order.isCompleted()) {
             return;
         }
-        if (!order.isNew()) {
-            throw new BusinessException("cannot complete already completed order");
+        if (order.isCancelled()) {
+            return;
         }
         order.cancel();
         log.info("Cancelled {}", id);
