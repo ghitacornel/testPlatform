@@ -98,7 +98,6 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                             .companyCountry(response.getCountry())
                             .build());
                 })
-                .process(exchange -> orderClient.complete(exchange.getMessage().getBody(Integer.class)))
                 .process(exchange -> invoiceClient.complete(exchange.getMessage().getBody(Integer.class)))
                 .end();
     }
