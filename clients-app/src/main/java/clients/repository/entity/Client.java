@@ -10,7 +10,7 @@ import lombok.ToString;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@ToString(callSuper = true)
+@ToString(callSuper = true, includeFieldNames = false)
 @Getter
 @Setter
 public class Client extends Identifiable {

@@ -13,7 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@ToString(callSuper = true)
+@ToString(callSuper = true, includeFieldNames = false)
 @Getter
 @Setter
 public class Company extends Identifiable {
