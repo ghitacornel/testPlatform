@@ -44,7 +44,7 @@ public class CreateOrderRoute extends RouteBuilder {
                             .productId(createOrderRequest.getProductId())
                             .quantity(createOrderRequest.getQuantity())
                             .build();
-                    productClient.buy(productBuyRequest);
+                    productClient.buy(productBuyRequest);// TODO try catch report order fail
                     exchange.getMessage().setHeader(PRODUCT_BUY_REQUEST, productBuyRequest);
                 })
                 .setBody(exchange -> orderClient.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
