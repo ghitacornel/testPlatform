@@ -25,6 +25,7 @@ public class DeleteOrderRoute extends RouteBuilder {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     return invoiceClient.existsByOrderId(id) ? null : id;
                 })
+                .filter(body().isNotNull())
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     if (id != null) {
