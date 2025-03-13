@@ -2,7 +2,6 @@ package platform.routes;
 
 import contracts.clients.ClientDetailsResponse;
 import contracts.orders.CreateOrderRequest;
-import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,6 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.ClientClient;
 import platform.clients.FlowsClient;
-import platform.clients.OrderClient;
 import platform.clients.ProductClient;
 
 import java.util.List;
@@ -19,11 +17,10 @@ import java.util.Random;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OrderRoute extends RouteBuilder {
+public class OrderRouteCreate extends RouteBuilder {
 
     private final Random random = new Random();
 
-    private final OrderClient orderClient;
     private final ClientClient clientClient;
     private final ProductClient productClient;
     private final FlowsClient flowsClient;
@@ -32,6 +29,33 @@ public class OrderRoute extends RouteBuilder {
     public void configure() {
 
         from("timer://simpleTimer?period=10&delay=1000")
+                .routeId("create-order-route-timer")
+                .multicast()
+                .parallelProcessing()
+                .to("direct:a")
+//                .to("direct:b")
+//                .to("direct:c")
+//                .to("direct:d")
+//                .to("direct:e")
+        ;
+
+        from("direct:a")
+                .routeId("direct-a")
+                .to("direct:create-order-route");
+//        from("direct:b")
+//                .routeId("direct-b")
+//                .to("direct:create-order-route");
+//        from("direct:c")
+//                .routeId("direct-c")
+//                .to("direct:create-order-route");
+//        from("direct:d")
+//                .routeId("direct-d")
+//                .to("direct:create-order-route");
+//        from("direct:e")
+//                .routeId("direct-e")
+//                .to("direct:create-order-route");
+
+        from("direct:create-order-route")
                 .routeId("create-order-route")
                 .setBody(exchange -> {
 
@@ -69,32 +93,6 @@ public class OrderRoute extends RouteBuilder {
                 .setBody(exchange -> flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
                 .log("Create order ${body}")
                 .endChoice()
-                .end();
-
-        from("timer://simpleTimer?period=500&delay=1000")
-                .routeId("cancel-order-route")
-                .setBody(exchange -> orderClient.findAllNew())
-                .filter(body().method("size").isGreaterThan(0))
-                .setBody(exchange -> {
-                    List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
-                    int index = random.nextInt(data.size());
-                    return data.get(index).getId();
-                })
-                .process(exchange -> flowsClient.cancelOrder(exchange.getMessage().getBody(Integer.class)))
-                .log("Cancel order ${body}")
-                .end();
-
-        from("timer://simpleTimer?period=10&delay=500")
-                .routeId("complete-order-route")
-                .setBody(exchange -> orderClient.findAllNew())
-                .filter(body().method("size").isGreaterThan(0))
-                .setBody(exchange -> {
-                    List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
-                    int index = random.nextInt(data.size());
-                    return data.get(index).getId();
-                })
-                .process(exchange -> flowsClient.completeOrder(exchange.getMessage().getBody(Integer.class)))
-                .log("Complete order ${body}")
                 .end();
 
     }
