@@ -1,6 +1,5 @@
 package platform.routes;
 
-import contracts.clients.ClientDetailsResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductDetailsResponse;
 import lombok.RequiredArgsConstructor;
@@ -45,13 +44,13 @@ public class OrderRouteCreate extends RouteBuilder {
 
                     Integer clientId;
                     {
-                        List<ClientDetailsResponse> clients = clientClient.findAll();
+                        List<Integer> clients = clientClient.findActiveIds();
                         if (clients.isEmpty()) {
                             log.error("no clients available");
                             return null;
                         }
                         int index = random.nextInt(clients.size());
-                        clientId = clients.get(index).getId();
+                        clientId = clients.get(index);
                     }
 
                     ProductDetailsResponse productDetailsResponse;
