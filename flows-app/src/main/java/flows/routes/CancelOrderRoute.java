@@ -21,7 +21,7 @@ public class CancelOrderRoute extends RouteBuilder {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
         rest()
-                .path("/order/cancel")
+                .path("/orders/cancel")
                 .patch("/{id}")
                 .to("direct:cancel-order");
 

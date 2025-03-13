@@ -22,7 +22,7 @@ public class DeleteCompanyRoute extends RouteBuilder {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
         rest()
-                .path("/company/delete")
+                .path("/companies/delete")
                 .delete("/{id}")
                 .to("direct:delete-company");
 

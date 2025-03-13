@@ -15,7 +15,7 @@ public class CompleteOrderRoute extends RouteBuilder {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
         rest()
-                .path("/order/complete")
+                .path("/orders/complete")
                 .patch("/{id}")
                 .to("direct:complete-order");
 

@@ -13,19 +13,19 @@ import java.util.List;
 @Validated
 public interface CompanyContract {
 
-    @GetMapping("company/count")
+    @GetMapping("companies/count")
     long count();
 
-    @GetMapping(value = "company", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "companies", produces = MediaType.APPLICATION_JSON_VALUE)
     List<CompanyDetailsResponse> findAll();
 
-    @GetMapping(value = "company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "companies/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     CompanyDetailsResponse findById(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @PostMapping(value = "company", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "companies", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse register(@Valid @RequestBody CompanyRegisterRequest inputModel);
 
-    @PatchMapping("company/unregister/{id}")
+    @PatchMapping("companies/unregister/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void unregister(@Valid @NotNull @PathVariable("id") Integer id);
 

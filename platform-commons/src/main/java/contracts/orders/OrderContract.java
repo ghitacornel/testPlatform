@@ -13,32 +13,32 @@ import java.util.List;
 @Validated
 public interface OrderContract {
 
-    @GetMapping(value = "order", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders", produces = MediaType.APPLICATION_JSON_VALUE)
     List<OrderDetailsResponse> findAllNew();
 
-    @GetMapping(value = "order/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     List<OrderDetailsResponse> findAllNewForClientId(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @GetMapping(value = "order/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     List<OrderDetailsResponse> findAllNewForProductId(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @GetMapping("count")
+    @GetMapping("orders/count")
     long countAllNew();
 
-    @GetMapping(value = "order/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     OrderDetailsResponse findById(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @GetMapping("product/{id}")
+    @GetMapping("orders/exists/product/{id}")
     boolean existsByProductId(@Valid @NotNull @PathVariable(name = "id") Integer id);
 
-    @PostMapping(value = "order", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "orders", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse create(@Valid @RequestBody CreateOrderRequest inputModel);
 
-    @PatchMapping("order/complete/{id}")
+    @PatchMapping("orders/complete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void complete(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @PatchMapping("order/cancel/{id}")
+    @PatchMapping("orders/cancel/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancel(@Valid @NotNull @PathVariable("id") Integer id);
 

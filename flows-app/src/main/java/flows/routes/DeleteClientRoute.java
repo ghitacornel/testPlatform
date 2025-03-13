@@ -20,7 +20,7 @@ public class DeleteClientRoute extends RouteBuilder {
         restConfiguration().component("servlet").bindingMode(RestBindingMode.json);
 
         rest()
-                .path("/client/delete")
+                .path("/clients/delete")
                 .delete("/{id}")
                 .to("direct:delete-client");
 
