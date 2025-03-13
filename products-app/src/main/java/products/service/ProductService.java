@@ -13,7 +13,6 @@ import products.exceptions.CannotBuyMoreThanAvailableException;
 import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
-import products.repository.entity.ProductStatus;
 
 import java.util.List;
 
