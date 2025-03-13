@@ -36,7 +36,7 @@ public class InvoiceService {
         Invoice invoice = new Invoice();
         invoice.setId(request.getOrderId());
         repository.save(invoice);
-        log.info("Invoice created: {}", invoice);
+        log.info("Created: {}", invoice);
         return new IdResponse(invoice.getId());
     }
 
@@ -44,33 +44,33 @@ public class InvoiceService {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
-        log.info("Invoice order updated: {}", invoice);
+        log.info("Order updated: {}", invoice);
     }
 
     public void updateClient(UpdateClientRequest request) {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
-        log.info("Invoice client updated: {}", invoice);
+        log.info("Client updated: {}", invoice);
     }
 
     public void updateCompany(UpdateCompanyRequest request) {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
-        log.info("Invoice company updated: {}", invoice);
+        log.info("Company updated: {}", invoice);
     }
 
     public void updateProduct(UpdateProductRequest request) {
         Invoice invoice = repository.findById(request.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + request.getId() + " not found"));
         invoiceMapper.update(invoice, request);
-        log.info("Invoice product updated: {}", invoice);
+        log.info("Product updated: {}", invoice);
     }
 
     public void complete(Integer id) {
         repository.complete(id);
-        log.info("Invoice completed: {}", id);
+        log.info("Completed: {}", id);
     }
 
     public boolean existsByOrderId(Integer id) {
