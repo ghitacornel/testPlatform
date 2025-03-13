@@ -48,6 +48,10 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancel(@Valid @NotNull @PathVariable("id") Integer id);
 
+    @PatchMapping("orders/cancel/product/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void cancelByProductId(@Valid @NotNull @PathVariable("id") Integer id);
+
     @DeleteMapping("orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(@Valid @NotNull @PathVariable("id") Integer id);

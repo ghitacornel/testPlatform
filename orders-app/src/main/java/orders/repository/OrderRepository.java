@@ -48,4 +48,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return countByStatus(OrderStatus.COMPLETED);
     }
 
+    @Query("select o.id from Order o where o.productId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
+    List<Integer> findActiveIdsByProductId(@Param("id") Integer id);
+
 }

@@ -38,8 +38,7 @@ public class DeleteCompanyRoute extends RouteBuilder {
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
                     productClient.findAllActiveForCompany(id)
-                            .forEach(product -> orderClient.findAllNewForProductId(product.getId())
-                                    .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId())));
+                            .forEach(product -> orderClient.cancelByProductId(product.getId()));
                 })
                 .log("End cancelling orders for company ${header.id}")
                 .log("Cancel products for company ${header.id}")

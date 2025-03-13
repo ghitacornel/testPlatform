@@ -88,6 +88,10 @@ public class OrderService {
         log.info("Cancelled {}", id);
     }
 
+    public void cancelByProductId(Integer id) {
+        repository.findActiveIdsByProductId(id).forEach(this::cancelById);
+    }
+
     public boolean existsByProductId(Integer id) {
         return repository.existsByProductId(id);
     }

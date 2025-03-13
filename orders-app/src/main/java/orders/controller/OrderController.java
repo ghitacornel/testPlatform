@@ -61,6 +61,10 @@ public class OrderController implements OrderContract {
         service.cancelById(id);
     }
 
+    public void cancelByProductId(Integer id) {
+        service.cancelByProductId(id);
+    }
+
     public void delete(Integer id) {
         service.delete(id);
     }
