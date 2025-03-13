@@ -40,4 +40,8 @@ public class CompanyController implements CompanyContract {
         service.unregister(id);
     }
 
+    public List<Integer> findActiveIds() {
+        return service.findActiveIds();
+    }
+
 }

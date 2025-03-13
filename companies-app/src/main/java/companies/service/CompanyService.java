@@ -1,12 +1,10 @@
 package companies.service;
 
-import commons.exceptions.BusinessException;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
-import companies.repository.entity.Status;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +29,10 @@ public class CompanyService {
                 .toList();
     }
 
+    public List<Integer> findActiveIds() {
+        return repository.findActiveIds();
+    }
+
     public CompanyDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(mapper::map)
@@ -46,14 +48,6 @@ public class CompanyService {
 
     public long count() {
         return repository.countAllActive();
-    }
-
-    public void delete(Integer id) {
-        if (!Status.RETIRED.equals(repository.findStatusById(id))) {
-            throw new BusinessException("cannot delete not RETIRED company");
-        }
-        repository.deleteById(id);
-        log.info("deleted {}", id);
     }
 
     public void unregister(Integer id) {

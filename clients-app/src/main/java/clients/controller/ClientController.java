@@ -26,6 +26,11 @@ public class ClientController implements ClientContract {
         return service.count();
     }
 
+    @Override
+    public List<Integer> findActiveIds() {
+        return service.findActiveIds();
+    }
+
     public ClientDetailsResponse findById(Integer id) {
         return service.findById(id);
     }

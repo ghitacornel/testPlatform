@@ -3,8 +3,6 @@ package clients.service;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
-import clients.repository.entity.Status;
-import commons.exceptions.BusinessException;
 import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import contracts.clients.ClientDetailsResponse;
@@ -31,6 +29,10 @@ public class ClientService {
                 .toList();
     }
 
+    public List<Integer> findActiveIds() {
+        return repository.findActiveIds();
+    }
+
     public ClientDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(clientMapper::map)
@@ -46,14 +48,6 @@ public class ClientService {
 
     public long count() {
         return repository.countAllActive();
-    }
-
-    public void deleteById(Integer id) {
-        if (!Status.RETIRED.equals(repository.findStatusById(id))) {
-            throw new BusinessException("cannot delete not RETIRED client");
-        }
-        repository.deleteById(id);
-        log.info("deleted {}", id);
     }
 
     public void unregister(Integer id) {

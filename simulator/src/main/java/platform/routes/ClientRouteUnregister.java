@@ -1,6 +1,5 @@
 package platform.routes;
 
-import contracts.clients.ClientDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -28,15 +27,15 @@ public class ClientRouteUnregister extends RouteBuilder {
                 .routeId("unregister-client-route")
                 .setBody(exchange -> clientClient.count())
                 .filter(body().isGreaterThan(ClientRouteUnregister.MINIMUM))
-                .setBody(exchange -> clientClient.findAll())
+                .setBody(exchange -> clientClient.findActiveIds())
                 .filter(body().method("size").isGreaterThan(ClientRouteUnregister.MINIMUM))
                 .setBody(exchange -> {
-                    List<ClientDetailsResponse> data = exchange.getMessage().getBody(List.class);
+                    List<?> data = exchange.getMessage().getBody(List.class);
                     if (data.isEmpty()) {
                         return null;
                     }
                     int index = random.nextInt(data.size());
-                    return data.get(index).getId();
+                    return data.get(index);
                 })
                 .choice()
                 .when(body().isNull()).log(LoggingLevel.WARN, "No clients available for unregistering")

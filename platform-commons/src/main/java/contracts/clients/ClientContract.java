@@ -19,6 +19,9 @@ public interface ClientContract {
     @GetMapping("clients/count")
     long count();
 
+    @GetMapping("clients/count/active")
+    List<Integer> findActiveIds();
+
     @GetMapping(value = "clients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ClientDetailsResponse findById(@PathVariable("id") Integer id);
 
