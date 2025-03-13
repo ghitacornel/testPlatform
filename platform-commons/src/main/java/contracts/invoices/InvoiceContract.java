@@ -48,4 +48,7 @@ public interface InvoiceContract {
     @GetMapping("invoices/exists/client/{id}")
     boolean existsByClientId(@Valid @NotNull @PathVariable("id") Integer id);
 
+    @GetMapping("invoices/exists/company/{id}")
+    boolean existsByCompanyId(@Valid @NotNull @PathVariable("id") Integer id);
+
 }

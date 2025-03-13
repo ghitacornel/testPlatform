@@ -56,7 +56,7 @@ public class ClientService {
 
     public void unregister(Integer id) {
         repository.findById(id).ifPresent(Client::retire);
-        log.info("unregister {}", id);
+        log.info("unregistered {}", id);
     }
 
     public void delete(Integer id) {

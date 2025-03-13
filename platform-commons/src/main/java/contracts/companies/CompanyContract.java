@@ -29,7 +29,13 @@ public interface CompanyContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void unregister(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @GetMapping("clients/count/active")
+    @GetMapping("companies/ids/active")
     List<Integer> findActiveIds();
+
+    @GetMapping("companies/ids/retired")
+    List<Integer> findRetiredIds();
+
+    @DeleteMapping("companies/{id}")
+    void delete(@Valid @NotNull @PathVariable("id") Integer id);
 
 }

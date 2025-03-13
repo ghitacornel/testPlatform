@@ -33,6 +33,10 @@ public class CompanyService {
         return repository.findActiveIds();
     }
 
+    public List<Integer> findRetiredIds() {
+        return repository.findRetiredIds();
+    }
+
     public CompanyDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(mapper::map)
@@ -52,7 +56,11 @@ public class CompanyService {
 
     public void unregister(Integer id) {
         repository.findById(id).ifPresent(Company::retire);
-        log.info("unregister {}", id);
+        log.info("unregistered {}", id);
     }
 
+    public void delete(Integer id) {
+        repository.deleteById(id);
+        log.info("deleted {}", id);
+    }
 }

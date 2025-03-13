@@ -44,4 +44,12 @@ public class CompanyController implements CompanyContract {
         return service.findActiveIds();
     }
 
+    public List<Integer> findRetiredIds() {
+        return service.findRetiredIds();
+    }
+
+    public void delete(Integer id) {
+        service.delete(id);
+    }
+
 }

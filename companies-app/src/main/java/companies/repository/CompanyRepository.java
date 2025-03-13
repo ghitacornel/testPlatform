@@ -15,10 +15,6 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
         return findByStatus(Status.ACTIVE);
     }
 
-    default List<Company> findAllRetired() {
-        return findByStatus(Status.RETIRED);
-    }
-
     long countByStatus(Status status);
 
     default long countAllActive() {
@@ -27,5 +23,8 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     @Query("select c.id from Company c where c.status = companies.repository.entity.Status.ACTIVE")
     List<Integer> findActiveIds();
+
+    @Query("select c.id from Company c where c.status = companies.repository.entity.Status.RETIRED")
+    List<Integer> findRetiredIds();
 
 }

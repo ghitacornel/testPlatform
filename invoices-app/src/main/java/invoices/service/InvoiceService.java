@@ -80,4 +80,8 @@ public class InvoiceService {
     public boolean existsByClientId(Integer id) {
         return repository.existsByClientId(id);
     }
+
+    public boolean existsByCompanyId(Integer id) {
+        return repository.existsByCompanyId(id);
+    }
 }

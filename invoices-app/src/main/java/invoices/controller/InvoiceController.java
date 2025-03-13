@@ -55,4 +55,8 @@ public class InvoiceController implements InvoiceContract {
         return service.existsByClientId(id);
     }
 
+    public boolean existsByCompanyId(Integer id) {
+        return service.existsByCompanyId(id);
+    }
+
 }

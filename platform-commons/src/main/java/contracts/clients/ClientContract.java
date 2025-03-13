@@ -35,7 +35,8 @@ public interface ClientContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void unregister(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("clients/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void delete(@Valid @NotNull @PathVariable("id") Integer id);
+
 }
