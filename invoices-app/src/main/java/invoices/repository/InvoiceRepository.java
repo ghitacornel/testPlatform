@@ -23,4 +23,6 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
     boolean existsById(Integer id);
 
+    boolean existsByClientId(Integer id);
+
 }

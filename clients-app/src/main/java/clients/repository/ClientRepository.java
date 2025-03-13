@@ -28,4 +28,7 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
     @Query("select c.id from Client c where c.status = clients.repository.entity.Status.ACTIVE")
     List<Integer> findActiveIds();
 
+    @Query("select c.id from Client c where c.status = clients.repository.entity.Status.RETIRED")
+    List<Integer> findRetiredIds();
+
 }

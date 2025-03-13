@@ -33,6 +33,10 @@ public class ClientService {
         return repository.findActiveIds();
     }
 
+    public List<Integer> findRetiredIds() {
+        return repository.findRetiredIds();
+    }
+
     public ClientDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(clientMapper::map)
@@ -55,4 +59,8 @@ public class ClientService {
         log.info("unregister {}", id);
     }
 
+    public void delete(Integer id) {
+        repository.deleteById(id);
+        log.info("deleted {}", id);
+    }
 }

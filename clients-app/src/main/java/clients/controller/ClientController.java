@@ -26,9 +26,12 @@ public class ClientController implements ClientContract {
         return service.count();
     }
 
-    @Override
     public List<Integer> findActiveIds() {
         return service.findActiveIds();
+    }
+
+    public List<Integer> findRetiredIds() {
+        return service.findRetiredIds();
     }
 
     public ClientDetailsResponse findById(Integer id) {
@@ -43,6 +46,11 @@ public class ClientController implements ClientContract {
     @Counted
     public void unregister(Integer id) {
         service.unregister(id);
+    }
+
+    @Counted
+    public void delete(Integer id) {
+        service.delete(id);
     }
 
 }

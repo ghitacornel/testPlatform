@@ -76,4 +76,8 @@ public class InvoiceService {
     public boolean existsByOrderId(Integer id) {
         return repository.existsById(id);
     }
+
+    public boolean existsByClientId(Integer id) {
+        return repository.existsByClientId(id);
+    }
 }

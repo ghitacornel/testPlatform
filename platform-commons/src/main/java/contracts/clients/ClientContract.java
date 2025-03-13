@@ -19,8 +19,11 @@ public interface ClientContract {
     @GetMapping("clients/count")
     long count();
 
-    @GetMapping("clients/count/active")
+    @GetMapping("clients/ids/active")
     List<Integer> findActiveIds();
+
+    @GetMapping("clients/ids/retired")
+    List<Integer> findRetiredIds();
 
     @GetMapping(value = "clients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ClientDetailsResponse findById(@PathVariable("id") Integer id);
@@ -32,4 +35,7 @@ public interface ClientContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void unregister(@Valid @NotNull @PathVariable("id") Integer id);
 
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void delete(@Valid @NotNull @PathVariable("id") Integer id);
 }
