@@ -1,7 +1,6 @@
 package invoices.service;
 
 import invoices.repository.InvoiceRepository;
-import invoices.repository.entity.Invoice;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +16,9 @@ class RemoveCompletedInvoicesSchedulerServiceHelper {
 
     @Async
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public void remove(Invoice invoice) {
-        repository.deleteById(invoice.getId());
-        log.info("Removed invoice {}", invoice.getId());
+    public void remove(Integer id) {
+        repository.deleteById(id);
+        log.info("Deleted {}", id);
     }
 
 }
