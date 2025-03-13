@@ -1,6 +1,5 @@
 package flows.routes.maintenance;
 
-import contracts.orders.OrderDetailsResponse;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +18,12 @@ public class DeleteOrderRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=10000&delay=1000")
                 .routeId("delete-completed-order-route")
-                .setBody(exchange -> orderClient.findAllCompleted())
+                .setBody(exchange -> orderClient.findIdsOfAllCompleted())
                 .split(body())
+                .parallelProcessing()
                 .setBody(exchange -> {
-                    OrderDetailsResponse orderDetailsResponse = exchange.getMessage().getBody(OrderDetailsResponse.class);
-                    boolean exists = invoiceClient.existsByOrderId(orderDetailsResponse.getId());
-                    if (exists) {
-                        return null;
-                    }
-                    return orderDetailsResponse.getId();
+                    Integer id = exchange.getMessage().getBody(Integer.class);
+                    return invoiceClient.existsByOrderId(id) ? null : id;
                 })
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);

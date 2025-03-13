@@ -16,13 +16,12 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return findByStatus(OrderStatus.NEW);
     }
 
-    default List<Order> findAllCompleted() {
-        return findByStatus(OrderStatus.COMPLETED);
-    }
-
     default List<Order> findAllCancelled() {
         return findByStatus(OrderStatus.CANCELLED);
     }
+
+    @Query("select o.id from Order o where o.status = orders.repository.entity.OrderStatus.COMPLETED")
+    List<Integer> findIdsOfAllCompleted();
 
     @Query("select o from Order o where o.clientId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
     List<Order> findAllNewForClientId(@Param("id") Integer id);
