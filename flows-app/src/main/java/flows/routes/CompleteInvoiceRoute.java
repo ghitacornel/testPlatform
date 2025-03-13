@@ -31,12 +31,6 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .routeId("create-invoice-route")
                 .process(exchange -> {
                     Integer orderId = exchange.getMessage().getBody(Integer.class);
-                    invoiceClient.create(InvoiceCreateRequest.builder()
-                            .orderId(orderId)
-                            .build());
-                })
-                .process(exchange -> {
-                    Integer orderId = exchange.getMessage().getBody(Integer.class);
                     OrderDetailsResponse response = orderClient.findById(orderId);
                     invoiceClient.update(UpdateOrderRequest.builder()
                             .id(orderId)
