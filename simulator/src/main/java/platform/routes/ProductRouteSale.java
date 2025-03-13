@@ -1,6 +1,5 @@
 package platform.routes;
 
-import contracts.companies.CompanyDetailsResponse;
 import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
@@ -46,13 +45,13 @@ public class ProductRouteSale extends RouteBuilder {
                 .setBody(exchange -> ProductSellRequestFaker.fake())
                 .process(exchange -> {
                     ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
-                    List<CompanyDetailsResponse> companyDetailsResponses = companyClient.findAll();
-                    if (companyDetailsResponses.isEmpty()) {
+                    List<Integer> activeCompaniesIds = companyClient.findActiveIds();
+                    if (activeCompaniesIds.isEmpty()) {
                         exchange.setMessage(null);
                         return;
                     }
-                    int index = random.nextInt(companyDetailsResponses.size());
-                    productSellRequest.setCompanyId(companyDetailsResponses.get(index).getId());
+                    int index = random.nextInt(activeCompaniesIds.size());
+                    productSellRequest.setCompanyId(activeCompaniesIds.get(index));
                 })
                 .choice()
                 .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for creating products")
