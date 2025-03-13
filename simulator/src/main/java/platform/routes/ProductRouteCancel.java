@@ -50,7 +50,7 @@ public class ProductRouteCancel extends RouteBuilder {
                 .when(body().isNull()).log(LoggingLevel.WARN, "No products available for cancelling")
                 .otherwise()
                 .process(exchange -> productClient.cancel(exchange.getMessage().getBody(Integer.class)))
-                .log("Cancel product " + body())
+                .log("Cancelled product ${body}")
                 .endChoice()
                 .end();
 
