@@ -48,4 +48,11 @@ public class Order extends Identifiable {
         status = OrderStatus.COMPLETED;
     }
 
+    public boolean isCompleted() {
+        return status == OrderStatus.COMPLETED;
+    }
+
+    public boolean isCancelled() {
+        return status == OrderStatus.CANCELLED;
+    }
 }

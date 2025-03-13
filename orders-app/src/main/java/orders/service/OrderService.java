@@ -58,6 +58,9 @@ public class OrderService {
     public void completeById(Integer id) {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
+        if (order.isCompleted()) {
+            return;
+        }
         if (!order.isNew()) {
             throw new BusinessException("cannot complete already completed order");
         }
@@ -68,6 +71,9 @@ public class OrderService {
     public void cancelById(Integer id) {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
+        if (order.isCancelled()) {
+            return;
+        }
         if (!order.isNew()) {
             throw new BusinessException("cannot complete already completed order");
         }
