@@ -50,8 +50,7 @@ public class ProductService {
     }
 
     public void cancel(Integer id) {
-        Product entity = repository.getReferenceById(id);
-        entity.setStatus(ProductStatus.CANCELLED);
+        repository.getReferenceById(id).cancel();
         log.info("canceled {}", id);
     }
 
@@ -78,14 +77,15 @@ public class ProductService {
     }
 
     public void refill(Integer id, Integer quantity) {
-        Product entity = repository.getReferenceById(id);
-        entity.setQuantity(entity.getQuantity() + quantity);
+        repository.getReferenceById(id).refill(quantity);
         log.info("refill {} with quantity {}", id, quantity);
     }
 
     public void cancelByCompany(Integer id) {
-        repository.cancelByCompany(id);
-        log.info("cancelled by company {}", id);
+        repository.findByCompanyId(id).forEach(product -> {
+            log.info("cancelled by company {}", product.getId());
+            product.cancel();
+        });
     }
 
     public List<Integer> findConsumedIds() {

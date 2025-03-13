@@ -54,4 +54,12 @@ public class Product extends Identifiable {
         }
     }
 
+    public void cancel() {
+        status = ProductStatus.CANCELLED;
+    }
+
+    public void refill(Integer refill) {
+        quantity += refill;
+    }
+
 }
