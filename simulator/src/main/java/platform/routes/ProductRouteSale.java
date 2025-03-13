@@ -32,28 +32,12 @@ public class ProductRouteSale extends RouteBuilder {
                 .routeId("sale-product-route-timer")
                 .multicast()
                 .parallelProcessing()
-                .to("direct:a")
-                .to("direct:b")
-                .to("direct:c")
-                .to("direct:d")
-                .to("direct:e")
+                .to("direct:sale-product-route")
+                .to("direct:sale-product-route")
+                .to("direct:sale-product-route")
+                .to("direct:sale-product-route")
+                .to("direct:sale-product-route")
         ;
-
-        from("direct:a")
-                .routeId("direct-a")
-                .to("direct:sale-product-route");
-        from("direct:b")
-                .routeId("direct-b")
-                .to("direct:sale-product-route");
-        from("direct:c")
-                .routeId("direct-c")
-                .to("direct:sale-product-route");
-        from("direct:d")
-                .routeId("direct-d")
-                .to("direct:sale-product-route");
-        from("direct:e")
-                .routeId("direct-e")
-                .to("direct:sale-product-route");
 
         from("direct:sale-product-route")
                 .routeId("sale-product-route")

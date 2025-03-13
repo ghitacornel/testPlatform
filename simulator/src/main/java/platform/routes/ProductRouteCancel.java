@@ -27,28 +27,12 @@ public class ProductRouteCancel extends RouteBuilder {
                 .routeId("cancel-product-route-timer")
                 .multicast()
                 .parallelProcessing()
-                .to("direct:a")
-                .to("direct:b")
-                .to("direct:c")
-                .to("direct:d")
-                .to("direct:e")
+                .to("direct:cancel-product-route")
+                .to("direct:cancel-product-route")
+                .to("direct:cancel-product-route")
+                .to("direct:cancel-product-route")
+                .to("direct:cancel-product-route")
         ;
-
-        from("direct:a")
-                .routeId("direct-a")
-                .to("direct:cancel-product-route");
-        from("direct:b")
-                .routeId("direct-b")
-                .to("direct:cancel-product-route");
-        from("direct:c")
-                .routeId("direct-c")
-                .to("direct:cancel-product-route");
-        from("direct:d")
-                .routeId("direct-d")
-                .to("direct:cancel-product-route");
-        from("direct:e")
-                .routeId("direct-e")
-                .to("direct:cancel-product-route");
 
         from("direct:cancel-product-route")
                 .routeId("cancel-product-route")

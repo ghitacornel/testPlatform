@@ -28,32 +28,16 @@ public class OrderRouteCreate extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=10&delay=1000")
+        from("timer://simpleTimer?period=100&delay=1000")
                 .routeId("create-order-route-timer")
                 .multicast()
                 .parallelProcessing()
-                .to("direct:a")
-                .to("direct:b")
-                .to("direct:c")
-                .to("direct:d")
-                .to("direct:e")
+                .to("direct:create-order-route")
+                .to("direct:create-order-route")
+                .to("direct:create-order-route")
+                .to("direct:create-order-route")
+                .to("direct:create-order-route")
         ;
-
-        from("direct:a")
-                .routeId("direct-a")
-                .to("direct:create-order-route");
-        from("direct:b")
-                .routeId("direct-b")
-                .to("direct:create-order-route");
-        from("direct:c")
-                .routeId("direct-c")
-                .to("direct:create-order-route");
-        from("direct:d")
-                .routeId("direct-d")
-                .to("direct:create-order-route");
-        from("direct:e")
-                .routeId("direct-e")
-                .to("direct:create-order-route");
 
         from("direct:create-order-route")
                 .routeId("create-order-route")
