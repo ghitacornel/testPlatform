@@ -1,6 +1,5 @@
 package platform.routes;
 
-import com.github.javafaker.Faker;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
 import org.apache.camel.LoggingLevel;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.CompanyClient;
+import platform.fakers.CompanyRegisterRequestFaker;
 
 import java.util.List;
 import java.util.Random;
@@ -17,11 +17,10 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class CompanyRoute extends RouteBuilder {
 
-    private static final int MINIMUM = 50;
+    public static final int MINIMUM = 50;
     private static final int MAXIMUM = 100;
 
     private final Random random = new Random();
-    private final Faker faker = Faker.instance();
 
     private final CompanyClient companyClient;
     private final FlowsClient flowsClient;
@@ -33,12 +32,7 @@ public class CompanyRoute extends RouteBuilder {
                 .routeId("register-company-route")
                 .setBody(exchange -> companyClient.count())
                 .filter(body().isLessThan(CompanyRoute.MAXIMUM))
-                .setBody(exchange -> CompanyRegisterRequest.builder()
-                        .name(faker.company().name())
-                        .industry(faker.company().industry())
-                        .url(faker.company().url())
-                        .country(faker.country().name())
-                        .build())
+                .setBody(exchange -> CompanyRegisterRequestFaker.fake())
                 .process(exchange -> companyClient.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
                 .end();
 

@@ -1,6 +1,5 @@
 package platform.routes;
 
-import com.github.javafaker.Faker;
 import contracts.clients.ClientDetailsResponse;
 import contracts.clients.ClientRegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.ClientClient;
 import platform.clients.FlowsClient;
+import platform.fakers.ClientRegisterRequestFaker;
 
 import java.util.List;
 import java.util.Random;
@@ -17,11 +17,10 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ClientRoute extends RouteBuilder {
 
-    private static final int MINIMUM = 100;
+    public static final int MINIMUM = 100;
     private static final int MAXIMUM = 200;
 
     private final Random random = new Random();
-    private final Faker faker = Faker.instance();
 
     private final ClientClient clientClient;
     private final FlowsClient flowsClient;
@@ -33,11 +32,7 @@ public class ClientRoute extends RouteBuilder {
                 .routeId("register-client-route")
                 .setBody(exchange -> clientClient.count())
                 .filter(body().isLessThan(ClientRoute.MAXIMUM))
-                .setBody(exchange -> ClientRegisterRequest.builder()
-                        .name(faker.name().username())
-                        .cardType(faker.business().creditCardType())
-                        .country(faker.country().name())
-                        .build())
+                .setBody(exchange -> ClientRegisterRequestFaker.fake())
                 .process(exchange -> clientClient.register(exchange.getMessage().getBody(ClientRegisterRequest.class)))
                 .end();
 
