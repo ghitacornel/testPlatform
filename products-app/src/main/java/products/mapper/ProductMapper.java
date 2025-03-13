@@ -12,6 +12,7 @@ public interface ProductMapper {
     ProductDetailsResponse map(Product model);
 
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "version", ignore = true)
     Product map(ProductSellRequest model);
 
 }
