@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import platform.clients.CompanyClient;
 import platform.fakers.CompanyRegisterRequestFaker;
 
-import static platform.routes.CompanyRoute.MINIMUM;
+import static platform.routes.CompanyRouteUnregister.MINIMUM;
 
 @Component
 @RequiredArgsConstructor
