@@ -29,8 +29,12 @@ public class OrderService {
                 .toList();
     }
 
-    public List<Integer> findIdsOfAllCompleted() {
-        return repository.findIdsOfAllCompleted();
+    public List<Integer> findCompletedIds() {
+        return repository.findCompletedIds();
+    }
+
+    public List<Integer> findNewIds() {
+        return repository.findNewIds();
     }
 
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {

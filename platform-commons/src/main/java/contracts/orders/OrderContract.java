@@ -17,7 +17,10 @@ public interface OrderContract {
     List<OrderDetailsResponse> findAllNew();
 
     @GetMapping(value = "orders/completed/ids", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<Integer> findIdsOfAllCompleted();
+    List<Integer> findCompletedIds();
+
+    @GetMapping(value = "orders/new/ids", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findNewIds();
 
     @GetMapping(value = "orders/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     List<OrderDetailsResponse> findAllNewForClientId(@Valid @NotNull @PathVariable("id") Integer id);

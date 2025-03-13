@@ -1,6 +1,5 @@
 package platform.routes;
 
-import contracts.orders.OrderDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
@@ -37,12 +36,12 @@ public class OrderRouteComplete extends RouteBuilder {
 
         from("direct:complete-order-route")
                 .routeId("complete-order-route")
-                .setBody(exchange -> orderClient.findAllNew())
+                .setBody(exchange -> orderClient.findNewIds())
                 .filter(body().method("size").isGreaterThan(0))
                 .setBody(exchange -> {
-                    List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
+                    List<?> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
-                    return data.get(index).getId();
+                    return data.get(index);
                 })
                 .process(exchange -> flowsClient.completeOrder(exchange.getMessage().getBody(Integer.class)))
                 .log("Complete order ${body}")

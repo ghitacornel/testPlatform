@@ -1,6 +1,5 @@
 package platform.routes;
 
-import contracts.orders.OrderDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
@@ -37,12 +36,12 @@ public class OrderRouteCancel extends RouteBuilder {
 
         from("direct:cancel-order-route")
                 .routeId("cancel-order-route")
-                .setBody(exchange -> orderClient.findAllNew())
+                .setBody(exchange -> orderClient.findNewIds())
                 .filter(body().method("size").isGreaterThan(0))
                 .setBody(exchange -> {
-                    List<OrderDetailsResponse> data = exchange.getMessage().getBody(List.class);
+                    List<?> data = exchange.getMessage().getBody(List.class);
                     int index = random.nextInt(data.size());
-                    return data.get(index).getId();
+                    return data.get(index);
                 })
                 .process(exchange -> flowsClient.cancelOrder(exchange.getMessage().getBody(Integer.class)))
                 .log("Cancel order ${body}")

@@ -18,7 +18,7 @@ public class DeleteCompletedOrdersRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=10000&delay=1000")
                 .routeId("delete-completed-order-route")
-                .setBody(exchange -> orderClient.findIdsOfAllCompleted())
+                .setBody(exchange -> orderClient.findCompletedIds())
                 .split(body())
                 .parallelProcessing()
                 .setBody(exchange -> {
