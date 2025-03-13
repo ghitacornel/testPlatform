@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class DeleteRetiredProductsRoute extends RouteBuilder {
+public class DeleteCancelledProductsRoute extends RouteBuilder {
 
     private final ProductClient productClient;
     private final InvoiceClient invoiceClient;
