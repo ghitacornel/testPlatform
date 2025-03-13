@@ -44,4 +44,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByCompanyId(Integer id);
 
+    boolean existsByCompanyId(Integer id);
+
 }

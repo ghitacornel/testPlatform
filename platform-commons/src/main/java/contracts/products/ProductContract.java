@@ -56,4 +56,7 @@ public interface ProductContract {
     @DeleteMapping("products/{id}")
     void delete(@Valid @NotNull @PathVariable("id") Integer id);
 
+    @GetMapping(value = "products/exists/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    boolean existsByCompanyId(@Valid @NotNull @PathVariable("id") Integer id);
+
 }

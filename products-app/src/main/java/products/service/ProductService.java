@@ -104,4 +104,8 @@ public class ProductService {
         log.info("deleted {}", id);
     }
 
+    public boolean existsByCompanyId(Integer id) {
+        return repository.existsByCompanyId(id);
+    }
+
 }

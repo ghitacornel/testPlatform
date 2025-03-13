@@ -71,4 +71,8 @@ public class ProductController implements ProductContract {
         service.delete(id);
     }
 
+    public boolean existsByCompanyId(Integer id) {
+        return service.existsByCompanyId(id);
+    }
+
 }
