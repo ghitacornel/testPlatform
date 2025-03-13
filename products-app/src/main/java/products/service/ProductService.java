@@ -57,7 +57,7 @@ public class ProductService {
 
     public void buy(ProductBuyRequest request) {
 
-        Product product = repository.findByIdAndLock(request.getProductId())
+        Product product = repository.findById(request.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + request.getProductId() + " not found"));
 
         if (product.getQuantity() < request.getQuantity()) {

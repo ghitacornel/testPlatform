@@ -37,6 +37,9 @@ public class Product extends Identifiable {
     @Enumerated(EnumType.ORDINAL)
     private ProductStatus status = ProductStatus.ACTIVE;
 
+    @Version
+    private Integer version;
+
     @PrePersist
     private void checkStrictPositiveQuantityOnCreation() {
         if (quantity == 0) {

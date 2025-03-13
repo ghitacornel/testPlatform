@@ -6,5 +6,6 @@ create table product
     price      double precision not null,
     quantity   int              not null,
     company_id int              not null,
-    status     smallint         not null
+    status     smallint         not null,
+    version    int
 );
