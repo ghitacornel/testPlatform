@@ -42,4 +42,7 @@ public interface InvoiceContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void complete(@Valid @NotNull @PathVariable("id") Integer id);
 
+    @GetMapping("invoices/exists/order/{id}")
+    boolean existsByOrderId(@Valid @NotNull @PathVariable("id") Integer id);
+
 }

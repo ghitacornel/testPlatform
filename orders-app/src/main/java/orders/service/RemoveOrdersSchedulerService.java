@@ -13,10 +13,6 @@ public class RemoveOrdersSchedulerService {
     private final OrderRepository repository;
     private final RemoveOrdersSchedulerServiceHelper helper;
 
-    public void removeCompletedOrders() {
-        repository.findAllCompleted().forEach(helper::delete);
-    }
-
     public void removeCancelledOrders() {
         repository.findAllCancelled().forEach(helper::delete);
     }

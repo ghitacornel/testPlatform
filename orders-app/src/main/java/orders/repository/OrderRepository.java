@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
@@ -17,12 +16,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return findByStatus(OrderStatus.NEW);
     }
 
-    @Query("select o from Order o where o.clientId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
-    List<Order> findAllNewForClientId(@Param("id") Integer id);
-
-    @Query("select o from Order o where o.productId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
-    List<Order> findAllNewForProductId(@Param("id") Integer id);
-
     default List<Order> findAllCompleted() {
         return findByStatus(OrderStatus.COMPLETED);
     }
@@ -30,6 +23,12 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     default List<Order> findAllCancelled() {
         return findByStatus(OrderStatus.CANCELLED);
     }
+
+    @Query("select o from Order o where o.clientId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
+    List<Order> findAllNewForClientId(@Param("id") Integer id);
+
+    @Query("select o from Order o where o.productId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
+    List<Order> findAllNewForProductId(@Param("id") Integer id);
 
     boolean existsByProductId(Integer id);
 

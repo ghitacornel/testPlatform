@@ -47,4 +47,8 @@ public class InvoiceController implements InvoiceContract {
         service.complete(id);
     }
 
+    public boolean existsByOrderId(Integer id) {
+        return service.existsByOrderId(id);
+    }
+
 }

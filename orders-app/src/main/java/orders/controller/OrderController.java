@@ -21,6 +21,10 @@ public class OrderController implements OrderContract {
         return service.findAllNew();
     }
 
+    public List<OrderDetailsResponse> findAllCompleted() {
+        return service.findAllCompleted();
+    }
+
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
         return service.findAllNewForClientId(id);
     }
@@ -51,6 +55,10 @@ public class OrderController implements OrderContract {
 
     public void cancel(Integer id) {
         service.cancelById(id);
+    }
+
+    public void delete(Integer id) {
+        service.delete(id);
     }
 
 }

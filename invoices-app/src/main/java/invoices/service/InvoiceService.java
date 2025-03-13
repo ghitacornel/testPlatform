@@ -73,4 +73,7 @@ public class InvoiceService {
         log.info("Invoice completed: {}", id);
     }
 
+    public boolean existsByOrderId(Integer id) {
+        return repository.existsById(id);
+    }
 }

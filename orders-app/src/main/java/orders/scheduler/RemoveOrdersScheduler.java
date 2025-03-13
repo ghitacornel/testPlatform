@@ -14,11 +14,6 @@ class RemoveOrdersScheduler {
     private final RemoveOrdersSchedulerService service;
 
     @Scheduled(fixedRate = 10000)
-    private void removeCompletedOrders() {
-        service.removeCompletedOrders();
-    }
-
-    @Scheduled(fixedRate = 10000)
     private void removeCancelledOrders() {
         service.removeCancelledOrders();
     }

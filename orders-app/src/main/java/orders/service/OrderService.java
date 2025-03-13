@@ -29,6 +29,12 @@ public class OrderService {
                 .toList();
     }
 
+    public List<OrderDetailsResponse> findAllCompleted() {
+        return repository.findAllCompleted().stream()
+                .map(orderMapper::map)
+                .toList();
+    }
+
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
         return repository.findAllNewForClientId(id).stream()
                 .map(orderMapper::map)
@@ -88,4 +94,8 @@ public class OrderService {
         return repository.countAllNew();
     }
 
+    public void delete(Integer id) {
+        repository.deleteById(id);
+        log.info("Deleted {}", id);
+    }
 }
