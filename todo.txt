@@ -12,7 +12,7 @@ TODO
 add UNREGISTERED marker for client/company + delete them in the future => add maintenance schedulers
 
 TODO
-add log gatherer => grafana loki for logs
+add log gatherer => grafana loki for logs Recently moved from ELK->Loki/grafana and not looking back.
 spring cloud gateway / spring-cloud-kubernetes
 parallel processing
 add correlation id
