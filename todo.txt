@@ -15,3 +15,4 @@ TODO
 add log gatherer => grafana loki for logs
 spring cloud gateway / spring-cloud-kubernetes
 parallel processing
+add correlation id
