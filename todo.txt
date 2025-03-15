@@ -15,7 +15,7 @@ TODO
 add log gatherer => grafana loki for logs Recently moved from ELK->Loki/grafana and not looking back.
 spring cloud gateway / spring-cloud-kubernetes
 
-add correlation id => https://github.com/micrometer-metrics/tracing
+add correlation id / observability => https://github.com/micrometer-metrics/tracing
 <dependency>
     <groupId>io.micrometer</groupId>
     <artifactId>micrometer-tracing-bridge-otel</artifactId>
