@@ -1,5 +1,7 @@
 package flows.routes;
 
+import commons.exceptions.RestTechnicalException;
+import feign.FeignException;
 import flows.clients.ClientClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -26,17 +28,15 @@ public class DeleteClientRoute extends RouteBuilder {
 
         from("direct:delete-client")
                 .routeId("delete-client-route")
-                .log("Unregister client ${header.id}")
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    clientClient.unregister(id);
-                })
-                .log("Unregistered client ${header.id}")
-                .log("Start cancelling orders for client ${header.id}")
-                .process(exchange -> {
-                    Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    orderClient.findAllNewForClientId(id)
-                            .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId()));
+                    try {
+                        clientClient.unregister(id);
+                        orderClient.findAllNewForClientId(id)
+                                .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId()));
+                    } catch (RestTechnicalException | FeignException e) {
+                        log.error(e.getMessage());
+                    }
                 })
                 .log("End cancelling orders for client ${header.id}")
                 .setBody().simple("${null}")

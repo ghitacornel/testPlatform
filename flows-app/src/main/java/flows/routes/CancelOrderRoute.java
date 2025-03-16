@@ -1,5 +1,6 @@
 package flows.routes;
 
+import commons.exceptions.RestTechnicalException;
 import contracts.orders.OrderDetailsResponse;
 import feign.FeignException;
 import flows.clients.OrderClient;
@@ -34,7 +35,7 @@ public class CancelOrderRoute extends RouteBuilder {
                         OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
                         productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
                         orderClient.cancel(id);
-                    } catch (FeignException e) {
+                    } catch (RestTechnicalException | FeignException e) {
                         log.error(e.getMessage());
                     }
                 })

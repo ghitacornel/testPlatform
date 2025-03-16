@@ -1,5 +1,7 @@
 package flows.routes.maintenance;
 
+import commons.exceptions.RestTechnicalException;
+import feign.FeignException;
 import flows.clients.ClientClient;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
@@ -23,21 +25,21 @@ public class DeleteRetiredClientsRoute extends RouteBuilder {
                 .setBody(exchange -> clientClient.findRetiredIds())
                 .split(body())
                 .parallelProcessing()
-                .setBody(exchange -> {
-                    Integer id = exchange.getMessage().getBody(Integer.class);
-                    return orderClient.existsByClientId(id) ? null : id;
-                })
-                .filter(body().isNotNull())
-                .setBody(exchange -> {
-                    Integer id = exchange.getMessage().getBody(Integer.class);
-                    return invoiceClient.existsByClientId(id) ? null : id;
-                })
-                .filter(body().isNotNull())
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
-                    clientClient.delete(id);
+                    try {
+                        if (orderClient.existsByClientId(id)) {
+                            return;
+                        }
+                        if (invoiceClient.existsByClientId(id)) {
+                            return;
+                        }
+                        clientClient.delete(id);
+                        log.info("Retired client deleted {}", id);
+                    } catch (RestTechnicalException | FeignException e) {
+                        log.error(e.getMessage());
+                    }
                 })
-                .log("Retired client deleted ${body}")
                 .end();
     }
 

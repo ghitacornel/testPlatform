@@ -1,6 +1,7 @@
 package flows.routes;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.RestTechnicalException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductBuyRequest;
@@ -56,7 +57,15 @@ public class CreateOrderRoute extends RouteBuilder {
                     return createOrderRequest;
                 })
                 .filter(body().isNotNull())
-                .setBody(exchange -> orderClient.create(exchange.getMessage().getBody(CreateOrderRequest.class)))
+                .setBody(exchange -> {
+                    try {
+                        return orderClient.create(exchange.getMessage().getBody(CreateOrderRequest.class));
+                    } catch (RestTechnicalException | FeignException e) {
+                        log.error(e.getMessage());
+                        return null;
+                    }
+                })
+                .filter(body().isNotNull())
                 .log("Order ${body.id} created with ${header.productBuyRequest}")
                 .removeHeader(PRODUCT_BUY_REQUEST)
                 .end();

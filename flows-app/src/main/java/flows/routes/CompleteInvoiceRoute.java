@@ -1,5 +1,6 @@
 package flows.routes;
 
+import commons.exceptions.RestTechnicalException;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.invoices.*;
@@ -96,7 +97,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
 
                         invoiceClient.complete(id);
 
-                    } catch (FeignException e) {
+                    } catch (RestTechnicalException | FeignException e) {
                         log.error(e.getMessage());
                         invoiceClient.error(id);
                     }

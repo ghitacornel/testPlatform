@@ -1,5 +1,7 @@
 package flows.routes.maintenance;
 
+import commons.exceptions.RestTechnicalException;
+import feign.FeignException;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +23,18 @@ public class DeleteInvoicedOrdersRoute extends RouteBuilder {
                 .setBody(exchange -> orderClient.findInvoicedIds())
                 .split(body())
                 .parallelProcessing()
-                .setBody(exchange -> {
-                    Integer id = exchange.getMessage().getBody(Integer.class);
-                    return invoiceClient.existsByOrderId(id) ? null : id;
-                })
-                .filter(body().isNotNull())// delete only those that were invoiced and invoiced was first deleted
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
-                    orderClient.delete(id);
+                    try {
+                        if (invoiceClient.existsByOrderId(id)) {
+                            return;
+                        }
+                        orderClient.delete(id);
+                        log.info("Invoiced order deleted {}", id);
+                    } catch (RestTechnicalException | FeignException e) {
+                        log.error(e.getMessage());
+                    }
                 })
-                .log("Invoiced order deleted ${body}")
                 .end();
     }
 

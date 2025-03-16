@@ -1,5 +1,6 @@
 package flows.routes;
 
+import commons.exceptions.RestTechnicalException;
 import feign.FeignException;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class CompleteOrderRoute extends RouteBuilder {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     try {
                         orderClient.complete(id);
-                    } catch (FeignException e) {
+                    } catch (RestTechnicalException | FeignException e) {
                         log.error(e.getMessage());
                     }
                 })

@@ -1,5 +1,7 @@
 package flows.routes.maintenance;
 
+import commons.exceptions.RestTechnicalException;
+import feign.FeignException;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
@@ -23,21 +25,21 @@ public class DeleteConsumedProductsRoute extends RouteBuilder {
                 .setBody(exchange -> productClient.findConsumedIds())
                 .split(body())
                 .parallelProcessing()
-                .setBody(exchange -> {
-                    Integer id = exchange.getMessage().getBody(Integer.class);
-                    return orderClient.existsByProductId(id) ? null : id;
-                })
-                .filter(body().isNotNull())
-                .setBody(exchange -> {
-                    Integer id = exchange.getMessage().getBody(Integer.class);
-                    return invoiceClient.existsByProductId(id) ? null : id;
-                })
-                .filter(body().isNotNull())
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
-                    productClient.delete(id);
+                    try {
+                        if (orderClient.existsByProductId(id)) {
+                            return;
+                        }
+                        if (invoiceClient.existsByProductId(id)) {
+                            return;
+                        }
+                        productClient.delete(id);
+                        log.info("Consumed product deleted {}", id);
+                    } catch (RestTechnicalException | FeignException e) {
+                        log.error(e.getMessage());
+                    }
                 })
-                .log("Consumed product deleted ${body}")
                 .end();
     }
 
