@@ -29,7 +29,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
 
         from("jms:queue:CompletedOrdersQueueName")
                 .routeId("create-invoice-route")
-                .multicast()
+                .multicast().parallelProcessing()
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
 
