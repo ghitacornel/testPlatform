@@ -47,43 +47,41 @@ public class CompleteInvoiceRoute extends RouteBuilder {
 
                     try {
 
-
-                        OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
+                        OrderDetailsResponse orderDetails = orderClient.findById(id);
                         invoiceClient.update(UpdateOrderRequest.builder()
                                 .id(id)
-                                .clientId(orderDetailsResponse.getClientId())
-                                .productId(orderDetailsResponse.getProductId())
-                                .orderQuantity(orderDetailsResponse.getQuantity())
+                                .clientId(orderDetails.getClientId())
+                                .productId(orderDetails.getProductId())
+                                .orderQuantity(orderDetails.getQuantity())
                                 .build());
 
-
-                        ProductDetailsResponse productDetailsResponse = productClient.findById(orderDetailsResponse.getProductId());
+                        ProductDetailsResponse productDetails = productClient.findById(orderDetails.getProductId());
                         invoiceClient.update(UpdateProductRequest.builder()
                                 .id(id)
-                                .productId(productDetailsResponse.getId())
-                                .productName(productDetailsResponse.getName())
-                                .productColor(productDetailsResponse.getColor())
-                                .productPrice(productDetailsResponse.getPrice())
-                                .companyId(productDetailsResponse.getCompanyId())
+                                .productId(productDetails.getId())
+                                .productName(productDetails.getName())
+                                .productColor(productDetails.getColor())
+                                .productPrice(productDetails.getPrice())
+                                .companyId(productDetails.getCompanyId())
                                 .build());
 
-                        ClientDetailsResponse clientDetailsResponse = clientClient.findById(orderDetailsResponse.getClientId());
+                        ClientDetailsResponse clientDetails = clientClient.findById(orderDetails.getClientId());
                         invoiceClient.update(UpdateClientRequest.builder()
                                 .id(id)
-                                .clientId(clientDetailsResponse.getId())
-                                .clientName(clientDetailsResponse.getName())
-                                .clientCardType(clientDetailsResponse.getCardType())
-                                .clientCountry(clientDetailsResponse.getCountry())
+                                .clientId(clientDetails.getId())
+                                .clientName(clientDetails.getName())
+                                .clientCardType(clientDetails.getCardType())
+                                .clientCountry(clientDetails.getCountry())
                                 .build());
 
-                        CompanyDetailsResponse companyDetailsResponse = companyClient.findById(productDetailsResponse.getCompanyId());
+                        CompanyDetailsResponse companyDetails = companyClient.findById(productDetails.getCompanyId());
                         invoiceClient.update(UpdateCompanyRequest.builder()
                                 .id(id)
-                                .companyId(companyDetailsResponse.getId())
-                                .companyName(companyDetailsResponse.getName())
-                                .companyUrl(companyDetailsResponse.getUrl())
-                                .companyIndustry(companyDetailsResponse.getIndustry())
-                                .companyCountry(companyDetailsResponse.getCountry())
+                                .companyId(companyDetails.getId())
+                                .companyName(companyDetails.getName())
+                                .companyUrl(companyDetails.getUrl())
+                                .companyIndustry(companyDetails.getIndustry())
+                                .companyCountry(companyDetails.getCountry())
                                 .build());
 
                         invoiceClient.complete(exchange.getMessage().getBody(Integer.class));
