@@ -20,19 +20,19 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return findByStatus(OrderStatus.CANCELLED);
     }
 
-    @Query("select o.id from Order o where o.status = orders.repository.entity.OrderStatus.COMPLETED")
+    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.COMPLETED")
     List<Integer> findCompletedIds();
 
-    @Query("select o.id from Order o where o.status = orders.repository.entity.OrderStatus.INVOICED")
+    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.INVOICED")
     List<Integer> findInvoicedIds();
 
-    @Query("select o.id from Order o where o.status = orders.repository.entity.OrderStatus.NEW")
+    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.NEW")
     List<Integer> findNewIds();
 
-    @Query("select o from Order o where o.clientId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
+    @Query("select o from Order o where o.clientId = :id and o.status = contracts.orders.OrderStatus.NEW")
     List<Order> findAllNewForClientId(@Param("id") Integer id);
 
-    @Query("select o from Order o where o.productId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
+    @Query("select o from Order o where o.productId = :id and o.status = contracts.orders.OrderStatus.NEW")
     List<Order> findAllNewForProductId(@Param("id") Integer id);
 
     boolean existsByProductId(Integer id);
@@ -50,7 +50,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return countByStatus(OrderStatus.COMPLETED);
     }
 
-    @Query("select o.id from Order o where o.productId = :id and o.status = orders.repository.entity.OrderStatus.NEW")
+    @Query("select o.id from Order o where o.productId = :id and o.status = contracts.orders.OrderStatus.NEW")
     List<Integer> findActiveIdsByProductId(@Param("id") Integer id);
 
 }
