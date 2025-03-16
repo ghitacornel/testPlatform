@@ -1,5 +1,6 @@
 package flows.routes;
 
+import commons.exceptions.BusinessException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductBuyRequest;
@@ -47,7 +48,7 @@ public class CreateOrderRoute extends RouteBuilder {
                             .build();
                     try {
                         productClient.buy(productBuyRequest);
-                    } catch (FeignException e) {
+                    } catch (BusinessException | FeignException e) {
                         log.error(e.getMessage());
                         return null;
                     }

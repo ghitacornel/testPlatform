@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import platform.clients.ClientClient;
 import platform.clients.FlowsClient;
 import platform.clients.ProductClient;
+import platform.utils.GenerateUtils;
 
-import java.util.List;
 import java.util.Random;
 
 @Component
@@ -38,28 +38,16 @@ public class OrderRouteCreate extends RouteBuilder {
                     .routeId("create-order-route-" + i)
                     .setBody(exchange -> {
 
-                        Integer clientId;
-                        {
-                            List<Integer> clients = clientClient.findActiveIds();
-                            if (clients.isEmpty()) {
-                                log.error("no clients available");
-                                return null;
-                            }
-                            int index = random.nextInt(clients.size());
-                            clientId = clients.get(index);
+                        Integer clientId = GenerateUtils.random(clientClient.findActiveIds(), random);
+                        if (clientId == null) {
+                            log.warn("no clients available");
+                            return null;
                         }
-
-                        ProductDetailsResponse productDetailsResponse;
-                        {
-                            List<ProductDetailsResponse> productDetailsResponses = productClient.findAllActive();
-                            if (productDetailsResponses.isEmpty()) {
-                                log.error("no products available");
-                                return null;
-                            }
-                            int index = random.nextInt(productDetailsResponses.size());
-                            productDetailsResponse = productDetailsResponses.get(index);
+                        ProductDetailsResponse productDetailsResponse = GenerateUtils.random(productClient.findAllActive(), random);
+                        if (productDetailsResponse == null) {
+                            log.warn("no products available");
+                            return null;
                         }
-
                         return CreateOrderRequest.builder()
                                 .clientId(clientId)
                                 .productId(productDetailsResponse.getId())

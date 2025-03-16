@@ -23,4 +23,12 @@ public class GenerateUtils {
         return data.get(index);
     }
 
+    public <T> T random(List<T> data, Random random) {
+        if (data == null || data.isEmpty()) {
+            return null;
+        }
+        int index = random.nextInt(data.size());
+        return data.get(index);
+    }
+
 }
