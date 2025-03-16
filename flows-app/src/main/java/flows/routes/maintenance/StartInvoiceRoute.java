@@ -18,7 +18,7 @@ public class StartInvoiceRoute extends RouteBuilder {
     public void configure() {
 
         from("timer://simpleTimer?period=10000&delay=1000")
-                .routeId("complete-order-route")
+                .routeId("start-invoice-route")
                 .setBody(exchange -> orderClient.findCompletedIds())
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
