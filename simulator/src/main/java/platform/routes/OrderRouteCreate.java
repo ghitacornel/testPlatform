@@ -1,6 +1,7 @@
 package platform.routes;
 
 import commons.exceptions.RestTechnicalException;
+import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductDetailsResponse;
 import feign.FeignException;
@@ -60,7 +61,12 @@ public class OrderRouteCreate extends RouteBuilder {
                     .otherwise()
                     .process(exchange -> {
                         try {
-                            Integer id = flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId();
+                            IdResponse idResponse = flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class));
+                            if (idResponse == null) {
+                                log.warn("null response for create order");
+                                return;
+                            }
+                            Integer id = idResponse.getId();
                             log.info("Order created {}", id);
                         } catch (RestTechnicalException | FeignException e) {
                             log.error(e.getMessage());
