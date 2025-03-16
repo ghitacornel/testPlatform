@@ -49,7 +49,7 @@ public class CreateOrderRoute extends RouteBuilder {
                             .build();
                     try {
                         productClient.buy(productBuyRequest);
-                    } catch (BusinessException | FeignException e) {
+                    } catch (RestTechnicalException | BusinessException | FeignException e) {
                         log.error(e.getMessage());
                         return null;
                     }
