@@ -84,7 +84,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                                 .companyCountry(companyDetails.getCountry())
                                 .build());
 
-                        invoiceClient.complete(exchange.getMessage().getBody(Integer.class));
+                        invoiceClient.complete(id);
 
                     } catch (FeignException e) {
                         log.error(e.getMessage());
