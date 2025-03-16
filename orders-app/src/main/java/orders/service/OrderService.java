@@ -60,7 +60,7 @@ public class OrderService {
         return new IdResponse(order.getId());
     }
 
-    public void completeById(Integer id) {
+    public void complete(Integer id) {
         Order order = repository.findById(id).orElse(null);
         if (order == null) {
             log.warn("Not found {}", id);
@@ -76,7 +76,23 @@ public class OrderService {
         log.info("Completed {}", id);
     }
 
-    public void cancelById(Integer id) {
+    public void invoice(Integer id) {
+        Order order = repository.findById(id).orElse(null);
+        if (order == null) {
+            log.warn("Not found {}", id);
+            return;
+        }
+        if (order.isCompleted()) {
+            return;
+        }
+        if (order.isCancelled()) {
+            return;
+        }
+        order.invoice();
+        log.info("Completed {}", id);
+    }
+
+    public void cancel(Integer id) {
         Order order = repository.findById(id).orElse(null);
         if (order == null) {
             log.warn("Not found {}", id);
@@ -93,7 +109,7 @@ public class OrderService {
     }
 
     public void cancelByProductId(Integer id) {
-        repository.findActiveIdsByProductId(id).forEach(this::cancelById);
+        repository.findActiveIdsByProductId(id).forEach(this::cancel);
     }
 
     public boolean existsByProductId(Integer id) {

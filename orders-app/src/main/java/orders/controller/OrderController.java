@@ -62,11 +62,15 @@ public class OrderController implements OrderContract {
     }
 
     public void complete(Integer id) {
-        service.completeById(id);
+        service.complete(id);
+    }
+
+    public void invoice(Integer id) {
+        service.invoice(id);
     }
 
     public void cancel(Integer id) {
-        service.cancelById(id);
+        service.cancel(id);
     }
 
     public void cancelByProductId(Integer id) {

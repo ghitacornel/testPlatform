@@ -50,6 +50,10 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void complete(@Valid @NotNull @PathVariable("id") Integer id);
 
+    @PatchMapping("orders/invoice/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void invoice(@Valid @NotNull @PathVariable("id") Integer id);
+
     @PatchMapping("orders/cancel/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancel(@Valid @NotNull @PathVariable("id") Integer id);

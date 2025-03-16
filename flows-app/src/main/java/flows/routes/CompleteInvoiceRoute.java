@@ -97,6 +97,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                                 .build());
 
                         invoiceClient.complete(id);
+                        orderClient.invoice(id);
 
                     } catch (BusinessException | RestTechnicalException | FeignException e) {
                         log.error(e.getMessage());

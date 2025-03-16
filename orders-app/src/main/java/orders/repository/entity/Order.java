@@ -48,6 +48,10 @@ public class Order extends Identifiable {
         status = OrderStatus.COMPLETED;
     }
 
+    public void invoice() {
+        status = OrderStatus.INVOICED;
+    }
+
     public boolean isCompleted() {
         return status == OrderStatus.COMPLETED;
     }
@@ -55,4 +59,5 @@ public class Order extends Identifiable {
     public boolean isCancelled() {
         return status == OrderStatus.CANCELLED;
     }
+
 }
