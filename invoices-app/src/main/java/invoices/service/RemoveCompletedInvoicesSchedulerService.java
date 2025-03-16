@@ -14,7 +14,7 @@ public class RemoveCompletedInvoicesSchedulerService {
     private final RemoveCompletedInvoicesSchedulerServiceHelper helper;
 
     public void removeCompleted() {
-        repository.findCompletedIds().forEach(helper::remove);
+        repository.findCompletedIdsForDelete().forEach(helper::remove);
     }
 
 }

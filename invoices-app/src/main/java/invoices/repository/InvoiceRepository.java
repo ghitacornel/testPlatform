@@ -14,7 +14,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
     @Query("select i.id from Invoice i where i.status = invoices.repository.entity.InvoiceStatus.COMPLETED and i.creationDateTime < :referenceDateTime ")
     List<Integer> findCompletedIdsByReferenceDateTime(@Param("referenceDateTime") Instant referenceDateTime);
 
-    default List<Integer> findCompletedIds() {
+    default List<Integer> findCompletedIdsForDelete() {
         return findCompletedIdsByReferenceDateTime(Instant.now().minusSeconds(60));
     }
 

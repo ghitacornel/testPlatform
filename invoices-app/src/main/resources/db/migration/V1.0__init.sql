@@ -21,5 +21,5 @@ create table invoice
     product_price    double precision,
 
     status           smallint  not null,
-    creationDateTime timestamp not null
+    creation_date_time timestamp not null
 );
