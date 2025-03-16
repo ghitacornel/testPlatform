@@ -22,7 +22,7 @@ public class ProductRouteCancel extends RouteBuilder {
     private final ProductClient productClient;
 
     private final Random random = new Random();
-    private final Cache<Integer, Integer> cache = Caffeine.newBuilder()
+    private final Cache<Integer, Object> cache = Caffeine.newBuilder()
             .expireAfterWrite(Duration.of(10, ChronoUnit.SECONDS))
             .build();
 
@@ -48,7 +48,6 @@ public class ProductRouteCancel extends RouteBuilder {
                     .when(body().isNull()).log(LoggingLevel.WARN, "No products available for cancelling")
                     .otherwise()
                     .process(exchange -> productClient.cancel(exchange.getMessage().getBody(Integer.class)))
-                    .process(exchange -> cache.put(exchange.getMessage().getBody(Integer.class), exchange.getMessage().getBody(Integer.class)))
                     .log("Cancelled product ${body}")
                     .endChoice()
                     .end();

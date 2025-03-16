@@ -21,7 +21,7 @@ public class OrderRouteComplete extends RouteBuilder {
     private final FlowsClient flowsClient;
 
     private final Random random = new Random();
-    private final Cache<Integer, Integer> cache = Caffeine.newBuilder()
+    private final Cache<Integer, Object> cache = Caffeine.newBuilder()
             .expireAfterWrite(Duration.of(10, ChronoUnit.SECONDS))
             .build();
 
@@ -42,7 +42,6 @@ public class OrderRouteComplete extends RouteBuilder {
                     .filter(body().method("size").isGreaterThan(0))
                     .setBody(exchange -> GenerateUtils.random(exchange, random, cache))
                     .process(exchange -> flowsClient.completeOrder(exchange.getMessage().getBody(Integer.class)))
-                    .process(exchange -> cache.put(exchange.getMessage().getBody(Integer.class), exchange.getMessage().getBody(Integer.class)))
                     .log("Complete order ${body}")
                     .end();
         }

@@ -10,13 +10,14 @@ import java.util.Random;
 @UtilityClass
 public class GenerateUtils {
 
-    public Object random(Exchange exchange, Random random, Cache<Integer, ?> cache) {
+    public Object random(Exchange exchange, Random random, Cache<Integer, Object> cache) {
         List<?> data = exchange.getMessage().getBody(List.class);
 
         int index;
         do {
             index = random.nextInt(data.size());
         } while (cache.getIfPresent(index) != null);
+        cache.put(index, "index");
 
         return data.get(index);
     }
