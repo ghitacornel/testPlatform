@@ -18,6 +18,10 @@ public class StartInvoiceRoute extends RouteBuilder {
                 .setBody(exchange -> orderClient.findCompletedIds())
                 .split(body())
                 .multicast().parallelProcessing()
+                .process(exchange -> {
+                    Integer id = exchange.getIn().getBody(Integer.class);
+                    log.info("start invoicing for {}", id);
+                })
                 .to("jms:queue:CompletedOrdersQueueName")
                 .end();
     }
