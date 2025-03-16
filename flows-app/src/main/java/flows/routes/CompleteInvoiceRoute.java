@@ -88,6 +88,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
 
                     } catch (FeignException e) {
                         log.error(e.getMessage());
+                        invoiceClient.error(id);
                     }
 
                 })
