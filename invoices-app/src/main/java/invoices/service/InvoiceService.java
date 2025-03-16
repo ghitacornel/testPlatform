@@ -33,6 +33,9 @@ public class InvoiceService {
     }
 
     public IdResponse createInvoice(InvoiceCreateRequest request) {
+        if (repository.existsById(request.getOrderId())) {
+            return new IdResponse(request.getOrderId());
+        }
         Invoice invoice = new Invoice();
         invoice.setId(request.getOrderId());
         repository.save(invoice);
