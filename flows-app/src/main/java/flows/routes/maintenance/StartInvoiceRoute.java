@@ -20,6 +20,7 @@ public class StartInvoiceRoute extends RouteBuilder {
                 .multicast().parallelProcessing()
                 .process(exchange -> {
                     Integer id = exchange.getIn().getBody(Integer.class);
+                    orderClient.markAsSentToInvoice(id);
                     log.info("start invoicing for {}", id);
                 })
                 .to("jms:queue:CompletedOrdersQueueName")

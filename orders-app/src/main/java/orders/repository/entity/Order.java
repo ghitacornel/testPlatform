@@ -1,6 +1,7 @@
 package orders.repository.entity;
 
 import commons.model.Identifiable;
+import contracts.orders.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,20 +37,20 @@ public class Order extends Identifiable {
     @Enumerated
     private OrderStatus status = OrderStatus.NEW;
 
-    public boolean isNew() {
-        return status == OrderStatus.NEW;
-    }
-
-    public void cancel() {
+    public void markAsCancelled() {
         status = OrderStatus.CANCELLED;
     }
 
-    public void complete() {
+    public void markAsCompleted() {
         status = OrderStatus.COMPLETED;
     }
 
-    public void invoice() {
+    public void markAsInvoiced() {
         status = OrderStatus.INVOICED;
+    }
+
+    public void markAsSentToInvoice() {
+        status = OrderStatus.SENT_TO_INVOICE;
     }
 
     public boolean isCompleted() {

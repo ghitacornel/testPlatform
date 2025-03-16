@@ -72,8 +72,24 @@ public class OrderService {
         if (order.isCancelled()) {
             return;
         }
-        order.complete();
+        order.markAsCompleted();
         log.info("Completed {}", id);
+    }
+
+    public void markAsSentToInvoice(Integer id) {
+        Order order = repository.findById(id).orElse(null);
+        if (order == null) {
+            log.warn("Not found {}", id);
+            return;
+        }
+        if (order.isCompleted()) {
+            return;
+        }
+        if (order.isCancelled()) {
+            return;
+        }
+        order.markAsSentToInvoice();
+        log.info("Sent to invoice {}", id);
     }
 
     public void invoice(Integer id) {
@@ -88,8 +104,8 @@ public class OrderService {
         if (order.isCancelled()) {
             return;
         }
-        order.invoice();
-        log.info("Completed {}", id);
+        order.markAsInvoiced();
+        log.info("Invoiced {}", id);
     }
 
     public void cancel(Integer id) {
@@ -104,7 +120,7 @@ public class OrderService {
         if (order.isCancelled()) {
             return;
         }
-        order.cancel();
+        order.markAsCancelled();
         log.info("Cancelled {}", id);
     }
 

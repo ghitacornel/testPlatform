@@ -69,6 +69,10 @@ public class OrderController implements OrderContract {
         service.invoice(id);
     }
 
+    public void markAsSentToInvoice(Integer id) {
+        service.markAsSentToInvoice(id);
+    }
+
     public void cancel(Integer id) {
         service.cancel(id);
     }

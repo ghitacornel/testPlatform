@@ -54,6 +54,10 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void invoice(@Valid @NotNull @PathVariable("id") Integer id);
 
+    @PatchMapping("orders/invoice-sent/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void markAsSentToInvoice(@Valid @NotNull @PathVariable("id") Integer id);
+
     @PatchMapping("orders/cancel/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancel(@Valid @NotNull @PathVariable("id") Integer id);
