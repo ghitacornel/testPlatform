@@ -26,15 +26,11 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     public List<ProductDetailsResponse> findAllActive() {
-        return repository.findAllActive().stream()
-                .map(productMapper::map)
-                .toList();
+        return repository.findAllActive().stream().map(productMapper::map).toList();
     }
 
     public List<ProductDetailsResponse> findAllActiveForCompany(Integer id) {
-        return repository.findAllActiveForCompany(id).stream()
-                .map(productMapper::map)
-                .toList();
+        return repository.findAllActiveForCompany(id).stream().map(productMapper::map).toList();
     }
 
     public long countAllActive() {
