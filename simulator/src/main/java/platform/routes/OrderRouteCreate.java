@@ -2,6 +2,7 @@ package platform.routes;
 
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductDetailsResponse;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -68,8 +69,14 @@ public class OrderRouteCreate extends RouteBuilder {
                     .choice()
                     .when(body().isNull()).log("no order created")
                     .otherwise()
-                    .setBody(exchange -> flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
-                    .log("Create order ${body}")
+                    .process(exchange -> {
+                        try {
+                            Integer id = flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId();
+                            log.info("Order created {}", id);
+                        } catch (FeignException e) {
+                            log.error(e.getMessage());
+                        }
+                    })
                     .endChoice()
                     .end();
         }

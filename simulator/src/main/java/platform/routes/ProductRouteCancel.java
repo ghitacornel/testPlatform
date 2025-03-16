@@ -2,6 +2,7 @@ package platform.routes;
 
 import com.github.benmanes.caffeine.cache.AsyncCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -47,8 +48,15 @@ public class ProductRouteCancel extends RouteBuilder {
                     .choice()
                     .when(body().isNull()).log(LoggingLevel.WARN, "No products available for cancelling")
                     .otherwise()
-                    .process(exchange -> productClient.cancel(exchange.getMessage().getBody(Integer.class)))
-                    .log("Cancelled product ${body}")
+                    .process(exchange -> {
+                        try {
+                            Integer id = exchange.getMessage().getBody(Integer.class);
+                            productClient.cancel(id);
+                            log.info("Product cancelled {}", id);
+                        } catch (FeignException e) {
+                            log.error(e.getMessage());
+                        }
+                    })
                     .endChoice()
                     .end();
         }

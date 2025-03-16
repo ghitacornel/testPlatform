@@ -2,6 +2,7 @@ package platform.routes;
 
 import com.github.benmanes.caffeine.cache.AsyncCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,15 @@ public class OrderRouteComplete extends RouteBuilder {
                     .setBody(exchange -> orderClient.findNewIds())
                     .filter(body().method("size").isGreaterThan(0))
                     .setBody(exchange -> GenerateUtils.random(exchange, random, cache))
-                    .process(exchange -> flowsClient.completeOrder(exchange.getMessage().getBody(Integer.class)))
+                    .process(exchange -> {
+                        try {
+                            Integer id = exchange.getMessage().getBody(Integer.class);
+                            flowsClient.completeOrder(id);
+                            log.info("Order completed {}", id);
+                        } catch (FeignException e) {
+                            log.error(e.getMessage());
+                        }
+                    })
                     .log("Complete order ${body}")
                     .end();
         }
