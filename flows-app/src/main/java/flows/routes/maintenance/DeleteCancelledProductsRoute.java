@@ -21,9 +21,16 @@ public class DeleteCancelledProductsRoute extends RouteBuilder {
     public void configure() {
 
         from("timer://simpleTimer?period=10000&delay=1000")
-                .routeId("delete-cancelled-products-route")
-                .setBody(exchange -> productClient.findCancelledIds())
-                .split(body())
+            .routeId("delete-cancelled-products-route")
+            .setBody(exchange -> {
+                    try {
+                        return productClient.findCancelledIds();
+                    } catch (Exception e) {
+                        log.error(e.getMessage());
+                        return null;
+                    }
+                })
+            .split(body())
                 .parallelProcessing()
                 .process(exchange -> {
                     try {
@@ -40,7 +47,7 @@ public class DeleteCancelledProductsRoute extends RouteBuilder {
                         log.error(e.getMessage());
                     }
                 })
-                .end();
+            .end();
     }
 
 }
