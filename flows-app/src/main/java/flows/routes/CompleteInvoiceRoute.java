@@ -30,34 +30,26 @@ public class CompleteInvoiceRoute extends RouteBuilder {
         from("jms:queue:CompletedOrdersQueueName")
                 .routeId("create-invoice-route")
                 .multicast()
-                .setBody(exchange -> {
+                .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
+
+                    OrderDetailsResponse orderDetails;
                     try {
-                        return orderClient.findById(id);
-                    } catch (FeignException e) {
-                        log.warn("No order found with id {}", id);
-                        return null;
+                        orderDetails = orderClient.findById(id);
+                    } catch (BusinessException e) {
+                        log.warn(e.getMessage());
+                        return;
                     }
-                })
-                .filter(body().isNotNull())
-                .setBody(exchange -> {
-                    OrderDetailsResponse orderDetails = exchange.getMessage().getBody(OrderDetailsResponse.class);
+
                     try {
                         invoiceClient.create(InvoiceCreateRequest.builder()
                                 .orderId(orderDetails.getId())
                                 .build());
                         log.info("Invoice created {}", orderDetails.getId());
-                        return orderDetails;
-                    } catch (FeignException e) {
+                    } catch (BusinessException | RestTechnicalException | FeignException e) {
                         log.error(e.getMessage());
-                        return null;
+                        return;
                     }
-                })
-                .filter(body().isNotNull())
-                .process(exchange -> {
-
-                    OrderDetailsResponse orderDetails = exchange.getMessage().getBody(OrderDetailsResponse.class);
-                    Integer id = orderDetails.getId();
 
                     try {
 
