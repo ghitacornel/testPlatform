@@ -1,5 +1,6 @@
 package platform.routes;
 
+import commons.exceptions.RestTechnicalException;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductDetailsResponse;
 import feign.FeignException;
@@ -61,7 +62,7 @@ public class OrderRouteCreate extends RouteBuilder {
                         try {
                             Integer id = flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId();
                             log.info("Order created {}", id);
-                        } catch (FeignException e) {
+                        } catch (RestTechnicalException | FeignException e) {
                             log.error(e.getMessage());
                         }
                     })

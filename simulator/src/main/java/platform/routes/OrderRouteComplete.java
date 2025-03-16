@@ -2,6 +2,7 @@ package platform.routes;
 
 import com.github.benmanes.caffeine.cache.AsyncCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import commons.exceptions.RestTechnicalException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -47,7 +48,7 @@ public class OrderRouteComplete extends RouteBuilder {
                             Integer id = exchange.getMessage().getBody(Integer.class);
                             flowsClient.completeOrder(id);
                             log.info("Order completed {}", id);
-                        } catch (FeignException e) {
+                        } catch (RestTechnicalException | FeignException e) {
                             log.error(e.getMessage());
                         }
                     })
