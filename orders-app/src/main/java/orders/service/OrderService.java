@@ -66,9 +66,6 @@ public class OrderService {
             log.warn("Not found {}", id);
             return;
         }
-        if (order.isCompleted()) {
-            return;
-        }
         if (order.isCancelled()) {
             return;
         }
@@ -82,9 +79,6 @@ public class OrderService {
             log.warn("Not found {}", id);
             return;
         }
-        if (order.isCompleted()) {
-            return;
-        }
         if (order.isCancelled()) {
             return;
         }
@@ -96,9 +90,6 @@ public class OrderService {
         Order order = repository.findById(id).orElse(null);
         if (order == null) {
             log.warn("Not found {}", id);
-            return;
-        }
-        if (order.isCompleted()) {
             return;
         }
         if (order.isCancelled()) {
