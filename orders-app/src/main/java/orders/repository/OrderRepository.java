@@ -36,17 +36,16 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findAllNewForProductId(@Param("id") Integer id);
 
     boolean existsByProductId(Integer id);
+    boolean existsByClientId(Integer id);
 
     long countByStatus(OrderStatus status);
 
     default long countAllNew() {
         return countByStatus(OrderStatus.NEW);
     }
-
     default long countAllCancelled() {
         return countByStatus(OrderStatus.CANCELLED);
     }
-
     default long countAllCompleted() {
         return countByStatus(OrderStatus.COMPLETED);
     }

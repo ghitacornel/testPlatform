@@ -40,6 +40,9 @@ public interface OrderContract {
     @GetMapping("orders/exists/product/{id}")
     boolean existsByProductId(@Valid @NotNull @PathVariable(name = "id") Integer id);
 
+    @GetMapping("orders/exists/client/{id}")
+    boolean existsByClientId(@Valid @NotNull @PathVariable(name = "id") Integer id);
+
     @PostMapping(value = "orders", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse create(@Valid @RequestBody CreateOrderRequest inputModel);
 

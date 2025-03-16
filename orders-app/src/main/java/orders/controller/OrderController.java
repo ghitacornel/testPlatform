@@ -53,6 +53,10 @@ public class OrderController implements OrderContract {
         return service.existsByProductId(id);
     }
 
+    public boolean existsByClientId(Integer id) {
+        return service.existsByClientId(id);
+    }
+
     public IdResponse create(CreateOrderRequest request) {
         return service.create(request);
     }

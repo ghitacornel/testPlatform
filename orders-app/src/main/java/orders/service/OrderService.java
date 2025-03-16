@@ -100,6 +100,10 @@ public class OrderService {
         return repository.existsByProductId(id);
     }
 
+    public boolean existsByClientId(Integer id) {
+        return repository.existsByClientId(id);
+    }
+
     public long countAllNew() {
         return repository.countAllNew();
     }

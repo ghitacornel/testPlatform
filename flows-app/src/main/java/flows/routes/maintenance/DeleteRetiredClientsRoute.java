@@ -2,6 +2,7 @@ package flows.routes.maintenance;
 
 import flows.clients.ClientClient;
 import flows.clients.InvoiceClient;
+import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class DeleteRetiredClientsRoute extends RouteBuilder {
 
     private final ClientClient clientClient;
+    private final OrderClient orderClient;
     private final InvoiceClient invoiceClient;
 
     @Override
@@ -21,6 +23,11 @@ public class DeleteRetiredClientsRoute extends RouteBuilder {
                 .setBody(exchange -> clientClient.findRetiredIds())
                 .split(body())
                 .parallelProcessing()
+                .setBody(exchange -> {
+                    Integer id = exchange.getMessage().getBody(Integer.class);
+                    return orderClient.existsByClientId(id) ? null : id;
+                })
+                .filter(body().isNotNull())
                 .setBody(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     return invoiceClient.existsByClientId(id) ? null : id;
