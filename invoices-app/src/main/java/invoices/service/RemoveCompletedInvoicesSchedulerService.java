@@ -17,4 +17,8 @@ public class RemoveCompletedInvoicesSchedulerService {
         repository.findCompletedIdsForDelete().forEach(helper::remove);
     }
 
+    public void removeError() {
+        repository.findErrorIdsForDelete().forEach(helper::remove);
+    }
+
 }

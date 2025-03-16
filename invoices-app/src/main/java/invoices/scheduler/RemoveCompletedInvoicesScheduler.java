@@ -18,4 +18,9 @@ class RemoveCompletedInvoicesScheduler {
         service.removeCompleted();
     }
 
+    @Scheduled(fixedRate = 10000)
+    private void removeError() {
+        service.removeError();
+    }
+
 }
