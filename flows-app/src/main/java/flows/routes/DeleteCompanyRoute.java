@@ -37,11 +37,11 @@ public class DeleteCompanyRoute extends RouteBuilder {
                         productClient.findAllActiveForCompany(id)
                                 .forEach(product -> orderClient.cancelByProductId(product.getId()));
                         productClient.cancelByCompany(id);
+                        log.info("Cancelled products for company {}", id);
                     } catch (RestTechnicalException | FeignException e) {
                         log.error(e.getMessage());
                     }
                 })
-                .log("Cancelled products for company ${header.id}")
                 .setBody().simple("${null}")
                 .end();
     }
