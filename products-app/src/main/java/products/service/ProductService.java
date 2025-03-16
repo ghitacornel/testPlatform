@@ -59,7 +59,7 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + request.getProductId() + " not found"));
 
         if (product.getQuantity() < request.getQuantity()) {
-            throw new CannotBuyMoreThanAvailableException(request.getQuantity(), product.getQuantity());
+            throw new CannotBuyMoreThanAvailableException(request.getProductId(), request.getQuantity(), product.getQuantity());
         }
 
         product.setQuantity(product.getQuantity() - request.getQuantity());

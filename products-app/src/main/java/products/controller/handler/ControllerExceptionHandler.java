@@ -16,7 +16,7 @@ public class ControllerExceptionHandler extends CommonControllerExceptionHandler
 
     @ExceptionHandler(CannotBuyMoreThanAvailableException.class)
     public ResponseEntity<Object> handleCannotBuyMoreThanAvailableException(CannotBuyMoreThanAvailableException e) {
-        log.error("business exception {}", e.getMessage());
+        log.error(e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
     }
 
