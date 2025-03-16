@@ -44,10 +44,17 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 })
                 .filter(body().isNotNull())
                 .process(exchange -> {
-                    Integer orderId = exchange.getMessage().getBody(Integer.class);
-                    OrderDetailsResponse response = orderClient.findById(orderId);
+                    Integer id = exchange.getMessage().getBody(Integer.class);
+                    OrderDetailsResponse response;
+                    try {
+                        response = orderClient.findById(id);
+                    } catch (FeignException e) {
+                        log.error(e.getMessage());
+                        invoiceClient.error(id);
+                        return;
+                    }
                     invoiceClient.update(UpdateOrderRequest.builder()
-                            .id(orderId)
+                            .id(id)
                             .clientId(response.getClientId())
                             .productId(response.getProductId())
                             .orderQuantity(response.getQuantity())
@@ -56,17 +63,18 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                     exchange.getMessage().setHeader("productId", response.getProductId());
                 })
                 .process(exchange -> {
-                    Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    Integer id = exchange.getMessage().getBody(Integer.class);
                     Integer productId = exchange.getMessage().getHeader("productId", Integer.class);
                     ProductDetailsResponse response;
                     try {
                         response = productClient.findById(productId);
                     } catch (FeignException e) {
                         log.error(e.getMessage());
+                        invoiceClient.error(id);
                         return;
                     }
                     invoiceClient.update(UpdateProductRequest.builder()
-                            .id(orderId)
+                            .id(id)
                             .productId(productId)
                             .productName(response.getName())
                             .productColor(response.getColor())
@@ -76,17 +84,18 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                     exchange.getMessage().setHeader("companyId", response.getCompanyId());
                 })
                 .process(exchange -> {
-                    Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    Integer id = exchange.getMessage().getBody(Integer.class);
                     Integer clientId = exchange.getMessage().getHeader("clientId", Integer.class);
                     ClientDetailsResponse response;
                     try {
                         response = clientClient.findById(clientId);
                     } catch (FeignException e) {
                         log.error(e.getMessage());
+                        invoiceClient.error(id);
                         return;
                     }
                     invoiceClient.update(UpdateClientRequest.builder()
-                            .id(orderId)
+                            .id(id)
                             .clientId(clientId)
                             .clientName(response.getName())
                             .clientCardType(response.getCardType())
@@ -94,17 +103,18 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                             .build());
                 })
                 .process(exchange -> {
-                    Integer orderId = exchange.getMessage().getBody(Integer.class);
+                    Integer id = exchange.getMessage().getBody(Integer.class);
                     Integer companyId = exchange.getMessage().getHeader("companyId", Integer.class);
                     CompanyDetailsResponse response;
                     try {
                         response = companyClient.findById(companyId);
                     } catch (FeignException e) {
                         log.error(e.getMessage());
+                        invoiceClient.error(id);
                         return;
                     }
                     invoiceClient.update(UpdateCompanyRequest.builder()
-                            .id(orderId)
+                            .id(id)
                             .companyId(companyId)
                             .companyName(response.getName())
                             .companyUrl(response.getUrl())
