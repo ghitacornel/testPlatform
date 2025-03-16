@@ -24,9 +24,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     public List<OrderDetailsResponse> findAllNew() {
-        return repository.findAllNew().stream()
-                .map(orderMapper::map)
-                .toList();
+        return repository.findAllNew().stream().map(orderMapper::map).toList();
     }
 
     public List<Integer> findCompletedIds() {
@@ -42,15 +40,11 @@ public class OrderService {
     }
 
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
-        return repository.findAllNewForClientId(id).stream()
-                .map(orderMapper::map)
-                .toList();
+        return repository.findAllNewForClientId(id).stream().map(orderMapper::map).toList();
     }
 
     public List<OrderDetailsResponse> findAllNewForProductId(Integer id) {
-        return repository.findAllNewForProductId(id).stream()
-                .map(orderMapper::map)
-                .toList();
+        return repository.findAllNewForProductId(id).stream().map(orderMapper::map).toList();
     }
 
     public OrderDetailsResponse findById(Integer id) {
@@ -67,8 +61,11 @@ public class OrderService {
     }
 
     public void completeById(Integer id) {
-        Order order = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
+        Order order = repository.findById(id).orElse(null);
+        if (order == null) {
+            log.warn("Not found {}", id);
+            return;
+        }
         if (order.isCompleted()) {
             return;
         }
@@ -80,8 +77,11 @@ public class OrderService {
     }
 
     public void cancelById(Integer id) {
-        Order order = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
+        Order order = repository.findById(id).orElse(null);
+        if (order == null) {
+            log.warn("Not found {}", id);
+            return;
+        }
         if (order.isCompleted()) {
             return;
         }

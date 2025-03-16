@@ -1,5 +1,6 @@
 package flows.routes;
 
+import feign.FeignException;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -27,7 +28,11 @@ public class CompleteOrderRoute extends RouteBuilder {
                 .setBody(exchange -> exchange.getIn().getHeader("id", Integer.class))
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
-                    orderClient.complete(id);
+                    try {
+                        orderClient.complete(id);
+                    } catch (FeignException e) {
+                        log.error(e.getMessage());
+                    }
                 })
                 .to("jms:queue:CompletedOrdersQueueName")
                 .setBody().simple("${null}")
