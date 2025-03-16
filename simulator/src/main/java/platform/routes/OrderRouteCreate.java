@@ -3,7 +3,6 @@ package platform.routes;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductDetailsResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.ClientClient;
@@ -13,7 +12,6 @@ import platform.clients.ProductClient;
 import java.util.List;
 import java.util.Random;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OrderRouteCreate extends RouteBuilder {
@@ -27,56 +25,54 @@ public class OrderRouteCreate extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=100&delay=1000")
-                .routeId("create-order-route-timer")
-                .multicast()
-                .parallelProcessing()
-                .to("direct:create-order-route")
-                .to("direct:create-order-route")
-                .to("direct:create-order-route")
-                .to("direct:create-order-route")
-                .to("direct:create-order-route")
-        ;
+        for (int i = 0; i < 5; i++) {
+            from("timer://simpleTimer?period=100&delay=1000")
+                    .routeId("create-order-route-timer-" + i)
+                    .multicast()
+                    .parallelProcessing()
+                    .to("direct:create-order-route-" + i)
+            ;
 
-        from("direct:create-order-route")
-                .routeId("create-order-route")
-                .setBody(exchange -> {
+            from("direct:create-order-route-" + i)
+                    .routeId("create-order-route-" + i)
+                    .setBody(exchange -> {
 
-                    Integer clientId;
-                    {
-                        List<Integer> clients = clientClient.findActiveIds();
-                        if (clients.isEmpty()) {
-                            log.error("no clients available");
-                            return null;
+                        Integer clientId;
+                        {
+                            List<Integer> clients = clientClient.findActiveIds();
+                            if (clients.isEmpty()) {
+                                log.error("no clients available");
+                                return null;
+                            }
+                            int index = random.nextInt(clients.size());
+                            clientId = clients.get(index);
                         }
-                        int index = random.nextInt(clients.size());
-                        clientId = clients.get(index);
-                    }
 
-                    ProductDetailsResponse productDetailsResponse;
-                    {
-                        List<ProductDetailsResponse> productDetailsResponses = productClient.findAllActive();
-                        if (productDetailsResponses.isEmpty()) {
-                            log.error("no products available");
-                            return null;
+                        ProductDetailsResponse productDetailsResponse;
+                        {
+                            List<ProductDetailsResponse> productDetailsResponses = productClient.findAllActive();
+                            if (productDetailsResponses.isEmpty()) {
+                                log.error("no products available");
+                                return null;
+                            }
+                            int index = random.nextInt(productDetailsResponses.size());
+                            productDetailsResponse = productDetailsResponses.get(index);
                         }
-                        int index = random.nextInt(productDetailsResponses.size());
-                        productDetailsResponse = productDetailsResponses.get(index);
-                    }
 
-                    return CreateOrderRequest.builder()
-                            .clientId(clientId)
-                            .productId(productDetailsResponse.getId())
-                            .quantity(generateRandomQuantity(productDetailsResponse))
-                            .build();
-                })
-                .choice()
-                .when(body().isNull()).log("no order created")
-                .otherwise()
-                .setBody(exchange -> flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
-                .log("Create order ${body}")
-                .endChoice()
-                .end();
+                        return CreateOrderRequest.builder()
+                                .clientId(clientId)
+                                .productId(productDetailsResponse.getId())
+                                .quantity(generateRandomQuantity(productDetailsResponse))
+                                .build();
+                    })
+                    .choice()
+                    .when(body().isNull()).log("no order created")
+                    .otherwise()
+                    .setBody(exchange -> flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class)).getId())
+                    .log("Create order ${body}")
+                    .endChoice()
+                    .end();
+        }
 
     }
 

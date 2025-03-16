@@ -27,39 +27,36 @@ public class ProductRouteSale extends RouteBuilder {
     @Override
     public void configure() {
 
-        from("timer://simpleTimer?period=500&delay=1000")
-                .routeId("sale-product-route-timer")
-                .multicast()
-                .parallelProcessing()
-                .to("direct:sale-product-route")
-                .to("direct:sale-product-route")
-                .to("direct:sale-product-route")
-                .to("direct:sale-product-route")
-                .to("direct:sale-product-route")
-        ;
+        for (int i = 0; i < 5; i++) {
+            from("timer://simpleTimer?period=500&delay=1000")
+                    .routeId("sale-product-route-timer-" + i)
+                    .multicast()
+                    .parallelProcessing()
+                    .to("direct:sale-product-route-" + i)
+            ;
 
-        from("direct:sale-product-route")
-                .routeId("sale-product-route")
-                .setBody(exchange -> productClient.countAllActive())
-                .filter(body().isLessThan(ProductRouteSale.MAXIMUM))
-                .setBody(exchange -> ProductSellRequestFaker.fake())
-                .process(exchange -> {
-                    ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
-                    List<Integer> activeCompaniesIds = companyClient.findActiveIds();
-                    if (activeCompaniesIds.isEmpty()) {
-                        exchange.setMessage(null);
-                        return;
-                    }
-                    int index = random.nextInt(activeCompaniesIds.size());
-                    productSellRequest.setCompanyId(activeCompaniesIds.get(index));
-                })
-                .choice()
-                .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for creating products")
-                .otherwise()
-                .process(exchange -> productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
-                .endChoice()
-                .end();
-
+            from("direct:sale-product-route-" + i)
+                    .routeId("sale-product-route-" + i)
+                    .setBody(exchange -> productClient.countAllActive())
+                    .filter(body().isLessThan(ProductRouteSale.MAXIMUM))
+                    .setBody(exchange -> ProductSellRequestFaker.fake())
+                    .process(exchange -> {
+                        ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
+                        List<Integer> activeCompaniesIds = companyClient.findActiveIds();
+                        if (activeCompaniesIds.isEmpty()) {
+                            exchange.setMessage(null);
+                            return;
+                        }
+                        int index = random.nextInt(activeCompaniesIds.size());
+                        productSellRequest.setCompanyId(activeCompaniesIds.get(index));
+                    })
+                    .choice()
+                    .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for creating products")
+                    .otherwise()
+                    .process(exchange -> productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
+                    .endChoice()
+                    .end();
+        }
     }
 
 }
