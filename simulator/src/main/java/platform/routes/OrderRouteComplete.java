@@ -1,6 +1,6 @@
 package platform.routes;
 
-import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.AsyncCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -21,9 +21,9 @@ public class OrderRouteComplete extends RouteBuilder {
     private final FlowsClient flowsClient;
 
     private final Random random = new Random();
-    private final Cache<Integer, Object> cache = Caffeine.newBuilder()
+    private final AsyncCache<Integer, Object> cache = Caffeine.newBuilder()
             .expireAfterWrite(Duration.of(10, ChronoUnit.SECONDS))
-            .build();
+            .buildAsync();
 
     @Override
     public void configure() {
