@@ -26,10 +26,6 @@ public class StartInvoiceRoute extends RouteBuilder {
                             .orderId(id)
                             .build());
                 })
-                .process(exchange -> {
-                    Integer id = exchange.getMessage().getBody(Integer.class);
-                    orderClient.complete(id);
-                })
                 .to("jms:queue:CompletedOrdersQueueName")
                 .setBody().simple("${null}")
                 .end();
