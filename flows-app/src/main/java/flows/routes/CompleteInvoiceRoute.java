@@ -30,11 +30,21 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .setBody(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     try {
+                        return orderClient.findById(id);
+                    } catch (FeignException e) {
+                        log.warn("No order found with id {}", id);
+                        return null;
+                    }
+                })
+                .filter(body().isNotNull())
+                .setBody(exchange -> {
+                    OrderDetailsResponse orderDetails = exchange.getMessage().getBody(OrderDetailsResponse.class);
+                    try {
                         invoiceClient.create(InvoiceCreateRequest.builder()
-                                .orderId(id)
+                                .orderId(orderDetails.getId())
                                 .build());
-                        log.info("Invoice created {}", id);
-                        return id;
+                        log.info("Invoice created {}", orderDetails.getId());
+                        return orderDetails;
                     } catch (FeignException e) {
                         log.error(e.getMessage());
                         return null;
@@ -43,11 +53,11 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                 .filter(body().isNotNull())
                 .process(exchange -> {
 
-                    Integer id = exchange.getMessage().getBody(Integer.class);
+                    OrderDetailsResponse orderDetails = exchange.getMessage().getBody(OrderDetailsResponse.class);
+                    Integer id = orderDetails.getId();
 
                     try {
 
-                        OrderDetailsResponse orderDetails = orderClient.findById(id);
                         invoiceClient.update(UpdateOrderRequest.builder()
                                 .id(id)
                                 .clientId(orderDetails.getClientId())
