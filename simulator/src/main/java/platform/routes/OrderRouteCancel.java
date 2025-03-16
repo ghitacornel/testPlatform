@@ -1,11 +1,15 @@
 package platform.routes;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.FlowsClient;
 import platform.clients.OrderClient;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 
@@ -13,10 +17,13 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class OrderRouteCancel extends RouteBuilder {
 
-    private final Random random = new Random();
-
     private final OrderClient orderClient;
     private final FlowsClient flowsClient;
+
+    private final Random random = new Random();
+    private final Cache<Integer, Integer> cache = Caffeine.newBuilder()
+            .expireAfterWrite(Duration.of(10, ChronoUnit.SECONDS))
+            .build();
 
     @Override
     public void configure() {
@@ -35,10 +42,16 @@ public class OrderRouteCancel extends RouteBuilder {
                     .filter(body().method("size").isGreaterThan(0))
                     .setBody(exchange -> {
                         List<?> data = exchange.getMessage().getBody(List.class);
-                        int index = random.nextInt(data.size());
+
+                        int index;
+                        do {
+                            index = random.nextInt(data.size());
+                        } while (cache.getIfPresent(index) != null);
+
                         return data.get(index);
                     })
                     .process(exchange -> flowsClient.cancelOrder(exchange.getMessage().getBody(Integer.class)))
+                    .process(exchange -> cache.put(exchange.getMessage().getBody(Integer.class), exchange.getMessage().getBody(Integer.class)))
                     .log("Cancel order ${body}")
                     .end();
         }

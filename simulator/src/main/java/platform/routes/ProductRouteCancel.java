@@ -1,11 +1,15 @@
 package platform.routes;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.ProductClient;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 
@@ -15,9 +19,12 @@ public class ProductRouteCancel extends RouteBuilder {
 
     public static final int MINIMUM = 50;
 
-    private final Random random = new Random();
-
     private final ProductClient productClient;
+
+    private final Random random = new Random();
+    private final Cache<Integer, Integer> cache = Caffeine.newBuilder()
+            .expireAfterWrite(Duration.of(10, ChronoUnit.SECONDS))
+            .build();
 
     @Override
     public void configure() {
@@ -35,18 +42,22 @@ public class ProductRouteCancel extends RouteBuilder {
                     .setBody(exchange -> productClient.countAllActive())
                     .filter(body().isGreaterThan(ProductRouteCancel.MINIMUM))
                     .setBody(exchange -> productClient.findActiveIds())
+                    .filter(body().method("size").isGreaterThan(0))
                     .setBody(exchange -> {
                         List<?> data = exchange.getMessage().getBody(List.class);
-                        if (data.isEmpty()) {
-                            return null;
-                        }
-                        int index = random.nextInt(data.size());
+
+                        int index;
+                        do {
+                            index = random.nextInt(data.size());
+                        } while (cache.getIfPresent(index) != null);
+
                         return data.get(index);
                     })
                     .choice()
                     .when(body().isNull()).log(LoggingLevel.WARN, "No products available for cancelling")
                     .otherwise()
                     .process(exchange -> productClient.cancel(exchange.getMessage().getBody(Integer.class)))
+                    .process(exchange -> cache.put(exchange.getMessage().getBody(Integer.class), exchange.getMessage().getBody(Integer.class)))
                     .log("Cancelled product ${body}")
                     .endChoice()
                     .end();
