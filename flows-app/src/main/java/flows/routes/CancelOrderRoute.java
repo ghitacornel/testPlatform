@@ -1,6 +1,7 @@
 package flows.routes;
 
 import contracts.orders.OrderDetailsResponse;
+import feign.FeignException;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,16 @@ public class CancelOrderRoute extends RouteBuilder {
                 .routeId("cancel-order-route")
                 .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
-                    productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
+                    try {
+                        OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
+                        productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
+                        orderClient.cancel(id);
+                    } catch (FeignException e) {
+                        log.error(e.getMessage());
+                    }
                 })
-                .process(exchange -> {
-                    Integer id = exchange.getIn().getHeader("id", Integer.class);
-                    orderClient.cancel(id);
-                })
-                .setBody().simple("${null}")
+                .setBody()
+                .simple("${null}")
                 .end();
     }
 
