@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class RemoveCompletedInvoicesScheduler {
+class RemoveErrorInvoicesScheduler {
 
     private final RemoveCompletedInvoicesSchedulerService service;
 
     @Scheduled(fixedRate = 10000)
-    private void removeCompleted() {
-        service.removeCompleted();
+    private void removeError() {
+        service.removeError();
     }
 
 }
