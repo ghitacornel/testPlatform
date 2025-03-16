@@ -33,6 +33,10 @@ public class OrderService {
         return repository.findCompletedIds();
     }
 
+    public List<Integer> findInvoicedIds() {
+        return repository.findInvoicedIds();
+    }
+
     public List<Integer> findNewIds() {
         return repository.findNewIds();
     }

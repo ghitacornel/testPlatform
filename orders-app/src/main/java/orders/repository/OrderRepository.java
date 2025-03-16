@@ -23,6 +23,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("select o.id from Order o where o.status = orders.repository.entity.OrderStatus.COMPLETED")
     List<Integer> findCompletedIds();
 
+    @Query("select o.id from Order o where o.status = orders.repository.entity.OrderStatus.INVOICED")
+    List<Integer> findInvoicedIds();
+
     @Query("select o.id from Order o where o.status = orders.repository.entity.OrderStatus.NEW")
     List<Integer> findNewIds();
 

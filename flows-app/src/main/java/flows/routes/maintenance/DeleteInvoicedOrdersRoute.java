@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class DeleteCompletedOrdersRoute extends RouteBuilder {
+public class DeleteInvoicedOrdersRoute extends RouteBuilder {
 
     private final OrderClient orderClient;
     private final InvoiceClient invoiceClient;
@@ -17,20 +17,20 @@ public class DeleteCompletedOrdersRoute extends RouteBuilder {
     public void configure() {
 
         from("timer://simpleTimer?period=10000&delay=1000")
-                .routeId("delete-completed-order-route")
-                .setBody(exchange -> orderClient.findCompletedIds())
+                .routeId("delete-invoiced-order-route")
+                .setBody(exchange -> orderClient.findInvoicedIds())
                 .split(body())
                 .parallelProcessing()
                 .setBody(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     return invoiceClient.existsByOrderId(id) ? null : id;
                 })
-                .filter(body().isNotNull())
+                .filter(body().isNotNull())// delete only those that were invoiced and invoiced was first deleted
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     orderClient.delete(id);
                 })
-                .log("Completed order deleted ${body}")
+                .log("Invoiced order deleted ${body}")
                 .end();
     }
 
