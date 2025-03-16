@@ -51,7 +51,6 @@ public class OrderRouteComplete extends RouteBuilder {
                             log.error(e.getMessage());
                         }
                     })
-                    .log("Complete order ${body}")
                     .end();
         }
     }
