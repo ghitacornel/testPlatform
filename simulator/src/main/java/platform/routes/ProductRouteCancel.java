@@ -23,7 +23,7 @@ public class ProductRouteCancel extends RouteBuilder {
 
     private final Random random = new Random();
     private final AsyncCache<Integer, Object> cache = Caffeine.newBuilder()
-            .expireAfterWrite(Duration.of(10, ChronoUnit.SECONDS))
+            .expireAfterWrite(Duration.of(1, ChronoUnit.MINUTES))
             .buildAsync();
 
     @Override
