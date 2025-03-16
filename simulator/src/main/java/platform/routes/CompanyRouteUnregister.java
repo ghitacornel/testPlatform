@@ -1,5 +1,7 @@
 package platform.routes;
 
+import commons.exceptions.RestTechnicalException;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -34,7 +36,13 @@ public class CompanyRouteUnregister extends RouteBuilder {
                 .choice()
                 .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for unregistering")
                 .otherwise()
-                .process(exchange -> flowsClient.deleteCompany(exchange.getMessage().getBody(Integer.class)))
+                .process(exchange -> {
+                    try {
+                        flowsClient.deleteCompany(exchange.getMessage().getBody(Integer.class));
+                    } catch (RestTechnicalException | FeignException e) {
+                        log.error(e.getMessage());
+                    }
+                })
                 .endChoice()
                 .end();
     }

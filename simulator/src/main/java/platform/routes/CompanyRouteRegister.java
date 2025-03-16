@@ -1,6 +1,8 @@
 package platform.routes;
 
+import commons.exceptions.RestTechnicalException;
 import contracts.companies.CompanyRegisterRequest;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -23,7 +25,13 @@ public class CompanyRouteRegister extends RouteBuilder {
                 .setBody(exchange -> companyClient.count())
                 .filter(body().isLessThan(CompanyRouteRegister.MAXIMUM))
                 .setBody(exchange -> CompanyRegisterRequestFaker.fake())
-                .process(exchange -> companyClient.register(exchange.getMessage().getBody(CompanyRegisterRequest.class)))
+                .process(exchange -> {
+                    try {
+                        companyClient.register(exchange.getMessage().getBody(CompanyRegisterRequest.class));
+                    } catch (RestTechnicalException | FeignException e) {
+                        log.error(e.getMessage());
+                    }
+                })
                 .end();
     }
 

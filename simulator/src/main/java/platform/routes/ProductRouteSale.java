@@ -1,6 +1,8 @@
 package platform.routes;
 
+import commons.exceptions.RestTechnicalException;
 import contracts.products.ProductSellRequest;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -8,8 +10,8 @@ import org.springframework.stereotype.Component;
 import platform.clients.CompanyClient;
 import platform.clients.ProductClient;
 import platform.fakers.ProductSellRequestFaker;
+import platform.utils.GenerateUtils;
 
-import java.util.List;
 import java.util.Random;
 
 @Component
@@ -42,18 +44,23 @@ public class ProductRouteSale extends RouteBuilder {
                     .setBody(exchange -> ProductSellRequestFaker.fake())
                     .process(exchange -> {
                         ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
-                        List<Integer> activeCompaniesIds = companyClient.findActiveIds();
-                        if (activeCompaniesIds.isEmpty()) {
+                        Integer id = GenerateUtils.random(companyClient.findActiveIds(), random);
+                        if (id == null) {
                             exchange.setMessage(null);
                             return;
                         }
-                        int index = random.nextInt(activeCompaniesIds.size());
-                        productSellRequest.setCompanyId(activeCompaniesIds.get(index));
+                        productSellRequest.setCompanyId(id);
                     })
                     .choice()
                     .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for creating products")
                     .otherwise()
-                    .process(exchange -> productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class)))
+                    .process(exchange -> {
+                        try {
+                            productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class));
+                        } catch (RestTechnicalException | FeignException e) {
+                            log.error(e.getMessage());
+                        }
+                    })
                     .endChoice()
                     .end();
         }
