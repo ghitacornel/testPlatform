@@ -7,10 +7,10 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 import platform.clients.FlowsClient;
 import platform.clients.OrderClient;
+import platform.utils.GenerateUtils;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Random;
 
 @Component
@@ -40,16 +40,7 @@ public class OrderRouteCancel extends RouteBuilder {
                     .routeId("cancel-order-route-" + i)
                     .setBody(exchange -> orderClient.findNewIds())
                     .filter(body().method("size").isGreaterThan(0))
-                    .setBody(exchange -> {
-                        List<?> data = exchange.getMessage().getBody(List.class);
-
-                        int index;
-                        do {
-                            index = random.nextInt(data.size());
-                        } while (cache.getIfPresent(index) != null);
-
-                        return data.get(index);
-                    })
+                    .setBody(exchange -> GenerateUtils.random(exchange, random, cache))
                     .process(exchange -> flowsClient.cancelOrder(exchange.getMessage().getBody(Integer.class)))
                     .process(exchange -> cache.put(exchange.getMessage().getBody(Integer.class), exchange.getMessage().getBody(Integer.class)))
                     .log("Cancel order ${body}")
