@@ -27,7 +27,6 @@ public class StartInvoiceRoute extends RouteBuilder {
                             .build());
                 })
                 .to("jms:queue:CompletedOrdersQueueName")
-                .setBody().simple("${null}")
                 .end();
     }
 
