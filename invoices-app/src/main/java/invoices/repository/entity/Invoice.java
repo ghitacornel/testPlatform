@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.Instant;
+
 @Entity
 @ToString
 @Getter
@@ -38,5 +40,8 @@ public class Invoice {
     @NotNull
     @Enumerated
     private InvoiceStatus status = InvoiceStatus.NEW;
+
+    @NotNull
+    private Instant creationDateTime = Instant.now();
 
 }

@@ -20,5 +20,6 @@ create table invoice
     product_color    varchar(255),
     product_price    double precision,
 
-    status           smallint not null
+    status           smallint  not null,
+    creationDateTime timestamp not null
 );
