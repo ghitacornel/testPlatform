@@ -93,6 +93,14 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+            <version>1.6.0</version>
+            <!-- remove scope for enabling loki -->
+            <!-- rename logs config xmls -->
+            <scope>provided</scope>
+        </dependency>
 
         <!-- TESTS -->
         <dependency>
