@@ -1,4 +1,4 @@
-package flows.clients;
+package flows.config;
 
 import feign.Capability;
 import feign.micrometer.MicrometerCapability;
