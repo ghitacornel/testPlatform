@@ -16,4 +16,8 @@ public class RemoveOrdersSchedulerService {
         repository.deleteAllByStatusCancelled();
     }
 
+    public void removeInvoicedOrders() {
+        repository.deleteAllByStatusInvoiced();
+    }
+
 }

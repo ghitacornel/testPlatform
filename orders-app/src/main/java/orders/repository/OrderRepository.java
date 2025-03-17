@@ -21,6 +21,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("delete from Order o where o.status = contracts.orders.OrderStatus.CANCELLED")
     void deleteAllByStatusCancelled();
 
+    @Modifying
+    @Query("delete from Order o where o.status = contracts.orders.OrderStatus.INVOICED")
+    void deleteAllByStatusInvoiced();
+
     @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.COMPLETED")
     List<Integer> findCompletedIds();
 
