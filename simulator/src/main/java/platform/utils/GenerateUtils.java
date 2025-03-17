@@ -11,6 +11,9 @@ import java.util.concurrent.CompletableFuture;
 public class GenerateUtils {
 
     public <T> T random(List<T> data, Random random, AsyncCache<Integer, Object> cache) {
+        if (data == null || data.isEmpty()) {
+            return null;
+        }
         int index;
         do {
             index = random.nextInt(data.size());
