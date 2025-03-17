@@ -23,11 +23,11 @@ public class ClientRouteRegister extends RouteBuilder {
             .filter(body().isLessThan(ClientRouteRegister.MAXIMUM))
             .setBody(exchange -> ClientRegisterRequestFaker.fake())
             .process(exchange -> {
-                try {
-                    clientClient.register(exchange.getMessage().getBody(ClientRegisterRequest.class));
-                } catch (Exception e) {
-                    log.error(e.getMessage());
-                }
+                    try {
+                        clientClient.register(exchange.getMessage().getBody(ClientRegisterRequest.class));
+                    } catch (Exception e) {
+                        log.error(e.getMessage());
+                    }
                 })
                 .end();
     }
