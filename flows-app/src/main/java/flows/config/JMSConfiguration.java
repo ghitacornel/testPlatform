@@ -1,22 +1,20 @@
 package flows.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.jms.Destination;
-import jakarta.jms.JMSException;
+import jakarta.jms.ConnectionFactory;
 import jakarta.jms.Queue;
-import jakarta.jms.Session;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
-import org.apache.camel.component.jms.JmsComponent;
+import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
-import org.springframework.jms.support.destination.DestinationResolver;
-import org.springframework.jms.support.destination.DynamicDestinationResolver;
 import org.springframework.beans.factory.annotation.Value;
 
 @EnableJms
@@ -38,13 +36,6 @@ class JMSConfiguration {
     }
 
     @Bean
-    JmsComponent jmsComponent(ActiveMQConnectionFactory connectionFactory) {
-        JmsComponent jmsComponent = new JmsComponent();
-        jmsComponent.setConnectionFactory(connectionFactory);
-        return jmsComponent;
-    }
-
-    @Bean
     MessageConverter messageConverter(ObjectMapper objectMapper) {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
@@ -53,25 +44,18 @@ class JMSConfiguration {
     }
 
     @Bean
-    DynamicDestinationResolver destinationResolver() {
-        return new DynamicDestinationResolver() {
-            @Override
-            public Destination resolveDestinationName(Session session, String destinationName, boolean pubSubDomain) throws JMSException {
-                pubSubDomain = destinationName.endsWith("Topic");
-                return super.resolveDestinationName(session, destinationName, pubSubDomain);
-            }
-        };
+    JmsListenerContainerFactory<?> queueConnectionFactory(ConnectionFactory connectionFactory,
+                                                          DefaultJmsListenerContainerFactoryConfigurer configurer) {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        // This provides all boot's default to this factory, including the message converter
+        configurer.configure(factory, connectionFactory);
+        // You could still override some of Boot's default if necessary.
+        return factory;
     }
 
     @Bean
-    JmsTemplate jmsTemplate(ActiveMQConnectionFactory connectionFactory, MessageConverter messageConverter, DestinationResolver destinationResolver) {
-        JmsTemplate template = new JmsTemplate();
-        template.setConnectionFactory(connectionFactory);
-        template.setMessageConverter(messageConverter);
-        template.setPubSubDomain(true);
-        template.setDestinationResolver(destinationResolver);
-        template.setDeliveryPersistent(true);
-        return template;
+    JmsTemplate jmsTemplateQueue(ConnectionFactory connectionFactory) {
+        return new JmsTemplate(connectionFactory);
     }
 
     @Bean

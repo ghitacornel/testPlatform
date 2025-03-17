@@ -1,8 +1,8 @@
 package flows.scheduler;
 
-import flows.clients.ClientClient;
+import flows.clients.CompanyClient;
 import flows.clients.InvoiceClient;
-import flows.clients.OrderClient;
+import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,23 +11,23 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class ClientsScheduler {
+class CompaniesScheduler {
 
-    private final ClientClient clientClient;
-    private final OrderClient orderClient;
+    private final CompanyClient companyClient;
     private final InvoiceClient invoiceClient;
+    private final ProductClient productClient;
 
     @Scheduled(fixedRate = 10000, initialDelay = 1000)
     void deleteRetired() {
-        clientClient.findRetiredIds().forEach(id -> {
-            if (orderClient.existsByClientId(id)) {
+        companyClient.findRetiredIds().forEach(id -> {
+            if (productClient.existsByCompanyId(id)) {
                 return;
             }
-            if (invoiceClient.existsByClientId(id)) {
+            if (invoiceClient.existsByCompanyId(id)) {
                 return;
             }
-            clientClient.delete(id);
-            log.info("Retired client deleted {}", id);
+            companyClient.delete(id);
+            log.info("Retired company deleted {}", id);
         });
     }
 

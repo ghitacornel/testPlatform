@@ -4,7 +4,6 @@ import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.camel.builder.RouteBuilder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
