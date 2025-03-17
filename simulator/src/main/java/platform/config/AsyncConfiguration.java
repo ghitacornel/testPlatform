@@ -30,8 +30,7 @@ class AsyncConfiguration implements AsyncConfigurer {
         return (e, method, params) -> {
             if (e instanceof BusinessException) {
                 log.error("Async error: {} {}", method, e.getMessage());
-            }
-            if (e instanceof RestTechnicalException) {
+            } else if (e instanceof RestTechnicalException) {
                 log.error("Async error: {} {}", method, e.getMessage());
             } else {
                 log.error("Async error: {}", method, e);
