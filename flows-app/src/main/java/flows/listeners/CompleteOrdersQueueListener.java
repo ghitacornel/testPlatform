@@ -12,7 +12,7 @@ class CompleteOrdersQueueListener {
     private final InvoiceService invoiceService;
 
     @JmsListener(destination = "CompletedOrdersQueueName")
-    public void listenerForQueue1(Integer id) {
+    public void listenerForCompletedOrdersQueueName(Integer id) {
         invoiceService.complete(id);
     }
 
