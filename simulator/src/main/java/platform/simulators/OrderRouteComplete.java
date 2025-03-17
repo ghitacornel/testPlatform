@@ -56,6 +56,10 @@ class OrderRouteComplete {
     private void simulate() {
         List<Integer> newIds = orderClient.findNewIds();
         Integer id = GenerateUtils.random(newIds, random, cache);
+        if (id == null) {
+            log.warn("No order to complete");
+            return;
+        }
         try {
             flowsClient.completeOrder(id);
             log.info("Order completed {}", id);

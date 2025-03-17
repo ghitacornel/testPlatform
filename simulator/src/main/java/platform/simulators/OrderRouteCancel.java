@@ -56,6 +56,10 @@ class OrderRouteCancel {
     private void simulate() {
         List<Integer> newIds = orderClient.findNewIds();
         Integer id = GenerateUtils.random(newIds, random, cache);
+        if (id == null) {
+            log.error("No order to cancel");
+            return;
+        }
         try {
             flowsClient.cancelOrder(id);
             log.info("Order cancelled {}", id);

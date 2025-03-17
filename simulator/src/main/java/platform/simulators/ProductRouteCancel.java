@@ -63,7 +63,7 @@ class ProductRouteCancel {
         List<Integer> activeIds = productClient.findActiveIds();
         Integer id = GenerateUtils.random(activeIds, random, cache);
         if (id == null) {
-            log.warn("No products available for cancelling");
+            log.warn("No product to cancel");
             return;
         }
 
