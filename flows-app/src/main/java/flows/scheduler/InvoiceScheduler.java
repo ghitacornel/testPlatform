@@ -18,8 +18,8 @@ class InvoiceScheduler {
     @Scheduled(fixedRate = 10000, initialDelay = 1000)
     void sendCompletedToInvoice() {
         orderClient.findCompletedIds().forEach(id -> {
-            orderClient.markAsSentToInvoice(id);
             jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
+            orderClient.markAsSentToInvoice(id);
             log.info("Order sent to invoice {}", id);
         });
     }

@@ -31,5 +31,19 @@ class ProductsScheduler {
         });
     }
 
+    @Scheduled(fixedRate = 10000, initialDelay = 1000)
+    void deleteConsumed() {
+        productClient.findConsumedIds().forEach(id -> {
+            if (orderClient.existsByProductId(id)) {
+                return;
+            }
+            if (invoiceClient.existsByProductId(id)) {
+                return;
+            }
+            productClient.delete(id);
+            log.info("Consumed product deleted {}", id);
+        });
+    }
+
 }
 
