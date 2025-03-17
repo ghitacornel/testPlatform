@@ -1,4 +1,4 @@
-package platform.clients;
+package platform.config;
 
 import feign.Capability;
 import feign.micrometer.MicrometerCapability;

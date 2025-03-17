@@ -2,7 +2,6 @@ package platform.utils;
 
 import com.github.benmanes.caffeine.cache.AsyncCache;
 import lombok.experimental.UtilityClass;
-import org.apache.camel.Exchange;
 
 import java.util.List;
 import java.util.Random;
@@ -11,9 +10,7 @@ import java.util.concurrent.CompletableFuture;
 @UtilityClass
 public class GenerateUtils {
 
-    public Object random(Exchange exchange, Random random, AsyncCache<Integer, Object> cache) {
-        List<?> data = exchange.getMessage().getBody(List.class);
-
+    public <T> T random(List<T> data, Random random, AsyncCache<Integer, Object> cache) {
         int index;
         do {
             index = random.nextInt(data.size());

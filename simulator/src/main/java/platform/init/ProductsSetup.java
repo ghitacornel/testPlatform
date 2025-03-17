@@ -9,7 +9,7 @@ import platform.clients.CompanyClient;
 import platform.clients.ProductClient;
 import platform.fakers.ProductSellRequestFaker;
 
-import static platform.routes.ProductRouteSale.MINIMUM;
+import static platform.simulators.ProductRouteSale.MINIMUM;
 
 @Component
 @DependsOn("companiesSetup")
