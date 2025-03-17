@@ -4,7 +4,6 @@ import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductBuyRequest;
-import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,8 @@ public class OrderService {
 
     private final OrderClient orderClient;
     private final ProductClient productClient;
-    private final InvoiceClient invoiceClient;
     private final JmsTemplate jmsTemplate;
+    private final OrderServiceHelper helper;
 
     public IdResponse createOrder(CreateOrderRequest request) {
         ProductBuyRequest productBuyRequest = ProductBuyRequest.builder()
@@ -49,22 +48,12 @@ public class OrderService {
 
     @Async
     public void sendCompletedToInvoice() {
-        orderClient.findCompletedIds().forEach(id -> {
-            jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
-            orderClient.markAsSentToInvoice(id);
-            log.info("Order sent to invoice {}", id);
-        });
+        orderClient.findCompletedIds().forEach(helper::sendCompletedToInvoice);
     }
 
     @Async
     public void deleteInvoiced() {
-        orderClient.findInvoicedIds().forEach(id -> {
-            if (invoiceClient.existsByOrderId(id)) {
-                return;
-            }
-            orderClient.delete(id);
-            log.info("Order invoiced deleted {}", id);
-        });
+        orderClient.findInvoicedIds().forEach(helper::deleteInvoiced);
     }
 
 }

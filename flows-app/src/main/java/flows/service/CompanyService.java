@@ -1,7 +1,6 @@
 package flows.service;
 
 import flows.clients.CompanyClient;
-import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ public class CompanyService {
     private final CompanyClient companyClient;
     private final ProductClient productClient;
     private final OrderClient orderClient;
-    private final InvoiceClient invoiceClient;
+    private final CompanyServiceHelper helper;
 
     public void deleteCompany(Integer id) {
         companyClient.retire(id);
@@ -29,16 +28,7 @@ public class CompanyService {
 
     @Async
     public void deleteRetired() {
-        companyClient.findRetiredIds().forEach(id -> {
-            if (productClient.existsByCompanyId(id)) {
-                return;
-            }
-            if (invoiceClient.existsByCompanyId(id)) {
-                return;
-            }
-            companyClient.delete(id);
-            log.info("Retired company deleted {}", id);
-        });
+        companyClient.findRetiredIds().forEach(helper::deleteRetired);
     }
 
 }

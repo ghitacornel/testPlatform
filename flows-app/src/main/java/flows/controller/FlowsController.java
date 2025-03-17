@@ -33,7 +33,6 @@ public class FlowsController implements FlowsContract {
         companyService.deleteCompany(id);
     }
 
-    @Override
     public void deleteClient(Integer id) {
         clientService.deleteClient(id);
     }
