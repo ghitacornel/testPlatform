@@ -63,7 +63,7 @@ public class OrderService {
     public void complete(Integer id) {
         Order order = repository.findById(id).orElse(null);
         if (order == null) {
-            log.warn("Not found {}", id);
+            log.warn("Not found for completion {}", id);
             return;
         }
         if (order.isCancelled()) {
@@ -76,7 +76,7 @@ public class OrderService {
     public void markAsSentToInvoice(Integer id) {
         Order order = repository.findById(id).orElse(null);
         if (order == null) {
-            log.warn("Not found {}", id);
+            log.warn("Not found for sending to invoice {}", id);
             return;
         }
         if (order.isCancelled()) {
@@ -89,7 +89,7 @@ public class OrderService {
     public void invoice(Integer id) {
         Order order = repository.findById(id).orElse(null);
         if (order == null) {
-            log.warn("Not found {}", id);
+            log.warn("Not found for invoice {}", id);
             return;
         }
         if (order.isCancelled()) {
@@ -102,7 +102,7 @@ public class OrderService {
     public void cancel(Integer id) {
         Order order = repository.findById(id).orElse(null);
         if (order == null) {
-            log.warn("Not found {}", id);
+            log.warn("Not found for cancel {}", id);
             return;
         }
         if (order.isCompleted()) {
