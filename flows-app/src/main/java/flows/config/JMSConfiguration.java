@@ -1,6 +1,5 @@
 package flows.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.Queue;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -12,9 +11,6 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageConverter;
-import org.springframework.jms.support.converter.MessageType;
 import org.springframework.beans.factory.annotation.Value;
 
 @EnableJms
@@ -33,14 +29,6 @@ class JMSConfiguration {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(BROKER_USERNAME, BROKER_PASSWORD, BROKER_URL);
         connectionFactory.setTrustAllPackages(true);
         return connectionFactory;
-    }
-
-    @Bean
-    MessageConverter messageConverter(ObjectMapper objectMapper) {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setObjectMapper(objectMapper);
-        return converter;
     }
 
     @Bean
