@@ -27,7 +27,7 @@ public class CompanyService {
     private final FlowsClient flowsClient;
 
     @Async
-    void register() {
+    public void register() {
         long count = companyClient.count();
         if (count > MAXIMUM) {
             return;
@@ -44,7 +44,7 @@ public class CompanyService {
     }
 
     @Async
-    void unregister() {
+    public void unregister() {
         long count = companyClient.count();
         if (count < MINIMUM) {
             return;
