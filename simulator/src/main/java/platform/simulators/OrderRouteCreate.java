@@ -25,27 +25,27 @@ class OrderRouteCreate {
     private final ProductClient productClient;
     private final FlowsClient flowsClient;
 
-    @Scheduled(fixedRate = 100, initialDelay = 10000)
+    @Scheduled(fixedRate = 100, initialDelay = 1000)
     void simulate1() {
         simulate();
     }
 
-    @Scheduled(fixedRate = 100, initialDelay = 10200)
+    @Scheduled(fixedRate = 100, initialDelay = 1020)
     void simulate2() {
         simulate();
     }
 
-    @Scheduled(fixedRate = 100, initialDelay = 10400)
+    @Scheduled(fixedRate = 100, initialDelay = 1040)
     void simulate3() {
         simulate();
     }
 
-    @Scheduled(fixedRate = 100, initialDelay = 10600)
+    @Scheduled(fixedRate = 100, initialDelay = 1060)
     void simulate4() {
         simulate();
     }
 
-    @Scheduled(fixedRate = 100, initialDelay = 10800)
+    @Scheduled(fixedRate = 100, initialDelay = 1080)
     void simulate5() {
         simulate();
     }
