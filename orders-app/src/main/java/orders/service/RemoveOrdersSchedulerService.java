@@ -14,7 +14,7 @@ public class RemoveOrdersSchedulerService {
     private final RemoveOrdersSchedulerServiceHelper helper;
 
     public void removeCancelledOrders() {
-        repository.findAllCancelled().forEach(helper::delete);
+        repository.deleteAllByStatusCancelled();
     }
 
 }

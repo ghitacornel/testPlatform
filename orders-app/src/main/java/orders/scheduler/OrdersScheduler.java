@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class RemoveOrdersScheduler {
+class OrdersScheduler {
 
     private final RemoveOrdersSchedulerService service;
 
     @Scheduled(fixedRate = 10000)
-    private void removeCancelledOrders() {
+    void removeCancelledOrders() {
         service.removeCancelledOrders();
     }
 

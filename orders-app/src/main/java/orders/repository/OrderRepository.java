@@ -3,6 +3,7 @@ package orders.repository;
 import contracts.orders.OrderStatus;
 import orders.repository.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -16,9 +17,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return findByStatus(OrderStatus.NEW);
     }
 
-    default List<Order> findAllCancelled() {
-        return findByStatus(OrderStatus.CANCELLED);
-    }
+    @Modifying
+    @Query("delete from Order o where o.status = contracts.orders.OrderStatus.CANCELLED")
+    void deleteAllByStatusCancelled();
 
     @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.COMPLETED")
     List<Integer> findCompletedIds();

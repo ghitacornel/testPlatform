@@ -23,9 +23,7 @@ public class InvoiceService {
     private final InvoiceMapper invoiceMapper;
 
     public List<InvoiceDetails> findAll() {
-        return repository.findAll().stream()
-                .map(invoiceMapper::map)
-                .toList();
+        return repository.findAll().stream().map(invoiceMapper::map).toList();
     }
 
     public long count() {
