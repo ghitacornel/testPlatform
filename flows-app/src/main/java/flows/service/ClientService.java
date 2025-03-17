@@ -5,6 +5,7 @@ import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -22,6 +23,7 @@ public class ClientService {
                 .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId()));
     }
 
+    @Async
     public void deleteRetired() {
         clientClient.findRetiredIds()
                 .forEach(id -> {

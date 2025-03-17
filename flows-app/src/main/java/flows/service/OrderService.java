@@ -10,6 +10,7 @@ import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -46,6 +47,7 @@ public class OrderService {
         log.info("Order cancelled {}", id);
     }
 
+    @Async
     public void sendCompletedToInvoice() {
         orderClient.findCompletedIds().forEach(id -> {
             jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
@@ -54,6 +56,7 @@ public class OrderService {
         });
     }
 
+    @Async
     public void deleteInvoiced() {
         orderClient.findInvoicedIds().forEach(id -> {
             if (invoiceClient.existsByOrderId(id)) {

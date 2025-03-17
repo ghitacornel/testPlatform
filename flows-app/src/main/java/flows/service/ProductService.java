@@ -5,6 +5,7 @@ import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -16,6 +17,7 @@ public class ProductService {
     private final InvoiceClient invoiceClient;
     private final OrderClient orderClient;
 
+    @Async
     public void deleteCancelled() {
         productClient.findCancelledIds().forEach(id -> {
             if (orderClient.existsByProductId(id)) {
@@ -29,6 +31,7 @@ public class ProductService {
         });
     }
 
+    @Async
     public void deleteConsumed() {
         productClient.findConsumedIds().forEach(id -> {
             if (orderClient.existsByProductId(id)) {
