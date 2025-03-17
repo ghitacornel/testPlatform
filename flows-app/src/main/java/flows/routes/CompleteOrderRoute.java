@@ -1,7 +1,5 @@
 package flows.routes;
 
-import commons.exceptions.RestTechnicalException;
-import feign.FeignException;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -25,18 +23,20 @@ public class CompleteOrderRoute extends RouteBuilder {
                 .to("direct:complete-order");
 
         from("direct:complete-order")
-                .routeId("complete-order-route")
-                .setBody(exchange -> exchange.getIn().getHeader("id", Integer.class))
-                .process(exchange -> {
+            .routeId("complete-order-route")
+            .setBody(exchange -> exchange.getIn().getHeader("id", Integer.class))
+            .setBody(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
                     try {
                         orderClient.complete(id);
-                    } catch (RestTechnicalException | FeignException e) {
+                        return id;
+                    } catch (Exception e) {
                         log.error(e.getMessage());
+                        return null;
                     }
                 })
-                .to("jms:queue:CompletedOrdersQueueName")
-                .setBody().simple("${null}")
+            .to("jms:queue:CompletedOrdersQueueName")
+            .setBody().simple("${null}")
                 .end();
     }
 

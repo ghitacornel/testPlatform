@@ -1,11 +1,8 @@
 package flows.routes;
 
-import commons.exceptions.BusinessException;
-import commons.exceptions.RestTechnicalException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductBuyRequest;
-import feign.FeignException;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +36,8 @@ public class CreateOrderRoute extends RouteBuilder {
                 .to("direct:create-order");
 
         from("direct:create-order")
-                .routeId("create-order-route")
-                .setBody(exchange -> {
+            .routeId("create-order-route")
+            .setBody(exchange -> {
                     CreateOrderRequest createOrderRequest = exchange.getMessage().getBody(CreateOrderRequest.class);
                     ProductBuyRequest productBuyRequest = ProductBuyRequest.builder()
                             .clientId(createOrderRequest.getClientId())
@@ -49,25 +46,25 @@ public class CreateOrderRoute extends RouteBuilder {
                             .build();
                     try {
                         productClient.buy(productBuyRequest);
-                    } catch (RestTechnicalException | BusinessException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                         return null;
                     }
                     exchange.getMessage().setHeader(PRODUCT_BUY_REQUEST, productBuyRequest);
                     return createOrderRequest;
                 })
-                .filter(body().isNotNull())
-                .setBody(exchange -> {
+            .filter(body().isNotNull())
+            .setBody(exchange -> {
                     try {
                         return orderClient.create(exchange.getMessage().getBody(CreateOrderRequest.class));
-                    } catch (RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                         return null;
                     }
                 })
-                .filter(body().isNotNull())
-                .log("Order ${body.id} created with ${header.productBuyRequest}")
-                .removeHeader(PRODUCT_BUY_REQUEST)
+            .filter(body().isNotNull())
+            .log("Order ${body.id} created with ${header.productBuyRequest}")
+            .removeHeader(PRODUCT_BUY_REQUEST)
                 .end();
     }
 

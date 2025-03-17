@@ -1,7 +1,5 @@
 package flows.routes;
 
-import commons.exceptions.RestTechnicalException;
-import feign.FeignException;
 import flows.clients.CompanyClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
@@ -29,8 +27,8 @@ public class DeleteCompanyRoute extends RouteBuilder {
                 .to("direct:delete-company");
 
         from("direct:delete-company")
-                .routeId("delete-company-route")
-                .process(exchange -> {
+            .routeId("delete-company-route")
+            .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
                     try {
                         companyClient.unregister(id);
@@ -38,11 +36,11 @@ public class DeleteCompanyRoute extends RouteBuilder {
                                 .forEach(product -> orderClient.cancelByProductId(product.getId()));
                         productClient.cancelByCompany(id);
                         log.info("Cancelled products for company {}", id);
-                    } catch (RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                     }
                 })
-                .setBody().simple("${null}")
+            .setBody().simple("${null}")
                 .end();
     }
 

@@ -1,8 +1,5 @@
 package flows.routes.maintenance;
 
-import commons.exceptions.BusinessException;
-import commons.exceptions.RestTechnicalException;
-import feign.FeignException;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -17,23 +14,24 @@ public class StartInvoiceRoute extends RouteBuilder {
     @Override
     public void configure() {
         from("timer://simpleTimer?period=10000&delay=1000")
-                .routeId("start-invoice-route")
-                .setBody(exchange -> {
+            .routeId("start-invoice-route")
+            .setBody(exchange -> {
                     try {
                         return orderClient.findCompletedIds();
-                    } catch (BusinessException | RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                         return null;
                     }
                 })
-                .split(body())
-                .multicast().parallelProcessing()
-                .process(exchange -> {
+            .split(body())
+                .multicast()
+                    .parallelProcessing()
+                    .process(exchange -> {
                     Integer id = exchange.getIn().getBody(Integer.class);
                     orderClient.markAsSentToInvoice(id);
                     log.info("start invoicing for {}", id);
                 })
-                .to("jms:queue:CompletedOrdersQueueName")
+                    .to("jms:queue:CompletedOrdersQueueName")
                 .end();
     }
 

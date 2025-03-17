@@ -1,7 +1,5 @@
 package flows.routes.maintenance;
 
-import commons.exceptions.RestTechnicalException;
-import feign.FeignException;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
@@ -22,14 +20,7 @@ public class DeleteCancelledProductsRoute extends RouteBuilder {
 
         from("timer://simpleTimer?period=10000&delay=1000")
             .routeId("delete-cancelled-products-route")
-            .setBody(exchange -> {
-                    try {
-                        return productClient.findCancelledIds();
-                    } catch (Exception e) {
-                        log.error(e.getMessage());
-                        return null;
-                    }
-                })
+            .setBody(exchange -> productClient.findCancelledIds())
             .split(body())
                 .parallelProcessing()
                 .process(exchange -> {
@@ -43,7 +34,7 @@ public class DeleteCancelledProductsRoute extends RouteBuilder {
                         }
                         productClient.delete(id);
                         log.info("Cancelled product deleted {}", id);
-                    } catch (RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                     }
                 })

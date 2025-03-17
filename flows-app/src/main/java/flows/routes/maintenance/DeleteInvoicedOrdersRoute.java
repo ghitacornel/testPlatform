@@ -1,7 +1,5 @@
 package flows.routes.maintenance;
 
-import commons.exceptions.RestTechnicalException;
-import feign.FeignException;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +17,9 @@ public class DeleteInvoicedOrdersRoute extends RouteBuilder {
     public void configure() {
 
         from("timer://simpleTimer?period=10000&delay=1000")
-                .routeId("delete-invoiced-order-route")
-                .setBody(exchange -> orderClient.findInvoicedIds())
-                .split(body())
+            .routeId("delete-invoiced-order-route")
+            .setBody(exchange -> orderClient.findInvoicedIds())
+            .split(body())
                 .parallelProcessing()
                 .process(exchange -> {
                     Integer id = exchange.getMessage().getBody(Integer.class);
@@ -31,11 +29,11 @@ public class DeleteInvoicedOrdersRoute extends RouteBuilder {
                         }
                         orderClient.delete(id);
                         log.info("Invoiced order deleted {}", id);
-                    } catch (RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                     }
                 })
-                .end();
+            .end();
     }
 
 }

@@ -1,9 +1,6 @@
 package flows.routes;
 
-import commons.exceptions.BusinessException;
-import commons.exceptions.RestTechnicalException;
 import contracts.orders.OrderDetailsResponse;
-import feign.FeignException;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
@@ -29,18 +26,18 @@ public class CancelOrderRoute extends RouteBuilder {
                 .to("direct:cancel-order");
 
         from("direct:cancel-order")
-                .routeId("cancel-order-route")
-                .process(exchange -> {
+            .routeId("cancel-order-route")
+            .process(exchange -> {
                     Integer id = exchange.getIn().getHeader("id", Integer.class);
                     try {
                         OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
                         productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
                         orderClient.cancel(id);
-                    } catch (BusinessException | RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                     }
                 })
-                .setBody()
+            .setBody()
                 .simple("${null}")
                 .end();
     }

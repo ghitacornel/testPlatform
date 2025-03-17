@@ -1,13 +1,11 @@
 package flows.routes;
 
 import commons.exceptions.BusinessException;
-import commons.exceptions.RestTechnicalException;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.invoices.*;
 import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductDetailsResponse;
-import feign.FeignException;
 import flows.clients.*;
 import flows.clients.InvoiceClient;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +47,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                                 .orderId(orderDetails.getId())
                                 .build());
                         log.info("Invoice created {}", orderDetails.getId());
-                    } catch (BusinessException | RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                         return;
                     }
@@ -95,7 +93,7 @@ public class CompleteInvoiceRoute extends RouteBuilder {
                         invoiceClient.complete(id);
                         orderClient.invoice(id);
 
-                    } catch (BusinessException | RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                         invoiceClient.error(id);
                     }
