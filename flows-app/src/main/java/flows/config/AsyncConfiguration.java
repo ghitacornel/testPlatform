@@ -28,9 +28,9 @@ class AsyncConfiguration implements AsyncConfigurer {
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (e, method, params) -> {
             if (e instanceof BusinessException) {
-                log.error("Unexpected exception occurred invoking async method: {} {}", method, e.getMessage());
+                log.error("Async error: {} {}", method, e.getMessage());
             } else {
-                log.error("Unexpected exception occurred invoking async method: {}", method, e);
+                log.error("Async error: {}", method, e);
             }
         };
     }
