@@ -8,20 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
-import java.util.List;
 
 public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
-    @Query("select i.id from Invoice i where i.status = :status and i.creationDateTime <= :referenceDateTime ")
-    List<Integer> findCompletedIdsByReferenceDateTime(@Param("status") InvoiceStatus status, @Param("referenceDateTime") Instant referenceDateTime);
-
-    default List<Integer> findCompletedIdsForDelete() {
-        return findCompletedIdsByReferenceDateTime(InvoiceStatus.COMPLETED, Instant.now().minusSeconds(60));
-    }
-
-    default List<Integer> findErrorIdsForDelete() {
-        return findCompletedIdsByReferenceDateTime(InvoiceStatus.ERROR, Instant.now().minusSeconds(60));
-    }
+    @Modifying
+    @Query("delete from Invoice i where i.status = :status and i.creationDateTime <= :referenceDateTime ")
+    void deleteByStatusAndReferenceDateTime(@Param("status") InvoiceStatus status, @Param("referenceDateTime") Instant referenceDateTime);
 
     @Modifying
     @Query("update Invoice i set i.status = invoices.repository.entity.InvoiceStatus.COMPLETED where i.id = :id")

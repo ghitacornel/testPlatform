@@ -1,20 +1,23 @@
 package invoices.scheduler;
 
-import invoices.service.RemoveCompletedInvoicesSchedulerService;
+import invoices.service.InvoicesSchedulerService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
-class RemoveErrorInvoicesScheduler {
+class InvoicesScheduler {
 
-    private final RemoveCompletedInvoicesSchedulerService service;
+    private final InvoicesSchedulerService service;
 
     @Scheduled(fixedRate = 10000)
-    private void removeError() {
+    void removeCompleted() {
+        service.removeCompleted();
+    }
+
+    @Scheduled(fixedRate = 10000)
+    void removeError() {
         service.removeError();
     }
 
