@@ -1,6 +1,7 @@
 package flows.config;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.RestTechnicalException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,9 @@ class AsyncConfiguration implements AsyncConfigurer {
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (e, method, params) -> {
             if (e instanceof BusinessException) {
+                log.error("Async error: {} {}", method, e.getMessage());
+            }
+            if (e instanceof RestTechnicalException) {
                 log.error("Async error: {} {}", method, e.getMessage());
             } else {
                 log.error("Async error: {}", method, e);
