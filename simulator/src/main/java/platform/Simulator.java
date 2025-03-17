@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableFeignClients
 @SpringBootApplication
-public class SimulatorApplication {
+public class Simulator {
     public static void main(String[] args) {
-        SpringApplication.run(SimulatorApplication.class, args);
+        SpringApplication.run(Simulator.class, args);
     }
 }
