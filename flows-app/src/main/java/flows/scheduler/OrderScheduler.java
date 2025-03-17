@@ -1,29 +1,20 @@
 package flows.scheduler;
 
-import flows.clients.InvoiceClient;
-import flows.clients.OrderClient;
+import flows.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 class OrderScheduler {
 
-    private final OrderClient orderClient;
-    private final InvoiceClient invoiceClient;
+    private final OrderService orderService;
 
     @Scheduled(fixedRate = 10000, initialDelay = 1000)
     void deleteInvoiced() {
-        orderClient.findInvoicedIds().forEach(id -> {
-            if (invoiceClient.existsByOrderId(id)) {
-                return;
-            }
-            orderClient.delete(id);
-            log.info("Order invoiced deleted {}", id);
-        });
+        orderService.deleteInvoiced();
     }
+
 }
 

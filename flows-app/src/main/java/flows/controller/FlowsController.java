@@ -18,15 +18,15 @@ public class FlowsController implements FlowsContract {
     private final ClientService clientService;
 
     public IdResponse createOrder(CreateOrderRequest request) {
-        return orderService.create(request);
+        return orderService.createOrder(request);
     }
 
     public void completeOrder(Integer id) {
-        orderService.complete(id);
+        orderService.completeOrder(id);
     }
 
     public void cancelOrder(Integer id) {
-        orderService.cancel(id);
+        orderService.cancelOrder(id);
     }
 
     public void deleteCompany(Integer id) {

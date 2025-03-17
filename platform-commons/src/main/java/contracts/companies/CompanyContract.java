@@ -25,9 +25,9 @@ public interface CompanyContract {
     @PostMapping(value = "companies", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse register(@Valid @RequestBody CompanyRegisterRequest inputModel);
 
-    @PatchMapping("companies/unregister/{id}")
+    @PatchMapping("companies/retire/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void unregister(@Valid @NotNull @PathVariable("id") Integer id);
+    void retire(@Valid @NotNull @PathVariable("id") Integer id);
 
     @GetMapping("companies/ids/active")
     List<Integer> findActiveIds();

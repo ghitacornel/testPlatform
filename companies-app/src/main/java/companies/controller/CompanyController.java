@@ -36,8 +36,8 @@ public class CompanyController implements CompanyContract {
     }
 
     @Counted
-    public void unregister(Integer id) {
-        service.unregister(id);
+    public void retire(Integer id) {
+        service.retire(id);
     }
 
     public List<Integer> findActiveIds() {

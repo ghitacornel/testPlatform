@@ -54,7 +54,7 @@ public class CompanyService {
         return repository.countAllActive();
     }
 
-    public void unregister(Integer id) {
+    public void retire(Integer id) {
         repository.findById(id).ifPresent(Company::retire);
         log.info("unregistered {}", id);
     }
