@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RemoveOrdersSchedulerService {
+public class OrdersSchedulerService {
 
     private final OrderRepository repository;
 

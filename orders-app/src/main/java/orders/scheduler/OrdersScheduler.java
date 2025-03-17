@@ -1,7 +1,7 @@
 package orders.scheduler;
 
 import lombok.RequiredArgsConstructor;
-import orders.service.RemoveOrdersSchedulerService;
+import orders.service.OrdersSchedulerService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class OrdersScheduler {
 
-    private final RemoveOrdersSchedulerService service;
+    private final OrdersSchedulerService service;
 
     @Scheduled(fixedRate = 10000)
     void removeCancelledOrders() {
