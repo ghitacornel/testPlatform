@@ -2,8 +2,6 @@ package platform.routes;
 
 import com.github.benmanes.caffeine.cache.AsyncCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import commons.exceptions.RestTechnicalException;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -32,23 +30,23 @@ public class OrderRouteComplete extends RouteBuilder {
 
         for (int i = 0; i < 5; i++) {
             from("timer://simpleTimer?period=10&delay=500")
-                    .routeId("complete-order-route-timer-" + i)
-                    .multicast()
+                .routeId("complete-order-route-timer-" + i)
+                .multicast()
                     .parallelProcessing()
                     .to("direct:complete-order-route-" + i)
             ;
 
             from("direct:complete-order-route-" + i)
-                    .routeId("complete-order-route-" + i)
-                    .setBody(exchange -> orderClient.findNewIds())
-                    .filter(body().method("size").isGreaterThan(0))
-                    .setBody(exchange -> GenerateUtils.random(exchange, random, cache))
-                    .process(exchange -> {
+                .routeId("complete-order-route-" + i)
+                .setBody(exchange -> orderClient.findNewIds())
+                .filter(body()
+                .method("size")
+                .isGreaterThan(0)).setBody(exchange -> GenerateUtils.random(exchange, random, cache)).process(exchange -> {
                         try {
                             Integer id = exchange.getMessage().getBody(Integer.class);
                             flowsClient.completeOrder(id);
                             log.info("Order completed {}", id);
-                        } catch (RestTechnicalException | FeignException e) {
+                        } catch (Exception e) {
                             log.error(e.getMessage());
                         }
                     })

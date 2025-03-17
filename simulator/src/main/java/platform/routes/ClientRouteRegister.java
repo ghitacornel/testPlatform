@@ -1,8 +1,6 @@
 package platform.routes;
 
-import commons.exceptions.RestTechnicalException;
 import contracts.clients.ClientRegisterRequest;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -20,14 +18,14 @@ public class ClientRouteRegister extends RouteBuilder {
     @Override
     public void configure() {
         from("timer://simpleTimer?period=5000&delay=5000")
-                .routeId("register-client-route")
-                .setBody(exchange -> clientClient.count())
-                .filter(body().isLessThan(ClientRouteRegister.MAXIMUM))
-                .setBody(exchange -> ClientRegisterRequestFaker.fake())
-                .process(exchange -> {
+            .routeId("register-client-route")
+            .setBody(exchange -> clientClient.count())
+            .filter(body().isLessThan(ClientRouteRegister.MAXIMUM))
+            .setBody(exchange -> ClientRegisterRequestFaker.fake())
+            .process(exchange -> {
                     try {
                         clientClient.register(exchange.getMessage().getBody(ClientRegisterRequest.class));
-                    } catch (RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                     }
                 })

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 public class RemoveOrdersSchedulerService {
 
     private final OrderRepository repository;
-    private final RemoveOrdersSchedulerServiceHelper helper;
 
     public void removeCancelledOrders() {
         repository.deleteAllByStatusCancelled();

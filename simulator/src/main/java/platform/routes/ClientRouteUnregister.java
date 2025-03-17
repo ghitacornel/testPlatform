@@ -1,7 +1,5 @@
 package platform.routes;
 
-import commons.exceptions.RestTechnicalException;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -27,24 +25,24 @@ public class ClientRouteUnregister extends RouteBuilder {
     @Override
     public void configure() {
         from("timer://simpleTimer?period=5000&delay=5000")
-                .routeId("unregister-client-route")
-                .setBody(exchange -> clientClient.count())
-                .filter(body().isGreaterThan(ClientRouteUnregister.MINIMUM))
-                .setBody(exchange -> clientClient.findActiveIds())
-                .filter(body().method("size").isGreaterThan(ClientRouteUnregister.MINIMUM))
-                .setBody(exchange -> GenerateUtils.random(exchange.getMessage().getBody(List.class), random))
-                .choice()
-                .when(body().isNull()).log(LoggingLevel.WARN, "No clients available for unregistering")
-                .otherwise()
+            .routeId("unregister-client-route")
+            .setBody(exchange -> clientClient.count())
+            .filter(body().isGreaterThan(ClientRouteUnregister.MINIMUM))
+            .setBody(exchange -> clientClient.findActiveIds())
+            .filter(body()
+            .method("size")
+            .isGreaterThan(ClientRouteUnregister.MINIMUM)).setBody(exchange -> GenerateUtils.random(exchange.getMessage().getBody(List.class), random)).choice()
+            .when(body().isNull())
+                .log(LoggingLevel.WARN, "No clients available for unregistering")
+            .otherwise()
                 .process(exchange -> {
                     try {
                         flowsClient.deleteClient(exchange.getMessage().getBody(Integer.class));
-                    } catch (RestTechnicalException | FeignException e) {
+                    } catch (Exception e) {
                         log.error(e.getMessage());
                     }
                 })
-                .endChoice()
-                .end();
+            .endChoice().end();
     }
 
 }

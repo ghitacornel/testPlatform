@@ -1,10 +1,8 @@
 package platform.routes;
 
-import commons.exceptions.RestTechnicalException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.products.ProductDetailsResponse;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
@@ -30,15 +28,15 @@ public class OrderRouteCreate extends RouteBuilder {
 
         for (int i = 0; i < 5; i++) {
             from("timer://simpleTimer?period=100&delay=1000")
-                    .routeId("create-order-route-timer-" + i)
-                    .multicast()
+                .routeId("create-order-route-timer-" + i)
+                .multicast()
                     .parallelProcessing()
                     .to("direct:create-order-route-" + i)
             ;
 
             from("direct:create-order-route-" + i)
-                    .routeId("create-order-route-" + i)
-                    .setBody(exchange -> {
+                .routeId("create-order-route-" + i)
+                .setBody(exchange -> {
 
                         Integer clientId = GenerateUtils.random(clientClient.findActiveIds(), random);
                         if (clientId == null) {
@@ -56,10 +54,11 @@ public class OrderRouteCreate extends RouteBuilder {
                                 .quantity(generateRandomQuantity(productDetailsResponse))
                                 .build();
                     })
-                    .choice()
-                    .when(body().isNull()).log("no order created")
+                .choice()
+                    .when(body().isNull())
+                        .log("no order created")
                     .otherwise()
-                    .process(exchange -> {
+                        .process(exchange -> {
                         try {
                             IdResponse idResponse = flowsClient.createOrder(exchange.getMessage().getBody(CreateOrderRequest.class));
                             if (idResponse == null) {
@@ -68,12 +67,12 @@ public class OrderRouteCreate extends RouteBuilder {
                             }
                             Integer id = idResponse.getId();
                             log.info("Order created {}", id);
-                        } catch (RestTechnicalException | FeignException e) {
+                        } catch (Exception e) {
                             log.error(e.getMessage());
                         }
                     })
                     .endChoice()
-                    .end();
+                .end();
         }
 
     }

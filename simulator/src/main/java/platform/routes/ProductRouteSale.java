@@ -1,8 +1,6 @@
 package platform.routes;
 
-import commons.exceptions.RestTechnicalException;
 import contracts.products.ProductSellRequest;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -31,18 +29,18 @@ public class ProductRouteSale extends RouteBuilder {
 
         for (int i = 0; i < 5; i++) {
             from("timer://simpleTimer?period=500&delay=1000")
-                    .routeId("sale-product-route-timer-" + i)
-                    .multicast()
+                .routeId("sale-product-route-timer-" + i)
+                .multicast()
                     .parallelProcessing()
                     .to("direct:sale-product-route-" + i)
             ;
 
             from("direct:sale-product-route-" + i)
-                    .routeId("sale-product-route-" + i)
-                    .setBody(exchange -> productClient.countAllActive())
-                    .filter(body().isLessThan(ProductRouteSale.MAXIMUM))
-                    .setBody(exchange -> ProductSellRequestFaker.fake())
-                    .process(exchange -> {
+                .routeId("sale-product-route-" + i)
+                .setBody(exchange -> productClient.countAllActive())
+                .filter(body().isLessThan(ProductRouteSale.MAXIMUM))
+                .setBody(exchange -> ProductSellRequestFaker.fake())
+                .process(exchange -> {
                         ProductSellRequest productSellRequest = exchange.getMessage().getBody(ProductSellRequest.class);
                         Integer id = GenerateUtils.random(companyClient.findActiveIds(), random);
                         if (id == null) {
@@ -51,18 +49,19 @@ public class ProductRouteSale extends RouteBuilder {
                         }
                         productSellRequest.setCompanyId(id);
                     })
-                    .choice()
-                    .when(body().isNull()).log(LoggingLevel.WARN, "No companies available for creating products")
+                .choice()
+                    .when(body().isNull())
+                        .log(LoggingLevel.WARN, "No companies available for creating products")
                     .otherwise()
-                    .process(exchange -> {
+                        .process(exchange -> {
                         try {
                             productClient.sell(exchange.getMessage().getBody(ProductSellRequest.class));
-                        } catch (RestTechnicalException | FeignException e) {
+                        } catch (Exception e) {
                             log.error(e.getMessage());
                         }
                     })
                     .endChoice()
-                    .end();
+                .end();
         }
     }
 
