@@ -57,7 +57,7 @@ class OrderRouteCancel {
         List<Integer> newIds = orderClient.findNewIds();
         Integer id = GenerateUtils.random(newIds, random, cache);
         if (id == null) {
-            log.error("No order to cancel");
+            log.warn("No order to cancel");
             return;
         }
         try {
