@@ -6,5 +6,3 @@ http://localhost:8761/
 TODO
 replace jms with kafka
 spring cloud gateway / spring-cloud-kubernetes
-
-order -> NEW -> COMPLETED/CANCELLED/REJECTED -> SEND TO INVOICE -> INVOICED
