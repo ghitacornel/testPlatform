@@ -70,12 +70,16 @@ public class InvoiceService {
     }
 
     public void complete(Integer id) {
-        repository.complete(id);
+        Invoice invoice = repository.findById(id)
+                .orElseThrow(() -> new InvoiceNotFoundException(id));
+        invoice.complete();
         log.info("Completed: {}", id);
     }
 
     public void error(Integer id, String message) {
-        repository.error(id, message);
+        Invoice invoice = repository.findById(id)
+                .orElseThrow(() -> new InvoiceNotFoundException(id));
+        invoice.error(message);
         log.error("Error: {} {} ", id, message);
     }
 

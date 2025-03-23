@@ -48,4 +48,12 @@ public class Invoice {
     @Column(length = 2000)
     private String errorMessage;
 
+    public void error(String message) {
+        errorMessage = message;
+    }
+
+    public void complete() {
+        status = Status.COMPLETED;
+    }
+
 }
