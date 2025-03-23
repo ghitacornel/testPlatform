@@ -97,12 +97,20 @@ public class InvoiceService {
 
         } catch (BusinessException e) {
             log.error("business error completing order {} {}", id, e.getMessage());
-            invoiceClient.error(id, e.getMessage());
+            errorInvoice(id, e.getMessage());
         } catch (Exception e) {
-            invoiceClient.error(id, e.getMessage());
+            errorInvoice(id, e.getMessage());
             throw e;
         }
 
+    }
+
+    private void errorInvoice(Integer id, String message) {
+        try {
+            invoiceClient.error(id, message);
+        } catch (BusinessException e) {
+            log.error("business error marking invoice as error {} {}", id, e.getMessage());
+        }
     }
 
 }
