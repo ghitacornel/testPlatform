@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.BusinessException;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,12 @@ class OrderServiceHelper {
     @Async
     void sendCompletedToInvoice(Integer id) {
         jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
-        orderClient.markAsSentToInvoice(id);
+        try {
+            orderClient.markAsSentToInvoice(id);
+        } catch (BusinessException e) {
+            log.error("Business error marking order as rejected {} {}", id, e.getMessage());
+            return;
+        }
         log.info("Order sent to invoice {}", id);
     }
 
