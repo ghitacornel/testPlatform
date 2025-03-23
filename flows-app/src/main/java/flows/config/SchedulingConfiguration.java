@@ -15,6 +15,7 @@ class SchedulingConfiguration implements SchedulingConfigurer {
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
         taskScheduler.setPoolSize(20);
         taskScheduler.setThreadNamePrefix("SchedulingThread");
+        taskScheduler.initialize();
         taskRegistrar.setTaskScheduler(taskScheduler);
     }
 
