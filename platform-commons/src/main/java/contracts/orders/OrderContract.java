@@ -72,7 +72,7 @@ public interface OrderContract {
 
     @PatchMapping("orders/reject/{id}/{reason}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void reject(@Valid @NotNull @PathVariable("id") Integer id, @Valid @NotBlank String reason);
+    void reject(@Valid @NotNull @PathVariable("id") Integer id, @Valid @NotBlank @PathVariable("reason") String reason);
 
     @DeleteMapping("orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
