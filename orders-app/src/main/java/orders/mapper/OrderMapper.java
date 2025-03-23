@@ -13,6 +13,7 @@ public interface OrderMapper {
     OrderDetailsResponse map(Order order);
 
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "rejectReason", ignore = true)
     Order map(CreateOrderRequest request);
 
     OrderArchive mapToArchive(Order order);

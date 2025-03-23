@@ -84,15 +84,15 @@ public class OrderService {
             productClient.buy(productBuyRequest);
         } catch (RestTechnicalException e) {
             log.error("Error reserving product for order {} {}", id, e.getMessage());
-            orderClient.reject(id);
+            orderClient.reject(id, e.getMessage());
             return;
         } catch (BusinessException e) {
             log.warn("problem reserving product for order {} {}", id, e.getMessage());
-            orderClient.reject(id);
+            orderClient.reject(id, e.getMessage());
             return;
         } catch (Exception e) {
             log.error("Error reserving product for order {}", id, e);
-            orderClient.reject(id);
+            orderClient.reject(id, e.getMessage());
             return;
         }
 
@@ -101,7 +101,7 @@ public class OrderService {
         } catch (BusinessException e) {
             log.warn("problem marking order as completed {} {}", id, e.getMessage());
             try {
-                orderClient.reject(id);
+                orderClient.reject(id, e.getMessage());
             } catch (BusinessException ex) {
                 log.error("Error marking order as rejected {} {}", id, ex.getMessage());
                 return;

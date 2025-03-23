@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Positive;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@Table(name = "T_ORDER")
+@Table(name = "ORDERS")
 public class Order extends Identifiable {
 
     @NotNull
@@ -37,6 +37,8 @@ public class Order extends Identifiable {
     @Enumerated
     private Status status = Status.NEW;
 
+    private String rejectReason;
+
     public void cancel() {
         status = Status.CANCELLED;
     }
@@ -45,8 +47,9 @@ public class Order extends Identifiable {
         status = Status.COMPLETED;
     }
 
-    public void reject() {
+    public void reject(String reason) {
         status = Status.REJECTED;
+        rejectReason = reason;
     }
 
     public void markAsInvoiced() {

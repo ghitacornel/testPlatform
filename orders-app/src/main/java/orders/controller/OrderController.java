@@ -85,8 +85,8 @@ public class OrderController implements OrderContract {
         service.cancelByProductId(id);
     }
 
-    public void reject(Integer id) {
-        service.reject(id);
+    public void reject(Integer id, String reason) {
+        service.reject(id, reason);
     }
 
     public void delete(Integer id) {

@@ -2,6 +2,7 @@ package contracts.orders;
 
 import commons.model.IdResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -69,9 +70,9 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancelByProductId(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @PatchMapping("orders/reject/{id}")
+    @PatchMapping("orders/reject/{id}/{reason}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void reject(@Valid @NotNull @PathVariable("id") Integer id);
+    void reject(@Valid @NotNull @PathVariable("id") Integer id, @Valid @NotBlank String reason);
 
     @DeleteMapping("orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

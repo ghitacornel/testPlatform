@@ -104,12 +104,12 @@ public class OrderService {
         repository.findActiveIdsByProductId(id).forEach(this::cancel);
     }
 
-    public void reject(Integer id) {
+    public void reject(Integer id, String reason) {
         Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         if (!order.isNew()) {
             return;
         }
-        order.reject();
+        order.reject(reason);
         log.info("Rejected {}", id);
     }
 
