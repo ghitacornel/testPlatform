@@ -116,7 +116,7 @@ public class OrderService {
             orderClient.reject(id, message);
             log.warn("Order rejected {} {}", id, message);
         } catch (BusinessException e) {
-            log.error("Error marking order as rejected {} {}", id, message);
+            log.error("Business error marking order as rejected {} {}", id, message);
         } catch (Exception e) {
             log.error("Error marking order as rejected {} {}", id, message, e);
         }
