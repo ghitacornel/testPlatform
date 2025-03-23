@@ -111,7 +111,7 @@ public class OrderService {
             return;
         }
         order.reject(reason);
-        log.info("Rejected {}", id);
+        log.info("Rejected {} {}", id, reason);
     }
 
     public boolean existsByProductId(Integer id) {
