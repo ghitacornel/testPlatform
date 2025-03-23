@@ -37,6 +37,7 @@ public class Order extends Identifiable {
     @Enumerated
     private Status status = Status.NEW;
 
+    @Column(length = 2000)
     private String rejectReason;
 
     public void cancel() {

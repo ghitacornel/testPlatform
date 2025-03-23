@@ -1,6 +1,7 @@
 package flows.service;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.RestTechnicalException;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.invoices.*;
@@ -36,12 +37,24 @@ public class InvoiceService {
             return;
         }
 
+        InvoiceCreateRequest invoiceCreateRequest = InvoiceCreateRequest.builder()
+                .orderId(orderDetails.getId())
+                .build();
         try {
-
-            invoiceClient.create(InvoiceCreateRequest.builder()
-                    .orderId(orderDetails.getId())
-                    .build());
+            invoiceClient.create(invoiceCreateRequest);
             log.info("Invoice created {}", orderDetails.getId());
+        } catch (BusinessException e) {
+            log.error("business error creating invoice for order {} {}", id, e.getMessage());
+            return;
+        } catch (RestTechnicalException e) {
+            log.error("rest tech error creating invoice for order {} {}", id, e.getMessage());
+            return;
+        } catch (Exception e) {
+            log.error("error creating invoice for order {} {}", id, e.getMessage(), e);
+            return;
+        }
+
+        try {
 
             invoiceClient.update(UpdateOrderRequest.builder()
                     .id(id)
@@ -84,9 +97,9 @@ public class InvoiceService {
 
         } catch (BusinessException e) {
             log.error("business error completing order {} {}", id, e.getMessage());
-            invoiceClient.error(id);
+            invoiceClient.error(id, e.getMessage());
         } catch (Exception e) {
-            invoiceClient.error(id);
+            invoiceClient.error(id, e.getMessage());
             throw e;
         }
 

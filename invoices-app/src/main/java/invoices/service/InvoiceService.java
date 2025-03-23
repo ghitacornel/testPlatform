@@ -74,9 +74,9 @@ public class InvoiceService {
         log.info("Completed: {}", id);
     }
 
-    public void error(Integer id) {
-        repository.error(id);
-        log.error("Error: {}", id);
+    public void error(Integer id, String message) {
+        repository.error(id, message);
+        log.error("Error: {} {} ", id, message);
     }
 
     public boolean existsByOrderId(Integer id) {

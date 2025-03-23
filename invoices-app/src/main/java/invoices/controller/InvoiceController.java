@@ -47,8 +47,8 @@ public class InvoiceController implements InvoiceContract {
         service.complete(id);
     }
 
-    public void error(Integer id) {
-        service.error(id);
+    public void error(Integer id, String message) {
+        service.error(id, message);
     }
 
     public boolean existsByOrderId(Integer id) {

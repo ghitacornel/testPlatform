@@ -1,5 +1,6 @@
 package invoices.repository.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
@@ -43,5 +44,8 @@ public class Invoice {
 
     @NotNull
     private Instant creationDateTime = Instant.now();
+
+    @Column(length = 2000)
+    private String errorMessage;
 
 }

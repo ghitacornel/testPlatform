@@ -2,6 +2,7 @@ package contracts.invoices;
 
 import commons.model.IdResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,9 +43,9 @@ public interface InvoiceContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void complete(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @PatchMapping("invoices/error/{id}")
+    @PatchMapping("invoices/error/{id}/{message}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void error(@Valid @NotNull @PathVariable("id") Integer id);
+    void error(@Valid @NotNull @PathVariable("id") Integer id, @Valid @NotBlank @PathVariable("message") String message);
 
     @GetMapping("invoices/exists/order/{id}")
     boolean existsByOrderId(@Valid @NotNull @PathVariable("id") Integer id);
