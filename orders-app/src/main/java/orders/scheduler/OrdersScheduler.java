@@ -17,6 +17,11 @@ class OrdersScheduler {
     }
 
     @Scheduled(fixedRate = 10000)
+    void removeRejectedOrders() {
+        service.removeRejectedOrders();
+    }
+
+    @Scheduled(fixedRate = 10000)
     void removeInvoicedOrders() {
         service.removeInvoicedOrders();
     }

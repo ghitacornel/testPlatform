@@ -23,7 +23,7 @@ public class ClientController implements ClientContract {
     }
 
     public long count() {
-        return service.count();
+        return service.countAllActive();
     }
 
     public List<Integer> findActiveIds() {

@@ -3,6 +3,7 @@ package orders.service;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
+import contracts.orders.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import orders.exceptions.OrderNotFoundException;
@@ -24,23 +25,23 @@ public class OrderService {
     private final OrderMapper orderMapper;
 
     public List<OrderDetailsResponse> findAllNew() {
-        return repository.findAllNew().stream().map(orderMapper::map).toList();
+        return repository.findByStatus(Status.NEW).stream().map(orderMapper::map).toList();
     }
 
     public List<Integer> findCompletedIds() {
-        return repository.findCompletedIds();
+        return repository.findIdsByStatus(Status.COMPLETED);
     }
 
     public List<Integer> findInvoicedIds() {
-        return repository.findInvoicedIds();
+        return repository.findIdsByStatus(Status.INVOICED);
     }
 
     public List<Integer> findNewIds() {
-        return repository.findNewIds();
+        return repository.findIdsByStatus(Status.NEW);
     }
 
     public List<Integer> findRejectedIds() {
-        return repository.findRejectedIds();
+        return repository.findIdsByStatus(Status.REJECTED);
     }
 
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
@@ -101,7 +102,7 @@ public class OrderService {
     }
 
     public void cancelByProductId(Integer id) {
-        repository.findActiveIdsByProductId(id).forEach(this::cancel);
+        repository.findNewIdsByProductId(id).forEach(this::cancel);
     }
 
     public void reject(Integer id, String reason) {
@@ -122,7 +123,7 @@ public class OrderService {
     }
 
     public long countAllNew() {
-        return repository.countAllNew();
+        return repository.countByStatus(Status.NEW);
     }
 
     public void delete(Integer id) {

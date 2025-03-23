@@ -13,29 +13,11 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findByStatus(Status status);
 
-    default List<Order> findAllNew() {
-        return findByStatus(Status.NEW);
-    }
-
     @Modifying
-    @Query("delete from Order o where o.status = contracts.orders.Status.CANCELLED")
-    void deleteAllByStatusCancelled();
+    @Query("delete from Order o where o.status = :status")
+    void deleteByStatus(@Param("status") Status status);
 
-    @Modifying
-    @Query("delete from Order o where o.status = contracts.orders.Status.INVOICED")
-    void deleteAllByStatusInvoiced();
-
-    @Query("select o.id from Order o where o.status = contracts.orders.Status.COMPLETED")
-    List<Integer> findCompletedIds();
-
-    @Query("select o.id from Order o where o.status = contracts.orders.Status.INVOICED")
-    List<Integer> findInvoicedIds();
-
-    @Query("select o.id from Order o where o.status = contracts.orders.Status.NEW")
-    List<Integer> findNewIds();
-
-    @Query("select o.id from Order o where o.status = contracts.orders.Status.REJECTED")
-    List<Integer> findRejectedIds();
+    List<Integer> findIdsByStatus(Status status);
 
     @Query("select o from Order o where o.clientId = :id and o.status = contracts.orders.Status.NEW")
     List<Order> findAllNewForClientId(@Param("id") Integer id);
@@ -49,11 +31,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     long countByStatus(Status status);
 
-    default long countAllNew() {
-        return countByStatus(Status.NEW);
-    }
-
     @Query("select o.id from Order o where o.productId = :id and o.status = contracts.orders.Status.NEW")
-    List<Integer> findActiveIdsByProductId(@Param("id") Integer id);
+    List<Integer> findNewIdsByProductId(@Param("id") Integer id);
 
 }

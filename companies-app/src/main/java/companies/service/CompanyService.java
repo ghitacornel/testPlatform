@@ -5,6 +5,7 @@ import companies.exceptions.CompanyNotFoundException;
 import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
+import companies.repository.entity.Status;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.companies.CompanyRegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class CompanyService {
     private final CompanyMapper mapper;
 
     public List<CompanyDetailsResponse> findAll() {
-        return repository.findAllActive().stream()
+        return repository.findByStatus(Status.ACTIVE).stream()
                 .map(mapper::map)
                 .toList();
     }
@@ -51,7 +52,7 @@ public class CompanyService {
     }
 
     public long count() {
-        return repository.countAllActive();
+        return repository.countByStatus(Status.ACTIVE);
     }
 
     public void retire(Integer id) {

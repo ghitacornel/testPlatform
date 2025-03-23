@@ -15,24 +15,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select p from Product p where p.companyId = :id and p.status = products.repository.entity.Status.ACTIVE")
     List<Product> findAllActiveForCompany(@Param("id") Integer id);
 
-    default List<Product> findAllActive() {
-        return findByStatus(Status.ACTIVE);
-    }
-
     long countByStatus(Status status);
 
-    default long countAllActive() {
-        return countByStatus(Status.ACTIVE);
-    }
-
-    @Query("select p.id from Product p where p.status = products.repository.entity.Status.CONSUMED")
-    List<Integer> findConsumedIds();
-
-    @Query("select p.id from Product p where p.status = products.repository.entity.Status.CANCELLED")
-    List<Integer> findCancelledIds();
-
-    @Query("select p.id from Product p where p.status = products.repository.entity.Status.ACTIVE")
-    List<Integer> findActiveIds();
+    @Query("select p.id from Product p where p.status = :status")
+    List<Integer> findIdsByStatus(@Param("status") Status status);
 
     List<Product> findByCompanyId(Integer id);
 

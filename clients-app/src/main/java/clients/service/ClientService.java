@@ -4,6 +4,7 @@ import clients.exceptions.ClientNotFoundException;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
+import clients.repository.entity.Status;
 import commons.model.IdResponse;
 import contracts.clients.ClientDetailsResponse;
 import contracts.clients.ClientRegisterRequest;
@@ -24,7 +25,7 @@ public class ClientService {
     private final ClientMapper clientMapper;
 
     public List<ClientDetailsResponse> findAll() {
-        return repository.findAllActive().stream()
+        return repository.findByStatus(Status.ACTIVE).stream()
                 .map(clientMapper::map)
                 .toList();
     }
@@ -50,8 +51,8 @@ public class ClientService {
         return new IdResponse(entity.getId());
     }
 
-    public long count() {
-        return repository.countAllActive();
+    public long countAllActive() {
+        return repository.countByStatus(Status.ACTIVE);
     }
 
     public void retire(Integer id) {

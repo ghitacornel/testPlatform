@@ -13,6 +13,7 @@ import products.exceptions.ProductNotFoundException;
 import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
+import products.repository.entity.Status;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     public List<ProductDetailsResponse> findAllActive() {
-        return repository.findAllActive().stream().map(productMapper::map).toList();
+        return repository.findByStatus(Status.ACTIVE).stream().map(productMapper::map).toList();
     }
 
     public List<ProductDetailsResponse> findAllActiveForCompany(Integer id) {
@@ -34,7 +35,7 @@ public class ProductService {
     }
 
     public long countAllActive() {
-        return repository.countAllActive();
+        return repository.countByStatus(Status.ACTIVE);
     }
 
     public IdResponse sell(ProductSellRequest request) {
@@ -84,15 +85,15 @@ public class ProductService {
     }
 
     public List<Integer> findConsumedIds() {
-        return repository.findConsumedIds();
+        return repository.findIdsByStatus(Status.CONSUMED);
     }
 
     public List<Integer> findCancelledIds() {
-        return repository.findCancelledIds();
+        return repository.findIdsByStatus(Status.CANCELLED);
     }
 
     public List<Integer> findActiveIds() {
-        return repository.findActiveIds();
+        return repository.findIdsByStatus(Status.ACTIVE);
     }
 
     public void delete(Integer id) {

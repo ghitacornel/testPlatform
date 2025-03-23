@@ -1,5 +1,6 @@
 package orders.service;
 
+import contracts.orders.Status;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import orders.repository.OrderRepository;
@@ -15,12 +16,17 @@ public class OrdersSchedulerService {
 
     @Async
     public void removeCancelledOrders() {
-        repository.deleteAllByStatusCancelled();
+        repository.deleteByStatus(Status.CANCELLED);
+    }
+
+    @Async
+    public void removeRejectedOrders() {
+        repository.deleteByStatus(Status.REJECTED);
     }
 
     @Async
     public void removeInvoicedOrders() {
-        repository.deleteAllByStatusInvoiced();
+        repository.deleteByStatus(Status.INVOICED);
     }
 
 }
