@@ -82,17 +82,12 @@ public class OrderService {
                 .build();
         try {
             productClient.buy(productBuyRequest);
-        } catch (RestTechnicalException e) {
-            log.error("Error reserving product for order {} {}", id, e.getMessage());
-            orderClient.reject(id, e.getMessage());
-            return;
-        } catch (BusinessException e) {
-            log.warn("problem reserving product for order {} {}", id, e.getMessage());
-            orderClient.reject(id, e.getMessage());
+        } catch (RestTechnicalException | BusinessException e) {
+            rejectOrder(id, e.getMessage());
             return;
         } catch (Exception e) {
             log.error("Error reserving product for order {}", id, e);
-            orderClient.reject(id, e.getMessage());
+            rejectOrder(id, e.getMessage());
             return;
         }
 
@@ -100,12 +95,7 @@ public class OrderService {
             orderClient.complete(id);
         } catch (BusinessException e) {
             log.warn("problem marking order as completed {} {}", id, e.getMessage());
-            try {
-                orderClient.reject(id, e.getMessage());
-            } catch (BusinessException ex) {
-                log.error("Error marking order as rejected {} {}", id, ex.getMessage());
-                return;
-            }
+            rejectOrder(id, e.getMessage());
             return;
         } catch (Exception e) {
             log.error("Error marking order as completed {}", id, e);
@@ -119,6 +109,17 @@ public class OrderService {
             return;
         }
         log.info("Order completed {}", id);
+    }
+
+    private void rejectOrder(Integer id, String message) {
+        try {
+            orderClient.reject(id, message);
+            log.warn("Order rejected {} {}", id, message);
+        } catch (BusinessException e) {
+            log.error("Error marking order as rejected {} {}", id, message);
+        } catch (Exception e) {
+            log.error("Error marking order as rejected {} {}", id, message, e);
+        }
     }
 
 }
