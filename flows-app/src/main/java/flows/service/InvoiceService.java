@@ -9,7 +9,6 @@ import contracts.invoices.*;
 import contracts.orders.OrderDetailsResponse;
 import contracts.products.ProductDetailsResponse;
 import flows.clients.*;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -27,7 +26,6 @@ public class InvoiceService {
     private final ProductClient productClient;
 
     @Async
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void complete(Integer id) {
 
         OrderDetailsResponse orderDetails;
