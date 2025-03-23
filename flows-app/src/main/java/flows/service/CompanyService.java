@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.ResourceNotFound;
 import flows.clients.CompanyClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
@@ -19,7 +20,14 @@ public class CompanyService {
     private final CompanyServiceHelper helper;
 
     public void deleteCompany(Integer id) {
-        companyClient.retire(id);
+
+        try {
+            companyClient.retire(id);
+        } catch (ResourceNotFound e) {
+            log.warn("Company not found {}", id);
+            return;
+        }
+
         productClient.findAllActiveForCompany(id)
                 .forEach(product -> orderClient.cancelByProductId(product.getId()));
         productClient.cancelByCompany(id);

@@ -31,11 +31,11 @@ public class ClientService {
     }
 
     public List<Integer> findActiveIds() {
-        return repository.findActiveIds();
+        return repository.findIdsByStatus(Status.ACTIVE);
     }
 
     public List<Integer> findRetiredIds() {
-        return repository.findRetiredIds();
+        return repository.findIdsByStatus(Status.RETIRED);
     }
 
     public ClientDetailsResponse findById(Integer id) {
@@ -56,7 +56,8 @@ public class ClientService {
     }
 
     public void retire(Integer id) {
-        repository.findById(id).ifPresent(Client::retire);
+        Client client = repository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
+        client.retire();
         log.info("unregistered {}", id);
     }
 

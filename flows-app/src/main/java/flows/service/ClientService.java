@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.ResourceNotFound;
 import flows.clients.ClientClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,14 @@ public class ClientService {
     private final ClientServiceHelper helper;
 
     public void deleteClient(Integer id) {
-        clientClient.retire(id);
+
+        try {
+            clientClient.retire(id);
+        } catch (ResourceNotFound e) {
+            log.warn("Client not found {}", id);
+            return;
+        }
+
         orderClient.findAllNewForClientId(id)
                 .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId()));
     }

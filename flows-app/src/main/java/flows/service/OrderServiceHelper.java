@@ -1,6 +1,6 @@
 package flows.service;
 
-import commons.exceptions.BusinessException;
+import commons.exceptions.ResourceNotFound;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,8 @@ class OrderServiceHelper {
         jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
         try {
             orderClient.markAsSentToInvoice(id);
-        } catch (BusinessException e) {
-            log.error("Business error marking order as rejected {} {}", id, e.getMessage());
+        } catch (ResourceNotFound e) {
+            log.error("Order not found {} for sending to invoice", id);
             return;
         }
         log.info("Order sent to invoice {}", id);
@@ -35,14 +35,23 @@ class OrderServiceHelper {
         if (invoiceClient.existsByOrderId(id)) {
             return;
         }
-        orderClient.delete(id);
-        log.info("Order invoiced deleted {}", id);
+
+        try {
+            orderClient.delete(id);
+            log.info("Invoiced order deleted {}", id);
+        } catch (ResourceNotFound e) {
+            log.error("Order not found {} for delete", id);
+        }
     }
 
     @Async
     void deleteRejected(Integer id) {
-        orderClient.delete(id);
-        log.info("Order rejected deleted {}", id);
+        try {
+            orderClient.delete(id);
+            log.info("Rejected order deleted {}", id);
+        } catch (ResourceNotFound e) {
+            log.error("Rejected order not found {} for delete", id);
+        }
     }
 
 }

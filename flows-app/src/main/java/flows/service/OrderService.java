@@ -1,6 +1,7 @@
 package flows.service;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.ResourceNotFound;
 import commons.exceptions.RestTechnicalException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
@@ -37,14 +38,29 @@ public class OrderService {
     }
 
     public void cancelOrder(Integer id) {
-        OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
+
+        OrderDetailsResponse orderDetails;
         try {
-            productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
+            orderDetails = orderClient.findById(id);
+        } catch (ResourceNotFound e) {
+            log.warn("Order not found {}", id);
+            return;
+        }
+
+        try {
+            productClient.refill(orderDetails.getProductId(), orderDetails.getQuantity());
         } catch (RestTechnicalException e) {
             log.error("error cancelling order {} {}", id, e.getMessage());
+            return;// TODO
         }
-        orderClient.cancel(id);
-        log.info("Order cancelled {}", id);
+
+        try {
+            orderClient.cancel(id);
+            log.info("Order cancelled {}", id);
+        } catch (ResourceNotFound e) {
+            log.error("Order not found for cancelling {}", id);
+        }
+
     }
 
     @Async
@@ -67,8 +83,8 @@ public class OrderService {
         OrderDetailsResponse orderDetails;
         try {
             orderDetails = orderClient.findById(id);
-        } catch (BusinessException e) {
-            log.error("Business error finding order {} {}", id, e.getMessage());
+        } catch (ResourceNotFound e) {
+            log.error("Order not found {}", id);
             return;
         } catch (Exception e) {
             log.error("Error finding order {}", id, e);
@@ -93,8 +109,8 @@ public class OrderService {
 
         try {
             orderClient.complete(id);
-        } catch (BusinessException e) {
-            log.warn("problem marking order as completed {} {}", id, e.getMessage());
+        } catch (ResourceNotFound e) {
+            log.error("Order not found for marking it as completed {}", id);
             rejectOrder(id, e.getMessage());
             return;
         } catch (Exception e) {
@@ -115,8 +131,8 @@ public class OrderService {
         try {
             orderClient.reject(id, message);
             log.warn("Order rejected {} {}", id, message);
-        } catch (BusinessException e) {
-            log.error("Business error marking order as rejected {} {} {}", id, message, e.getMessage());
+        } catch (ResourceNotFound e) {
+            log.error("Order not found for marking it as rejected {} {}", id, message);
         } catch (Exception e) {
             log.error("Error marking order as rejected {} {}", id, message, e);
         }

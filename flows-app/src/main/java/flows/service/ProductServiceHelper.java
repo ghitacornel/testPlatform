@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.ResourceNotFound;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
@@ -25,8 +26,12 @@ class ProductServiceHelper {
         if (invoiceClient.existsByProductId(id)) {
             return;
         }
-        productClient.delete(id);
-        log.info("Cancelled product deleted {}", id);
+        try {
+            productClient.delete(id);
+            log.info("Cancelled product deleted {}", id);
+        } catch (ResourceNotFound e) {
+            log.error("Cancelled product not found {} for delete", id);
+        }
     }
 
     @Async
@@ -37,8 +42,12 @@ class ProductServiceHelper {
         if (invoiceClient.existsByProductId(id)) {
             return;
         }
-        productClient.delete(id);
-        log.info("Consumed product deleted {}", id);
+        try {
+            productClient.delete(id);
+            log.info("Consumed product deleted {}", id);
+        } catch (ResourceNotFound e) {
+            log.error("Consumed product not found {} for delete", id);
+        }
     }
 
 }

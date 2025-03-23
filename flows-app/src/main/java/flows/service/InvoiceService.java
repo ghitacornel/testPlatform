@@ -34,7 +34,7 @@ public class InvoiceService {
         try {
             orderDetails = orderClient.findById(id);
         } catch (ResourceNotFound e) {
-            log.error("order not found {} {}", id, e.getMessage());
+            log.error("Order not found {}", id);
             return;
         }
 
@@ -93,15 +93,25 @@ public class InvoiceService {
                     .companyCountry(companyDetails.getCountry())
                     .build());
 
-            invoiceClient.complete(id);
-            orderClient.invoice(id);
-
         } catch (BusinessException e) {
-            log.error("business error completing order {} {}", id, e.getMessage());
+            log.error("business error updating invoice order {} {}", id, e.getMessage());
             errorInvoice(id, e.getMessage());
         } catch (Exception e) {
             errorInvoice(id, e.getMessage());
             throw e;
+        }
+
+        try {
+            invoiceClient.complete(id);
+        } catch (ResourceNotFound e) {
+            log.error("Invoice not found {}", id);
+            return;
+        }
+
+        try {
+            orderClient.invoice(id);
+        } catch (ResourceNotFound e) {
+            log.error("Order not found {}", id);
         }
 
     }
