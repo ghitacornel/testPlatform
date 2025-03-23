@@ -69,7 +69,7 @@ public class OrderService {
         if (order.isCancelled()) {
             return;
         }
-        order.markAsCompleted();
+        order.complete();
         log.info("Completed {}", id);
     }
 
@@ -111,7 +111,7 @@ public class OrderService {
         if (order.isCancelled()) {
             return;
         }
-        order.markAsCancelled();
+        order.cancel();
         log.info("Cancelled {}", id);
     }
 

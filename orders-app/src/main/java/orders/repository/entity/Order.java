@@ -37,11 +37,11 @@ public class Order extends Identifiable {
     @Enumerated
     private OrderStatus status = OrderStatus.NEW;
 
-    public void markAsCancelled() {
+    public void cancel() {
         status = OrderStatus.CANCELLED;
     }
 
-    public void markAsCompleted() {
+    public void complete() {
         status = OrderStatus.COMPLETED;
     }
 
