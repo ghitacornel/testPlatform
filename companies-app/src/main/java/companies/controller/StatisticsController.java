@@ -1,7 +1,7 @@
-package invoices.controller;
+package companies.controller;
 
-import invoices.repository.InvoiceRepository;
-import invoices.repository.entity.InvoiceStatus;
+import companies.repository.CompanyRepository;
+import companies.repository.entity.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +15,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StatisticsController {
 
-    private final InvoiceRepository repository;
+    private final CompanyRepository repository;
 
     @GetMapping
     public Map<String, Object> statistics() {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("all", repository.count());
-        result.put("new", repository.countByStatus(InvoiceStatus.NEW));
-        result.put("completed", repository.countByStatus(InvoiceStatus.COMPLETED));
-        result.put("error", repository.countByStatus(InvoiceStatus.ERROR));
+        result.put("active", repository.countByStatus(Status.ACTIVE));
+        result.put("retired", repository.countByStatus(Status.RETIRED));
         return result;
     }
 

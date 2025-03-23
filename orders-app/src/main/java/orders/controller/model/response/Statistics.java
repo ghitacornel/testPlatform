@@ -13,7 +13,10 @@ public class Statistics {
 
     private long countAll;
     private long countNew;
-    private long countCancelled;
     private long countCompleted;
+    private long countSentForInvoice;
+    private long countInvoiced;
+    private long countCancelled;
+    private long countRejected;
 
 }
