@@ -69,7 +69,7 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancelByProductId(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @PostMapping("orders/reject")
+    @PatchMapping(path = "orders/reject", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void reject(@Valid @NotNull OrderRejectRequest request);
 
