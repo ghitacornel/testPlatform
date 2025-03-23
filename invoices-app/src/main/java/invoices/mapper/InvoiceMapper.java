@@ -50,6 +50,7 @@ public interface InvoiceMapper {
     @Mapping(target = "productColor", ignore = true)
     @Mapping(target = "productPrice", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "creationDateTime", ignore = true)
     void update(@MappingTarget Invoice invoice, UpdateCompanyRequest data);
 
     @Mapping(target = "id", ignore = true)
