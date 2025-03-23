@@ -32,7 +32,7 @@ public class InvoiceService {
         try {
             orderDetails = orderClient.findById(id);
         } catch (BusinessException e) {
-            log.error("business error completing order {} {}", id, e.getMessage());
+            log.error("business error fetching order to complete {} {}", id, e.getMessage());
             return;
         }
 
