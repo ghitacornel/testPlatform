@@ -11,7 +11,7 @@ class CompleteOrdersQueueListener {
 
     private final InvoiceService invoiceService;
 
-    @JmsListener(destination = "CompletedOrdersQueueName", concurrency = "10")
+    @JmsListener(destination = "CompletedOrdersQueueName")
     public void listenerForCompletedOrdersQueueName(Integer id) {
         invoiceService.complete(id);
     }

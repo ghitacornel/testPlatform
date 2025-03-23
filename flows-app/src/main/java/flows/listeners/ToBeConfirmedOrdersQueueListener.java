@@ -11,7 +11,7 @@ class ToBeConfirmedOrdersQueueListener {
 
     private final OrderService orderService;
 
-    @JmsListener(destination = "ToBeConfirmedOrdersQueueName", concurrency = "10")
+    @JmsListener(destination = "ToBeConfirmedOrdersQueueName")
     public void listenerForToBeConfirmedOrdersQueueName(Integer id) {
         orderService.confirm(id);
     }
