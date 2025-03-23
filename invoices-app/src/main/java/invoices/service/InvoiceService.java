@@ -76,7 +76,7 @@ public class InvoiceService {
 
     public void error(Integer id) {
         repository.error(id);
-        log.info("Error: {}", id);
+        log.error("Error: {}", id);
     }
 
     public boolean existsByOrderId(Integer id) {
