@@ -34,7 +34,7 @@ public class InvoiceService {
         try {
             orderDetails = orderClient.findById(id);
         } catch (ResourceNotFound e) {
-            log.error("Order not found {}", id);
+            log.error("Order not found for completion {}", id);
             return;
         }
 
@@ -114,7 +114,7 @@ public class InvoiceService {
         try {
             orderClient.invoice(id);
         } catch (ResourceNotFound e) {
-            log.error("Order not found {}", id);
+            log.error("Order not found for completion after invoice is completed {}", id);
         }
 
     }
