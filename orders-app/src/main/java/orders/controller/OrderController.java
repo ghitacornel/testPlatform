@@ -4,6 +4,7 @@ import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderContract;
 import contracts.orders.OrderDetailsResponse;
+import contracts.orders.OrderRejectRequest;
 import lombok.RequiredArgsConstructor;
 import orders.service.OrderService;
 import org.springframework.web.bind.annotation.*;
@@ -85,8 +86,8 @@ public class OrderController implements OrderContract {
         service.cancelByProductId(id);
     }
 
-    public void reject(Integer id, String reason) {
-        service.reject(id, reason);
+    public void reject(OrderRejectRequest request) {
+        service.reject(request.getId(), request.getReason());
     }
 
     public void delete(Integer id) {

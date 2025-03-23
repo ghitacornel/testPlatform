@@ -70,9 +70,9 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancelByProductId(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @PatchMapping("orders/reject/{id}/{reason}")
+    @PatchMapping("orders/reject")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void reject(@Valid @NotNull @PathVariable("id") Integer id, @Valid @NotBlank @PathVariable("reason") String reason);
+    void reject(@Valid @NotNull OrderRejectRequest request);
 
     @DeleteMapping("orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

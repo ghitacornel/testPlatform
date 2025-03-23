@@ -6,6 +6,7 @@ import commons.exceptions.RestTechnicalException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
+import contracts.orders.OrderRejectRequest;
 import contracts.products.ProductBuyRequest;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
@@ -126,7 +127,7 @@ public class OrderService {
 
     private void rejectOrder(Integer id, String message) {
         try {
-            orderClient.reject(id, message);
+            orderClient.reject(new OrderRejectRequest(id, message));
             log.warn("Order rejected {} {}", id, message);
         } catch (ResourceNotFound e) {
             log.error("Order not found for rejection {} {}", id, message);
