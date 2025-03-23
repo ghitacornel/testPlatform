@@ -8,52 +8,12 @@ services:
       - "8161:8161"
       - "11111:61616"
 
-  postgres_clients:
+  postgres_all:
     image: postgres:latest
-    container_name: clients
+    container_name: all
     ports:
-      - "1111:5432"
+      - "5432:5432"
     environment:
-      - POSTGRES_USER=clients
-      - POSTGRES_PASSWORD=clients
-      - POSTGRES_DB=clients
-
-  postgres_companies:
-    image: postgres:latest
-    container_name: companies
-    ports:
-      - "2222:5432"
-    environment:
-      - POSTGRES_USER=companies
-      - POSTGRES_PASSWORD=companies
-      - POSTGRES_DB=companies
-
-  postgres_products:
-    image: postgres:latest
-    container_name: products
-    ports:
-      - "3333:5432"
-    environment:
-      - POSTGRES_USER=products
-      - POSTGRES_PASSWORD=products
-      - POSTGRES_DB=products
-
-  postgres_orders:
-    image: postgres:latest
-    container_name: orders
-    ports:
-      - "4444:5432"
-    environment:
-      - POSTGRES_USER=orders
-      - POSTGRES_PASSWORD=orders
-      - POSTGRES_DB=orders
-
-  postgres_invoices:
-    image: postgres:latest
-    container_name: invoices
-    ports:
-      - "5555:5432"
-    environment:
-      - POSTGRES_USER=invoices
-      - POSTGRES_PASSWORD=invoices
-      - POSTGRES_DB=invoices
+      - POSTGRES_USER=all
+      - POSTGRES_PASSWORD=all
+      - POSTGRES_DB=all
