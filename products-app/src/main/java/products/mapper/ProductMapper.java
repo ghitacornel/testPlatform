@@ -4,9 +4,10 @@ import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 import products.repository.entity.Product;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface ProductMapper {
 
     ProductDetailsResponse map(Product model);

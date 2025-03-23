@@ -4,7 +4,7 @@ import contracts.invoices.*;
 import invoices.repository.entity.Invoice;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface InvoiceMapper {
 
     InvoiceDetails map(Invoice data);
