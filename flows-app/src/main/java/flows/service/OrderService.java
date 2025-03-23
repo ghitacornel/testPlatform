@@ -98,6 +98,10 @@ public class OrderService {
 
         try {
             orderClient.complete(id);
+        } catch (BusinessException e) {
+            log.warn("problem reserving product for order {} {}", id, e.getMessage());
+            orderClient.reject(id);
+            return;
         } catch (Exception e) {
             log.error("Error marking order as completed {}", id, e);
             return;
