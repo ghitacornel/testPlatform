@@ -23,6 +23,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
     @Query("update Invoice i set i.status = invoices.repository.entity.InvoiceStatus.ERROR where i.id = :id")
     void error(@Param("id") Integer id);
 
+    long countByStatus(InvoiceStatus status);
+
     boolean existsByClientId(Integer id);
 
     boolean existsByCompanyId(Integer id);

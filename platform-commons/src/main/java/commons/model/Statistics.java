@@ -12,5 +12,8 @@ import lombok.NoArgsConstructor;
 public class Statistics {
 
     private long countAll;
+    private long countNew;
+    private long countCompleted;
+    private long countError;
 
 }
