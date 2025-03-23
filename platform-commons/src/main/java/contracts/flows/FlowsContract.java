@@ -11,10 +11,6 @@ public interface FlowsContract {
     @PostMapping(value = "camel/orders/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse createOrder(@RequestBody CreateOrderRequest inputModel);
 
-    @PatchMapping("camel/orders/complete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    void completeOrder(@PathVariable("id") Integer id);
-
     @PatchMapping("camel/orders/cancel/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancelOrder(@PathVariable("id") Integer id);

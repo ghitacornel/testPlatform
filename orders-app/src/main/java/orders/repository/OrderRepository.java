@@ -34,6 +34,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.NEW")
     List<Integer> findNewIds();
 
+    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.REJECTED")
+    List<Integer> findRejectedIds();
+
     @Query("select o from Order o where o.clientId = :id and o.status = contracts.orders.OrderStatus.NEW")
     List<Order> findAllNewForClientId(@Param("id") Integer id);
 

@@ -39,6 +39,10 @@ public class OrderService {
         return repository.findNewIds();
     }
 
+    public List<Integer> findRejectedIds() {
+        return repository.findRejectedIds();
+    }
+
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
         return repository.findAllNewForClientId(id).stream().map(orderMapper::map).toList();
     }
@@ -117,6 +121,19 @@ public class OrderService {
 
     public void cancelByProductId(Integer id) {
         repository.findActiveIdsByProductId(id).forEach(this::cancel);
+    }
+
+    public void reject(Integer id) {
+        Order order = repository.findById(id).orElse(null);
+        if (order == null) {
+            log.warn("Not found for reject {}", id);
+            return;
+        }
+        if (!order.isNew()) {
+            return;
+        }
+        order.reject();
+        log.info("Rejected {}", id);
     }
 
     public boolean existsByProductId(Integer id) {

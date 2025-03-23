@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.BusinessException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
@@ -23,20 +24,15 @@ public class OrderService {
     private final OrderServiceHelper helper;
 
     public IdResponse createOrder(CreateOrderRequest request) {
-        ProductBuyRequest productBuyRequest = ProductBuyRequest.builder()
-                .clientId(request.getClientId())
-                .productId(request.getProductId())
-                .quantity(request.getQuantity())
-                .build();
 
-        productClient.buy(productBuyRequest);
-        return orderClient.create(request);
-    }
+        IdResponse idResponse = orderClient.create(request);
 
-    public void completeOrder(Integer id) {
-        orderClient.complete(id);
-        jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
-        log.info("Order completed {}", id);
+        try {
+            jmsTemplate.convertAndSend("ToBeConfirmedOrdersQueueName", idResponse.getId());
+        } catch (Exception e) {
+            log.error("error sending order confirmation {}", idResponse.getId(), e);
+        }
+        return idResponse;
     }
 
     public void cancelOrder(Integer id) {
@@ -54,6 +50,57 @@ public class OrderService {
     @Async
     public void deleteInvoiced() {
         orderClient.findInvoicedIds().forEach(helper::deleteInvoiced);
+    }
+
+    @Async
+    public void deleteRejected() {
+        orderClient.findRejectedIds().forEach(helper::deleteRejected);
+    }
+
+    public void confirm(Integer id) {
+
+        OrderDetailsResponse orderDetails;
+        try {
+            orderDetails = orderClient.findById(id);
+        } catch (BusinessException e) {
+            log.error("Error finding order details {} {}", id, e.getMessage());
+            return;
+        } catch (Exception e) {
+            log.error("Error finding order details {}", id, e);
+            return;
+        }
+
+        ProductBuyRequest productBuyRequest = ProductBuyRequest.builder()
+                .clientId(orderDetails.getClientId())
+                .productId(orderDetails.getProductId())
+                .quantity(orderDetails.getQuantity())
+                .build();
+        try {
+            productClient.buy(productBuyRequest);
+        } catch (BusinessException e) {
+            log.error("Error reserving product for order {} {}", id, e.getMessage());
+            orderClient.reject(id);
+            return;
+        } catch (Exception e) {
+            log.error("Error reserving product for order {}", id, e);
+            orderClient.reject(id);
+            return;
+        }
+
+        try {
+            orderClient.complete(id);
+        } catch (Exception e) {
+            log.error("Error marking order as completed {}", id, e);
+            return;
+        }
+
+        try {
+            jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
+        } catch (Exception e) {
+            log.error("Error sending order id to CompletedOrdersQueueName {}", id, e);
+            return;
+        }
+        log.info("Order completed {}", id);
     }
 
 }

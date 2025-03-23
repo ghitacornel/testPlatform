@@ -20,10 +20,5 @@ class OrderScheduler {
         service.cancel();
     }
 
-    @Scheduled(fixedRate = 100, initialDelay = 1000)
-    void complete() {
-        service.complete();
-    }
-
 }
 

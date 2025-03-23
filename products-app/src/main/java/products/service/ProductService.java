@@ -4,12 +4,12 @@ import commons.model.IdResponse;
 import contracts.products.ProductBuyRequest;
 import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import products.exceptions.CannotBuyMoreThanAvailableException;
+import products.exceptions.ProductNotFoundException;
 import products.mapper.ProductMapper;
 import products.repository.ProductRepository;
 import products.repository.entity.Product;
@@ -52,7 +52,7 @@ public class ProductService {
     public void buy(ProductBuyRequest request) {
 
         Product product = repository.findById(request.getProductId())
-                .orElseThrow(() -> new EntityNotFoundException("Product with id " + request.getProductId() + " not found"));
+                .orElseThrow(() -> new ProductNotFoundException(request.getProductId()));
 
         if (product.getQuantity() < request.getQuantity()) {
             throw new CannotBuyMoreThanAvailableException(request.getProductId(), request.getQuantity(), product.getQuantity());
@@ -68,7 +68,7 @@ public class ProductService {
     public ProductDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(productMapper::map)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     public void refill(Integer id, Integer quantity) {

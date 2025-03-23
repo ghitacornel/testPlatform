@@ -79,17 +79,6 @@ public class OrderService {
         log.info("Order cancelled {}", id);
     }
 
-    @Async
-    public void complete() {
-        Integer id = GenerateUtils.random(orderClient.findNewIds(), random, cacheCompleted);
-        if (id == null) {
-            log.warn("No order to complete");
-            return;
-        }
-        flowsClient.completeOrder(id);
-        log.info("Order completed {}", id);
-    }
-
     private int generateRandomQuantity(ProductDetailsResponse productDetailsResponse) {
         int quantity = random.nextInt(productDetailsResponse.getQuantity());
         if (quantity == 0) quantity++;

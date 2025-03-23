@@ -33,6 +33,10 @@ public class OrderController implements OrderContract {
         return service.findNewIds();
     }
 
+    public List<Integer> findRejectedIds() {
+        return service.findRejectedIds();
+    }
+
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
         return service.findAllNewForClientId(id);
     }
@@ -79,6 +83,10 @@ public class OrderController implements OrderContract {
 
     public void cancelByProductId(Integer id) {
         service.cancelByProductId(id);
+    }
+
+    public void reject(Integer id) {
+        service.reject(id);
     }
 
     public void delete(Integer id) {

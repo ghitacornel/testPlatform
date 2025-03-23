@@ -51,4 +51,9 @@ class JMSConfiguration {
         return new ActiveMQQueue("CompletedOrdersQueueName");
     }
 
+    @Bean
+    Queue tobeConfirmedOrdersQueue() {
+        return new ActiveMQQueue("ToBeConfirmedOrdersQueueName");
+    }
+
 }

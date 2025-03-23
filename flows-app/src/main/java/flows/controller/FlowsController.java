@@ -21,10 +21,6 @@ public class FlowsController implements FlowsContract {
         return orderService.createOrder(request);
     }
 
-    public void completeOrder(Integer id) {
-        orderService.completeOrder(id);
-    }
-
     public void cancelOrder(Integer id) {
         orderService.cancelOrder(id);
     }

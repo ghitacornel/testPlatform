@@ -25,6 +25,9 @@ public interface OrderContract {
     @GetMapping(value = "orders/new/ids", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findNewIds();
 
+    @GetMapping(value = "orders/rejected/ids", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findRejectedIds();
+
     @GetMapping(value = "orders/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     List<OrderDetailsResponse> findAllNewForClientId(@Valid @NotNull @PathVariable("id") Integer id);
 
@@ -65,6 +68,10 @@ public interface OrderContract {
     @PatchMapping("orders/cancel/product/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void cancelByProductId(@Valid @NotNull @PathVariable("id") Integer id);
+
+    @PatchMapping("orders/reject/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void reject(@Valid @NotNull @PathVariable("id") Integer id);
 
     @DeleteMapping("orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

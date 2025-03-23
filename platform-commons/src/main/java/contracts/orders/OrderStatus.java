@@ -6,6 +6,7 @@ public enum OrderStatus {
     COMPLETED,
     SENT_TO_INVOICE,
     INVOICED,
-    CANCELLED
+    CANCELLED,
+    REJECTED
 
 }

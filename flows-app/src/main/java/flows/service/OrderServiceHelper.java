@@ -33,4 +33,10 @@ class OrderServiceHelper {
         log.info("Order invoiced deleted {}", id);
     }
 
+    @Async
+    void deleteRejected(Integer id) {
+        orderClient.delete(id);
+        log.info("Order rejected deleted {}", id);
+    }
+
 }

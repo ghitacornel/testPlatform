@@ -45,12 +45,20 @@ public class Order extends Identifiable {
         status = OrderStatus.COMPLETED;
     }
 
+    public void reject() {
+        status = OrderStatus.REJECTED;
+    }
+
     public void markAsInvoiced() {
         status = OrderStatus.INVOICED;
     }
 
     public void markAsSentToInvoice() {
         status = OrderStatus.SENT_TO_INVOICE;
+    }
+
+    public boolean isNew() {
+        return status == OrderStatus.NEW;
     }
 
     public boolean isCompleted() {

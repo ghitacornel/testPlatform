@@ -16,5 +16,10 @@ class OrderScheduler {
         orderService.deleteInvoiced();
     }
 
+    @Scheduled(fixedRate = 10000, initialDelay = 10000)
+    void deleteRejected() {
+        orderService.deleteRejected();
+    }
+
 }
 
