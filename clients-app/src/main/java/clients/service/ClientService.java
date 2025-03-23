@@ -58,7 +58,7 @@ public class ClientService {
     public void retire(Integer id) {
         Client client = repository.findById(id).orElse(null);
         if (client == null) {
-            log.info("unregistered not found {}", id);
+            log.warn("client not found {}", id);
             return;
         }
         client.retire();

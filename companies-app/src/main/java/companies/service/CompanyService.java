@@ -56,7 +56,12 @@ public class CompanyService {
     }
 
     public void retire(Integer id) {
-        repository.findById(id).ifPresent(Company::retire);
+        Company company = repository.findById(id).orElse(null);
+        if (company == null) {
+            log.warn("company not found {}", id);
+            return;
+        }
+        company.retire();
         log.info("unregistered {}", id);
     }
 
