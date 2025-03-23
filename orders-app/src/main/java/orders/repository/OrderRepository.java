@@ -17,7 +17,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("delete from Order o where o.status = :status")
     void deleteByStatus(@Param("status") Status status);
 
-    List<Integer> findIdsByStatus(Status status);
+    @Query("select o.id from Order o where o.status = :status")
+    List<Integer> findIdsByStatus(@Param("status") Status status);
 
     @Query("select o from Order o where o.clientId = :id and o.status = contracts.orders.Status.NEW")
     List<Order> findAllNewForClientId(@Param("id") Integer id);
