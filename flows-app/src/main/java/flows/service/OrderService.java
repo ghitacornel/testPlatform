@@ -68,10 +68,10 @@ public class OrderService {
         try {
             orderDetails = orderClient.findById(id);
         } catch (BusinessException e) {
-            log.error("Error finding order details {} {}", id, e.getMessage());
+            log.error("Error finding order {} {}", id, e.getMessage());
             return;
         } catch (Exception e) {
-            log.error("Error finding order details {}", id, e);
+            log.error("Error finding order {}", id, e);
             return;
         }
 
