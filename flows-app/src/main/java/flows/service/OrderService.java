@@ -79,6 +79,7 @@ public class OrderService {
         orderClient.findRejectedIds().forEach(helper::deleteRejected);
     }
 
+    @Async
     public void confirm(Integer id) {
 
         OrderDetailsResponse orderDetails;
