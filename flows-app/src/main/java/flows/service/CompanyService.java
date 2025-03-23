@@ -1,6 +1,7 @@
 package flows.service;
 
 import commons.exceptions.ResourceNotFound;
+import contracts.products.ProductDetailsResponse;
 import flows.clients.CompanyClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -28,9 +31,10 @@ public class CompanyService {
             return;
         }
 
-        productClient.findAllActiveForCompany(id)
-                .forEach(product -> orderClient.cancelByProductId(product.getId()));
+        List<ProductDetailsResponse> products = productClient.findAllActiveForCompany(id);
         productClient.cancelByCompany(id);
+        products.forEach(product -> orderClient.cancelByProductId(product.getId()));
+
         log.info("Company retired {}", id);
     }
 
