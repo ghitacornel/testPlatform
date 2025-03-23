@@ -28,7 +28,13 @@ public class InvoiceService {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void complete(Integer id) {
 
-        OrderDetailsResponse orderDetails = orderClient.findById(id);
+        OrderDetailsResponse orderDetails;
+        try {
+            orderDetails = orderClient.findById(id);
+        } catch (BusinessException e) {
+            log.error("business error completing order {} {}", id, e.getMessage());
+            return;
+        }
 
         invoiceClient.create(InvoiceCreateRequest.builder()
                 .orderId(orderDetails.getId())
