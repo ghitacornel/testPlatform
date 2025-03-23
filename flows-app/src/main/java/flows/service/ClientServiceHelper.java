@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.ResourceNotFound;
 import flows.clients.ClientClient;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
@@ -25,8 +26,12 @@ class ClientServiceHelper {
         if (invoiceClient.existsByClientId(id)) {
             return;
         }
-        clientClient.delete(id);
-        log.info("Retired client deleted {}", id);
+        try {
+            clientClient.delete(id);
+            log.info("Retired client deleted {}", id);
+        } catch (ResourceNotFound e) {
+            log.warn("Retired client not found {}", id);
+        }
     }
 
 }

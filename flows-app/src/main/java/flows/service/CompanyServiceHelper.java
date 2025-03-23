@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.ResourceNotFound;
 import flows.clients.CompanyClient;
 import flows.clients.InvoiceClient;
 import flows.clients.ProductClient;
@@ -25,8 +26,13 @@ class CompanyServiceHelper {
         if (invoiceClient.existsByCompanyId(id)) {
             return;
         }
-        companyClient.delete(id);
-        log.info("Retired company deleted {}", id);
+
+        try {
+            companyClient.delete(id);
+            log.info("Retired company deleted {}", id);
+        } catch (ResourceNotFound e) {
+            log.warn("Retired company not found {}", id);
+        }
     }
 
 }
