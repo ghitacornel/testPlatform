@@ -11,12 +11,12 @@ class InvoiceScheduler {
 
     private final OrderService orderService;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     void sendCompletedToInvoice() {
         orderService.sendCompletedToInvoice();
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     void checkSentToInvoice() {
         orderService.checkSentToInvoice();
     }

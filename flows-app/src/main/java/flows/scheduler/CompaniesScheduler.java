@@ -11,7 +11,7 @@ class CompaniesScheduler {
 
     private final CompanyService companyService;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     void deleteRetired() {
         companyService.deleteRetired();
     }
