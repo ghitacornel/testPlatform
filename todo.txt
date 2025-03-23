@@ -7,4 +7,4 @@ TODO
 replace jms with kafka
 spring cloud gateway / spring-cloud-kubernetes
 
-order -> NEW -> CONFIRMED -> COMPLETED/CANCELLED -> SEND TO INVOICE -> INVOICED
+order -> NEW -> COMPLETED/CANCELLED/REJECTED -> SEND TO INVOICE -> INVOICED
