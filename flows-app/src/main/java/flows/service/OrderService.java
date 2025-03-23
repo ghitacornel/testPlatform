@@ -99,7 +99,7 @@ public class OrderService {
         try {
             orderClient.complete(id);
         } catch (BusinessException e) {
-            log.warn("problem reserving product for order {} {}", id, e.getMessage());
+            log.warn("problem marking order as completed {} {}", id, e.getMessage());
             orderClient.reject(id);
             return;
         } catch (Exception e) {
