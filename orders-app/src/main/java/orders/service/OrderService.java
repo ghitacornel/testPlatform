@@ -1,11 +1,11 @@
 package orders.service;
 
-import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import orders.exceptions.OrderNotFoundException;
 import orders.mapper.OrderMapper;
 import orders.repository.OrderRepository;
 import orders.repository.entity.Order;
@@ -54,7 +54,7 @@ public class OrderService {
     public OrderDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(orderMapper::map)
-                .orElseThrow(() -> new ResourceNotFound("Order with id " + id + " not found"));
+                .orElseThrow(() -> new OrderNotFoundException(id));
     }
 
     public IdResponse create(CreateOrderRequest request) {
@@ -65,12 +65,8 @@ public class OrderService {
     }
 
     public void complete(Integer id) {
-        Order order = repository.findById(id).orElse(null);
-        if (order == null) {
-            log.warn("Not found for completion {}", id);
-            return;
-        }
-        if (order.isCancelled()) {
+        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        if (!order.isNew()) {
             return;
         }
         order.complete();
@@ -78,12 +74,8 @@ public class OrderService {
     }
 
     public void markAsSentToInvoice(Integer id) {
-        Order order = repository.findById(id).orElse(null);
-        if (order == null) {
-            log.warn("Not found for sending to invoice {}", id);
-            return;
-        }
-        if (order.isCancelled()) {
+        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        if (!order.isCompleted()) {
             return;
         }
         order.markAsSentToInvoice();
@@ -91,12 +83,8 @@ public class OrderService {
     }
 
     public void invoice(Integer id) {
-        Order order = repository.findById(id).orElse(null);
-        if (order == null) {
-            log.warn("Not found for invoice {}", id);
-            return;
-        }
-        if (order.isCancelled()) {
+        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        if (!order.isSentToInvoice()) {
             return;
         }
         order.markAsInvoiced();
@@ -104,15 +92,8 @@ public class OrderService {
     }
 
     public void cancel(Integer id) {
-        Order order = repository.findById(id).orElse(null);
-        if (order == null) {
-            log.warn("Not found for cancel {}", id);
-            return;
-        }
-        if (order.isCompleted()) {
-            return;
-        }
-        if (order.isCancelled()) {
+        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        if (!order.isNew()) {
             return;
         }
         order.cancel();
@@ -124,11 +105,7 @@ public class OrderService {
     }
 
     public void reject(Integer id) {
-        Order order = repository.findById(id).orElse(null);
-        if (order == null) {
-            log.warn("Not found for reject {}", id);
-            return;
-        }
+        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         if (!order.isNew()) {
             return;
         }

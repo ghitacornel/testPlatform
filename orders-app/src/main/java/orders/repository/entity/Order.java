@@ -69,4 +69,8 @@ public class Order extends Identifiable {
         return status == OrderStatus.CANCELLED;
     }
 
+    public boolean isSentToInvoice() {
+        return status == OrderStatus.SENT_TO_INVOICE;
+    }
+
 }

@@ -22,11 +22,11 @@ public class ControllerExceptionHandler extends CommonControllerExceptionHandler
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException e) {
-        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), NOT_FOUND);
     }
 
     @ExceptionHandler(org.hibernate.StaleObjectStateException.class)
-    public ResponseEntity<Object> handleCannotBuyMoreThanAvailableException(org.hibernate.StaleObjectStateException e) {
+    public ResponseEntity<Object> handleStaleObjectStateException(org.hibernate.StaleObjectStateException e) {
         log.error(e.getMessage());
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), INTERNAL_SERVER_ERROR);
     }
