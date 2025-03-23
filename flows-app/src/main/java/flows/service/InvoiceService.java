@@ -93,6 +93,9 @@ public class InvoiceService {
                     .companyCountry(companyDetails.getCountry())
                     .build());
 
+        } catch (ResourceNotFound e) {
+            log.error("Not found {} {}", id, e.getMessage());
+            errorInvoice(id, e.getMessage());
         } catch (BusinessException e) {
             log.error("business error updating invoice order {} {}", id, e.getMessage());
             errorInvoice(id, e.getMessage());
