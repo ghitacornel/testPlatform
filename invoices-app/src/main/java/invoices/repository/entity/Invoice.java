@@ -39,7 +39,7 @@ public class Invoice {
 
     @NotNull
     @Enumerated
-    private InvoiceStatus status = InvoiceStatus.NEW;
+    private Status status = Status.NEW;
 
     @NotNull
     private Instant creationDateTime = Instant.now();

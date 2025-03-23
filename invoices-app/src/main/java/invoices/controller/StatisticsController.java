@@ -1,12 +1,13 @@
 package invoices.controller;
 
 import invoices.repository.InvoiceRepository;
-import invoices.repository.entity.InvoiceStatus;
+import invoices.repository.entity.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -21,9 +22,7 @@ public class StatisticsController {
     public Map<String, Object> statistics() {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("all", repository.count());
-        result.put("new", repository.countByStatus(InvoiceStatus.NEW));
-        result.put("completed", repository.countByStatus(InvoiceStatus.COMPLETED));
-        result.put("error", repository.countByStatus(InvoiceStatus.ERROR));
+        Arrays.stream(Status.values()).forEach(status -> result.put(status.name().toLowerCase(), repository.countByStatus(status)));
         return result;
     }
 

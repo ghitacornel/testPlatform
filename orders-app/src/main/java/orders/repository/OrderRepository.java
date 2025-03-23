@@ -1,6 +1,6 @@
 package orders.repository;
 
-import contracts.orders.OrderStatus;
+import contracts.orders.Status;
 import orders.repository.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,57 +11,57 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    List<Order> findByStatus(OrderStatus status);
+    List<Order> findByStatus(Status status);
 
     default List<Order> findAllNew() {
-        return findByStatus(OrderStatus.NEW);
+        return findByStatus(Status.NEW);
     }
 
     @Modifying
-    @Query("delete from Order o where o.status = contracts.orders.OrderStatus.CANCELLED")
+    @Query("delete from Order o where o.status = contracts.orders.Status.CANCELLED")
     void deleteAllByStatusCancelled();
 
     @Modifying
-    @Query("delete from Order o where o.status = contracts.orders.OrderStatus.INVOICED")
+    @Query("delete from Order o where o.status = contracts.orders.Status.INVOICED")
     void deleteAllByStatusInvoiced();
 
-    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.COMPLETED")
+    @Query("select o.id from Order o where o.status = contracts.orders.Status.COMPLETED")
     List<Integer> findCompletedIds();
 
-    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.INVOICED")
+    @Query("select o.id from Order o where o.status = contracts.orders.Status.INVOICED")
     List<Integer> findInvoicedIds();
 
-    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.NEW")
+    @Query("select o.id from Order o where o.status = contracts.orders.Status.NEW")
     List<Integer> findNewIds();
 
-    @Query("select o.id from Order o where o.status = contracts.orders.OrderStatus.REJECTED")
+    @Query("select o.id from Order o where o.status = contracts.orders.Status.REJECTED")
     List<Integer> findRejectedIds();
 
-    @Query("select o from Order o where o.clientId = :id and o.status = contracts.orders.OrderStatus.NEW")
+    @Query("select o from Order o where o.clientId = :id and o.status = contracts.orders.Status.NEW")
     List<Order> findAllNewForClientId(@Param("id") Integer id);
 
-    @Query("select o from Order o where o.productId = :id and o.status = contracts.orders.OrderStatus.NEW")
+    @Query("select o from Order o where o.productId = :id and o.status = contracts.orders.Status.NEW")
     List<Order> findAllNewForProductId(@Param("id") Integer id);
 
     boolean existsByProductId(Integer id);
 
     boolean existsByClientId(Integer id);
 
-    long countByStatus(OrderStatus status);
+    long countByStatus(Status status);
 
     default long countAllNew() {
-        return countByStatus(OrderStatus.NEW);
+        return countByStatus(Status.NEW);
     }
 
     default long countAllCancelled() {
-        return countByStatus(OrderStatus.CANCELLED);
+        return countByStatus(Status.CANCELLED);
     }
 
     default long countAllCompleted() {
-        return countByStatus(OrderStatus.COMPLETED);
+        return countByStatus(Status.COMPLETED);
     }
 
-    @Query("select o.id from Order o where o.productId = :id and o.status = contracts.orders.OrderStatus.NEW")
+    @Query("select o.id from Order o where o.productId = :id and o.status = contracts.orders.Status.NEW")
     List<Integer> findActiveIdsByProductId(@Param("id") Integer id);
 
 }

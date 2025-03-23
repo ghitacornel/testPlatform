@@ -4,42 +4,42 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import products.repository.entity.Product;
 
-import products.repository.entity.ProductStatus;
+import products.repository.entity.Status;
 
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    List<Product> findByStatus(ProductStatus status);
+    List<Product> findByStatus(Status status);
 
-    @Query("select p from Product p where p.companyId = :id and p.status = products.repository.entity.ProductStatus.ACTIVE")
+    @Query("select p from Product p where p.companyId = :id and p.status = products.repository.entity.Status.ACTIVE")
     List<Product> findAllActiveForCompany(@Param("id") Integer id);
 
     default List<Product> findAllActive() {
-        return findByStatus(ProductStatus.ACTIVE);
+        return findByStatus(Status.ACTIVE);
     }
 
-    long countByStatus(ProductStatus status);
+    long countByStatus(Status status);
 
     default long countAllActive() {
-        return countByStatus(ProductStatus.ACTIVE);
+        return countByStatus(Status.ACTIVE);
     }
 
     default long countAllCancelled() {
-        return countByStatus(ProductStatus.CANCELLED);
+        return countByStatus(Status.CANCELLED);
     }
 
     default long countAllConsumed() {
-        return countByStatus(ProductStatus.CONSUMED);
+        return countByStatus(Status.CONSUMED);
     }
 
-    @Query("select p.id from Product p where p.status = products.repository.entity.ProductStatus.CONSUMED")
+    @Query("select p.id from Product p where p.status = products.repository.entity.Status.CONSUMED")
     List<Integer> findConsumedIds();
 
-    @Query("select p.id from Product p where p.status = products.repository.entity.ProductStatus.CANCELLED")
+    @Query("select p.id from Product p where p.status = products.repository.entity.Status.CANCELLED")
     List<Integer> findCancelledIds();
 
-    @Query("select p.id from Product p where p.status = products.repository.entity.ProductStatus.ACTIVE")
+    @Query("select p.id from Product p where p.status = products.repository.entity.Status.ACTIVE")
     List<Integer> findActiveIds();
 
     List<Product> findByCompanyId(Integer id);

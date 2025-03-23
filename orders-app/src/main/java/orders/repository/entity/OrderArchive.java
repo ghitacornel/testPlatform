@@ -1,6 +1,6 @@
 package orders.repository.entity;
 
-import contracts.orders.OrderStatus;
+import contracts.orders.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -30,6 +30,6 @@ public class OrderArchive {
 
     @NotNull
     @Enumerated
-    private OrderStatus status;
+    private Status status;
 
 }

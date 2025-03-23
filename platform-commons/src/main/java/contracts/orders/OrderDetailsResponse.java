@@ -9,6 +9,6 @@ public class OrderDetailsResponse {
     private Integer clientId;
     private Integer productId;
     private Integer quantity;
-    private OrderStatus status;
+    private Status status;
 
 }

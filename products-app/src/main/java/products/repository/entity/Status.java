@@ -1,6 +1,6 @@
 package products.repository.entity;
 
-public enum ProductStatus {
+public enum Status {
 
     ACTIVE,
     CANCELLED,

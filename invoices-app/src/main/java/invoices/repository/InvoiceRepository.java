@@ -1,7 +1,7 @@
 package invoices.repository;
 
 import invoices.repository.entity.Invoice;
-import invoices.repository.entity.InvoiceStatus;
+import invoices.repository.entity.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,17 +13,17 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
     @Modifying
     @Query("delete from Invoice i where i.status = :status and i.creationDateTime <= :referenceDateTime ")
-    void deleteByStatusAndReferenceDateTime(@Param("status") InvoiceStatus status, @Param("referenceDateTime") Instant referenceDateTime);
+    void deleteByStatusAndReferenceDateTime(@Param("status") Status status, @Param("referenceDateTime") Instant referenceDateTime);
 
     @Modifying
-    @Query("update Invoice i set i.status = invoices.repository.entity.InvoiceStatus.COMPLETED where i.id = :id")
+    @Query("update Invoice i set i.status = invoices.repository.entity.Status.COMPLETED where i.id = :id")
     void complete(@Param("id") Integer id);
 
     @Modifying
-    @Query("update Invoice i set i.status = invoices.repository.entity.InvoiceStatus.ERROR where i.id = :id")
+    @Query("update Invoice i set i.status = invoices.repository.entity.Status.ERROR where i.id = :id")
     void error(@Param("id") Integer id);
 
-    long countByStatus(InvoiceStatus status);
+    long countByStatus(Status status);
 
     boolean existsByClientId(Integer id);
 

@@ -1,6 +1,6 @@
 package contracts.orders;
 
-public enum OrderStatus {
+public enum Status {
 
     NEW,
     COMPLETED,

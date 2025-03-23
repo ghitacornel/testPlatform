@@ -1,7 +1,7 @@
 package orders.repository.entity;
 
 import commons.model.Identifiable;
-import contracts.orders.OrderStatus;
+import contracts.orders.Status;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,42 +35,42 @@ public class Order extends Identifiable {
 
     @NotNull
     @Enumerated
-    private OrderStatus status = OrderStatus.NEW;
+    private Status status = Status.NEW;
 
     public void cancel() {
-        status = OrderStatus.CANCELLED;
+        status = Status.CANCELLED;
     }
 
     public void complete() {
-        status = OrderStatus.COMPLETED;
+        status = Status.COMPLETED;
     }
 
     public void reject() {
-        status = OrderStatus.REJECTED;
+        status = Status.REJECTED;
     }
 
     public void markAsInvoiced() {
-        status = OrderStatus.INVOICED;
+        status = Status.INVOICED;
     }
 
     public void markAsSentToInvoice() {
-        status = OrderStatus.SENT_TO_INVOICE;
+        status = Status.SENT_TO_INVOICE;
     }
 
     public boolean isNew() {
-        return status == OrderStatus.NEW;
+        return status == Status.NEW;
     }
 
     public boolean isCompleted() {
-        return status == OrderStatus.COMPLETED;
+        return status == Status.COMPLETED;
     }
 
     public boolean isCancelled() {
-        return status == OrderStatus.CANCELLED;
+        return status == Status.CANCELLED;
     }
 
     public boolean isSentToInvoice() {
-        return status == OrderStatus.SENT_TO_INVOICE;
+        return status == Status.SENT_TO_INVOICE;
     }
 
 }

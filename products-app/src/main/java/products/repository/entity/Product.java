@@ -35,7 +35,7 @@ public class Product extends Identifiable {
 
     @NotNull
     @Enumerated
-    private ProductStatus status = ProductStatus.ACTIVE;
+    private Status status = Status.ACTIVE;
 
     @Version
     private Integer version;
@@ -50,12 +50,12 @@ public class Product extends Identifiable {
     @PreUpdate
     private void adjustStatusBasedOnQuantity() {
         if (quantity == 0) {
-            status = ProductStatus.CONSUMED;
+            status = Status.CONSUMED;
         }
     }
 
     public void cancel() {
-        status = ProductStatus.CANCELLED;
+        status = Status.CANCELLED;
     }
 
     public void refill(Integer refill) {

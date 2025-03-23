@@ -1,7 +1,7 @@
 package invoices.service;
 
 import invoices.repository.InvoiceRepository;
-import invoices.repository.entity.InvoiceStatus;
+import invoices.repository.entity.Status;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ public class InvoicesSchedulerService {
     private final InvoiceRepository repository;
 
     public void removeCompleted() {
-        repository.deleteByStatusAndReferenceDateTime(InvoiceStatus.COMPLETED, Instant.now().minusSeconds(60));
+        repository.deleteByStatusAndReferenceDateTime(Status.COMPLETED, Instant.now().minusSeconds(60));
     }
 
     public void removeError() {
-        repository.deleteByStatusAndReferenceDateTime(InvoiceStatus.ERROR, Instant.now().minusSeconds(60));
+        repository.deleteByStatusAndReferenceDateTime(Status.ERROR, Instant.now().minusSeconds(60));
     }
 
 }
