@@ -100,7 +100,12 @@ public class OrderService {
             orderClient.complete(id);
         } catch (BusinessException e) {
             log.warn("problem marking order as completed {} {}", id, e.getMessage());
-            orderClient.reject(id);
+            try {
+                orderClient.reject(id);
+            } catch (BusinessException ex) {
+                log.error("Error marking order as rejected {} {}", id, ex.getMessage());
+                return;
+            }
             return;
         } catch (Exception e) {
             log.error("Error marking order as completed {}", id, e);
