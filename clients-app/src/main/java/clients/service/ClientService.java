@@ -56,7 +56,12 @@ public class ClientService {
     }
 
     public void retire(Integer id) {
-        repository.findById(id).ifPresent(Client::retire);
+        Client client = repository.findById(id).orElse(null);
+        if (client == null) {
+            log.info("unregistered not found {}", id);
+            return;
+        }
+        client.retire();
         log.info("unregistered {}", id);
     }
 
