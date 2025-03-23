@@ -25,14 +25,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
         return countByStatus(Status.ACTIVE);
     }
 
-    default long countAllCancelled() {
-        return countByStatus(Status.CANCELLED);
-    }
-
-    default long countAllConsumed() {
-        return countByStatus(Status.CONSUMED);
-    }
-
     @Query("select p.id from Product p where p.status = products.repository.entity.Status.CONSUMED")
     List<Integer> findConsumedIds();
 

@@ -53,14 +53,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         return countByStatus(Status.NEW);
     }
 
-    default long countAllCancelled() {
-        return countByStatus(Status.CANCELLED);
-    }
-
-    default long countAllCompleted() {
-        return countByStatus(Status.COMPLETED);
-    }
-
     @Query("select o.id from Order o where o.productId = :id and o.status = contracts.orders.Status.NEW")
     List<Integer> findActiveIdsByProductId(@Param("id") Integer id);
 
