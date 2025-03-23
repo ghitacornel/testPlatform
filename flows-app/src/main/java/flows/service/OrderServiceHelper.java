@@ -18,7 +18,6 @@ class OrderServiceHelper {
     private final InvoiceClient invoiceClient;
     private final JmsTemplate jmsTemplate;
 
-    @Async
     void sendCompletedToInvoice(Integer id) {
         jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
 
