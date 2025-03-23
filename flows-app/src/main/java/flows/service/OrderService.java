@@ -86,9 +86,6 @@ public class OrderService {
         } catch (ResourceNotFound e) {
             log.error("Order not found for confirmation {}", id);
             return;
-        } catch (Exception e) {
-            log.error("Error finding order {}", id, e);
-            return;
         }
 
         ProductBuyRequest productBuyRequest = ProductBuyRequest.builder()

@@ -67,6 +67,10 @@ public class ProductController implements ProductContract {
         return service.findActiveIds();
     }
 
+    public List<Integer> findAllActiveIdsForCompany(Integer id) {
+        return service.findAllActiveIdsForCompany(id);
+    }
+
     public void delete(Integer id) {
         service.delete(id);
     }

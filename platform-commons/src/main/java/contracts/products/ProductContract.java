@@ -53,6 +53,9 @@ public interface ProductContract {
     @GetMapping(value = "products/ids/active", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findActiveIds();
 
+    @GetMapping(value = "products/ids/active/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findAllActiveIdsForCompany(@Valid @NotNull @PathVariable("id") Integer id);
+
     @DeleteMapping("products/{id}")
     void delete(@Valid @NotNull @PathVariable("id") Integer id);
 

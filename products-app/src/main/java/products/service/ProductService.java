@@ -46,7 +46,12 @@ public class ProductService {
     }
 
     public void cancel(Integer id) {
-        repository.getReferenceById(id).cancel();
+        Product product = repository.findById(id).orElse(null);
+        if (product == null) {
+            log.warn("Product not found for cancellation {}", id);
+            return;
+        }
+        product.cancel();
         log.info("canceled {}", id);
     }
 
@@ -61,6 +66,7 @@ public class ProductService {
 
         product.setQuantity(product.getQuantity() - request.getQuantity());
         if (product.getQuantity() == 0) {
+            product.setStatus(Status.ACTIVE);
             log.info("consumed {}", request.getProductId());
         }
 
@@ -73,14 +79,15 @@ public class ProductService {
     }
 
     public void refill(Integer id, Integer quantity) {
-        repository.getReferenceById(id).refill(quantity);
+        Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        product.refill(quantity);
         log.info("refill {} with quantity {}", id, quantity);
     }
 
     public void cancelByCompany(Integer id) {
         repository.findByCompanyId(id).forEach(product -> {
-            log.info("cancelled by company {}", product.getId());
             product.cancel();
+            log.info("cancelled by company {}", product.getId());
         });
     }
 
@@ -94,6 +101,10 @@ public class ProductService {
 
     public List<Integer> findActiveIds() {
         return repository.findIdsByStatus(Status.ACTIVE);
+    }
+
+    public List<Integer> findAllActiveIdsForCompany(Integer id) {
+        return repository.findAllActiveIdsForCompany(id);
     }
 
     public void delete(Integer id) {

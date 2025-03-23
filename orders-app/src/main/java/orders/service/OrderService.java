@@ -93,7 +93,11 @@ public class OrderService {
     }
 
     public void cancel(Integer id) {
-        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        Order order = repository.findById(id).orElse(null);
+        if (order == null) {
+            log.warn("Order not found for cancellation {}", id);
+            return;
+        }
         if (!order.isNew()) {
             return;
         }
@@ -106,7 +110,11 @@ public class OrderService {
     }
 
     public void reject(Integer id, String reason) {
-        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        Order order = repository.findById(id).orElse(null);
+        if (order == null) {
+            log.warn("Order not found for rejection {}", id);
+            return;
+        }
         if (!order.isNew()) {
             return;
         }

@@ -21,13 +21,13 @@ class OrderServiceHelper {
     @Async
     void sendCompletedToInvoice(Integer id) {
         jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
+
         try {
             orderClient.markAsSentToInvoice(id);
+            log.info("Order sent to invoice {}", id);
         } catch (ResourceNotFound e) {
             log.error("Order not found {} for sending to invoice", id);
-            return;
         }
-        log.info("Order sent to invoice {}", id);
     }
 
     @Async

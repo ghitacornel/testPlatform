@@ -70,15 +70,21 @@ public class InvoiceService {
     }
 
     public void complete(Integer id) {
-        Invoice invoice = repository.findById(id)
-                .orElseThrow(() -> new InvoiceNotFoundException(id));
+        Invoice invoice = repository.findById(id).orElse(null);
+        if (invoice == null) {
+            log.warn("Invoice not found for completion {}", id);
+            return;
+        }
         invoice.complete();
         log.info("Completed: {}", id);
     }
 
     public void error(Integer id, String message) {
-        Invoice invoice = repository.findById(id)
-                .orElseThrow(() -> new InvoiceNotFoundException(id));
+        Invoice invoice = repository.findById(id).orElse(null);
+        if (invoice == null) {
+            log.warn("Invoice not found for error {}", id);
+            return;
+        }
         invoice.error(message);
         log.error("{} {} ", id, message);
     }

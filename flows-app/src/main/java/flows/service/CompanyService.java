@@ -28,8 +28,7 @@ public class CompanyService {
             return;
         }
 
-        productClient.findAllActiveForCompany(id)
-                .forEach(product -> orderClient.cancelByProductId(product.getId()));
+        productClient.findAllActiveIdsForCompany(id).forEach(orderClient::cancelByProductId);
         productClient.cancelByCompany(id);
         log.info("Company retired {}", id);
     }

@@ -24,4 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     boolean existsByCompanyId(Integer id);
 
+    @Query("select p.id from Product p where p.companyId = :id and p.status = products.repository.entity.Status.ACTIVE")
+    List<Integer> findAllActiveIdsForCompany(@Param("id") Integer id);
+
 }

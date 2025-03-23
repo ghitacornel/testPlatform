@@ -124,8 +124,6 @@ public class InvoiceService {
             invoiceClient.error(id, message);
         } catch (ResourceNotFound e) {
             log.error("invoice not found {}", id);
-        } catch (BusinessException e) {
-            log.error("business error marking invoice as error {} {}", id, e.getMessage());
         }
     }
 
