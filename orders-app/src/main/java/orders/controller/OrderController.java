@@ -26,6 +26,10 @@ public class OrderController implements OrderContract {
         return service.findCompletedIds();
     }
 
+    public List<Integer> findSentIds() {
+        return service.findSentIds();
+    }
+
     public List<Integer> findInvoicedIds() {
         return service.findInvoicedIds();
     }

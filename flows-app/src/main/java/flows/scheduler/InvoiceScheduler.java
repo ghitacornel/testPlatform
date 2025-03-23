@@ -16,5 +16,10 @@ class InvoiceScheduler {
         orderService.sendCompletedToInvoice();
     }
 
+    @Scheduled(fixedRate = 1000)
+    void checkSentToInvoice() {
+        orderService.checkSentToInvoice();
+    }
+
 }
 

@@ -19,6 +19,9 @@ public interface OrderContract {
     @GetMapping(value = "orders/completed/ids", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findCompletedIds();
 
+    @GetMapping(value = "orders/sent/ids", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findSentIds();
+
     @GetMapping(value = "orders/invoiced/ids", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findInvoicedIds();
 

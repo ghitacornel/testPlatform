@@ -32,6 +32,10 @@ public class OrderService {
         return repository.findIdsByStatus(Status.COMPLETED);
     }
 
+    public List<Integer> findSentIds() {
+        return repository.findIdsByStatus(Status.SENT_TO_INVOICE);
+    }
+
     public List<Integer> findInvoicedIds() {
         return repository.findIdsByStatus(Status.INVOICED);
     }

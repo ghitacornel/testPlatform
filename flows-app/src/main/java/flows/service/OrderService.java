@@ -68,6 +68,10 @@ public class OrderService {
         orderClient.findCompletedIds().forEach(helper::sendCompletedToInvoice);
     }
 
+    public void checkSentToInvoice() {
+        orderClient.findSentIds().forEach(helper::sendCompletedToInvoice);
+    }
+
     public void deleteInvoiced() {
         orderClient.findInvoicedIds().forEach(helper::deleteInvoiced);
     }
