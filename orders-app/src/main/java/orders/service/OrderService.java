@@ -68,6 +68,7 @@ public class OrderService {
     public void complete(Integer id) {
         Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         if (!order.isNew()) {
+            log.warn("Order in {} cannot be completed {}", order.getStatus(), id);
             return;
         }
         order.complete();
@@ -77,6 +78,7 @@ public class OrderService {
     public void markAsSentToInvoice(Integer id) {
         Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         if (!order.isCompleted()) {
+            log.warn("Order in {} cannot be sent to invoice {}", order.getStatus(), id);
             return;
         }
         order.markAsSentToInvoice();
@@ -86,6 +88,7 @@ public class OrderService {
     public void invoice(Integer id) {
         Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         if (!order.isSentToInvoice()) {
+            log.warn("Order in {} cannot be invoiced {}", order.getStatus(), id);
             return;
         }
         order.markAsInvoiced();
@@ -99,6 +102,7 @@ public class OrderService {
             return;
         }
         if (!order.isNew()) {
+            log.warn("Order in {} cannot be cancelled {}", order.getStatus(), id);
             return;
         }
         order.cancel();
@@ -116,6 +120,7 @@ public class OrderService {
             return;
         }
         if (!order.isNew()) {
+            log.warn("Order in {} cannot be rejected {}", order.getStatus(), id);
             return;
         }
         order.reject(reason);
