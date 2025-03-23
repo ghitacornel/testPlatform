@@ -1,6 +1,7 @@
 package flows.service;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.RestTechnicalException;
 import commons.model.IdResponse;
 import contracts.orders.CreateOrderRequest;
 import contracts.orders.OrderDetailsResponse;
@@ -37,7 +38,11 @@ public class OrderService {
 
     public void cancelOrder(Integer id) {
         OrderDetailsResponse orderDetailsResponse = orderClient.findById(id);
-        productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
+        try {
+            productClient.refill(orderDetailsResponse.getProductId(), orderDetailsResponse.getQuantity());
+        } catch (RestTechnicalException e) {
+            log.error("error cancelling order {} {}", id, e.getMessage());
+        }
         orderClient.cancel(id);
         log.info("Order cancelled {}", id);
     }
