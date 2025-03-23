@@ -22,6 +22,7 @@ public interface InvoiceMapper {
     @Mapping(target = "companyIndustry", ignore = true)
     @Mapping(target = "companyCountry", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "creationDateTime", ignore = true)
     void update(@MappingTarget Invoice invoice, UpdateOrderRequest data);
 
     @Mapping(target = "id", ignore = true)
