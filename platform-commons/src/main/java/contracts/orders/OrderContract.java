@@ -71,7 +71,7 @@ public interface OrderContract {
 
     @PatchMapping(value = "orders/reject", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void reject(@Valid @NotNull OrderRejectRequest request);
+    void reject(@Valid @RequestBody OrderRejectRequest request);
 
     @DeleteMapping("orders/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
