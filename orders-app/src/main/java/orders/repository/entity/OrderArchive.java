@@ -29,7 +29,7 @@ public class OrderArchive {
     private Integer quantity;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated
     private OrderStatus status;
 
 }

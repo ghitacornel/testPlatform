@@ -28,7 +28,7 @@ public class Client extends Identifiable {
     private String country;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated
     private Status status = Status.ACTIVE;
 
     public void retire() {

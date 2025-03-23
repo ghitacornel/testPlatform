@@ -34,7 +34,7 @@ public class Product extends Identifiable {
     private Integer companyId;
 
     @NotNull
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     private ProductStatus status = ProductStatus.ACTIVE;
 
     @Version
