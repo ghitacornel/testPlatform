@@ -43,7 +43,7 @@ public class OrderService {
         try {
             orderDetails = orderClient.findById(id);
         } catch (ResourceNotFound e) {
-            log.warn("Order not found {}", id);
+            log.warn("Order not found for cancellation {}", id);
             return;
         }
 
@@ -84,7 +84,7 @@ public class OrderService {
         try {
             orderDetails = orderClient.findById(id);
         } catch (ResourceNotFound e) {
-            log.error("Order not found {}", id);
+            log.error("Order not found for confirmation {}", id);
             return;
         } catch (Exception e) {
             log.error("Error finding order {}", id, e);
@@ -132,7 +132,7 @@ public class OrderService {
             orderClient.reject(id, message);
             log.warn("Order rejected {} {}", id, message);
         } catch (ResourceNotFound e) {
-            log.error("Order not found for marking it as rejected {} {}", id, message);
+            log.error("Order not found for rejection {} {}", id, message);
         } catch (Exception e) {
             log.error("Error marking order as rejected {} {}", id, message, e);
         }
