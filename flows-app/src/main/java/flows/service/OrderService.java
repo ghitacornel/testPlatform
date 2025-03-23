@@ -64,17 +64,14 @@ public class OrderService {
 
     }
 
-    @Async
     public void sendCompletedToInvoice() {
         orderClient.findCompletedIds().forEach(helper::sendCompletedToInvoice);
     }
 
-    @Async
     public void deleteInvoiced() {
         orderClient.findInvoicedIds().forEach(helper::deleteInvoiced);
     }
 
-    @Async
     public void deleteRejected() {
         orderClient.findRejectedIds().forEach(helper::deleteRejected);
     }
