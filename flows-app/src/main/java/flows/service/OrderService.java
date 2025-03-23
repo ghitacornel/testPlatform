@@ -82,8 +82,12 @@ public class OrderService {
                 .build();
         try {
             productClient.buy(productBuyRequest);
-        } catch (RestTechnicalException | BusinessException e) {
+        } catch (RestTechnicalException e) {
             log.error("Error reserving product for order {} {}", id, e.getMessage());
+            orderClient.reject(id);
+            return;
+        } catch (BusinessException e) {
+            log.warn("problem reserving product for order {} {}", id, e.getMessage());
             orderClient.reject(id);
             return;
         } catch (Exception e) {
