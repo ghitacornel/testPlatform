@@ -1,5 +1,6 @@
 package flows.service;
 
+import commons.exceptions.BusinessException;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyDetailsResponse;
 import contracts.invoices.*;
@@ -75,6 +76,9 @@ public class InvoiceService {
             invoiceClient.complete(id);
             orderClient.invoice(id);
 
+        } catch (BusinessException e) {
+            log.error("business error completing order {} {}", id, e.getMessage());
+            invoiceClient.error(id);
         } catch (Exception e) {
             invoiceClient.error(id);
             throw e;
