@@ -80,7 +80,7 @@ public class InvoiceService {
         Invoice invoice = repository.findById(id)
                 .orElseThrow(() -> new InvoiceNotFoundException(id));
         invoice.error(message);
-        log.error("Error: {} {} ", id, message);
+        log.error("{} {} ", id, message);
     }
 
     public boolean existsByOrderId(Integer id) {
