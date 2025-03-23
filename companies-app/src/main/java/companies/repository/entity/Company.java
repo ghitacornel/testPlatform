@@ -1,7 +1,6 @@
 package companies.repository.entity;
 
 import commons.model.Identifiable;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
