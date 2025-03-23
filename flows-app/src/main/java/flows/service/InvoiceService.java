@@ -36,12 +36,12 @@ public class InvoiceService {
             return;
         }
 
-        invoiceClient.create(InvoiceCreateRequest.builder()
-                .orderId(orderDetails.getId())
-                .build());
-        log.info("Invoice created {}", orderDetails.getId());
-
         try {
+
+            invoiceClient.create(InvoiceCreateRequest.builder()
+                    .orderId(orderDetails.getId())
+                    .build());
+            log.info("Invoice created {}", orderDetails.getId());
 
             invoiceClient.update(UpdateOrderRequest.builder()
                     .id(id)
