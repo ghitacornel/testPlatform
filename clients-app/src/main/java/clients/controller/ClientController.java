@@ -5,7 +5,6 @@ import commons.model.IdResponse;
 import contracts.clients.ClientContract;
 import contracts.clients.ClientDetailsResponse;
 import contracts.clients.ClientRegisterRequest;
-import io.micrometer.core.annotation.Counted;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,17 +37,14 @@ public class ClientController implements ClientContract {
         return service.findById(id);
     }
 
-    @Counted
     public IdResponse register(ClientRegisterRequest request) {
         return service.register(request);
     }
 
-    @Counted
     public void retire(Integer id) {
         service.retire(id);
     }
 
-    @Counted
     public void delete(Integer id) {
         service.delete(id);
     }
