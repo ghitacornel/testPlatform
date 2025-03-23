@@ -23,6 +23,7 @@ public interface InvoiceMapper {
     @Mapping(target = "companyCountry", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "creationDateTime", ignore = true)
+    @Mapping(target = "errorMessage", ignore = true)
     void update(@MappingTarget Invoice invoice, UpdateOrderRequest data);
 
     @Mapping(target = "id", ignore = true)
@@ -38,6 +39,7 @@ public interface InvoiceMapper {
     @Mapping(target = "companyCountry", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "creationDateTime", ignore = true)
+    @Mapping(target = "errorMessage", ignore = true)
     void update(@MappingTarget Invoice invoice, UpdateClientRequest data);
 
     @Mapping(target = "id", ignore = true)
@@ -52,6 +54,7 @@ public interface InvoiceMapper {
     @Mapping(target = "productPrice", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "creationDateTime", ignore = true)
+    @Mapping(target = "errorMessage", ignore = true)
     void update(@MappingTarget Invoice invoice, UpdateCompanyRequest data);
 
     @Mapping(target = "id", ignore = true)
@@ -66,6 +69,7 @@ public interface InvoiceMapper {
     @Mapping(target = "companyCountry", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "creationDateTime", ignore = true)
+    @Mapping(target = "errorMessage", ignore = true)
     void update(@MappingTarget Invoice invoice, UpdateProductRequest data);
 
 }

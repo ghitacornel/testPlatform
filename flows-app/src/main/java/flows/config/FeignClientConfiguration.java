@@ -1,6 +1,6 @@
 package flows.config;
 
-import contracts.clients.exceptions.ExceptionErrorDecoder;
+import contracts.exceptions.ExceptionErrorDecoder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

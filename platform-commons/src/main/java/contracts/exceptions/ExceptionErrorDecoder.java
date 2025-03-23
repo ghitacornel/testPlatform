@@ -1,6 +1,7 @@
-package contracts.clients.exceptions;
+package contracts.exceptions;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.ResourceNotFound;
 import commons.exceptions.RestTechnicalException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -17,6 +18,9 @@ public class ExceptionErrorDecoder implements ErrorDecoder {
             return new RestTechnicalException(requestUrl, toMessage(response));
         }
         if (responseStatus.is4xxClientError()) {
+            if (responseStatus == HttpStatus.NOT_FOUND) {
+                return new ResourceNotFound(toMessage(response));
+            }
             return new BusinessException(toMessage(response));
         }
         return new RestTechnicalException(requestUrl, toMessage(response));

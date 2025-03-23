@@ -1,8 +1,8 @@
 package invoices.exceptions;
 
-import commons.exceptions.TechnicalException;
+import commons.exceptions.ResourceNotFound;
 
-public class InvoiceNotFoundException extends TechnicalException {
+public class InvoiceNotFoundException extends ResourceNotFound {
 
     public InvoiceNotFoundException(Integer id) {
         super("Invoice not found for id " + id);

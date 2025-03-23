@@ -1,6 +1,7 @@
 package flows.service;
 
 import commons.exceptions.BusinessException;
+import commons.exceptions.ResourceNotFound;
 import commons.exceptions.RestTechnicalException;
 import contracts.clients.ClientDetailsResponse;
 import contracts.companies.CompanyDetailsResponse;
@@ -32,8 +33,8 @@ public class InvoiceService {
         OrderDetailsResponse orderDetails;
         try {
             orderDetails = orderClient.findById(id);
-        } catch (BusinessException e) {
-            log.error("business error fetching order to complete {} {}", id, e.getMessage());
+        } catch (ResourceNotFound e) {
+            log.error("order not found {} {}", id, e.getMessage());
             return;
         }
 
@@ -108,6 +109,8 @@ public class InvoiceService {
     private void errorInvoice(Integer id, String message) {
         try {
             invoiceClient.error(id, message);
+        } catch (ResourceNotFound e) {
+            log.error("invoice not found {}", id);
         } catch (BusinessException e) {
             log.error("business error marking invoice as error {} {}", id, e.getMessage());
         }

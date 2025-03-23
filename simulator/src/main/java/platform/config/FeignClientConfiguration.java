@@ -1,6 +1,6 @@
 package platform.config;
 
-import contracts.clients.exceptions.ExceptionErrorDecoder;
+import contracts.exceptions.ExceptionErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
