@@ -32,7 +32,7 @@ public class OrderService {
     private final FlowsClient flowsClient;
 
     private final AsyncCache<Integer, Object> cacheCancelled = Caffeine.newBuilder()
-            .expireAfterWrite(Duration.of(1, ChronoUnit.MINUTES))
+            .expireAfterWrite(Duration.of(10, ChronoUnit.MINUTES))
             .buildAsync();
 
     @Async
