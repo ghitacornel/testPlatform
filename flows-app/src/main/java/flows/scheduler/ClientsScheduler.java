@@ -11,7 +11,7 @@ class ClientsScheduler {
 
     private final ClientService clientService;
 
-    @Scheduled(fixedRate = 10000, initialDelay = 1000)
+    @Scheduled(fixedRate = 1000)
     void deleteRetired() {
         clientService.deleteRetired();
     }
