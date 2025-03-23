@@ -1,9 +1,9 @@
 package clients.service;
 
+import clients.exceptions.ClientNotFoundException;
 import clients.mapper.ClientMapper;
 import clients.repository.ClientRepository;
 import clients.repository.entity.Client;
-import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
 import contracts.clients.ClientDetailsResponse;
 import contracts.clients.ClientRegisterRequest;
@@ -40,7 +40,7 @@ public class ClientService {
     public ClientDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(clientMapper::map)
-                .orElseThrow(() -> new ResourceNotFound("Client with id " + id + " not found"));
+                .orElseThrow(() -> new ClientNotFoundException(id));
     }
 
     public IdResponse register(ClientRegisterRequest request) {
@@ -54,7 +54,7 @@ public class ClientService {
         return repository.countAllActive();
     }
 
-    public void unregister(Integer id) {
+    public void retire(Integer id) {
         repository.findById(id).ifPresent(Client::retire);
         log.info("unregistered {}", id);
     }

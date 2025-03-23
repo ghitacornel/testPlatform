@@ -44,8 +44,8 @@ public class ClientController implements ClientContract {
     }
 
     @Counted
-    public void unregister(Integer id) {
-        service.unregister(id);
+    public void retire(Integer id) {
+        service.retire(id);
     }
 
     @Counted

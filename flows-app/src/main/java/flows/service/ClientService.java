@@ -17,7 +17,7 @@ public class ClientService {
     private final ClientServiceHelper helper;
 
     public void deleteClient(Integer id) {
-        clientClient.unregister(id);
+        clientClient.retire(id);
         orderClient.findAllNewForClientId(id)
                 .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId()));
     }

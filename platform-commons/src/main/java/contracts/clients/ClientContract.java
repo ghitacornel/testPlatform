@@ -31,9 +31,9 @@ public interface ClientContract {
     @PostMapping(value = "clients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse register(@RequestBody ClientRegisterRequest inputModel);
 
-    @PatchMapping("clients/unregister/{id}")
+    @PatchMapping("clients/retire/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void unregister(@Valid @NotNull @PathVariable("id") Integer id);
+    void retire(@Valid @NotNull @PathVariable("id") Integer id);
 
     @DeleteMapping("clients/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

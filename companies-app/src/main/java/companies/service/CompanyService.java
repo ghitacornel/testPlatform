@@ -1,7 +1,7 @@
 package companies.service;
 
-import commons.exceptions.ResourceNotFound;
 import commons.model.IdResponse;
+import companies.exceptions.CompanyNotFoundException;
 import companies.mapper.CompanyMapper;
 import companies.repository.CompanyRepository;
 import companies.repository.entity.Company;
@@ -40,7 +40,7 @@ public class CompanyService {
     public CompanyDetailsResponse findById(Integer id) {
         return repository.findById(id)
                 .map(mapper::map)
-                .orElseThrow(() -> new ResourceNotFound("Company with id " + id + " not found"));
+                .orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
     public IdResponse register(CompanyRegisterRequest request) {
