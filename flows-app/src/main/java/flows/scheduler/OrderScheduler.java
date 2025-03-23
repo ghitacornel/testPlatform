@@ -11,12 +11,12 @@ class OrderScheduler {
 
     private final OrderService orderService;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     void deleteInvoiced() {
         orderService.deleteInvoiced();
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     void deleteRejected() {
         orderService.deleteRejected();
     }

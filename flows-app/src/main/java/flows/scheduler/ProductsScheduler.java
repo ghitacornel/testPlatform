@@ -11,12 +11,12 @@ class ProductsScheduler {
 
     private final ProductService productService;
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     void deleteCancelled() {
         productService.deleteCancelled();
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 10000)
     void deleteConsumed() {
         productService.deleteConsumed();
     }
