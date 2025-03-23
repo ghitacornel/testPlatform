@@ -82,7 +82,7 @@ public class OrderService {
                 .build();
         try {
             productClient.buy(productBuyRequest);
-        } catch (BusinessException e) {
+        } catch (RestTechnicalException | BusinessException e) {
             log.error("Error reserving product for order {} {}", id, e.getMessage());
             orderClient.reject(id);
             return;
