@@ -5,7 +5,8 @@ import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jms.core.JmsTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +15,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class OrderServiceHelper {
 
+    @Value(value = "${topic.completedOrders}")
+    private String completedOrdersTopic;
+
     private final OrderClient orderClient;
     private final InvoiceClient invoiceClient;
-    private final JmsTemplate jmsTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     void sendCompletedToInvoice(Integer id) {
-        jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
+        kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
 
         try {
             orderClient.markAsSentToInvoice(id);

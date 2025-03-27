@@ -12,7 +12,8 @@ import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jms.core.JmsTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +22,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderService {
 
+    @Value(value = "${topic.completedOrders}")
+    private String completedOrdersTopic;
+    @Value(value = "${topic.toBeConfirmedOrders}")
+    private String toBeConfirmedOrdersTopic;
+
     private final OrderClient orderClient;
     private final ProductClient productClient;
-    private final JmsTemplate jmsTemplate;
     private final OrderServiceHelper helper;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     public IdResponse createOrder(CreateOrderRequest request) {
 
         IdResponse idResponse = orderClient.create(request);
 
         try {
-            jmsTemplate.convertAndSend("ToBeConfirmedOrdersQueueName", idResponse.getId());
+            kafkaTemplate.send(toBeConfirmedOrdersTopic, String.valueOf(idResponse.getId()));
         } catch (Exception e) {
             log.error("error sending order confirmation {}", idResponse.getId(), e);
         }
@@ -119,7 +125,7 @@ public class OrderService {
         }
 
         try {
-            jmsTemplate.convertAndSend("CompletedOrdersQueueName", id);
+            kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
         } catch (Exception e) {
             log.error("Error sending order id to CompletedOrdersQueueName {}", id, e);
             return;

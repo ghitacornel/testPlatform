@@ -2,7 +2,7 @@ package flows.listeners;
 
 import flows.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jms.annotation.JmsListener;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +11,7 @@ class ToBeConfirmedOrdersQueueListener {
 
     private final OrderService orderService;
 
-    @JmsListener(destination = "ToBeConfirmedOrdersQueueName", concurrency = "10")
+    @KafkaListener(topics = "ToBeConfirmedOrdersTopic", containerFactory = "kafkaListenerDataModelContainerFactory")
     public void listenerForToBeConfirmedOrdersQueueName(Integer id) {
         orderService.confirm(id);
     }

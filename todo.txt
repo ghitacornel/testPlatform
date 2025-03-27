@@ -4,5 +4,5 @@ EUREKA ADMIN
 http://localhost:8761/
 
 TODO
-replace jms with kafka
 spring cloud gateway / spring-cloud-kubernetes
+(jms+db) transactional
