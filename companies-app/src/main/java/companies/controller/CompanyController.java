@@ -1,6 +1,7 @@
 package companies.controller;
 
 import commons.model.IdResponse;
+import companies.service.CompanySearchService;
 import companies.service.CompanyService;
 import contracts.companies.CompanyContract;
 import contracts.companies.CompanyDetailsResponse;
@@ -16,17 +17,18 @@ import java.util.List;
 public class CompanyController implements CompanyContract {
 
     private final CompanyService service;
+    private final CompanySearchService searchService;
 
     public List<CompanyDetailsResponse> findAll() {
-        return service.findAll();
+        return searchService.findAll();
     }
 
     public long count() {
-        return service.count();
+        return searchService.count();
     }
 
     public CompanyDetailsResponse findById(Integer id) {
-        return service.findById(id);
+        return searchService.findById(id);
     }
 
     public IdResponse register(CompanyRegisterRequest request) {
@@ -38,11 +40,11 @@ public class CompanyController implements CompanyContract {
     }
 
     public List<Integer> findActiveIds() {
-        return service.findActiveIds();
+        return searchService.findActiveIds();
     }
 
     public List<Integer> findRetiredIds() {
-        return service.findRetiredIds();
+        return searchService.findRetiredIds();
     }
 
     public void delete(Integer id) {
