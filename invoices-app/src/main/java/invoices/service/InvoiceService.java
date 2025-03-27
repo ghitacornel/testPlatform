@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Slf4j
 @Service
 @Transactional
@@ -21,14 +19,6 @@ public class InvoiceService {
 
     private final InvoiceRepository repository;
     private final InvoiceMapper invoiceMapper;
-
-    public List<InvoiceDetails> findAll() {
-        return repository.findAll().stream().map(invoiceMapper::map).toList();
-    }
-
-    public long count() {
-        return repository.count();
-    }
 
     public IdResponse createInvoice(InvoiceCreateRequest request) {
         if (repository.existsById(request.getOrderId())) {
@@ -87,22 +77,6 @@ public class InvoiceService {
         }
         invoice.error(message);
         log.error("{} {} ", id, message);
-    }
-
-    public boolean existsByOrderId(Integer id) {
-        return repository.existsById(id);
-    }
-
-    public boolean existsByClientId(Integer id) {
-        return repository.existsByClientId(id);
-    }
-
-    public boolean existsByCompanyId(Integer id) {
-        return repository.existsByCompanyId(id);
-    }
-
-    public boolean existsByProductId(Integer id) {
-        return repository.existsByProductId(id);
     }
 
 }

@@ -2,6 +2,7 @@ package invoices.controller;
 
 import commons.model.IdResponse;
 import contracts.invoices.*;
+import invoices.service.InvoiceSearchService;
 import invoices.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +15,14 @@ import java.util.List;
 public class InvoiceController implements InvoiceContract {
 
     private final InvoiceService service;
+    private final InvoiceSearchService searchService;
 
     public List<InvoiceDetails> findAll() {
-        return service.findAll();
+        return searchService.findAll();
     }
 
     public long count() {
-        return service.count();
+        return searchService.count();
     }
 
     public IdResponse create(InvoiceCreateRequest request) {
@@ -52,19 +54,19 @@ public class InvoiceController implements InvoiceContract {
     }
 
     public boolean existsByOrderId(Integer id) {
-        return service.existsByOrderId(id);
+        return searchService.existsByOrderId(id);
     }
 
     public boolean existsByClientId(Integer id) {
-        return service.existsByClientId(id);
+        return searchService.existsByClientId(id);
     }
 
     public boolean existsByCompanyId(Integer id) {
-        return service.existsByCompanyId(id);
+        return searchService.existsByCompanyId(id);
     }
 
     public boolean existsByProductId(Integer id) {
-        return service.existsByProductId(id);
+        return searchService.existsByProductId(id);
     }
 
 }
