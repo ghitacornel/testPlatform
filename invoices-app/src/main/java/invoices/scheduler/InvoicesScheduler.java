@@ -5,10 +5,12 @@ import invoices.repository.entity.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 class InvoicesScheduler {
 

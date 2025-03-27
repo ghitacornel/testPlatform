@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import orders.repository.OrderRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 class OrdersScheduler {
 
