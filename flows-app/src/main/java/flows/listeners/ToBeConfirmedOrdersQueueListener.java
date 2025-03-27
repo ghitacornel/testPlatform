@@ -11,7 +11,7 @@ class ToBeConfirmedOrdersQueueListener {
 
     private final OrderService orderService;
 
-    @KafkaListener(topics = "ToBeConfirmedOrdersTopic", containerFactory = "kafkaListenerDataModelContainerFactory")
+    @KafkaListener(topics = "ToBeConfirmedOrdersTopic", containerFactory = "kafkaListenerDataModelContainerFactory", concurrency = "10")
     public void listenerForToBeConfirmedOrdersQueueName(Integer id) {
         orderService.confirm(id);
     }

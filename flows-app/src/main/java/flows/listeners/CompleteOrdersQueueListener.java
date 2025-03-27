@@ -11,7 +11,7 @@ class CompleteOrdersQueueListener {
 
     private final InvoiceService invoiceService;
 
-    @KafkaListener(topics = "CompletedOrdersTopic", containerFactory = "kafkaListenerDataModelContainerFactory")
+    @KafkaListener(topics = "CompletedOrdersTopic", containerFactory = "kafkaListenerDataModelContainerFactory", concurrency = "10")
     public void listenerForCompletedOrdersQueueName(Integer id) {
         invoiceService.complete(id);
     }
