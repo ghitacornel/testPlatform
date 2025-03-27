@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -19,6 +20,7 @@ class OrderServiceHelper {
     private final OrderClient orderClient;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
+    @Async
     void sendCompletedToInvoice(Integer id) {
         kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
 
