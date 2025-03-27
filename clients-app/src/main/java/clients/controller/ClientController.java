@@ -1,5 +1,6 @@
 package clients.controller;
 
+import clients.service.ClientSearchService;
 import clients.service.ClientService;
 import commons.model.IdResponse;
 import contracts.clients.ClientContract;
@@ -16,25 +17,26 @@ import java.util.List;
 public class ClientController implements ClientContract {
 
     private final ClientService service;
+    private final ClientSearchService searchService;
 
     public List<ClientDetailsResponse> findAll() {
-        return service.findAll();
+        return searchService.findAll();
     }
 
     public long count() {
-        return service.countAllActive();
+        return searchService.countAllActive();
     }
 
     public List<Integer> findActiveIds() {
-        return service.findActiveIds();
+        return searchService.findActiveIds();
     }
 
     public List<Integer> findRetiredIds() {
-        return service.findRetiredIds();
+        return searchService.findRetiredIds();
     }
 
     public ClientDetailsResponse findById(Integer id) {
-        return service.findById(id);
+        return searchService.findById(id);
     }
 
     public IdResponse register(ClientRegisterRequest request) {
