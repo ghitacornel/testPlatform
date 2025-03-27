@@ -114,6 +114,13 @@ public class OrderService {
         }
 
         try {
+            kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
+        } catch (Exception e) {
+            log.error("Error sending order id to CompletedOrdersQueueName {}", id, e);
+            return;
+        }
+
+        try {
             orderClient.complete(id);
         } catch (ResourceNotFound e) {
             log.error("Order not found for marking it as completed {}", id);
@@ -124,12 +131,6 @@ public class OrderService {
             return;
         }
 
-        try {
-            kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
-        } catch (Exception e) {
-            log.error("Error sending order id to CompletedOrdersQueueName {}", id, e);
-            return;
-        }
         log.info("Order completed {}", id);
     }
 
