@@ -6,6 +6,7 @@ import contracts.orders.OrderContract;
 import contracts.orders.OrderDetailsResponse;
 import contracts.orders.OrderRejectRequest;
 import lombok.RequiredArgsConstructor;
+import orders.service.OrderSearchService;
 import orders.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,53 +18,54 @@ import java.util.List;
 public class OrderController implements OrderContract {
 
     private final OrderService service;
+    private final OrderSearchService searchService;
 
     public List<OrderDetailsResponse> findAllNew() {
-        return service.findAllNew();
+        return searchService.findAllNew();
     }
 
     public List<Integer> findCompletedIds() {
-        return service.findCompletedIds();
+        return searchService.findCompletedIds();
     }
 
     public List<Integer> findSentIds() {
-        return service.findSentIds();
+        return searchService.findSentIds();
     }
 
     public List<Integer> findInvoicedIds() {
-        return service.findInvoicedIds();
+        return searchService.findInvoicedIds();
     }
 
     public List<Integer> findNewIds() {
-        return service.findNewIds();
+        return searchService.findNewIds();
     }
 
     public List<Integer> findRejectedIds() {
-        return service.findRejectedIds();
+        return searchService.findRejectedIds();
     }
 
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
-        return service.findAllNewForClientId(id);
+        return searchService.findAllNewForClientId(id);
     }
 
     public List<OrderDetailsResponse> findAllNewForProductId(Integer id) {
-        return service.findAllNewForProductId(id);
+        return searchService.findAllNewForProductId(id);
     }
 
     public long countAllNew() {
-        return service.countAllNew();
+        return searchService.countAllNew();
     }
 
     public OrderDetailsResponse findById(Integer id) {
-        return service.findById(id);
+        return searchService.findById(id);
     }
 
     public boolean existsByProductId(Integer id) {
-        return service.existsByProductId(id);
+        return searchService.existsByProductId(id);
     }
 
     public boolean existsByClientId(Integer id) {
-        return service.existsByClientId(id);
+        return searchService.existsByClientId(id);
     }
 
     public IdResponse create(CreateOrderRequest request) {
