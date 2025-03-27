@@ -3,7 +3,6 @@ package orders.service;
 import contracts.orders.OrderDetailsResponse;
 import contracts.orders.Status;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import orders.exceptions.OrderNotFoundException;
 import orders.mapper.OrderMapper;
 import orders.repository.OrderRepository;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
