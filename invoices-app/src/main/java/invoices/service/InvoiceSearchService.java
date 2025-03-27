@@ -15,10 +15,10 @@ import java.util.List;
 public class InvoiceSearchService {
 
     private final InvoiceRepository repository;
-    private final InvoiceMapper invoiceMapper;
+    private final InvoiceMapper mapper;
 
     public List<InvoiceDetails> findAll() {
-        return repository.findAll().stream().map(invoiceMapper::map).toList();
+        return repository.findAll().stream().map(mapper::map).toList();
     }
 
     public long count() {

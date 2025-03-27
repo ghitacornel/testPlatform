@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class InvoiceService {
 
     private final InvoiceRepository repository;
-    private final InvoiceMapper invoiceMapper;
+    private final InvoiceMapper mapper;
 
     public IdResponse createInvoice(InvoiceCreateRequest request) {
         if (repository.existsById(request.getOrderId())) {
@@ -32,30 +32,26 @@ public class InvoiceService {
     }
 
     public void updateOrder(UpdateOrderRequest request) {
-        Invoice invoice = repository.findById(request.getId())
-                .orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
-        invoiceMapper.update(invoice, request);
+        Invoice invoice = repository.findById(request.getId()).orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
+        mapper.update(invoice, request);
         log.info("Order updated: {}", invoice);
     }
 
     public void updateClient(UpdateClientRequest request) {
-        Invoice invoice = repository.findById(request.getId())
-                .orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
-        invoiceMapper.update(invoice, request);
+        Invoice invoice = repository.findById(request.getId()).orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
+        mapper.update(invoice, request);
         log.info("Client updated: {}", invoice);
     }
 
     public void updateCompany(UpdateCompanyRequest request) {
-        Invoice invoice = repository.findById(request.getId())
-                .orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
-        invoiceMapper.update(invoice, request);
+        Invoice invoice = repository.findById(request.getId()).orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
+        mapper.update(invoice, request);
         log.info("Company updated: {}", invoice);
     }
 
     public void updateProduct(UpdateProductRequest request) {
-        Invoice invoice = repository.findById(request.getId())
-                .orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
-        invoiceMapper.update(invoice, request);
+        Invoice invoice = repository.findById(request.getId()).orElseThrow(() -> new InvoiceNotFoundException(request.getId()));
+        mapper.update(invoice, request);
         log.info("Product updated: {}", invoice);
     }
 

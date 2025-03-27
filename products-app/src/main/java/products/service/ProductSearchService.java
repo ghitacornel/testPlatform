@@ -17,14 +17,14 @@ import java.util.List;
 public class ProductSearchService {
 
     private final ProductRepository repository;
-    private final ProductMapper productMapper;
+    private final ProductMapper mapper;
 
     public List<ProductDetailsResponse> findAllActive() {
-        return repository.findByStatus(Status.ACTIVE).stream().map(productMapper::map).toList();
+        return repository.findByStatus(Status.ACTIVE).stream().map(mapper::map).toList();
     }
 
     public List<ProductDetailsResponse> findAllActiveForCompany(Integer id) {
-        return repository.findAllActiveForCompany(id).stream().map(productMapper::map).toList();
+        return repository.findAllActiveForCompany(id).stream().map(mapper::map).toList();
     }
 
     public long countAllActive() {
@@ -32,9 +32,7 @@ public class ProductSearchService {
     }
 
     public ProductDetailsResponse findById(Integer id) {
-        return repository.findById(id)
-                .map(productMapper::map)
-                .orElseThrow(() -> new ProductNotFoundException(id));
+        return repository.findById(id).map(mapper::map).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     public List<Integer> findConsumedIds() {

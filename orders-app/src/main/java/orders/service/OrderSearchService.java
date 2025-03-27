@@ -17,10 +17,10 @@ import java.util.List;
 public class OrderSearchService {
 
     private final OrderRepository repository;
-    private final OrderMapper orderMapper;
+    private final OrderMapper mapper;
 
     public List<OrderDetailsResponse> findAllNew() {
-        return repository.findByStatus(Status.NEW).stream().map(orderMapper::map).toList();
+        return repository.findByStatus(Status.NEW).stream().map(mapper::map).toList();
     }
 
     public List<Integer> findCompletedIds() {
@@ -44,17 +44,15 @@ public class OrderSearchService {
     }
 
     public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
-        return repository.findAllNewForClientId(id).stream().map(orderMapper::map).toList();
+        return repository.findAllNewForClientId(id).stream().map(mapper::map).toList();
     }
 
     public List<OrderDetailsResponse> findAllNewForProductId(Integer id) {
-        return repository.findAllNewForProductId(id).stream().map(orderMapper::map).toList();
+        return repository.findAllNewForProductId(id).stream().map(mapper::map).toList();
     }
 
     public OrderDetailsResponse findById(Integer id) {
-        return repository.findById(id)
-                .map(orderMapper::map)
-                .orElseThrow(() -> new OrderNotFoundException(id));
+        return repository.findById(id).map(mapper::map).orElseThrow(() -> new OrderNotFoundException(id));
     }
 
     public boolean existsByProductId(Integer id) {

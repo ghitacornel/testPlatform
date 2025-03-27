@@ -21,10 +21,10 @@ import products.repository.entity.Status;
 public class ProductService {
 
     private final ProductRepository repository;
-    private final ProductMapper productMapper;
+    private final ProductMapper mapper;
 
     public IdResponse sell(ProductSellRequest request) {
-        Product entity = productMapper.map(request);
+        Product entity = mapper.map(request);
         repository.save(entity);
         log.info("sell {}", entity);
         return new IdResponse(entity.getId());
@@ -42,8 +42,7 @@ public class ProductService {
 
     public void buy(ProductBuyRequest request) {
 
-        Product product = repository.findById(request.getProductId())
-                .orElseThrow(() -> new ProductNotFoundException(request.getProductId()));
+        Product product = repository.findById(request.getProductId()).orElseThrow(() -> new ProductNotFoundException(request.getProductId()));
 
         if (product.getQuantity() < request.getQuantity()) {
             throw new CannotBuyMoreThanAvailableException(request.getProductId(), request.getQuantity(), product.getQuantity());

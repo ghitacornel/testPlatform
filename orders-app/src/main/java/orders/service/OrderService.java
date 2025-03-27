@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
     private final OrderRepository repository;
-    private final OrderMapper orderMapper;
+    private final OrderMapper mapper;
 
     public IdResponse create(CreateOrderRequest request) {
-        Order order = orderMapper.map(request);
+        Order order = mapper.map(request);
         repository.save(order);
         log.info("Created {}", order);
         return new IdResponse(order.getId());
