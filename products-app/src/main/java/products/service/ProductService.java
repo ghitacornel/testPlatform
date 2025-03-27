@@ -2,7 +2,6 @@ package products.service;
 
 import commons.model.IdResponse;
 import contracts.products.ProductBuyRequest;
-import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +14,6 @@ import products.repository.ProductRepository;
 import products.repository.entity.Product;
 import products.repository.entity.Status;
 
-import java.util.List;
-
 @Slf4j
 @Service
 @Transactional
@@ -25,18 +22,6 @@ public class ProductService {
 
     private final ProductRepository repository;
     private final ProductMapper productMapper;
-
-    public List<ProductDetailsResponse> findAllActive() {
-        return repository.findByStatus(Status.ACTIVE).stream().map(productMapper::map).toList();
-    }
-
-    public List<ProductDetailsResponse> findAllActiveForCompany(Integer id) {
-        return repository.findAllActiveForCompany(id).stream().map(productMapper::map).toList();
-    }
-
-    public long countAllActive() {
-        return repository.countByStatus(Status.ACTIVE);
-    }
 
     public IdResponse sell(ProductSellRequest request) {
         Product entity = productMapper.map(request);
@@ -72,12 +57,6 @@ public class ProductService {
 
     }
 
-    public ProductDetailsResponse findById(Integer id) {
-        return repository.findById(id)
-                .map(productMapper::map)
-                .orElseThrow(() -> new ProductNotFoundException(id));
-    }
-
     public void refill(Integer id, Integer quantity) {
         Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         product.refill(quantity);
@@ -91,29 +70,9 @@ public class ProductService {
         });
     }
 
-    public List<Integer> findConsumedIds() {
-        return repository.findIdsByStatus(Status.CONSUMED);
-    }
-
-    public List<Integer> findCancelledIds() {
-        return repository.findIdsByStatus(Status.CANCELLED);
-    }
-
-    public List<Integer> findActiveIds() {
-        return repository.findIdsByStatus(Status.ACTIVE);
-    }
-
-    public List<Integer> findAllActiveIdsForCompany(Integer id) {
-        return repository.findAllActiveIdsForCompany(id);
-    }
-
     public void delete(Integer id) {
         repository.deleteById(id);
         log.info("deleted {}", id);
-    }
-
-    public boolean existsByCompanyId(Integer id) {
-        return repository.existsByCompanyId(id);
     }
 
 }

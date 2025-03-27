@@ -7,6 +7,7 @@ import contracts.products.ProductDetailsResponse;
 import contracts.products.ProductSellRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import products.service.ProductSearchService;
 import products.service.ProductService;
 
 import java.util.List;
@@ -17,22 +18,23 @@ import java.util.List;
 public class ProductController implements ProductContract {
 
     private final ProductService service;
+    private final ProductSearchService searchService;
 
     public List<ProductDetailsResponse> findAllActive() {
-        return service.findAllActive();
+        return searchService.findAllActive();
     }
 
     @Override
     public List<ProductDetailsResponse> findAllActiveForCompany(Integer id) {
-        return service.findAllActiveForCompany(id);
+        return searchService.findAllActiveForCompany(id);
     }
 
     public long countAllActive() {
-        return service.countAllActive();
+        return searchService.countAllActive();
     }
 
     public ProductDetailsResponse findById(Integer id) {
-        return service.findById(id);
+        return searchService.findById(id);
     }
 
     public IdResponse sell(ProductSellRequest request) {
@@ -56,19 +58,19 @@ public class ProductController implements ProductContract {
     }
 
     public List<Integer> findConsumedIds() {
-        return service.findConsumedIds();
+        return searchService.findConsumedIds();
     }
 
     public List<Integer> findCancelledIds() {
-        return service.findCancelledIds();
+        return searchService.findCancelledIds();
     }
 
     public List<Integer> findActiveIds() {
-        return service.findActiveIds();
+        return searchService.findActiveIds();
     }
 
     public List<Integer> findAllActiveIdsForCompany(Integer id) {
-        return service.findAllActiveIdsForCompany(id);
+        return searchService.findAllActiveIdsForCompany(id);
     }
 
     public void delete(Integer id) {
@@ -76,7 +78,7 @@ public class ProductController implements ProductContract {
     }
 
     public boolean existsByCompanyId(Integer id) {
-        return service.existsByCompanyId(id);
+        return searchService.existsByCompanyId(id);
     }
 
 }
