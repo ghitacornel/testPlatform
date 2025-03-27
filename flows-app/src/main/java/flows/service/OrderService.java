@@ -78,14 +78,6 @@ public class OrderService {
         orderClient.findSentIds().forEach(helper::sendCompletedToInvoice);
     }
 
-    public void deleteInvoiced() {
-        orderClient.findInvoicedIds().forEach(helper::deleteInvoiced);
-    }
-
-    public void deleteRejected() {
-        orderClient.findRejectedIds().forEach(helper::deleteRejected);
-    }
-
     @Async
     public void confirm(Integer id) {
 
