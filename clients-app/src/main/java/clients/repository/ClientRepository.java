@@ -20,6 +20,6 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 
     @Modifying
     @Query("delete from Client c where c.status = :status")
-    void deleteByStatus(Status status);
+    void deleteByStatus(@Param("status")Status status);
 
 }
