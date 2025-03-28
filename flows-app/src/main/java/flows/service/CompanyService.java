@@ -2,6 +2,7 @@ package flows.service;
 
 import commons.exceptions.ResourceNotFound;
 import flows.clients.CompanyClient;
+import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
@@ -16,24 +17,39 @@ public class CompanyService {
     private final CompanyClient companyClient;
     private final ProductClient productClient;
     private final OrderClient orderClient;
-    private final CompanyServiceHelper helper;
+    private final InvoiceClient invoiceClient;
 
     public void deleteCompany(Integer id) {
 
         try {
-            companyClient.retire(id);
+            companyClient.retiring(id);
+            log.info("retiring company {}", id);
         } catch (ResourceNotFound e) {
             log.warn("Company not found {}", id);
             return;
         }
 
-        productClient.findAllActiveIdsForCompany(id).forEach(orderClient::cancelByProductId);
-        productClient.cancelByCompany(id);
-        log.info("Company retired {}", id);
+        deleteRetiring(id);
     }
 
-    public void deleteRetired() {
-        companyClient.findRetiredIds().forEach(helper::deleteRetired);
+    public void deleteRetiring(Integer id) {
+
+        productClient.findAllActiveIdsForCompany(id).forEach(orderClient::cancelByProductId);
+        productClient.cancelByCompany(id);
+        if (productClient.existsByCompanyId(id)) {
+            return;
+        }
+        if (invoiceClient.existsByCompanyId(id)) {
+            return;
+        }
+
+        try {
+            companyClient.retired(id);
+            log.info("retired company {}", id);
+        } catch (ResourceNotFound e) {
+            log.warn("Company not found {}", id);
+        }
+
     }
 
 }

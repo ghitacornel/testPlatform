@@ -37,7 +37,11 @@ public class Company extends Identifiable {
     @Enumerated
     private Status status = Status.ACTIVE;
 
-    public void retire() {
+    public void retiring() {
+        status = Status.RETIRING;
+    }
+
+    public void retired() {
         status = Status.RETIRED;
     }
 

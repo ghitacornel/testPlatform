@@ -35,20 +35,20 @@ public class CompanyController implements CompanyContract {
         return service.register(request);
     }
 
-    public void retire(Integer id) {
-        service.retire(id);
+    public void retiring(Integer id) {
+        service.retiring(id);
+    }
+
+    public void retired(Integer id) {
+        service.retired(id);
     }
 
     public List<Integer> findActiveIds() {
         return searchService.findActiveIds();
     }
 
-    public List<Integer> findRetiredIds() {
-        return searchService.findRetiredIds();
-    }
-
-    public void delete(Integer id) {
-        service.delete(id);
+    public List<Integer> findRetiringIds() {
+        return searchService.findRetiringIds();
     }
 
 }

@@ -21,6 +21,7 @@ public class ClientService {
 
         try {
             clientClient.retiring(id);
+            log.info("retiring client {}", id);
         } catch (ResourceNotFound e) {
             log.warn("Client not found for retiring {}", id);
             return;
@@ -43,6 +44,7 @@ public class ClientService {
 
         try {
             clientClient.retired(id);
+            log.info("retired client {}", id);
         } catch (ResourceNotFound e) {
             log.warn("Client not found for retire {}", id);
         }

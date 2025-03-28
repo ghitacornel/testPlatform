@@ -25,17 +25,18 @@ public interface CompanyContract {
     @PostMapping(value = "companies", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse register(@Valid @RequestBody CompanyRegisterRequest inputModel);
 
-    @PatchMapping("companies/retire/{id}")
+    @PatchMapping("companies/retiring/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void retire(@Valid @NotNull @PathVariable("id") Integer id);
+    void retiring(@Valid @NotNull @PathVariable("id") Integer id);
+
+    @PatchMapping("companies/retired/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void retired(@Valid @NotNull @PathVariable("id") Integer id);
 
     @GetMapping("companies/ids/active")
     List<Integer> findActiveIds();
 
-    @GetMapping("companies/ids/retired")
-    List<Integer> findRetiredIds();
-
-    @DeleteMapping("companies/{id}")
-    void delete(@Valid @NotNull @PathVariable("id") Integer id);
+    @GetMapping("companies/ids/retiring")
+    List<Integer> findRetiringIds();
 
 }

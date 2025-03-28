@@ -24,11 +24,11 @@ public class CompanySearchService {
     }
 
     public List<Integer> findActiveIds() {
-        return repository.findActiveIds();
+        return repository.findIdsByStatus(Status.ACTIVE);
     }
 
-    public List<Integer> findRetiredIds() {
-        return repository.findRetiredIds();
+    public List<Integer> findRetiringIds() {
+        return repository.findIdsByStatus(Status.RETIRING);
     }
 
     public CompanyDetailsResponse findById(Integer id) {

@@ -26,18 +26,24 @@ public class CompanyService {
         return new IdResponse(entity.getId());
     }
 
-    public void retire(Integer id) {
+    public void retiring(Integer id) {
         Company company = repository.findById(id).orElse(null);
         if (company == null) {
             log.warn("company not found {}", id);
             return;
         }
-        company.retire();
-        log.info("unregistered {}", id);
+        company.retiring();
+        log.info("retiring {}", id);
     }
 
-    public void delete(Integer id) {
-        repository.deleteById(id);
-        log.info("deleted {}", id);
+    public void retired(Integer id) {
+        Company company = repository.findById(id).orElse(null);
+        if (company == null) {
+            log.warn("company not found {}", id);
+            return;
+        }
+        company.retired();
+        log.info("retired {}", id);
     }
+
 }
