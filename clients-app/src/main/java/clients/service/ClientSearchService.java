@@ -27,8 +27,8 @@ public class ClientSearchService {
         return repository.findIdsByStatus(Status.ACTIVE);
     }
 
-    public List<Integer> findRetiredIds() {
-        return repository.findIdsByStatus(Status.RETIRED);
+    public List<Integer> findRetiringIds() {
+        return repository.findIdsByStatus(Status.RETIRING);
     }
 
     public ClientDetailsResponse findById(Integer id) {

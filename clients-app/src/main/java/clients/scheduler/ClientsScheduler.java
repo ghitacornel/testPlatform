@@ -1,7 +1,7 @@
-package flows.scheduler;
+package clients.scheduler;
 
-import flows.clients.ClientClient;
-import flows.service.ClientService;
+import clients.repository.ClientRepository;
+import clients.repository.entity.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,12 +10,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class ClientsScheduler {
 
-    private final ClientClient clientClient;
-    private final ClientService clientService;
+    private final ClientRepository repository;
 
     @Scheduled(fixedRate = 10000)
     void deleteRetired() {
-        clientClient.findRetiringIds().forEach(clientService::deleteRetiringClient);
+        repository.deleteByStatus(Status.RETIRED);
     }
 
 }

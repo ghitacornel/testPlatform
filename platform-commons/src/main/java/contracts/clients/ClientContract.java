@@ -22,8 +22,8 @@ public interface ClientContract {
     @GetMapping("clients/ids/active")
     List<Integer> findActiveIds();
 
-    @GetMapping("clients/ids/retired")
-    List<Integer> findRetiredIds();
+    @GetMapping("clients/ids/retiring")
+    List<Integer> findRetiringIds();
 
     @GetMapping(value = "clients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ClientDetailsResponse findById(@PathVariable("id") Integer id);
@@ -31,12 +31,12 @@ public interface ClientContract {
     @PostMapping(value = "clients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     IdResponse register(@RequestBody ClientRegisterRequest inputModel);
 
-    @PatchMapping("clients/retire/{id}")
+    @PatchMapping("clients/retiring/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void retire(@Valid @NotNull @PathVariable("id") Integer id);
+    void retiring(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @DeleteMapping("clients/{id}")
+    @PatchMapping("clients/retired/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@Valid @NotNull @PathVariable("id") Integer id);
+    void retired(@Valid @NotNull @PathVariable("id") Integer id);
 
 }

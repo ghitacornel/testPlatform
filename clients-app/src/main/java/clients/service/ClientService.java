@@ -26,19 +26,24 @@ public class ClientService {
         return new IdResponse(entity.getId());
     }
 
-    public void retire(Integer id) {
+    public void retiring(Integer id) {
         Client client = repository.findById(id).orElse(null);
         if (client == null) {
-            log.warn("client not found {}", id);
+            log.warn("client not found for retiring {}", id);
             return;
         }
-        client.retire();
-        log.info("unregistered {}", id);
+        client.retiring();
+        log.info("retiring {}", id);
     }
 
-    public void delete(Integer id) {
-        repository.deleteById(id);
-        log.info("deleted {}", id);
+    public void retired(Integer id) {
+        Client client = repository.findById(id).orElse(null);
+        if (client == null) {
+            log.warn("client not found for retired {}", id);
+            return;
+        }
+        client.retired();
+        log.info("retired {}", id);
     }
 
 }

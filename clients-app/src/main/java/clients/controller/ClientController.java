@@ -31,8 +31,8 @@ public class ClientController implements ClientContract {
         return searchService.findActiveIds();
     }
 
-    public List<Integer> findRetiredIds() {
-        return searchService.findRetiredIds();
+    public List<Integer> findRetiringIds() {
+        return searchService.findRetiringIds();
     }
 
     public ClientDetailsResponse findById(Integer id) {
@@ -43,12 +43,12 @@ public class ClientController implements ClientContract {
         return service.register(request);
     }
 
-    public void retire(Integer id) {
-        service.retire(id);
+    public void retiring(Integer id) {
+        service.retiring(id);
     }
 
-    public void delete(Integer id) {
-        service.delete(id);
+    public void retired(Integer id) {
+        service.retired(id);
     }
 
 }
