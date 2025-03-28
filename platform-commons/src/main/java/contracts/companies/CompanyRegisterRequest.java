@@ -16,12 +16,12 @@ public class CompanyRegisterRequest {
     private String name;
 
     @NotBlank
-    private String url;
+    private String country;
 
     @NotBlank
     private String industry;
 
     @NotBlank
-    private String country;
+    private String url;
 
 }
