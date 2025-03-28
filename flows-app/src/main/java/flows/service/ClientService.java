@@ -32,8 +32,7 @@ public class ClientService {
 
     public void deleteRetiringClient(Integer id) {
 
-        orderClient.findAllNewForClientId(id)
-                .forEach(orderDetailsResponse -> orderClient.cancel(orderDetailsResponse.getId()));
+        orderClient.findNewIdsForClientId(id).forEach(orderClient::cancel);
 
         if (orderClient.existsByClientId(id)) {
             return;

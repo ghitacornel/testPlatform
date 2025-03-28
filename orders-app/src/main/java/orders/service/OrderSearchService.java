@@ -43,12 +43,12 @@ public class OrderSearchService {
         return repository.findIdsByStatus(Status.REJECTED);
     }
 
-    public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
-        return repository.findAllNewForClientId(id).stream().map(mapper::map).toList();
+    public List<Integer> findAllNewForClientId(Integer id) {
+        return repository.findNewIdsForClientId(id);
     }
 
-    public List<OrderDetailsResponse> findAllNewForProductId(Integer id) {
-        return repository.findAllNewForProductId(id).stream().map(mapper::map).toList();
+    public List<Integer> findAllNewForProductId(Integer id) {
+        return repository.findNewIdsForProductId(id);
     }
 
     public OrderDetailsResponse findById(Integer id) {

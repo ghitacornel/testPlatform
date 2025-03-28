@@ -44,11 +44,11 @@ public class OrderController implements OrderContract {
         return searchService.findRejectedIds();
     }
 
-    public List<OrderDetailsResponse> findAllNewForClientId(Integer id) {
+    public List<Integer> findNewIdsForClientId(Integer id) {
         return searchService.findAllNewForClientId(id);
     }
 
-    public List<OrderDetailsResponse> findAllNewForProductId(Integer id) {
+    public List<Integer> findNewIdsForProductId(Integer id) {
         return searchService.findAllNewForProductId(id);
     }
 

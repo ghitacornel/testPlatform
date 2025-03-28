@@ -16,6 +16,7 @@ public class FlowsController implements FlowsContract {
     private final OrderService orderService;
     private final CompanyService companyService;
     private final ClientService clientService;
+    private final ProductService productService;
 
     public IdResponse createOrder(CreateOrderRequest request) {
         return orderService.createOrder(request);
@@ -31,6 +32,10 @@ public class FlowsController implements FlowsContract {
 
     public void deleteClient(Integer id) {
         clientService.deleteClient(id);
+    }
+
+    public void cancelProduct(Integer id) {
+        productService.cancelProduct(id);
     }
 
 }

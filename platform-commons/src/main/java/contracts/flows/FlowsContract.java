@@ -23,4 +23,8 @@ public interface FlowsContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteClient(@PathVariable("id") Integer id);
 
+    @DeleteMapping("flow/products/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void cancelProduct(@PathVariable("id") Integer id);
+
 }

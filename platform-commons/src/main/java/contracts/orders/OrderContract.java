@@ -19,23 +19,23 @@ public interface OrderContract {
     @GetMapping(value = "orders/completed/ids", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findCompletedIds();
 
-    @GetMapping(value = "orders/sent/ids", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders/ids/sent", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findSentIds();
 
-    @GetMapping(value = "orders/invoiced/ids", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders/ids/invoiced", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findInvoicedIds();
 
-    @GetMapping(value = "orders/new/ids", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders/ids/new", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findNewIds();
 
-    @GetMapping(value = "orders/rejected/ids", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "orders/ids/rejected", produces = MediaType.APPLICATION_JSON_VALUE)
     List<Integer> findRejectedIds();
 
-    @GetMapping(value = "orders/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<OrderDetailsResponse> findAllNewForClientId(@Valid @NotNull @PathVariable("id") Integer id);
+    @GetMapping(value = "orders/ids/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findNewIdsForClientId(@Valid @NotNull @PathVariable("id") Integer id);
 
-    @GetMapping(value = "orders/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<OrderDetailsResponse> findAllNewForProductId(@Valid @NotNull @PathVariable("id") Integer id);
+    @GetMapping(value = "orders/ids/company/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Integer> findNewIdsForProductId(@Valid @NotNull @PathVariable("id") Integer id);
 
     @GetMapping("orders/count")
     long countAllNew();

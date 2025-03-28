@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import platform.clients.CompanyClient;
+import platform.clients.FlowsClient;
 import platform.clients.ProductClient;
 import platform.fakers.ProductSellRequestFaker;
 import platform.utils.GenerateUtils;
@@ -27,6 +28,7 @@ public class ProductService {
 
     private final ProductClient productClient;
     private final CompanyClient companyClient;
+    private final FlowsClient flowsClient;
 
     private final Random random = new Random();
     private final AsyncCache<Integer, Object> cache = Caffeine.newBuilder()
@@ -66,7 +68,7 @@ public class ProductService {
             return;
         }
 
-        productClient.cancel(id);
+        flowsClient.cancelProduct(id);
         log.info("Product cancelled {}", id);
     }
 
