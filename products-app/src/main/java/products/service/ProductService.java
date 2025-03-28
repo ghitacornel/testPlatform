@@ -59,7 +59,7 @@ public class ProductService {
     public void refill(Integer id, Integer quantity) {
         Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         product.refill(quantity);
-        log.info("refill {} with quantity {}", id, quantity);
+        log.info("refilled {} with quantity {}", id, quantity);
     }
 
     public void cancelByCompany(Integer id) {
