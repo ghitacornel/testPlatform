@@ -55,6 +55,9 @@ public class Product extends Identifiable {
     }
 
     public void cancel() {
+        if (status == Status.CONSUMED) {
+            return;
+        }
         status = Status.CANCELLED;
     }
 
