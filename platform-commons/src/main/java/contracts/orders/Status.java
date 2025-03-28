@@ -4,7 +4,7 @@ public enum Status {
 
     NEW,
     COMPLETED,
-    SENT_TO_INVOICE,
+    INVOICING,
     INVOICED,
     CANCELLED,
     REJECTED

@@ -57,8 +57,8 @@ public class Order extends Identifiable {
         status = Status.INVOICED;
     }
 
-    public void markAsSentToInvoice() {
-        status = Status.SENT_TO_INVOICE;
+    public void markAsInvoicing() {
+        status = Status.INVOICING;
     }
 
     public boolean isNew() {
@@ -69,8 +69,8 @@ public class Order extends Identifiable {
         return status == Status.COMPLETED;
     }
 
-    public boolean isSentToInvoice() {
-        return status == Status.SENT_TO_INVOICE;
+    public boolean isInvoicing() {
+        return status == Status.INVOICING;
     }
 
     public boolean isCancelled() {

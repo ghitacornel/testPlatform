@@ -28,7 +28,7 @@ public class OrderSearchService {
     }
 
     public List<Integer> findSentIds() {
-        return repository.findIdsByStatus(Status.SENT_TO_INVOICE);
+        return repository.findIdsByStatus(Status.INVOICING);
     }
 
     public List<Integer> findInvoicedIds() {

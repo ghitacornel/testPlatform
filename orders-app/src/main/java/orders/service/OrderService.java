@@ -43,13 +43,13 @@ public class OrderService {
             log.warn("Order in {} cannot be sent to invoice {}", order.getStatus(), id);
             return;
         }
-        order.markAsSentToInvoice();
+        order.markAsInvoicing();
         log.info("Sent to invoice {}", id);
     }
 
     public void invoice(Integer id) {
         Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
-        if (!order.isSentToInvoice()) {
+        if (!order.isInvoicing()) {
             log.warn("Order in {} cannot be invoiced {}", order.getStatus(), id);
             return;
         }
