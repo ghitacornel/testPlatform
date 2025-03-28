@@ -15,17 +15,17 @@ class OrdersScheduler {
     private final OrderRepository repository;
 
     @Scheduled(fixedRate = 10000)
-    void removeCancelledOrders() {
+    void removeCancelled() {
         repository.deleteByStatus(Status.CANCELLED);
     }
 
     @Scheduled(fixedRate = 10000)
-    void removeRejectedOrders() {
+    void removeRejected() {
         repository.deleteByStatus(Status.REJECTED);
     }
 
     @Scheduled(fixedRate = 10000)
-    void removeInvoicedOrders() {
+    void removeInvoiced() {
         repository.deleteByStatus(Status.INVOICED);
     }
 
