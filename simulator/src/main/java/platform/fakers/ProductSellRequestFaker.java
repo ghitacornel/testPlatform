@@ -13,7 +13,7 @@ public class ProductSellRequestFaker {
     public static ProductSellRequest fake() {
         return ProductSellRequest.builder()
                 .name(faker.commerce().productName())
-                .color(faker.commerce().color())
+                .color(faker.commerce().material())
                 .price(Double.valueOf(faker.commerce().price(1, 100)))
                 .quantity(random.nextInt(100000) + 100)
                 .build();
