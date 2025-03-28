@@ -63,6 +63,9 @@ public class Product extends Identifiable {
 
     public void refill(Integer refill) {
         quantity += refill;
+        if (status == Status.CONSUMED) {
+            status = Status.ACTIVE;
+        }
     }
 
 }
