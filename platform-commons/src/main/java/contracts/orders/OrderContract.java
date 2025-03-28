@@ -76,8 +76,4 @@ public interface OrderContract {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void reject(@Valid @RequestBody OrderRejectRequest request);
 
-    @DeleteMapping("orders/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    void delete(@Valid @NotNull @PathVariable("id") Integer id);
-
 }

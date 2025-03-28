@@ -104,9 +104,4 @@ public class OrderService {
         log.info("Rejected {} {}", id, reason);
     }
 
-    public void delete(Integer id) {
-        repository.deleteById(id);
-        log.info("Deleted {}", id);
-    }
-
 }

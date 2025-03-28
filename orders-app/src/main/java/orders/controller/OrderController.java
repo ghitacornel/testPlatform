@@ -96,8 +96,4 @@ public class OrderController implements OrderContract {
         service.reject(request.getId(), request.getReason());
     }
 
-    public void delete(Integer id) {
-        service.delete(id);
-    }
-
 }
