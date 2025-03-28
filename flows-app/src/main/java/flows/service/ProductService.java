@@ -12,11 +12,11 @@ public class ProductService {
     private final ProductServiceHelper helper;
 
     public void deleteCancelled() {
-        productClient.findCancelledIds().forEach(helper::deleteCancelled);
+        productClient.findCancelledIds().forEach(helper::delete);
     }
 
     public void deleteConsumed() {
-        productClient.findConsumedIds().forEach(helper::deleteConsumed);
+        productClient.findConsumedIds().forEach(helper::delete);
     }
 
 }

@@ -19,7 +19,7 @@ class ProductServiceHelper {
     private final OrderClient orderClient;
 
     @Async
-    void deleteCancelled(Integer id) {
+    void delete(Integer id) {
         if (orderClient.existsByProductId(id)) {
             return;
         }
@@ -28,25 +28,9 @@ class ProductServiceHelper {
         }
         try {
             productClient.delete(id);
-            log.info("Cancelled product deleted {}", id);
+            log.info("product deleted {}", id);
         } catch (ResourceNotFound e) {
-            log.error("Cancelled product not found {} for delete", id);
-        }
-    }
-
-    @Async
-    void deleteConsumed(Integer id) {
-        if (orderClient.existsByProductId(id)) {
-            return;
-        }
-        if (invoiceClient.existsByProductId(id)) {
-            return;
-        }
-        try {
-            productClient.delete(id);
-            log.info("Consumed product deleted {}", id);
-        } catch (ResourceNotFound e) {
-            log.error("Consumed product not found {} for delete", id);
+            log.error("to be deleted product not found {}", id);
         }
     }
 
