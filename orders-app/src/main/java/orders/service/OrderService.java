@@ -75,6 +75,9 @@ public class OrderService {
         if (order.isCancelled()) {
             return;
         }
+        if (order.isRejected()) {
+            return;
+        }
         if (!order.isNew()) {
             log.warn("Order in {} cannot be cancelled {}", order.getStatus(), id);
             return;
@@ -94,6 +97,9 @@ public class OrderService {
             return;
         }
         if (order.isRejected()) {
+            return;
+        }
+        if (order.isCancelled()) {
             return;
         }
         if (!order.isNew()) {
