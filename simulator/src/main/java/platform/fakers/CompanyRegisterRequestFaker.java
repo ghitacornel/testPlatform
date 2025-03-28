@@ -1,11 +1,11 @@
 package platform.fakers;
 
-import com.github.javafaker.Faker;
 import contracts.companies.CompanyRegisterRequest;
+import net.datafaker.Faker;
 
 public class CompanyRegisterRequestFaker {
 
-    private static final Faker faker = Faker.instance();
+    private static final Faker faker = new Faker();
 
     public static CompanyRegisterRequest fake() {
         return CompanyRegisterRequest.builder()

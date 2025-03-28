@@ -1,14 +1,14 @@
 package platform.fakers;
 
-import com.github.javafaker.Faker;
 import contracts.products.ProductSellRequest;
+import net.datafaker.Faker;
 
 import java.util.Random;
 
 public class ProductSellRequestFaker {
 
     private static final Random random = new Random();
-    private static final Faker faker = Faker.instance();
+    private static final Faker faker = new Faker();
 
     public static ProductSellRequest fake() {
         return ProductSellRequest.builder()

@@ -1,15 +1,15 @@
 package platform.fakers;
 
-import com.github.javafaker.Faker;
 import contracts.clients.ClientRegisterRequest;
+import net.datafaker.Faker;
 
 public class ClientRegisterRequestFaker {
 
-    private static final Faker faker = Faker.instance();
+    private static final Faker faker = new Faker();
 
     public static ClientRegisterRequest fake() {
         return ClientRegisterRequest.builder()
-                .name(faker.name().username())
+                .name(faker.name().fullName())
                 .cardType(faker.business().creditCardType())
                 .country(faker.country().name())
                 .build();
