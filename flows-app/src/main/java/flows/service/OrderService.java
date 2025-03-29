@@ -118,16 +118,13 @@ public class OrderService {
 
         try {
             orderClient.complete(id);
+            log.info("Order completed {}", id);
         } catch (ResourceNotFound e) {
             log.error("Order not found for marking it as completed {}", id);
             rejectOrder(id, e.getMessage());
-            return;
         } catch (Exception e) {
             log.error("Error marking order as completed {}", id, e);
-            return;
         }
-
-        log.info("Order completed {}", id);
     }
 
     private void rejectOrder(Integer id, String message) {
