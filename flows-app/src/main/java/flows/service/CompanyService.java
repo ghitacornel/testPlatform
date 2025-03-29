@@ -25,7 +25,7 @@ public class CompanyService {
             companyClient.retiring(id);
             log.info("retiring company {}", id);
         } catch (ResourceNotFound e) {
-            log.warn("Company not found {}", id);
+            log.warn("Company not found for retiring {}", id);
             return;
         }
 
@@ -47,7 +47,7 @@ public class CompanyService {
             companyClient.retired(id);
             log.info("retired company {}", id);
         } catch (ResourceNotFound e) {
-            log.warn("Company not found {}", id);
+            log.warn("Company not found for retired {}", id);
         }
 
     }
