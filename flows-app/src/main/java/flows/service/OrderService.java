@@ -113,8 +113,7 @@ public class OrderService {
         try {
             kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
         } catch (Exception e) {
-            log.error("Error sending order id to CompletedOrdersQueueName {}", id, e);
-            return;
+            throw new BusinessException("Error sending order " + id + " to CompletedOrdersQueueName", e);
         }
 
         try {
