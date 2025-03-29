@@ -34,7 +34,12 @@ public class OrderService {
 
     public IdResponse createOrder(CreateOrderRequest request) {
 
-        IdResponse idResponse = orderClient.create(request);
+        IdResponse idResponse;
+        try {
+            idResponse = orderClient.create(request);
+        } catch (Exception e) {
+            throw new BusinessException("error creating order " + request, e);
+        }
 
         try {
             kafkaTemplate.send(toBeConfirmedOrdersTopic, String.valueOf(idResponse.getId()));
@@ -57,8 +62,7 @@ public class OrderService {
         try {
             productClient.refill(orderDetails.getProductId(), orderDetails.getQuantity());
         } catch (RestTechnicalException e) {
-            log.error("error cancelling order {} {}", id, e.getMessage());
-            return;// TODO
+            throw new BusinessException("Error refilling product " + orderDetails, e);
         }
 
         try {
