@@ -14,7 +14,7 @@ class ClientsScheduler {
     private final ClientService clientService;
 
     @Scheduled(fixedRate = 10000)
-    void deleteRetired() {
+    void deleteRetiring() {
         clientClient.findRetiringIds().forEach(clientService::deleteRetiringClient);
     }
 
