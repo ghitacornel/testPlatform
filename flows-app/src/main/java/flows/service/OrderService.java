@@ -44,8 +44,7 @@ public class OrderService {
         try {
             kafkaTemplate.send(toBeConfirmedOrdersTopic, String.valueOf(idResponse.getId()));
         } catch (Exception e) {
-            log.error("error sending order confirmation {}", idResponse.getId(), e);
-            throw new BusinessException("error sending order confirmation " + request, e);
+            throw new BusinessException("error sending order for confirmation " + request, e);
         }
         return idResponse;
     }
