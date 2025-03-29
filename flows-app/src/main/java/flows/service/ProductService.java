@@ -35,9 +35,9 @@ public class ProductService {
 
         try {
             orderClient.findNewIdsForProductId(id).forEach(orderClient::cancel);
-            log.info("cancelled product orders cancelled {}", id);
+            log.info("cancelled orders for product {}", id);
         } catch (Exception e) {
-            log.error("cancelled product orders cancelled {}", id, e);
+            log.error("cancelled orders for product {}", id, e);
         }
     }
 }
