@@ -5,5 +5,6 @@ create table ORDERS
     product_id    int      not null,
     quantity      int      not null,
     status        smallint not null,
-    reject_reason varchar(2000)
+    reject_reason varchar(2000),
+    version       int
 );

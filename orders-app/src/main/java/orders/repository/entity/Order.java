@@ -2,14 +2,11 @@ package orders.repository.entity;
 
 import commons.model.Identifiable;
 import contracts.orders.Status;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -39,6 +36,9 @@ public class Order extends Identifiable {
 
     @Column(length = 2000)
     private String rejectReason;
+
+    @Version
+    private Integer version;
 
     public void cancel() {
         status = Status.CANCELLED;
