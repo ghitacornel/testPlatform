@@ -72,7 +72,7 @@ public class InvoiceService {
             return;
         }
         invoice.error(message);
-        log.error("{} {}", id, message);
+        log.error("{} - {}", id, message);
     }
 
 }
