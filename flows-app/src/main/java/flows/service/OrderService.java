@@ -45,6 +45,7 @@ public class OrderService {
             kafkaTemplate.send(toBeConfirmedOrdersTopic, String.valueOf(idResponse.getId()));
         } catch (Exception e) {
             log.error("error sending order confirmation {}", idResponse.getId(), e);
+            throw new BusinessException("error sending order confirmation " + request, e);
         }
         return idResponse;
     }
@@ -136,6 +137,8 @@ public class OrderService {
             log.warn("Order rejected {} {}", id, message);
         } catch (ResourceNotFound e) {
             log.error("Order not found for rejection {} {}", id, message);
+        } catch (RestTechnicalException e) {
+            log.error("Error marking order as rejected {} {} {}", id, message, e.getMessage());
         } catch (Exception e) {
             log.error("Error marking order as rejected {} {}", id, message, e);
         }
