@@ -23,7 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("select o.id from Order o where o.clientId = :id and o.status = contracts.orders.Status.NEW")
     List<Integer> findNewIdsForClientId(@Param("id") Integer id);
 
-    @Query("select o from Order o where o.productId = :id and o.status = contracts.orders.Status.NEW")
+    @Query("select o.id from Order o where o.productId = :id and o.status = contracts.orders.Status.NEW")
     List<Integer> findNewIdsForProductId(@Param("id") Integer id);
 
     boolean existsByProductId(Integer id);
