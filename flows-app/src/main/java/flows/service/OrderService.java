@@ -41,11 +41,7 @@ public class OrderService {
             throw new BusinessException("error creating order " + request, e);
         }
 
-        try {
-            kafkaTemplate.send(toBeConfirmedOrdersTopic, String.valueOf(idResponse.getId()));
-        } catch (Exception e) {
-            throw new BusinessException("error sending order for confirmation " + request, e);
-        }
+        kafkaTemplate.send(toBeConfirmedOrdersTopic, String.valueOf(idResponse.getId()));
         return idResponse;
     }
 
@@ -109,11 +105,7 @@ public class OrderService {
             return;
         }
 
-        try {
-            kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
-        } catch (Exception e) {
-            throw new BusinessException("Error sending order " + id + " to CompletedOrdersQueueName", e);
-        }
+        kafkaTemplate.send(completedOrdersTopic, String.valueOf(id));
 
         try {
             orderClient.complete(id);
