@@ -1,6 +1,5 @@
 package flows.service;
 
-import commons.exceptions.ResourceNotFound;
 import flows.clients.ClientClient;
 import flows.clients.InvoiceClient;
 import flows.clients.OrderClient;
@@ -33,13 +32,8 @@ public class ClientService {
             return;
         }
 
-        try {
-            clientClient.retired(id);
-            log.info("retired client {}", id);
-        } catch (ResourceNotFound e) {
-            log.warn("Client not found for retire {}", id);
-        }
-
+        clientClient.retired(id);
+        log.info("retired client {}", id);
     }
 
 }
