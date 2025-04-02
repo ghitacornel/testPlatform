@@ -61,13 +61,8 @@ public class OrderService {
             throw new BusinessException("Error refilling product " + orderDetails, e);
         }
 
-        try {
-            orderClient.cancel(id);
-            log.info("Order cancelled {}", id);
-        } catch (ResourceNotFound e) {
-            log.error("Order not found for cancelling {}", id);
-        }
-
+        orderClient.cancel(id);
+        log.info("Order cancelled {}", id);
     }
 
     public void sendCompletedToInvoice() {
