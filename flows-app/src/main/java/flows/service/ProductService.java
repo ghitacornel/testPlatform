@@ -1,6 +1,5 @@
 package flows.service;
 
-import commons.exceptions.ResourceNotFound;
 import flows.clients.OrderClient;
 import flows.clients.ProductClient;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +25,8 @@ public class ProductService {
 
     public void cancelProduct(Integer id) {
 
-        try {
-            productClient.cancel(id);
-            log.info("product cancelled {}", id);
-        } catch (ResourceNotFound e) {
-            log.error("to be cancelled product not found {}", id);
-        }
+        productClient.cancel(id);
+        log.info("product cancelled {}", id);
 
         try {
             orderClient.findNewIdsForProductId(id).forEach(orderClient::cancel);
