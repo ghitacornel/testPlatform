@@ -18,15 +18,7 @@ public class ClientService {
     private final InvoiceClient invoiceClient;
 
     public void deleteClient(Integer id) {
-
-        try {
-            clientClient.retiring(id);
-            log.info("retiring client {}", id);
-        } catch (ResourceNotFound e) {
-            log.warn("Client not found for retiring {}", id);
-            return;
-        }
-
+        clientClient.retiring(id);
         deleteRetiringClient(id);
     }
 

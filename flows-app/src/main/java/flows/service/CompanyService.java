@@ -20,15 +20,7 @@ public class CompanyService {
     private final InvoiceClient invoiceClient;
 
     public void deleteCompany(Integer id) {
-
-        try {
-            companyClient.retiring(id);
-            log.info("retiring company {}", id);
-        } catch (ResourceNotFound e) {
-            log.warn("Company not found for retiring {}", id);
-            return;
-        }
-
+        companyClient.retiring(id);
         deleteRetiring(id);
     }
 
