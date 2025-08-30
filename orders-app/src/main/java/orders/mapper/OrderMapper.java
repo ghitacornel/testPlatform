@@ -14,6 +14,7 @@ public interface OrderMapper {
 
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "rejectReason", ignore = true)
+    @Mapping(target = "version", ignore = true)
     Order map(CreateOrderRequest request);
 
 }
