@@ -63,6 +63,9 @@ public class OrderService {
             log.warn("Order not found for cancellation {}", id);
             return;
         }
+        if (order.isCancelled()) {
+            return;
+        }
         if (!order.isNew()) {
             log.warn("Order in {} cannot be cancelled {}", order.getStatus(), id);
             return;
