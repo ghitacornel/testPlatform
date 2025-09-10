@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 class OrderServiceHelper {
 
-    @Value(value = "${topic.completedOrders}")
+    @Value(value = "${kafka.topic.completedOrders}")
     private String completedOrdersTopic;
 
     private final OrderClient orderClient;
