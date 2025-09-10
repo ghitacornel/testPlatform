@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class TopicConfiguration {
 
-    @Value(value = "${topic.completedOrders}")
+    @Value(value = "${kafka.topic.completedOrders}")
     private String completedOrdersTopic;
 
-    @Value(value = "${topic.toBeConfirmedOrders}")
+    @Value(value = "${kafka.topic.toBeConfirmedOrders}")
     private String toBeConfirmedOrdersTopic;
 
     @Bean
