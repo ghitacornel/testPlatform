@@ -108,7 +108,7 @@
         <dependency>
             <groupId>com.github.loki4j</groupId>
             <artifactId>loki-logback-appender</artifactId>
-            <version>1.6.0</version>
+            <version>2.0.0</version>
             <!-- remove scope for enabling loki -->
             <!-- rename logs config xmls -->
             <scope>provided</scope>
@@ -134,7 +134,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.6.1</version>
                     <executions>
                         <execution>
                             <phase>generate-sources</phase>
