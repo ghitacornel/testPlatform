@@ -22,9 +22,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderService {
 
-    @Value(value = "${topic.completedOrders}")
+    @Value(value = "${kafka.topic.completedOrders}")
     private String completedOrdersTopic;
-    @Value(value = "${topic.toBeConfirmedOrders}")
+    @Value(value = "${kafka.topic.toBeConfirmedOrders}")
     private String toBeConfirmedOrdersTopic;
 
     private final OrderClient orderClient;
