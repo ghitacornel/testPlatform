@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-class InvoiceScheduler {
+class InvoicesScheduler {
 
     private final OrderService orderService;
 
